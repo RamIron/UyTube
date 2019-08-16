@@ -2,16 +2,17 @@ package logica;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Canal {
 
 	private String nombre;
 	private String descripcion;
-	private boolean publico;
+	private Boolean publico;
 	private Usuario usuario;
-	private List<Video> videos = new ArrayList<>();
-	private List<ListaReproduccion> listaRep = new ArrayList<>();
-	
+	private Map <String ,Video> videos;
+	private Map <String,ListaReproduccion> lista;
+		
 	//Constructores
 	public Canal() {
 		super();

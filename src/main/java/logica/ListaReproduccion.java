@@ -1,5 +1,5 @@
 package logica;
 
-public class ListaReproduccion {
+public abstract class ListaReproduccion {
 
 }
