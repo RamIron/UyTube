@@ -43,8 +43,5 @@ public class DtComentario {
 		return respuestas;
 	}
 	
-	
-	
-	
 }
 

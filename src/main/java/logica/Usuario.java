@@ -1,8 +1,8 @@
 package logica;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+//import datatypes.DtVideo;
+
 
 public class Usuario {
 	
@@ -81,114 +81,123 @@ public class Usuario {
 
 	
 	//Operaciones
-	public void agregarCanal(nick:String, desc:String, public:bool) {
+	public void agregarCanal(String nick, String desc, Boolean publico) {
 		
 	}
 	
-	public void agregarCategoriaALista(nomL: String, cat:Categoria) {
+	public void agregarCategoriaALista(String nomL, Categoria cat) {
 		
 	}
 	
-	public void agregarCategoriaVideo(nomV:String, cat:Categoria) {
+	public void agregarCategoriaVideo(String nomV, Categoria cat) {
 		
 	}
 	
-	public void agregarLista(lista: ListaReproduccion) {
+	public void agregarLista(ListaReproduccion lista) {
 		
 	}
 	
-	public void agregarLista(nomL: String, public: bool) {
+	public void agregarLista(String nomL, Boolean publico) {
 		
 	}
 	
-	public void agregarNombreCanal(nomC:String) {
+	public void agregarNombreCanal(String nomC) {
 		
 	}
 	
-	public void agregarSeguidor(u:usuario) {
+	/*public void agregarSeguidor(Usuario u) {
 		
 	}
 	
-	public void agregarSeguidor(u1:Usuario) {
+	public void agregarSeguidor(Usuario u1) {
 		
 	}
-	public void agregarValoracion(val:Valoracion) {
-		
-	}
-	
-	public void agregarVideo(nomV:String, desc:String, fPub:Date, dur:int, url:String) {
+	*/
+	public void agregarValoracion(Valoracion val) {
 		
 	}
 	
-	public void agregarVideo(nomV:String, public:bool, desc:String, fPub:Date, dur:int, url:String) {
+	public void agregarVideo(String nomV, String desc, Date fPub, int dur, String url) {
 		
 	}
 	
-	public void dejarSeguirUsuario(u2:Usuario) {
+	public void agregarVideo(String nomV, Boolean publico, String desc, Date fPub, int dur, String url) {
 		
 	}
 	
-	public void eliminarVideoDeLista(nomVid:String, nomList:String) {
+	public void dejarSeguirUsuario(Usuario u2) {
 		
 	}
 	
-	public boolean existeListaDefecto(nomL: String) {
+	public void eliminarVideoDeLista(String nomVid, String nomList) {
 		
 	}
 	
-	public boolean existeListaParticular(nomL: String) {
+	public Boolean existeListaDefecto(String nomL) {
 		
 	}
 	
-	//public QUE TIPO DE RETORNO TIENE listarListasDeUsuario():Set(String) {}         
-	
-	//public QUE TIPO DE RETORNO TIENE listarListasParticulares():Set(String) {}
-	
-	//public QUE TIPO DE RETORNO TIENE listarVideosdeLista(nomList:String):Set(String) {}
-	
-	public void modificarInfoCanal(nomC:String, descC:String, public:bool) {
+	public Boolean existeListaParticular(String nomL) {
 		
 	}
 	
-	public void obtenerCanalU(u:Usuario) {
+	public ArrayList<String> listarListasDeUsuario() {
+		
+	}         
+	
+	public ArrayList<String> listarListasParticulares() {
 		
 	}
 	
-	public DtVideo obtenerInfoVideo(nomVid:String) {}
-	
-	public DtLista obtenerListaDeUsuario(nomList:String) {}
-	
-	public DtListaRep obtenerListaDeUsuario(nomList:String) {}
-	
-	public void quitarSeguidor(u1:Usuario) {
+	public ArrayList<String> listarVideosdeLista(String nomList) {
 		
 	}
 	
-	public void seguirUsuario(u2:Usuario) {
+	public void modificarInfoCanal(String nomC, String descC, Boolean publico) {
 		
 	}
 	
-	public void valorarVideo(nomVid:String, uVal:Usuario, val:bool) {
+	public void obtenerCanalU(Usuario u) {
 		
 	}
 	
-	//public QUE TIPO DE RETORNO TIENE listarSeguidores(nick:String):Set(String) {}
-	
-	//public QUE TIPO DE RETORNO TIENE listarSeguidos(nick:String):Set(String) {}
-	
-	public void agregarVideoLista(v:Video, nomList:String) {
+	public DtVideo obtenerInfoVideo(String nomVid) {
 		
 	}
 	
-	public void obtenerVideo(nomVid:String):Video {
+	public DtLista obtenerListaDeUsuario(String nomList) {
 		
 	}
 	
-	public void agregarVideoLista(v:Video, nomList:String) {
+	public DtListaRep obtenerListaDeUsuario(String nomList) {
 		
 	}
 	
-	public Video obtenerVideo(nomVid:String) {
+	public void quitarSeguidor(Usuario u1) {
+		
+	}
+	
+	public void seguirUsuario(Usuario u2) {
+		
+	}
+	
+	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {
+		
+	}
+	
+	public ArrayList<String> listarSeguidores(String nick) {
+		
+	}
+	
+	public ArrayList<String> listarSeguidos(String nick) {
+		
+	}
+	
+	public void agregarVideoLista(Video v, String nomList) {
+		
+	}
+	
+	public Video obtenerVideo(String nomVid) {
 		
 	}
 	
