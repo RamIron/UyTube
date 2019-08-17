@@ -1,8 +1,11 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import datatypes.DtListaRep;
 
 public class Canal {
 
@@ -50,79 +53,68 @@ public class Canal {
 	}
 	
 	//Operaciones
-	public void agregarCategoriaALista(nomL: String, cat:Categoria) {
+	public void agregarCategoriaALista(String nomL, Categoria cat) {
 		
 	}
 	
-	public void agregarCategoriaVideo(nomV:String, cat:Categoria) {
+	public void agregarCategoriaVideo(String nomV, Categoria cat) {
 		
 	}
 	
-	public void agregarLista(lista: ListaReproduccion) {
+	public void agregarLista(ListaReproduccion lista) {
 		
 	}
 	
-	public void agregarLista(nomL: String, public: bool) {
+	public void agregarLista(String nomL, boolean publico) {
 		
 	}
 	
-	public void agregarVideo(nomV:String, desc:String, fPub:Date, dur:int, url:String) {
+	public void agregarVideo(String nomV, String desc, Date fPub, int dur, String url) {
 		
 	}
 	
-	public void eliminarVideoDeLista(v:Video, nomList:String) {
+	public void eliminarVideoDeLista(Video v, String nomList) {
 		
 	}
 	
-	public void existeListaDefecto( nomL: String):bool {
+	public boolean existeListaDefecto(String nomL) {
 		
 	}
 	
-	public boolean existeListaParticular( nomL: String) {
+	public boolean existeListaParticular(String nomL) {
 		
 	}
 	
-	public void listarListasDeUsuario():Set(String) {
+	public ArrayList<String> listarListasDeUsuario() {
 		
 	}
 	
-	public void listarListasParticulares():Set(String) {
+	public ArrayList<String> listarListasParticulares() {
 		
 	}
 	
-	//public QUE TIPO DE RETORNO TIENE listarVideosdeLista(nomList:String):Set(String) {
+	public ArrayList<String> listarVideosdeLista(String nomList) {
 		
 	}
 	
-	public DtLista obtenerListaDeUsuario(nomList:String) {
-		
-	}
-	
-	public DtListaRep obtenerListaDeUsuario(nomList:String) {
-		
-	}
-	
-	public String obtenerUsuarioCanal():String {
-		
-	}
-	
-	public void valorarVideo(nomVid:String, uVal:Usuario, val:bool) {
-		
-	}
-	
-	public Video obtenerVideo(nomVid:String): {
-		
-	}
-	
-	public void agregarVideoLista(v:Video, nomList:String) {
+	public DtListaRep obtenerListaDeUsuario(String nomList) {
 		
 	}
 	
 	
+	public String obtenerUsuarioCanal() {
+		
+	}
 	
+	public void valorarVideo(String nomVid, Usuario uVal, boolean val) {
+		
+	}
 	
+	public Video obtenerVideo(String nomVid) {
+		
+	}
 	
-	
-	
-	
+	public void agregarVideoLista(Video v, String nomList) {
+		
+	}
 }

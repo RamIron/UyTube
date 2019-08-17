@@ -2,12 +2,14 @@ package logica;
 
 import java.util.*;
 
+import datatypes.DtElementoUsuario;
+
 
 public class Categoria {
 		
 		//ATRIBUTOS
 		private String nombre;
-		private List <Elemento> elementos;
+		private List<Elemento> elementos;
 		
 		
 		//METODOS
