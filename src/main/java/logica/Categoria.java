@@ -2,7 +2,6 @@ package logica;
 
 import java.util.*;
 
-
 public class Categoria {
 		
 		//ATRIBUTOS
