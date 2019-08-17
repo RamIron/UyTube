@@ -7,7 +7,7 @@ public class Categoria {
 		
 		//ATRIBUTOS
 		private String nombre;
-		private Map <DtElementoUsuario,Elemento> elementos;
+		private List <Elemento> elementos;
 		
 		
 		//METODOS
