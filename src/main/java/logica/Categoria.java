@@ -2,12 +2,9 @@ package logica;
 
 import java.util.*;
 
-<<<<<<< HEAD
 import datatypes.DtElementoUsuario;
 
 
-=======
->>>>>>> e83dc7792ec45390cb40810447b68773e28364fe
 public class Categoria {
 		
 		//ATRIBUTOS
@@ -33,6 +30,7 @@ public class Categoria {
 			this.nombre = nombre;
 		}
 		
+		/*
 		public List<DtElementoUsuario> obtenerElemCategoria(){
 			// TODO
 		}
@@ -43,5 +41,5 @@ public class Categoria {
 		
 		public void agregarLista(Particular p) {
 			// TODO
-		}
+		}*/
 }

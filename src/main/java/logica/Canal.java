@@ -53,68 +53,35 @@ public class Canal {
 	}
 	
 	//Operaciones
-	public void agregarCategoriaALista(String nomL, Categoria cat) {
-		
-	}
+	/*public void agregarCategoriaALista(String nomL, Categoria cat) {}
 	
-	public void agregarCategoriaVideo(String nomV, Categoria cat) {
-		
-	}
+	public void agregarCategoriaVideo(String nomV, Categoria cat) {}
 	
-	public void agregarLista(ListaReproduccion lista) {
-		
-	}
+	public void agregarLista(ListaReproduccion lista) {}
 	
-	public void agregarLista(String nomL, boolean publico) {
-		
-	}
+	public void agregarLista(String nomL, boolean publico) {}
 	
-	public void agregarVideo(String nomV, String desc, Date fPub, int dur, String url) {
-		
-	}
+	public void agregarVideo(String nomV, String desc, Date fPub, int dur, String url) {}
 	
-	public void eliminarVideoDeLista(Video v, String nomList) {
-		
-	}
+	public void eliminarVideoDeLista(Video v, String nomList) {}
 	
-	public boolean existeListaDefecto(String nomL) {
-		
-	}
+	public boolean existeListaDefecto(String nomL) {}
 	
-	public boolean existeListaParticular(String nomL) {
-		
-	}
+	public boolean existeListaParticular(String nomL) {}
 	
-	public ArrayList<String> listarListasDeUsuario() {
-		
-	}
+	public ArrayList<String> listarListasDeUsuario() {}
 	
-	public ArrayList<String> listarListasParticulares() {
-		
-	}
+	public ArrayList<String> listarListasParticulares() {}
 	
-	public ArrayList<String> listarVideosdeLista(String nomList) {
-		
-	}
+	public ArrayList<String> listarVideosdeLista(String nomList) {}
 	
-	public DtListaRep obtenerListaDeUsuario(String nomList) {
-		
-	}
+	public DtListaRep obtenerListaDeUsuario(String nomList) {}
 	
+	public String obtenerUsuarioCanal() {}
 	
-	public String obtenerUsuarioCanal() {
-		
-	}
+	public void valorarVideo(String nomVid, Usuario uVal, boolean val) {}
 	
-	public void valorarVideo(String nomVid, Usuario uVal, boolean val) {
-		
-	}
+	public Video obtenerVideo(String nomVid) {}
 	
-	public Video obtenerVideo(String nomVid) {
-		
-	}
-	
-	public void agregarVideoLista(Video v, String nomList) {
-		
-	}
+	public void agregarVideoLista(Video v, String nomList) {}*/
 }

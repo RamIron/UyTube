@@ -8,7 +8,7 @@ public class DtComentario {
 	private String nickname;
 	private Date fecha;
 	private String texto;
-	private List<DtComentario> respuestas = new ArrayList<>();
+	private List<DtComentario> respuestas;
 	
 	public DtComentario() {
 	
