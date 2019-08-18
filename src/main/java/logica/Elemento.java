@@ -1,6 +1,6 @@
 package logica;
 
-
+import datatypes.*;
 
 public abstract class Elemento {
 	private String nombre;
@@ -38,6 +38,6 @@ public abstract class Elemento {
 		this.canal = canal;
 	}
 	
-	
+	public abstract DtElementoUsuario obtenerElemCategoria();
 	
 }

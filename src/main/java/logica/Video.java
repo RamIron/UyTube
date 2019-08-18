@@ -99,7 +99,7 @@ public class Video extends Elemento {
 	
 	//Operaciones
 	
-	/*public void crearComentario(Usuario uC, Date fCom, String texto) {}
+	public void crearComentario(Usuario uC, Date fCom, String texto) {}
 	
 	public void crearRespuesta(int idCom, Usuario uC, Date fCom, String texto) {}
 	
@@ -109,5 +109,5 @@ public class Video extends Elemento {
 	
 	public DtElementoUsuario obtenerElemCategoria() {}
 	
-	public void valorar(Usuario uVal, boolean val) {}*/
+	public void valorar(Usuario uVal, boolean val) {}
 }

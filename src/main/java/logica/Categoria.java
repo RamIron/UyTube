@@ -30,16 +30,21 @@ public class Categoria {
 			this.nombre = nombre;
 		}
 		
-		/*
+		
 		public List<DtElementoUsuario> obtenerElemCategoria(){
-			// TODO
+			List<DtElementoUsuario> res = new LinkedList<DtElementoUsuario>();
+			DtElementoUsuario elem;
+			for(Elemento e: elementos) {
+				elem = e.obtenerElemCategoria();
+				res.add(elem);
+			}
+			return res;
 		}
 		
 		public void agregarVideo(Video v) {
-			// TODO
-		}
+			elementos.add(v);		}
 		
 		public void agregarLista(Particular p) {
-			// TODO
-		}*/
+			elementos.add(p);
+		}
 }
