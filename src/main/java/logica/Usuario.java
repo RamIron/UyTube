@@ -3,16 +3,36 @@ package logica;
 import java.util.*;
 //import datatypes.DtVideo;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name="USUARIOS")
 public class Usuario {
 	
+	@Id //Siempre tenenos que tener un atributo Id
+	@Column(name="NICKNAME") 
 	private String nickname;
+	@Column(name="NOMBRE")
 	private String nombre;
+	@Column(name="APELLIDO")
 	private String apellido;
+	@Column(name="FECHA DE NACIMIENTO")
 	private Date fNac;
+	@Column(name="IMAGEN")
 	private String imagen;
+	@Column(name="CORREO ELECTRONICO")
 	private String correoE;
+	@OneToOne(mappedBy="canal", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY) /* no se si 
+	es mapedBy="canal" o mappedBy="usuario"*/
 	private Canal canal;
+	//falta @OneToMany
 	private ArrayList<Valoracion> valoraciones;
 
 	//Constructores

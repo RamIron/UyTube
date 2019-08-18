@@ -2,8 +2,11 @@ package logica;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.OneToOne;
 
 import datatypes.DtListaRep;
 
@@ -12,9 +15,10 @@ public class Canal {
 	private String nombre;
 	private String descripcion;
 	private Boolean publico;
+	@OneToOne
 	private Usuario usuario;
-	private Map <String ,Video> videos;
-	private Map <String,ListaReproduccion> lista;
+	private Map <String ,Video> videos = new HashMap<String, Video>();
+	private Map <String,ListaReproduccion> lista = new HashMap<String, ListaReproduccion>();
 		
 	//Constructores
 	public Canal() {
