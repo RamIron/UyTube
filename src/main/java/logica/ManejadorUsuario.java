@@ -6,7 +6,9 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 
 public class ManejadorUsuario {
+	
 	private static ManejadorUsuario instancia = null;
+	
 	private Map <String, Usuario> usuario = new HashMap<String, Usuario>();
 	
 	private ManejadorUsuario() {}
@@ -30,10 +32,5 @@ public class ManejadorUsuario {
 		EntityManager em = conexion.getEntityManager();
 		return em.find(Usuario.class, nickname);
 	}
-
-	
-	
-	
-	
 	
 }
