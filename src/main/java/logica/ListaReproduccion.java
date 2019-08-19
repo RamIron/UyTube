@@ -1,42 +1,86 @@
 package logica;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Map;
 
 import datatypes.DtComentario;
+import datatypes.DtElementoUsuario;
 import datatypes.DtVideo;
+import datatypes.DtVideoUsuario;
+import datatypes.tipoElemento;
 import datatypes.DtValoracion;
 
 public abstract class ListaReproduccion extends Elemento {
 	
+	//Atributos
+	private List<Video> videos;
+	
 	//Constructores
 	public ListaReproduccion() {
 		super();
+		videos = new ArrayList<Video>();
 	}
 
 	public ListaReproduccion(String nombre, Canal canal) {
 		super(nombre, canal);
+		videos = new ArrayList<Video>();
 	}
 
 	public ListaReproduccion(String nombre) {
 		super(nombre);
+		videos = new ArrayList<Video>();
 	}
 	
 	//Operaciones
-	/*public void agregarVideo(Video v) {}
+	public void agregarVideo(Video v) {
+		videos.add(v);
+		
+	}
 	
-	public void eliminarVideo(String nomVid) {}
+	public void eliminarVideo(String nickV, String nomVid) {
+		for(Video v: videos) {
+			if(v.getCanal().getUsuario().getNickname() == nickV &&  v.getNombre() == nomVid){
+				videos.remove(v);
+				break;
+			}
+		}
+	}
 	
-	public boolean esParticular() {}
+	public abstract boolean esParticular();
 	
-	public boolean esPublico() {}
+	public abstract boolean esPublico();
 	
-	public ArrayList<String> listarVideos() {}
+	public List<DtVideoUsuario> listarVideos() {
+		List<DtVideoUsuario> res = new ArrayList<DtVideoUsuario>();
+		for(Video v: videos) {
+			DtVideoUsuario vid = new DtVideoUsuario(v.getCanal().getUsuario().getNickname(), v.getNombre());
+			res.add(vid);
+		}
+		return res;
+	}
 	
-	public Map<Integer, DtComentario> obtenerComentariosVideo(String nomVid) {}
+	public Map<Integer, DtComentario> obtenerComentariosVideo(String nickV, String nomVid) {}/// ver si se usa jTree
 	
-	public DtVideo obtenerInfoVideo1(String nomVid) {}
+	public DtVideo obtenerInfoVideo(String nickV, String nomVid) {
+		for(Video v: videos) {
+			if(v.getCanal().getUsuario().getNickname() == nickV &&  v.getNombre() == nomVid){
+				return new DtVideo(nomVid, v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico());
+			}
+		}
+		return null;
+	}
 	
-	public Map<String, DtValoracion> obtenerValoracionVideo(String nomVid) {}*/
+	public List<DtValoracion> obtenerValoracionVideo(String nickV, String nomVid) {
+		for(Video v: videos) {
+			if(v.getCanal().getUsuario().getNickname() == nickV &&  v.getNombre() == nomVid){
+				return v.listarValoraciones();
+			}
+		}
+		return null;
+	}
 	
+	@Override
+	public DtElementoUsuario obtenerElemCategoria() {
+		return new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA);
+	}
 }

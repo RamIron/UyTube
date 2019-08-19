@@ -13,5 +13,15 @@ public class PorDefecto extends ListaReproduccion{
 	public PorDefecto(String nombre) {
 		super(nombre);
 	}
+
+	@Override
+	public boolean esParticular() {
+		return false;
+	}
+
+	@Override
+	public boolean esPublico() {
+		return false;
+	}
 	
 }

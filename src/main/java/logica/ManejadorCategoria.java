@@ -27,10 +27,10 @@ public class ManejadorCategoria {
 		em.getTransaction().commit();
 	}
 	
-	public Categoria buscarCategoria(int String){
+	public Categoria buscarCategoria(String nomC){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		return em.find(Categoria.class, String);
+		return em.find(Categoria.class, nomC);
 	}
 
 }

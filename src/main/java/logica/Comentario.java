@@ -61,6 +61,6 @@ public class Comentario {
 		respuestas.put(c.getId(), c);
 	}
 	
-	public Map<Integer, DtComentario> getRespuestas(){} //esto deberia ser una lista
+	public Map<Integer, DtComentario> getRespuestas(){} //esto deberia ser un jTree
 	
 }
