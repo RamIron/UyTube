@@ -81,7 +81,7 @@ public class Usuario {
 
 	
 	//Operaciones
-	/*public void agregarCanal(String nick, String desc, Boolean publico) {}
+	public void agregarCanal(String nick, String desc, Boolean publico) {}
 	
 	public void agregarCategoriaALista(String nomL, Categoria cat) {}
 	
@@ -139,7 +139,7 @@ public class Usuario {
 	
 	public void agregarVideoLista(Video v, String nomList) {}
 	
-	public Video obtenerVideo(String nomVid) {}*/
+	public Video obtenerVideo(String nomVid) {}
 	
 }
 

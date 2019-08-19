@@ -17,6 +17,7 @@ public class DtElementoUsuario {
 		this.tipo = tipo;
 	}
 
+	//Getters
 	public String getNickname() {
 		return nickname;
 	}
