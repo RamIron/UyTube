@@ -5,6 +5,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
 import interfaces.IUsuario;
@@ -65,7 +69,17 @@ public class CUsuario implements IUsuario {
 	}
 	
 	public ArrayList<String> listarUsuarios() {
-		return null;
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query consulta = em.createQuery("SELECT * FROM Usuarios u", Usuario.class);
+	    List<Usuario> usuarios = consulta.getResultList();
+	    ArrayList<String> nickUsers = new ArrayList<String>();
+	    String nick;
+	    for(Usuario u : usuarios) {
+			nick = u.getNickname();
+			nickUsers.add(nick);
+		}
+	    return nickUsers;
 	}
 	
 	public void modificarImagen(String img) {

@@ -1,6 +1,11 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import datatypes.DtElementoUsuario;
 import interfaces.ICategoria;
 
@@ -19,7 +24,17 @@ public class CCategoria implements ICategoria {
 	}
 	
 	public ArrayList<String> listarCategorias() {
-		return null;
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Query consulta = em.createQuery("SELECT * FROM Categorias c", Categoria.class);
+	    List<Categoria> categorias = consulta.getResultList();
+	    ArrayList<String> nomCats = new ArrayList<String>();
+	    String nomC;
+	    for(Categoria c : categorias) {
+			nomC = c.getNombre();
+			nomCats.add(nomC);
+		}
+	    return nomCats;
 	}
 	
 }

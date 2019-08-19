@@ -43,6 +43,7 @@ public class ManejadorUsuario {
 			return false;
 	}
 	
+	
 	public Usuario obtenerUsuario(String nickname) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
