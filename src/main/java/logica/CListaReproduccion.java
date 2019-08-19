@@ -15,8 +15,9 @@ public class CListaReproduccion implements ILIstaReproduccion {
 	private Video video;
 	private ListaReproduccion lista;
 
-	
+	@Override 
 	public void agregarCategoriaALista(String nick, String nomL, String nomC) {}
+	@Override 
 	public void agregarListaDefecto(String nomL) {}
 	public void agregarListaParticular(String nick, String nomL, boolean publico) {}
 	public void agregarVideoLista(String nomVid, String nomList) {}

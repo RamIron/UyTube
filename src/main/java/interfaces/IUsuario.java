@@ -1,7 +1,7 @@
 package interfaces;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ArrayList;
 
 import datatypes.DtCanal;
@@ -25,7 +25,7 @@ public interface IUsuario {
 	
 	public ArrayList<String> listarSeguidos();
 	
-	public ArrayList<String> listarUsuarios();
+	public List<String> listarUsuarios();
 	
 	public void modificarImagen(String img);
 	

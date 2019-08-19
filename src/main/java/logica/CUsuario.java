@@ -68,18 +68,13 @@ public class CUsuario implements IUsuario {
 		return dtSeguidos;
 	}
 	
-	public ArrayList<String> listarUsuarios() {
+	public List<String> listarUsuarios() {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Query consulta = em.createQuery("SELECT * FROM Usuarios u", Usuario.class);
-	    List<Usuario> usuarios = consulta.getResultList();
-	    ArrayList<String> nickUsers = new ArrayList<String>();
-	    String nick;
-	    for(Usuario u : usuarios) {
-			nick = u.getNickname();
-			nickUsers.add(nick);
-		}
-	    return nickUsers;
+		Query consulta = em.createQuery("SELECT u.nombre FROM Usuarios u", String.class);
+	    List<String> usuarios = consulta.getResultList();
+	    em.close();
+	    return usuarios;
 	}
 	
 	public void modificarImagen(String img) {

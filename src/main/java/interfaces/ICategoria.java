@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import datatypes.DtElementoUsuario;
 
@@ -12,6 +13,6 @@ public interface ICategoria {
 	
 	public ArrayList<DtElementoUsuario> listarElemCategoria(String nomC);
 	
-	public ArrayList<String> listarCategorias();
+	public List<String> listarCategorias();
 	
 }
