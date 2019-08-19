@@ -20,6 +20,7 @@ public class Categoria {
 		public Categoria(String nombre) {
 			super();
 			this.nombre = nombre;
+			this.elementos = new ArrayList<Elemento>(); 
 		}
 
 		public String getNombre() {

@@ -1,11 +1,11 @@
 package logica;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 import datatypes.DtComentario;
 import datatypes.DtElementoUsuario;
 import datatypes.DtValoracion;
+import datatypes.tipoElemento;
 
 public class Video extends Elemento {
 	private String descripcion;
@@ -14,12 +14,15 @@ public class Video extends Elemento {
 	private String url;
 	private boolean publico;
 	private Categoria categoria;
-	private Map<Integer, Valoracion> valoraciones;
-	private Map<Integer, Comentario> comentarios;
+	private List<Valoracion> valoraciones;
+	private Map<Integer, Comentario> comentarios; //evaluar como hacer esto
 	
 	//Constructores
 	public Video() {
 		super();
+
+		this.valoraciones = new ArrayList<Valoracion>();
+		this.comentarios = new HashMap<Integer, Comentario>();
 	}
 
 	public Video(String nombre, String descripcion, Date fPublicacion, Integer duracion, String url, boolean publico) {
@@ -29,6 +32,8 @@ public class Video extends Elemento {
 		this.duracion = duracion;
 		this.url = url;
 		this.publico = publico;
+		this.valoraciones = new ArrayList<Valoracion>();
+		this.comentarios = new HashMap<Integer, Comentario>();
 	}
 
 	//Getters & Setters
@@ -79,41 +84,41 @@ public class Video extends Elemento {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-
-	public Map<Integer, Valoracion> getValoraciones() {
-		return valoraciones;
-	}
-
-	public void setValoraciones(Map<Integer, Valoracion> valoraciones) {
-		this.valoraciones = valoraciones;
-	}
-
-	public Map<Integer, Comentario> getComentarios() {
-		return comentarios;
-	}
-
-	public void setComentarios(Map<Integer, Comentario> comentarios) {
-		this.comentarios = comentarios;
-	}
-	
 	
 	//Operaciones
 	
-	public void crearComentario(Usuario uC, Date fCom, String texto) {}
+	public void crearComentario(Usuario uC, Date fCom, String texto) {
+		Comentario c = new Comentario(fCom,texto,uC);
+		comentarios.put(c.getId(), c);
+	}
 	
-	public void crearRespuesta(int idCom, Usuario uC, Date fCom, String texto) {}
-	
-	public Map<String, DtValoracion> listarValoraciones(){
-		return null;
+	public void crearRespuesta(int idCom, Usuario uC, Date fCom, String texto) {
+		Comentario c = comentarios.get(idCom);
+		c.crearRespuesta(uC, fCom, texto);
+		
+	}
+		
+	public List<DtValoracion> listarValoraciones() {
+		List<DtValoracion> res = new ArrayList<DtValoracion>();
+		for(Valoracion val: valoraciones) {
+			DtValoracion v = new DtValoracion(val.getUsuario().getNickname(), val.isGusta());
+			res.add(v);
+		}
+		return res;
 	}
 	
 	public DtComentario obtenerComentariosVideo() {
 		return null;
-	}
+	}  ///esto debe ser un jTree
 	
 	public DtElementoUsuario obtenerElemCategoria() {
-		return null;
+		DtElementoUsuario res = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
+		return res;
 	}
 	
-	public void valorar(Usuario uVal, boolean val) {}
+	public void valorar(Usuario uVal, boolean val) {
+		Valoracion v = new Valoracion(val, uVal, this);
+		uVal.agregarValoracion(v);
+		this.valoraciones.add(v);
+	}
 }

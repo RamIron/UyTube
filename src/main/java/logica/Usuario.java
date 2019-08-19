@@ -222,8 +222,13 @@ public class Usuario {
 	
 	public void agregarVideoLista(Video v, String nomList) {}
 	
+<<<<<<< HEAD
 	public Video obtenerVideo(String nomVid) {
 		return null;
 	}
+=======
+	public Video obtenerVideo(String nomVid) {}
+	
+>>>>>>> 63f07f46f16255294889cbebdd3ab74be66817c4
 }
 

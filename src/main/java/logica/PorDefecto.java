@@ -20,5 +20,14 @@ public class PorDefecto extends ListaReproduccion{
 	public DtElementoUsuario obtenerElemCategoria() {
 		return null;
 	}
+		
+	public boolean esParticular() {
+		return false;
+	}
+
+	@Override
+	public boolean esPublico() {
+		return false;
+	}
 	
 }

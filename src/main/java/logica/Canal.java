@@ -58,6 +58,16 @@ public class Canal {
 	public void setPublico(boolean publico) {
 		this.publico = publico;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	
 	
 	//Operaciones
 	/*public void agregarCategoriaALista(String nomL, Categoria cat) {}

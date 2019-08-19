@@ -11,14 +11,15 @@ public class Comentario {
 	private String texto;
 	private Usuario usuario;
 	private Map<Integer, Comentario> respuestas;
+	private static Integer sigId = 0;
 	
 	//Constructores
 	public Comentario() {
 		super();
 	}
-	public Comentario(Integer id, Date fecha, String texto, Usuario usuario) {
+	public Comentario(Date fecha, String texto, Usuario usuario) {
 		super();
-		this.id = id;
+		this.id = Comentario.sigId++;
 		this.fecha = fecha;
 		this.texto = texto;
 		this.usuario = usuario;
@@ -50,13 +51,16 @@ public class Comentario {
 		this.usuario = usuario;
 	}
 	
-	public Map<Integer, Comentario> getRespuestas() {
+	/*public Map<Integer, Comentario> getRespuestas() {
 		return respuestas;
-	}
+	}*/
 	
 	//Operaciones
-	/*public void crearRespuesta(Usuario uC, Date fCom, String texto) {}
+	public void crearRespuesta(Usuario uC, Date fCom, String texto) {
+		Comentario c = new Comentario(fCom,texto,uC);
+		respuestas.put(c.getId(), c);
+	}
 	
-	public Map<Integer, DtComentario> getRespuestas2(){}*/
+	public Map<Integer, DtComentario> getRespuestas(){} //esto deberia ser un jTree
 	
 }
