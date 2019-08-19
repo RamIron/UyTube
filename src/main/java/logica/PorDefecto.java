@@ -1,5 +1,7 @@
 package logica;
 
+import datatypes.DtElementoUsuario;
+
 public class PorDefecto extends ListaReproduccion{
 
 	public PorDefecto() {
@@ -12,6 +14,11 @@ public class PorDefecto extends ListaReproduccion{
 
 	public PorDefecto(String nombre) {
 		super(nombre);
+	}
+
+	@Override
+	public DtElementoUsuario obtenerElemCategoria() {
+		return null;
 	}
 	
 }

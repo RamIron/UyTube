@@ -2,6 +2,7 @@ package logica;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.persistence.EntityManager;
 
@@ -33,4 +34,20 @@ public class ManejadorUsuario {
 		return em.find(Usuario.class, nickname);
 	}
 	
+	public boolean existeUsuario(String nickname) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		if ( em.find(Usuario.class, nickname) == null)
+			return true;
+		else
+			return false;
+	}
+	
+	public Usuario obtenerUsuario(String nickname) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Usuario usr = em.find(Usuario.class, nickname);		
+		
+		return usr;
+	}
 }

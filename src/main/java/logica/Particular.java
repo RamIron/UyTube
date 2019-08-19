@@ -31,7 +31,9 @@ public class Particular extends ListaReproduccion{
 	}
 	
 	//Operaciones
-	/*public void modificarCategoria(String nomC) {}
+	public void modificarCategoria(String nomC) {}
 	
-	public DtElementoUsuario obtenerElemCategoria() {}*/
+	public DtElementoUsuario obtenerElemCategoria() {
+		return null;
+	}
 }

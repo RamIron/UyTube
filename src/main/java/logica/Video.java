@@ -103,11 +103,17 @@ public class Video extends Elemento {
 	
 	public void crearRespuesta(int idCom, Usuario uC, Date fCom, String texto) {}
 	
-	public Map<String, DtValoracion> listarValoraciones(){}
+	public Map<String, DtValoracion> listarValoraciones(){
+		return null;
+	}
 	
-	public DtComentario obtenerComentariosVideo() {}
+	public DtComentario obtenerComentariosVideo() {
+		return null;
+	}
 	
-	public DtElementoUsuario obtenerElemCategoria() {}
+	public DtElementoUsuario obtenerElemCategoria() {
+		return null;
+	}
 	
 	public void valorar(Usuario uVal, boolean val) {}
 }

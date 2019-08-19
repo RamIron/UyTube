@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import datatypes.DtCanal;
+import datatypes.DtListaRep;
+import datatypes.DtVideo;
+
 
 @Entity
 @Table(name="USUARIOS")
@@ -19,34 +23,43 @@ public class Usuario {
 	@Id //Siempre tenenos que tener un atributo Id
 	@Column(name="NICKNAME") 
 	private String nickname;
+	
 	@Column(name="NOMBRE")
 	private String nombre;
+	
 	@Column(name="APELLIDO")
 	private String apellido;
+	
 	@Column(name="FECHA DE NACIMIENTO")
 	private Date fNac;
+	
 	@Column(name="IMAGEN")
 	private String imagen;
+	
 	@Column(name="CORREO ELECTRONICO")
 	private String correoE;
-	@OneToOne(mappedBy="canal", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY) /* no se si 
+	
+	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY) /* no se si 
 	es mapedBy="canal" o mappedBy="usuario"*/
 	private Canal canal;
 	//falta @OneToMany
 	private ArrayList<Valoracion> valoraciones;
+	
+	private ArrayList<Usuario> seguidores;
+	
+	private ArrayList<Usuario> seguidos;
 
 	//Constructores
 	public Usuario() {
 		super();
 	}
 	
-	public Usuario(String nickname, String nombre, String apellido, Date fNac, String imagen, String correoE) {
+	public Usuario(String nickname, String nombre, String apellido, Date fNac, String correoE) {
 		super();
 		this.nickname = nickname;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.fNac = fNac;
-		this.imagen = imagen;
 		this.correoE = correoE;
 	}
 
@@ -98,10 +111,30 @@ public class Usuario {
 	public void setCorreoE(String correoE) {
 		this.correoE = correoE;
 	}
+	
+	public ArrayList<Usuario> getSeguidos() {
+		return seguidos;
+	}
+
+	public void setSeguidos(ArrayList<Usuario> seguidos) {
+		this.seguidos = seguidos;
+	}
+
+	public ArrayList<Usuario> getSeguidores() {
+		return seguidores;
+	}
+
+	public void setSeguidores(ArrayList<Usuario> seguidores) {
+		this.seguidores = seguidores;
+	}
+	
 
 	
 	//Operaciones
-	/*public void agregarCanal(String nick, String desc, Boolean publico) {}
+	public void agregarCanal(String desc, Boolean publico) {
+		Canal can = new Canal(this.getNickname(), desc, publico);
+		this.canal = can;
+	}
 	
 	public void agregarCategoriaALista(String nomL, Categoria cat) {}
 	
@@ -111,11 +144,11 @@ public class Usuario {
 	
 	public void agregarLista(String nomL, Boolean publico) {}
 	
-	public void agregarNombreCanal(String nomC) {}
+	public void agregarNombreCanal(String nomC) {
+		this.canal.setNombre(nomC);
+	}
 	
 	public void agregarSeguidor(Usuario u) {}
-	
-	public void agregarSeguidor(Usuario u1) {}
 	
 	public void agregarValoracion(Valoracion val) {}
 	
@@ -127,25 +160,51 @@ public class Usuario {
 	
 	public void eliminarVideoDeLista(String nomVid, String nomList) {}
 	
-	public Boolean existeListaDefecto(String nomL) {}
+	public Boolean existeListaDefecto(String nomL) {
+		return null;
+	}
 	
-	public Boolean existeListaParticular(String nomL) {}
+	public Boolean existeListaParticular(String nomL) {
+		return null;
+	}
 	
-	public ArrayList<String> listarListasDeUsuario() {}         
+	public ArrayList<String> listarListasDeUsuario() {
+		return null;
+	}         
 	
-	public ArrayList<String> listarListasParticulares() {}
+	public ArrayList<String> listarListasParticulares() {
+		return null;
+	}
 	
-	public ArrayList<String> listarVideosdeLista(String nomList) {}
+	public ArrayList<String> listarVideosdeLista(String nomList) {
+		return null;
+	}
 	
-	public void modificarInfoCanal(String nomC, String descC, Boolean publico) {}
+	public void modificarInfoCanal(String nomC, String descC, Boolean publico) {
+		this.canal.setNombre(nomC);
+		this.canal.setDescripcion(descC);
+		this.canal.setPublico(publico);
+	}
 	
-	public void obtenerCanalU(Usuario u) {}
+	public Canal obtenerCanalU() {
+		return this.canal;
+	}
 	
-	public DtVideo obtenerInfoVideo(String nomVid) {}
+	public DtCanal obtenerInfoCanal() {
+		DtCanal dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.isPublico());
+		
+		return dtCan;
+	}
 	
-	public DtLista obtenerListaDeUsuario(String nomList) {}
+	public DtVideo obtenerInfoVideo(String nomVid) {
+		return null;
+	}
 	
-	public DtListaRep obtenerListaDeUsuario(String nomList) {}
+	//public DtLista obtenerListaDeUsuario(String nomList) {}
+	
+	public DtListaRep obtenerListaDeUsuario(String nomList) {
+		return null;
+	}
 	
 	public void quitarSeguidor(Usuario u1) {}
 	
@@ -153,13 +212,18 @@ public class Usuario {
 	
 	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {}
 	
-	public ArrayList<String> listarSeguidores(String nick) {}
+	public ArrayList<String> listarSeguidores(String nick) {
+		return null;
+	}
 	
-	public ArrayList<String> listarSeguidos(String nick) {}
+	public ArrayList<String> listarSeguidos(String nick) {
+		return null;
+	}
 	
 	public void agregarVideoLista(Video v, String nomList) {}
 	
-	public Video obtenerVideo(String nomVid) {}*/
-	
+	public Video obtenerVideo(String nomVid) {
+		return null;
+	}
 }
 

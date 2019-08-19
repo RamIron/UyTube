@@ -8,9 +8,9 @@ import datatypes.DtUsuario;
 
 public interface IUsuario {
 	
-	public void agregarCanal(String nick, String desc, boolean publico);
+	public void agregarCanal(String desc, boolean publico);
 	
-	public void agregarNombreCanal(String nick, String nomC);
+	public void agregarNombreCanal(String nomC);
 	
 	public void agregarUsuario(String nick, String nom, String ape, Date fechaN, String email);
 	
@@ -26,9 +26,9 @@ public interface IUsuario {
 	
 	public ArrayList<String> listarUsuarios();
 	
-	public void modificarImagen(String nick, String img);
+	public void modificarImagen(String img);
 	
-	public void modificarInfoCanal(String nick, String nomC, String descC, boolean publico);
+	public void modificarInfoCanal(String nomC, String descC, boolean publico);
 	
 	public void modificarInfoUsuario(String nick, String nomU, String apeU, Date fNacU, String imagen);
 	

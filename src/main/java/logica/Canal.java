@@ -6,12 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import datatypes.DtListaRep;
 
+@Entity
 public class Canal {
-
+	@Id
 	private String nombre;
 	private String descripcion;
 	private Boolean publico;
