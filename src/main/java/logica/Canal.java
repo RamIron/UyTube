@@ -66,6 +66,13 @@ public class Canal {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	public Map<String, ListaReproduccion> getLista() {
+		return lista;
+	}
+	
+	
+	
 	
 	
 	

@@ -12,33 +12,44 @@ public class CVideo implements IVideo {
 	public Video vid;
 	
 	//Operaciones
-	 public void agregarCategoria(String nomV, String nomC) {}
-	 
-	 public void agregarVideo(String nick, String nomV, boolean publico, String desc, Date fPub, int dur, String url) {}
-	 
-	 public void agregarVideoPrivado(String nick, String nomV, String desc, Date fPub, int dur, String url) {}
-	 
-	 public ArrayList<String> listarVideosDeUsuario(String nick) {
-		return null;
-	 }
-	 
-	 public void modificarInfoVideo(String nomV, String desc, Date fecha, int dur, String url, boolean publico) {}
-	 
-	 public ArrayList<DtComentario> obtenerComentariosVideo() {
+	@Override 
+	public void agregarCategoria(String nomV, String nomC) {}
+	
+	@Override 
+	public void agregarVideo(String nick, String nomV, boolean publico, String desc, Date fPub, int dur, String url) {}
+	
+	@Override	
+	public void agregarVideoPrivado(String nick, String nomV, String desc, Date fPub, int dur, String url) {}
+	
+	@Override
+	public ArrayList<String> listarVideosDeUsuario(String nick) {
 		return null;
 	}
-	 
-	 public ArrayList<DtVideo> obtenerInfoVideo(String nomVid) {
+	
+	@Override 
+	public void modificarInfoVideo(String nomV, String desc, Date fecha, int dur, String url, boolean publico) {}
+	
+	@Override 
+	public ArrayList<DtComentario> obtenerComentariosVideo() {
 		return null;
 	}
-	 
-	 public ArrayList<DtValoracion> obtenerValoracionVideo() {
+	
+	@Override 
+	public ArrayList<DtVideo> obtenerInfoVideo(String nomVid) {
 		return null;
 	}
-	 
-	 public void responderComentario(int idCom, String nick, Date fcom, String texto) {}
-	 
-	 public void realizarComentario(String nick, Date fCom, String texto) {}
-	 
-	 public void valorarVideo(String nomVid, String nickVal, boolean val) {}
+	
+	@Override 
+	public ArrayList<DtValoracion> obtenerValoracionVideo() {
+		return null;
+	}
+	
+	@Override 
+	public void responderComentario(int idCom, String nick, Date fcom, String texto) {}
+	
+	@Override 
+	public void realizarComentario(String nick, Date fCom, String texto) {}
+	
+	@Override 
+	public void valorarVideo(String nomVid, String nickVal, boolean val) {}
 }

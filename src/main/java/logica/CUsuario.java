@@ -18,15 +18,18 @@ public class CUsuario implements IUsuario {
 	public Canal can;
 	
 	//Operaciones
+	@Override 
 	public void agregarCanal(String desc, boolean publico) {
 		usr.agregarCanal(desc, publico);
 		this.can = this.usr.obtenerCanalU();
 	}
 	
+	@Override 
 	public void agregarNombreCanal(String nomC) {
 		this.agregarNombreCanal(nomC);
 	}
 	
+	@Override 
 	public void agregarUsuario(String nick, String nom, String ape, Date fechaN, String email) {
 		ManejadorUsuario mu = ManejadorUsuario.getInstancia();
 		Usuario usuario = new Usuario(nick, nom, ape, fechaN, email);
@@ -34,18 +37,22 @@ public class CUsuario implements IUsuario {
 		mu.agregarUsuario(usuario);
 	}
 	
+	@Override 
 	public void dejarDeSeguirUsuario(String seguidor, String seguido) {}
 	
+	@Override 
 	public boolean existeEmail(String email) {
 		ManejadorUsuario mu = ManejadorUsuario.getInstancia();
 		return false;
 	}
 	
+	@Override 
 	public boolean existeNickname(String nick) {
 		ManejadorUsuario mu = ManejadorUsuario.getInstancia();
 		return mu.existeUsuario(nick);
 	}
 	
+	@Override 
 	public ArrayList<String> listarSeguidores() {
 		ArrayList<String> dtSeguidores = new ArrayList<String>();
 		Collection<Usuario> seguidores = usr.getSeguidores();
@@ -57,6 +64,7 @@ public class CUsuario implements IUsuario {
 		return dtSeguidores;
 	}
 	
+	@Override 
 	public ArrayList<String> listarSeguidos() {
 		ArrayList<String> dtSeguidos = new ArrayList<String>();
 		Collection<Usuario> seguidos = usr.getSeguidos();
@@ -68,6 +76,7 @@ public class CUsuario implements IUsuario {
 		return dtSeguidos;
 	}
 	
+	@Override 
 	public List<String> listarUsuarios() {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
@@ -77,14 +86,17 @@ public class CUsuario implements IUsuario {
 	    return usuarios;
 	}
 	
+	@Override 
 	public void modificarImagen(String img) {
 		this.usr.setImagen(img);
 	}
 	
+	@Override 
 	public void modificarInfoCanal(String nomC, String descC, boolean publico) {
 		this.usr.modificarInfoCanal(nomC, descC, publico);
 	}
 	
+	@Override 
 	public void modificarInfoUsuario(String nick, String nomU, String apeU, Date fNacU, String imagen) {
 		ManejadorUsuario mu = ManejadorUsuario.getInstancia();
 		this.usr = mu.obtenerUsuario(nick);
@@ -94,11 +106,13 @@ public class CUsuario implements IUsuario {
 		this.usr.setImagen(imagen);
 	}
 	
+	@Override 
 	public DtCanal obtenerInfoCanal() {
 		DtCanal dtCan = usr.obtenerInfoCanal();
 		return dtCan;
 	}
 	
+	@Override 
 	public DtUsuario obtenerInfoUsuario(String nick) {
 		ManejadorUsuario mu = ManejadorUsuario.getInstancia();
 		Usuario usr = mu.obtenerUsuario(nick);
@@ -108,5 +122,7 @@ public class CUsuario implements IUsuario {
 		return dtUsr;
 	}
 	
+	@Override 
 	public void seguirUsuario(String seguidor, String seguido) {}
+
 }

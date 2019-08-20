@@ -34,13 +34,13 @@ public class CCategoria implements ICategoria {
 				if(e instanceof RollbackException)
 					if(em.getTransaction().isActive())
 						em.getTransaction().rollback();
-				throw new IllegalArgumentException("Se cayo todo");
+				throw new IllegalArgumentException("Hubo un error inesperado");
 			}
 			finally { 
 				em.close();
 			}
 		} else {
-			throw new IllegalArgumentException("Ya existe esta categoria");
+			throw new IllegalArgumentException("Ya existe una categoria con el nombre ingresado");
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class CCategoria implements ICategoria {
 		return null;
 	}
 	
-	@Override //Esta sobreescribido en la interfaz
+	@Override //Esta sobreescrito en la interfaz
 	public List<String> listarCategorias() {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
