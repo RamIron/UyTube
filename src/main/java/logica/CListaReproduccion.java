@@ -21,23 +21,21 @@ public class CListaReproduccion implements ILIstaReproduccion {
 
 	@Override 
 	public void agregarCategoriaALista(String nick, String nomL, String nomC) {
-		/*Conexion conexion = Conexion.getInstancia();
+		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
-		if((em.find(Categoria.class, nomL) == null)) { //Si la categoria no existe
+		if((em.find(Categoria.class, nomC) != null)) { //Si la categoria existe
 			if((em.find(Usuario.class, nick) != null)) { //Verificando que el nick exista
 				if((em.find(Particular.class, nomL) != null)) { //Verificando que la lista exista
 					Usuario user = em.find(Usuario.class, nick);
 					Canal userC = user.obtenerCanalU();
 					Map<String, ListaReproduccion> listas = userC.getLista();
 					ListaReproduccion listaRep = listas.get(nomL);
-					if(listaRep instanceof ListaReproduccion) { //me fijo si la lista es particular o no
-						Particular lisPar = listaRep;
+					if(listaRep instanceof Particular) { //me fijo si la lista es particular o no
+						((Particular) listaRep).modificarCategoria(nomC);
 					}
-					
 					try {
 						em.getTransaction().begin();
-						em.persist();
+						em.persist(listaRep);
 						em.getTransaction().commit();
 						} catch (Exception e){
 							if(e instanceof RollbackException)
@@ -57,9 +55,9 @@ public class CListaReproduccion implements ILIstaReproduccion {
 			}
 			em.close();
 		} else { 
-			throw new IllegalArgumentException("Ya existe una categoria con el nombre ingresado");
+			throw new IllegalArgumentException("No existe la categoria con el nombre ingresado");
 		}
-		em.close();*/
+		em.close();
 	}
 	
 	@Override 

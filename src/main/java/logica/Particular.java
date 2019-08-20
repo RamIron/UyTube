@@ -1,5 +1,7 @@
 package logica;
 
+import javax.persistence.EntityManager;
+
 import datatypes.DtElementoUsuario;
 
 public class Particular extends ListaReproduccion{
@@ -57,8 +59,9 @@ public class Particular extends ListaReproduccion{
 	}
 	
 	public void modificarCategoria(String nomC) {
-		ManejadorCategoria mCat = ManejadorCategoria.getInstancia();
-		Categoria c = mCat.buscarCategoria(nomC);
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Categoria c = em.find(Categoria.class, nomC);
 		this.categoria = c;
 	}
 }
