@@ -5,22 +5,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
+import javax.persistence.*;
 import datatypes.DtListaRep;
+
 
 @Entity
 public class Canal {
-	@Id
 	private String nombre;
 	private String descripcion;
 	private Boolean publico;
+	
+	@Id
 	@OneToOne
 	private Usuario usuario;
+	
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private Map <String ,Video> videos = new HashMap<String, Video>();
+	
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private Map <String,ListaReproduccion> lista = new HashMap<String, ListaReproduccion>();
 		
 	//Constructores

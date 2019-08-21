@@ -21,6 +21,8 @@ public interface IUsuario {
 	
 	public boolean existeNickname(String nick);
 	
+	public void limpiarControlador();
+	
 	public ArrayList<String> listarSeguidores();
 	
 	public ArrayList<String> listarSeguidos();

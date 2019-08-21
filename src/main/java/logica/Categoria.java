@@ -1,16 +1,24 @@
 package logica;
 
 import java.util.*;
-
 import datatypes.DtElementoUsuario;
 
+import javax.persistence.*;
 
+@Entity
 public class Categoria {
 		
 		//ATRIBUTOS
 		private String nombre;
+		
+		@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)
 		private List<Elemento> elementos;
 		
+		/*@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)
+		private List<Video> videos;
+		
+		@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)
+		private List<Particular> listasParticulares;*/
 		
 		//METODOS
 		
@@ -20,7 +28,6 @@ public class Categoria {
 		public Categoria(String nombre) {
 			super();
 			this.nombre = nombre;
-			this.elementos = new ArrayList<Elemento>(); 
 		}
 
 		public String getNombre() {

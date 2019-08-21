@@ -27,9 +27,9 @@ public class CCategoria implements ICategoria {
 		if(em.find(Categoria.class, nomC) == null) { //asi ya veo si existe o no la categoria
 			Categoria cat = new Categoria(nomC);
 			try {
-			em.getTransaction().begin();
-			em.persist(cat);
-			em.getTransaction().commit();
+				em.getTransaction().begin();
+				em.persist(cat);
+				em.getTransaction().commit();
 			} catch (Exception e){
 				if(e instanceof RollbackException)
 					if(em.getTransaction().isActive())

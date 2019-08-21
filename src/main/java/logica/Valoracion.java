@@ -1,8 +1,22 @@
 package logica;
 
+import javax.persistence.*;
+
+
+
+@Entity
+@IdClass(ValoracionID.class)
 public class Valoracion {
 	private boolean gusta;
+	
+	@Id 
+	@ManyToOne
+	@JoinColumn(insertable=false, updatable=false)
 	private Usuario usuario;
+	
+	@Id 
+	@ManyToOne
+	@JoinColumn(insertable=false, updatable=false)
 	private Video video;
 	
 	//Constructores
