@@ -6,23 +6,38 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.RollbackException;
 
 import datatypes.DtListaRep;
 
 @Entity
 public class Canal {
-	@Id
+	@Column(name="NOMBRE")
 	private String nombre;
+	
+	@Column(name="DESCRIPCION")
 	private String descripcion;
+	
+	@Column(name="PUBLICO")
 	private Boolean publico;
+	
+	@Id
+	@Column(name="USUARIO")
 	@OneToOne
 	private Usuario usuario;
+	
+	@Column(name="VIDEOS")
 	private Map <String ,Video> videos = new HashMap<String, Video>();
+	
+	@Column(name="LISTAS REP")
 	private Map <String,ListaReproduccion> lista = new HashMap<String, ListaReproduccion>();
-		
+	
+	
 	//Constructores
 	public Canal() {
 		super();
@@ -72,12 +87,30 @@ public class Canal {
 	}
 	
 	
-	
-	
-	
-	
 	//Operaciones
-	/*public void agregarCategoriaALista(String nomL, Categoria cat) {}
+	public void agregarCategoriaALista(String nomL, Categoria cat) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		Map<String, ListaReproduccion> listas = this.getLista();
+		ListaReproduccion listaRep = listas.get(nomL);
+		if(listaRep instanceof Particular) { //me fijo si la lista es particular o no
+			((Particular) listaRep).modificarCategoria(cat.getNombre());
+		}
+		try {
+			em.getTransaction().begin();
+			em.persist(listaRep);
+			em.getTransaction().commit();
+			} catch (Exception e){
+				if(e instanceof RollbackException)
+					if(em.getTransaction().isActive())
+						em.getTransaction().rollback();
+				throw new IllegalArgumentException("Hubo un error inesperado");
+			}
+			finally { 
+				em.close();
+			}
+		
+	}
 	
 	public void agregarCategoriaVideo(String nomV, Categoria cat) {}
 	
@@ -89,9 +122,9 @@ public class Canal {
 	
 	public void eliminarVideoDeLista(Video v, String nomList) {}
 	
-	public boolean existeListaDefecto(String nomL) {}
+	//public boolean existeListaDefecto(String nomL) {}
 	
-	public boolean existeListaParticular(String nomL) {}
+	//public boolean existeListaParticular(String nomL) {}
 	
 	public ArrayList<String> listarListasDeUsuario() {}
 	

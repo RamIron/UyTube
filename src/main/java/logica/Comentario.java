@@ -3,12 +3,17 @@ package logica;
 import java.util.Date;
 import java.util.Map;
 
+import javax.persistence.ManyToOne;
+
 import datatypes.DtComentario;
 
 public class Comentario {
+	
 	private Integer id;
 	private Date fecha;
 	private String texto;
+	
+	@ManyToOne
 	private Usuario usuario;
 	private Map<Integer, Comentario> respuestas;
 	private static Integer sigId = 0;

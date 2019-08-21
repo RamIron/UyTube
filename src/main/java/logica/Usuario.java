@@ -39,9 +39,9 @@ public class Usuario {
 	@Column(name="CORREO ELECTRONICO")
 	private String correoE;
 	
-	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY) /* no se si 
-	es mapedBy="canal" o mappedBy="usuario"*/
+	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
+	
 	//falta @OneToMany
 	private ArrayList<Valoracion> valoraciones;
 	
@@ -136,7 +136,9 @@ public class Usuario {
 		this.canal = can;
 	}
 	
-	public void agregarCategoriaALista(String nomL, Categoria cat) {}
+	public void agregarCategoriaALista(String nomL, Categoria cat) {
+		this.canal.agregarCategoriaALista(nomL, cat);
+	}
 	
 	public void agregarCategoriaVideo(String nomV, Categoria cat) {}
 	
@@ -222,13 +224,8 @@ public class Usuario {
 	
 	public void agregarVideoLista(Video v, String nomList) {}
 	
-<<<<<<< HEAD
 	public Video obtenerVideo(String nomVid) {
 		return null;
 	}
-=======
-	public Video obtenerVideo(String nomVid) {}
-	
->>>>>>> 63f07f46f16255294889cbebdd3ab74be66817c4
-}
+
 

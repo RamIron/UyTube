@@ -26,26 +26,9 @@ public class CListaReproduccion implements ILIstaReproduccion {
 		if((em.find(Categoria.class, nomC) != null)) { //Si la categoria existe
 			if((em.find(Usuario.class, nick) != null)) { //Verificando que el nick exista
 				if((em.find(Particular.class, nomL) != null)) { //Verificando que la lista exista
-					Usuario user = em.find(Usuario.class, nick);
-					Canal userC = user.obtenerCanalU();
-					Map<String, ListaReproduccion> listas = userC.getLista();
-					ListaReproduccion listaRep = listas.get(nomL);
-					if(listaRep instanceof Particular) { //me fijo si la lista es particular o no
-						((Particular) listaRep).modificarCategoria(nomC);
-					}
-					try {
-						em.getTransaction().begin();
-						em.persist(listaRep);
-						em.getTransaction().commit();
-						} catch (Exception e){
-							if(e instanceof RollbackException)
-								if(em.getTransaction().isActive())
-									em.getTransaction().rollback();
-							throw new IllegalArgumentException("Hubo un error inesperado");
-						}
-						finally { 
-							em.close();
-						}
+					this.uList = em.find(Usuario.class, nick);
+					Categoria cat = em.find(Categoria.class, nomC);
+					this.uList.agregarCategoriaALista(nomL, cat);
 				} else { 
 					throw new IllegalArgumentException("No existe una lista con el nombre ingresado");
 				}
@@ -117,8 +100,8 @@ public class CListaReproduccion implements ILIstaReproduccion {
 	@Override 
 	public void eliminarVideoDeLista(String nickVid, String nomVid, String nomList) {}
 	
-	@Override 
-	public boolean existeListaDefecto(String nomL) {}
+	//@Override 
+	//public boolean existeListaDefecto(String nomL) {}
 	
 	@Override 
 	public boolean existeListaParticular(String nick, String nomL) {}
