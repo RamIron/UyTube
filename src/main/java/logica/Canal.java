@@ -11,10 +11,7 @@ import datatypes.DtListaRep;
 
 @Entity
 public class Canal {
-<<<<<<< HEAD
-	
-=======
->>>>>>> c1635bdb624d8977ae4978a2aa9c5ad70f71911c
+
 	private String nombre;
 	
 	@Column(name="DESCRIPCION")
@@ -136,5 +133,5 @@ public class Canal {
 	
 	public Video obtenerVideo(String nomVid) {}
 	
-	public void agregarVideoLista(Video v, String nomList) {}*/
+	public void agregarVideoLista(Video v, String nomList) {}
 }
