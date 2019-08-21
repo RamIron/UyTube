@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.*;
+import javax.persistence.*;
 import java.util.Map;
 
 import datatypes.DtComentario;
@@ -10,9 +11,11 @@ import datatypes.DtVideoUsuario;
 import datatypes.tipoElemento;
 import datatypes.DtValoracion;
 
+@MappedSuperclass
 public abstract class ListaReproduccion extends Elemento {
 	
 	//Atributos
+	@ManyToMany(cascade= {CascadeType.PERSIST,CascadeType.MERGE})
 	private List<Video> videos;
 	
 	//Constructores
@@ -59,7 +62,9 @@ public abstract class ListaReproduccion extends Elemento {
 		return res;
 	}
 	
-	public Map<Integer, DtComentario> obtenerComentariosVideo(String nickV, String nomVid) {}/// ver si se usa jTree
+	public Map<Integer, DtComentario> obtenerComentariosVideo(String nickV, String nomVid) {
+		return null;
+	}/// ver si se usa jTree
 	
 	public DtVideo obtenerInfoVideo(String nickV, String nomVid) {
 		for(Video v: videos) {

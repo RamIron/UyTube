@@ -1,7 +1,10 @@
 package logica;
 
+import javax.persistence.Entity;
+
 import datatypes.DtElementoUsuario;
 
+@Entity
 public class PorDefecto extends ListaReproduccion{
 
 	public PorDefecto() {

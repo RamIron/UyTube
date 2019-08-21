@@ -2,8 +2,13 @@ package logica;
 
 import datatypes.*;
 
+import javax.persistence.*;
+
+@MappedSuperclass
 public abstract class Elemento {
 	private String nombre;
+	
+	@ManyToOne
 	private Canal canal;
 	
 	//Constructor por defecto

@@ -1,26 +1,35 @@
 package logica;
 
 import java.util.*;
-
+import javax.persistence.*;
 import datatypes.DtComentario;
 import datatypes.DtElementoUsuario;
 import datatypes.DtValoracion;
 import datatypes.tipoElemento;
 
+@Entity
 public class Video extends Elemento {
+	//Atributos
 	private String descripcion;
 	private Date fPublicacion;
 	private Integer duracion;
 	private String url;
+	
 	private boolean publico;
+	
+	@ManyToOne
 	private Categoria categoria;
+	
+	@OneToMany(mappedBy="video",cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Valoracion> valoraciones;
+	
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private Map<Integer, Comentario> comentarios; //evaluar como hacer esto
+	
 	
 	//Constructores
 	public Video() {
 		super();
-
 		this.valoraciones = new ArrayList<Valoracion>();
 		this.comentarios = new HashMap<Integer, Comentario>();
 	}

@@ -6,7 +6,9 @@ import java.util.Map;
 import javax.persistence.ManyToOne;
 
 import datatypes.DtComentario;
+import javax.persistence.*;
 
+@Entity
 public class Comentario {
 	
 	private Integer id;
@@ -15,6 +17,7 @@ public class Comentario {
 	
 	@ManyToOne
 	private Usuario usuario;
+	
 	private Map<Integer, Comentario> respuestas;
 	private static Integer sigId = 0;
 	
@@ -66,6 +69,7 @@ public class Comentario {
 		respuestas.put(c.getId(), c);
 	}
 	
-	public Map<Integer, DtComentario> getRespuestas(){} //esto deberia ser un jTree
+	public Map<Integer, DtComentario> getRespuestas(){
+		return null;} //esto deberia ser un jTree
 	
 }

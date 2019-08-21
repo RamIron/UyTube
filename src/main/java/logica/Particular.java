@@ -1,11 +1,14 @@
 package logica;
 
-import javax.persistence.EntityManager;
+import javax.persistence.*;
 
 import datatypes.DtElementoUsuario;
 
+@Entity
 public class Particular extends ListaReproduccion{
 	private boolean publico;
+	
+	@ManyToOne
 	private Categoria categoria;
 
 	public Particular() {

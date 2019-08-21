@@ -5,19 +5,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.RollbackException;
-
+import javax.persistence.*;
 import datatypes.DtListaRep;
+
 
 @Entity
 public class Canal {
-	@Column(name="NOMBRE")
+
 	private String nombre;
 	
 	@Column(name="DESCRIPCION")
@@ -27,14 +21,13 @@ public class Canal {
 	private Boolean publico;
 	
 	@Id
-	@Column(name="USUARIO")
 	@OneToOne
 	private Usuario usuario;
 	
-	@Column(name="VIDEOS")
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private Map <String ,Video> videos = new HashMap<String, Video>();
 	
-	@Column(name="LISTAS REP")
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private Map <String,ListaReproduccion> lista = new HashMap<String, ListaReproduccion>();
 	
 	

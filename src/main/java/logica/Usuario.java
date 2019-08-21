@@ -8,13 +8,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import datatypes.DtCanal;
 import datatypes.DtListaRep;
 import datatypes.DtVideo;
-
 
 @Entity
 @Table(name="USUARIOS")
@@ -30,23 +32,29 @@ public class Usuario {
 	@Column(name="APELLIDO")
 	private String apellido;
 	
-	@Column(name="FECHA DE NACIMIENTO")
+	@Column(name="FECHA_DE_NACIMIENTO")
 	private Date fNac;
 	
 	@Column(name="IMAGEN")
 	private String imagen;
 	
-	@Column(name="CORREO ELECTRONICO")
+	@Column(name="CORREO_ELECTRONICO")
 	private String correoE;
 	
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
 	
+<<<<<<< HEAD
 	//falta @OneToMany
+=======
+	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
+>>>>>>> c1635bdb624d8977ae4978a2aa9c5ad70f71911c
 	private ArrayList<Valoracion> valoraciones;
 	
+	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
 	private ArrayList<Usuario> seguidores;
 	
+	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
 	private ArrayList<Usuario> seguidos;
 
 	//Constructores
@@ -150,7 +158,9 @@ public class Usuario {
 		this.canal.setNombre(nomC);
 	}
 	
-	public void agregarSeguidor(Usuario u) {}
+	public void agregarSeguidor(Usuario u) {
+		this.seguidores.add(u);
+	}
 	
 	public void agregarValoracion(Valoracion val) {}
 	
@@ -158,7 +168,11 @@ public class Usuario {
 	
 	public void agregarVideo(String nomV, Boolean publico, String desc, Date fPub, int dur, String url) {}
 	
-	public void dejarSeguirUsuario(Usuario u2) {}
+	public void agregarVideoLista(Video v, String nomList) {}
+	
+	public void dejarSeguirUsuario(Usuario u2) {
+		this.seguidos.remove(u2);
+	}
 	
 	public void eliminarVideoDeLista(String nomVid, String nomList) {}
 	
@@ -202,30 +216,51 @@ public class Usuario {
 		return null;
 	}
 	
-	//public DtLista obtenerListaDeUsuario(String nomList) {}
-	
 	public DtListaRep obtenerListaDeUsuario(String nomList) {
 		return null;
 	}
 	
-	public void quitarSeguidor(Usuario u1) {}
-	
-	public void seguirUsuario(Usuario u2) {}
-	
-	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {}
-	
-	public ArrayList<String> listarSeguidores(String nick) {
-		return null;
+	public ArrayList<String> listarSeguidores() {
+		ArrayList<String> dtSeguidores = new ArrayList<String>();
+		Collection<Usuario> seguidores = this.getSeguidores();
+		
+		for(Usuario u:seguidores) {
+			dtSeguidores.add(u.getNickname());
+		}
+		
+		return dtSeguidores;
 	}
 	
-	public ArrayList<String> listarSeguidos(String nick) {
-		return null;
+	public ArrayList<String> listarSeguidos() {
+		ArrayList<String> dtSeguidos = new ArrayList<String>();
+		Collection<Usuario> seguidos = this.getSeguidos();
+		
+		for(Usuario u:seguidos) {
+			dtSeguidos.add(u.getNickname());
+		}
+		
+		return dtSeguidos;
 	}
-	
-	public void agregarVideoLista(Video v, String nomList) {}
 	
 	public Video obtenerVideo(String nomVid) {
 		return null;
 	}
+	
+	public void quitarSeguidor(Usuario u1) {
+		this.seguidores.remove(u1);
+	}
+	
+<<<<<<< HEAD
+	public Video obtenerVideo(String nomVid) {
+		return null;
+	}
 
+=======
+	public void seguirUsuario(Usuario u2) {
+		this.seguidos.add(u2);
+	}
+	
+	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {}
+}
+>>>>>>> c1635bdb624d8977ae4978a2aa9c5ad70f71911c
 
