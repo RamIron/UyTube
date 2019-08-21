@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Categoria {
 		
 		//ATRIBUTOS
+		@Id
 		private String nombre;
 		
 		@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)

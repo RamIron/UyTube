@@ -3,16 +3,7 @@ package logica;
 import java.util.*;
 //import datatypes.DtVideo;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import datatypes.DtCanal;
 import datatypes.DtListaRep;
@@ -47,10 +38,10 @@ public class Usuario {
 	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
 	private ArrayList<Valoracion> valoraciones;
 	
-	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
+	@ManyToMany(mappedBy="seguidos")
 	private ArrayList<Usuario> seguidores;
 	
-	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
+	@ManyToMany
 	private ArrayList<Usuario> seguidos;
 
 	//Constructores

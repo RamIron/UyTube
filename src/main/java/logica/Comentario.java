@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 public class Comentario {
 	
+	@Id
 	private Integer id;
 	private Date fecha;
 	private String texto;

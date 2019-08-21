@@ -4,9 +4,17 @@ import datatypes.*;
 
 import javax.persistence.*;
 
+@Entity
 @MappedSuperclass
 public abstract class Elemento {
+	@Id
+	@GeneratedValue
+	private Integer id; 
+	
 	private String nombre;
+	
+	@ManyToOne
+	private Categoria categoria;
 	
 	@ManyToOne
 	private Canal canal;

@@ -11,6 +11,7 @@ import datatypes.DtVideoUsuario;
 import datatypes.tipoElemento;
 import datatypes.DtValoracion;
 
+@Entity
 @MappedSuperclass
 public abstract class ListaReproduccion extends Elemento {
 	
