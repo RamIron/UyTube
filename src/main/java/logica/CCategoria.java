@@ -45,8 +45,17 @@ public class CCategoria implements ICategoria {
 	}
 	
 	@Override 
-	public ArrayList<DtElementoUsuario> listarElemCategoria(String nomC) {
-		return null;
+	public List<DtElementoUsuario> listarElemCategoria(String nomC) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		if(em.find(Categoria.class, nomC) != null) { //veo si existe o no la categoria
+			this.cat = em.find(Categoria.class, nomC);
+			List<DtElementoUsuario> elementos = this.cat.obtenerElemCategoria();
+			em.close();
+			return elementos;	
+		} else {
+			throw new IllegalArgumentException("No se encontro una categoria con ese nombre");
+		}
 	}
 	
 	@Override //Esta sobreescrito en la interfaz

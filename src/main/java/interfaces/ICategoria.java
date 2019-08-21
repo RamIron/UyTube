@@ -11,7 +11,7 @@ public interface ICategoria {
 	
 	public void altaCategoria(String nomC);
 	
-	public ArrayList<DtElementoUsuario> listarElemCategoria(String nomC);
+	public List<DtElementoUsuario> listarElemCategoria(String nomC);
 	
 	public List<String> listarCategorias();
 	
