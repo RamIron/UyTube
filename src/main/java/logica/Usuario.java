@@ -251,4 +251,5 @@ public class Usuario {
 	}
 	
 	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {}
+	
 }
