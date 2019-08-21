@@ -44,11 +44,7 @@ public class Usuario {
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
 	
-<<<<<<< HEAD
-	//falta @OneToMany
-=======
 	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
->>>>>>> c1635bdb624d8977ae4978a2aa9c5ad70f71911c
 	private ArrayList<Valoracion> valoraciones;
 	
 	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
@@ -250,17 +246,9 @@ public class Usuario {
 		this.seguidores.remove(u1);
 	}
 	
-<<<<<<< HEAD
-	public Video obtenerVideo(String nomVid) {
-		return null;
-	}
-
-=======
 	public void seguirUsuario(Usuario u2) {
 		this.seguidos.add(u2);
 	}
 	
 	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {}
 }
->>>>>>> c1635bdb624d8977ae4978a2aa9c5ad70f71911c
-

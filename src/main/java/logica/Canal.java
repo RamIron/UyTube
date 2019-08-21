@@ -11,7 +11,7 @@ import datatypes.DtListaRep;
 
 @Entity
 public class Canal {
-
+	
 	private String nombre;
 	
 	@Column(name="DESCRIPCION")
