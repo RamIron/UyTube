@@ -41,8 +41,6 @@ public class Video extends Elemento {
 		this.duracion = duracion;
 		this.url = url;
 		this.publico = publico;
-		this.valoraciones = new ArrayList<Valoracion>();
-		this.comentarios = new HashMap<Integer, Comentario>();
 	}
 
 	//Getters & Setters

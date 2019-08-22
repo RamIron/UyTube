@@ -111,15 +111,27 @@ public class Canal {
 		
 	}
 	
-	public void agregarCategoriaVideo(String nomV, Categoria cat) {}
+	public void agregarCategoriaVideo(String nomV, Categoria cat) {
+		Video v = this.videos.get(nomV);
+		v.setCategoria(cat);
+	}
 	
-	public void agregarLista(ListaReproduccion lista) {}
+	public void agregarLista(ListaReproduccion lista) {
+		this.listas.put(lista.getNombre(), lista);
+	}
 	
-	public void agregarLista(String nomL, boolean publico) {}
+	public void agregarLista(String nomL, boolean publico) {
+		
+	}
 	
-	public void agregarVideo(String nomV, String desc, Date fPub, int dur, String url) {}
+	public void agregarVideo(String nomV, String desc, Boolean publico, Date fPub, int dur, String url) {
+		Video v = new Video(nomV, desc, fPub, dur, url, publico);
+		this.videos.put(nomV, v);
+	}
 	
-	public void agregarVideoLista(Video v, String nomList) {}
+	public void agregarVideoLista(Video v, String nomList) {
+		
+	}
 	
 	public void eliminarVideoDeLista(Video v, String nomList) {}
 	
@@ -147,7 +159,9 @@ public class Canal {
 	
 	public DtListaRep obtenerListaDeUsuario(String nomList) {}
 	
-	public String obtenerUsuarioCanal() {}
+	public String obtenerUsuarioCanal() {
+		return this.usuario.getNickname();
+	}
 	
 	public Video obtenerVideo(String nomVid) {
 		Video v= this.videos.get(nomVid);

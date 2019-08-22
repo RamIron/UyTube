@@ -20,10 +20,25 @@ public class CVideo implements IVideo {
 	public void agregarCategoria(String nomV, String nomC) {}
 	
 	@Override 
-	public void agregarVideo(String nick, String nomV, boolean publico, String desc, Date fPub, int dur, String url) {}
+	public void agregarVideo(String nick, String nomV, boolean publico, String desc, Date fPub, int dur, String url) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		if(em.find(Usuario.class, nick) != null) {
+			this.usr = em.find(Usuario.class, nick);
+			this.usr.agregarVideo(nomV, publico, desc, fPub, dur, url);
+		}
+		em.close();
+	}
 	
 	@Override	
-	public void agregarVideoPrivado(String nick, String nomV, String desc, Date fPub, int dur, String url) {}
+	public void agregarVideoPrivado(String nick, String nomV, String desc, Date fPub, int dur, String url) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		if(em.find(Usuario.class, nick) != null) {
+			this.usr = em.find(Usuario.class, nick);
+			this.usr.agregarVideo(nomV, publico, desc, fPub, dur, url);
+		}
+	}
 	
 	@Override
 	public void limpiarControlador() { //Operacion para utilizar al final de cada caso de uso

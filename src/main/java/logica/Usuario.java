@@ -143,9 +143,13 @@ public class Usuario {
 		this.canal.agregarCategoriaALista(nomL, cat);
 	}
 	
-	public void agregarCategoriaVideo(String nomV, Categoria cat) {}
+	public void agregarCategoriaVideo(String nomV, Categoria cat) {
+		this.canal.agregarCategoriaVideo(nomV, cat);
+	}
 	
-	public void agregarLista(ListaReproduccion lista) {}
+	public void agregarLista(ListaReproduccion lista) {
+		this.canal.agregarLista(lista);
+	}
 	
 	public void agregarLista(String nomL, Boolean publico) {}
 	
@@ -161,17 +165,26 @@ public class Usuario {
 		this.valoraciones.add(val);
 	}
 	
-	public void agregarVideo(String nomV, String desc, Date fPub, int dur, String url) {}
+	public void agregarVideo(String nomV, Boolean publico, String desc, Date fPub, int dur, String url) {
+		this.canal.agregarVideo(nomV, desc, publico, fPub, dur, url);
+	}
 	
-	public void agregarVideo(String nomV, Boolean publico, String desc, Date fPub, int dur, String url) {}
+	public void agregarVideoPrivado(String nomV, String desc, Date fPub, int dur, String url) {
+		Boolean publico = false;
+		this.canal.agregarVideo(nomV, desc, publico, fPub, dur, url);
+	}
 	
-	public void agregarVideoLista(Video v, String nomList) {}
+	public void agregarVideoLista(Video v, String nomList) {
+		this.canal.agregarVideoLista(v, nomList);
+	}
 	
 	public void dejarSeguirUsuario(Usuario u2) {
 		this.seguidos.remove(u2);
 	}
 	
-	public void eliminarVideoDeLista(String nomVid, String nomList) {}
+	public void eliminarVideoDeLista(String nomVid, String nomList) {
+		this.canal.eliminarVideoDeLista(nomVid, nomList);
+	}
 	
 	public Boolean existeListaDefecto(String nomL) {
 		return null;
