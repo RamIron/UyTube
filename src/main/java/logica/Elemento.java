@@ -51,6 +51,15 @@ public abstract class Elemento {
 		this.canal = canal;
 	}
 	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
+	
 	public abstract DtElementoUsuario obtenerElemCategoria();
 	
 }

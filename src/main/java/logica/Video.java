@@ -17,10 +17,7 @@ public class Video extends Elemento {
 	private String url;
 	
 	private boolean publico;
-	
-	@ManyToOne
-	private Categoria categoria;
-	
+		
 	@OneToMany(mappedBy="video",cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Valoracion> valoraciones;
 	
@@ -85,13 +82,7 @@ public class Video extends Elemento {
 		this.publico = publico;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
+	
 	
 	//Operaciones
 	

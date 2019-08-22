@@ -1,7 +1,6 @@
 package logica;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 import javax.persistence.ManyToOne;
 
@@ -12,6 +11,7 @@ import javax.persistence.*;
 public class Comentario {
 	
 	@Id
+	@GeneratedValue
 	private Integer id;
 	private Date fecha;
 	private String texto;
@@ -20,7 +20,6 @@ public class Comentario {
 	private Usuario usuario;
 	
 	private Map<Integer, Comentario> respuestas;
-	private static Integer sigId = 0;
 	
 	//Constructores
 	public Comentario() {
@@ -28,7 +27,6 @@ public class Comentario {
 	}
 	public Comentario(Date fecha, String texto, Usuario usuario) {
 		super();
-		this.id = Comentario.sigId++;
 		this.fecha = fecha;
 		this.texto = texto;
 		this.usuario = usuario;
@@ -70,7 +68,8 @@ public class Comentario {
 		respuestas.put(c.getId(), c);
 	}
 	
-	public Map<Integer, DtComentario> getRespuestas(){
-		return null;} //esto deberia ser un jTree
+	public List<DtComentario> getRespuestas(){
+		return null;
+	} //TODO
 	
 }

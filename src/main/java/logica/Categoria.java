@@ -15,11 +15,6 @@ public class Categoria {
 		@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)
 		private List<Elemento> elementos;
 		
-		/*@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)
-		private List<Video> videos;
-		
-		@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)
-		private List<Particular> listasParticulares;*/
 		
 		//METODOS
 		
@@ -38,8 +33,11 @@ public class Categoria {
 		public void setNombre(String nombre) {
 			this.nombre = nombre;
 		}
-		
-		
+			
+		public List<Elemento> getElementos() {
+			return elementos;
+		}
+
 		public List<DtElementoUsuario> obtenerElemCategoria(){
 			List<DtElementoUsuario> res = new LinkedList<DtElementoUsuario>();
 			DtElementoUsuario elem;
