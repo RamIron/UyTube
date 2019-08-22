@@ -15,11 +15,13 @@ public interface IVideo {
 	 
 	 public void agregarVideoPrivado(String nick, String nomV, String desc, Date fPub, int dur, String url);
 	 
+	 public void limpiarControlador();
+	 
 	 public ArrayList<String> listarVideosDeUsuario(String nick);
 	 
 	 public void modificarInfoVideo(String nomV, String desc, Date fecha, int dur, String url, boolean publico);
 	 
-	 public ArrayList<DtComentario> obtenerComentariosVideo();
+	 public ArrayList<DtComentario> obtenerComentariosVideo(String nomVid);
 	 
 	 public ArrayList<DtVideo> obtenerInfoVideo(String nomVid);
 	 

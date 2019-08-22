@@ -116,7 +116,7 @@ public class Video extends Elemento {
 		return res;
 	}
 	
-	public DtComentario obtenerComentariosVideo() {
+	public ArrayList<DtComentario> obtenerComentariosVideo() {
 		return null;
 	}  ///esto debe ser un jTree
 	

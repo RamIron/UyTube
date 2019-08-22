@@ -9,7 +9,7 @@ import javax.persistence.*;
 public abstract class Elemento {
 	@Id
 	@GeneratedValue
-	private Integer id; 
+	private int id; 
 	
 	private String nombre;
 	

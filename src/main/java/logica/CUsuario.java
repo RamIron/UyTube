@@ -22,7 +22,7 @@ public class CUsuario implements IUsuario {
 	@Override 
 	public void agregarCanal(String desc, boolean publico) {
 		usr.agregarCanal(desc, publico);
-		this.can = this.usr.obtenerCanalU();
+		this.can = this.usr.getCanal();
 	}
 	
 	@Override 

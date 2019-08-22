@@ -6,6 +6,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import datatypes.DtCanal;
+import datatypes.DtComentario;
 import datatypes.DtListaRep;
 import datatypes.DtVideo;
 
@@ -123,6 +124,13 @@ public class Usuario {
 		this.seguidores = seguidores;
 	}
 	
+	public Canal getCanal() {
+		return this.canal;
+	}
+	
+	public void setCanal(Canal c) {
+		this.canal = c;
+	}
 
 	
 	//Operaciones
@@ -149,7 +157,9 @@ public class Usuario {
 		this.seguidores.add(u);
 	}
 	
-	public void agregarValoracion(Valoracion val) {}
+	public void agregarValoracion(Valoracion val) {
+		this.valoraciones.add(val);
+	}
 	
 	public void agregarVideo(String nomV, String desc, Date fPub, int dur, String url) {}
 	
@@ -183,14 +193,21 @@ public class Usuario {
 		return null;
 	}
 	
+	public ArrayList<String> listarVideosDeUsuario (){
+		Map<String, Video> videosUsr = this.canal.getVideos();
+		ArrayList<String> videos = new ArrayList<String>();
+		
+		for (Map.Entry<String, Video> vs: videosUsr.entrySet()) {
+			String nomVideo = vs.getKey();
+			videos.add(nomVideo);
+		}
+		return videos;
+	}
+	
 	public void modificarInfoCanal(String nomC, String descC, Boolean publico) {
 		this.canal.setNombre(nomC);
 		this.canal.setDescripcion(descC);
 		this.canal.setPublico(publico);
-	}
-	
-	public Canal obtenerCanalU() {
-		return this.canal;
 	}
 	
 	public DtCanal obtenerInfoCanal() {
@@ -200,7 +217,8 @@ public class Usuario {
 	}
 	
 	public DtVideo obtenerInfoVideo(String nomVid) {
-		return null;
+		DtVideo dtVid = this.canal.obtenerInfoVideo(nomVid);
+		return dtVid;
 	}
 	
 	public DtListaRep obtenerListaDeUsuario(String nomList) {
@@ -229,8 +247,14 @@ public class Usuario {
 		return dtSeguidos;
 	}
 	
+	public ArrayList<DtComentario> obtenerComentariosVideo(String nomVid) {
+		ArrayList<DtComentario> dtComentarios = this.canal.obtenerComentariosVideo(nomVid);
+		return dtComentarios;
+	}
+	
 	public Video obtenerVideo(String nomVid) {
-		return null;
+		Video v= this.canal.obtenerVideo(nomVid);
+		return v;
 	}
 	
 	public void quitarSeguidor(Usuario u1) {
@@ -241,6 +265,8 @@ public class Usuario {
 		this.seguidos.add(u2);
 	}
 	
-	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {}
+	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {
+		this.canal.valorarVideo(nomVid, uVal, val);
+	}
 	
 }
