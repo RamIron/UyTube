@@ -1,10 +1,12 @@
 package logica;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 import datatypes.DtElementoUsuario;
 
 @Entity
+@DiscriminatorValue("LD")
 public class PorDefecto extends ListaReproduccion{
 
 	public PorDefecto() {

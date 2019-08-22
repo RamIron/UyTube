@@ -12,7 +12,7 @@ import datatypes.tipoElemento;
 import datatypes.DtValoracion;
 
 @Entity
-@MappedSuperclass
+@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class ListaReproduccion extends Elemento {
 	
 	//Atributos

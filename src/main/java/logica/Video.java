@@ -8,6 +8,7 @@ import datatypes.DtValoracion;
 import datatypes.tipoElemento;
 
 @Entity
+@DiscriminatorValue("V")
 public class Video extends Elemento {
 	//Atributos
 	private String descripcion;

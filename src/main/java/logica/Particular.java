@@ -5,6 +5,7 @@ import javax.persistence.*;
 import datatypes.DtElementoUsuario;
 
 @Entity
+@DiscriminatorValue("LP")
 public class Particular extends ListaReproduccion{
 	private boolean publico;
 	
