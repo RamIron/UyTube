@@ -3,8 +3,13 @@ package presentacion;
 import java.util.Date;
 import java.util.Scanner;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import interfaces.IUsuario;
 import interfaces.UFactory;
+import logica.Socio;
 
 public class Principal {
 	static void menu() {
@@ -24,6 +29,14 @@ public class Principal {
 	}
 
 	public static void main (String args[]) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Con");
+		EntityManager em = emf.createEntityManager();
+		Socio s = new Socio("45453", "fdgfdhg");
+		em.getTransaction().begin();
+		em.persist(s);
+		em.getTransaction().commit();
+		em.close();
+		emf.close();
 		Scanner entrada = new Scanner (System.in);
 		int opcion;
 		

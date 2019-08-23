@@ -9,7 +9,8 @@
   <properties>
   	<maven.compiler.source>1.8</maven.compiler.source>
   	<maven.compiler.target>1.8</maven.compiler.target>
-  	<hibernate.version>5.4.4.Final</hibernate.version>
+  	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+  	<hibernate.version>5.4.3.Final</hibernate.version>
   </properties>
   <dependencies>
 	<dependency>

@@ -36,7 +36,7 @@ public class CVideo implements IVideo {
 		EntityManager em = conexion.getEntityManager();
 		if(em.find(Usuario.class, nick) != null) {
 			this.usr = em.find(Usuario.class, nick);
-			this.usr.agregarVideo(nomV, publico, desc, fPub, dur, url);
+//			this.usr.agregarVideo(nomV, publico, desc, fPub, dur, url);
 		}
 	}
 	
