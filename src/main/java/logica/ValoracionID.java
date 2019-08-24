@@ -5,45 +5,33 @@ import java.io.Serializable;
 public class ValoracionID implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private String nickname;
-	private int idV;
-	
+	private String usuario;
+	private int video;
+		
 	
 	public ValoracionID() {
 		super();
 	}
-
-
-	public String getNickname() {
-		return nickname;
+	public String getUsuario() {
+		return usuario;
 	}
-
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
-
-
-	public int getIdV() {
-		return idV;
+	public int getVideo() {
+		return video;
 	}
-
-
-	public void setIdV(int idV) {
-		this.idV = idV;
+	public void setVideo(int video) {
+		this.video = video;
 	}
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idV;
-		result = prime * result + ((nickname == null) ? 0 : nickname.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		result = prime * result + video;
 		return result;
 	}
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -53,14 +41,16 @@ public class ValoracionID implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		ValoracionID other = (ValoracionID) obj;
-		if (idV != other.idV)
-			return false;
-		if (nickname == null) {
-			if (other.nickname != null)
+		if (usuario == null) {
+			if (other.usuario != null)
 				return false;
-		} else if (!nickname.equals(other.nickname))
+		} else if (!usuario.equals(other.usuario))
+			return false;
+		if (video != other.video)
 			return false;
 		return true;
 	}
 	
+	
+
 }

@@ -36,8 +36,8 @@ public class Usuario {
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
 	
-//	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
-//	private List<Valoracion> valoraciones = new ArrayList<Valoracion>();
+	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
+	private List<Valoracion> valoraciones = new ArrayList<Valoracion>();
 	
 	@ManyToMany(mappedBy="seguidos")
 	//@JoinTable(name="USUARIOS_SEGUIDOS")
@@ -46,6 +46,12 @@ public class Usuario {
 	@ManyToMany
 	private List<Usuario> seguidos = new ArrayList<Usuario>();
 
+	
+	
+	
+	
+	
+	
 	//Constructores
 	public Usuario() {
 		super();
@@ -129,9 +135,9 @@ public class Usuario {
 	}
 
 	
-//	public List<Valoracion> getValoraciones() {
-//		return valoraciones;
-//	}
+	public List<Valoracion> getValoraciones() {
+		return valoraciones;
+	}
 
 	
 	//Operaciones
@@ -161,11 +167,11 @@ public class Usuario {
 //	public void agregarSeguidor(Usuario u) {
 //		this.seguidores.add(u);
 //	}
-//	
-//	public void agregarValoracion(Valoracion val) {
-//		this.valoraciones.add(val);
-//	}
-//	
+	
+	public void agregarValoracion(Valoracion val) {
+		this.valoraciones.add(val);
+	}
+	
 //	public void agregarVideo(String nomV, Boolean publico, String desc, Date fPub, int dur, String url) {
 //		this.canal.agregarVideo(nomV, desc, publico, fPub, dur, url);
 //	}
