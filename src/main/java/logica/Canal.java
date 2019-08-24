@@ -23,12 +23,12 @@ public class Canal {
 	
 	@OneToOne
 	private Usuario usuario;
-//	
-//	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
-//	private Map <String ,Video> videos = new HashMap<String, Video>();
-//	
-//	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
-//	private Map <String,ListaReproduccion> listas = new HashMap<String, ListaReproduccion>();
+	
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+	private List <Video> videos = new ArrayList<Video>();
+	
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+	private List <ListaReproduccion> listas = new ArrayList<ListaReproduccion>();
 	
 	
 	//Constructores
@@ -59,14 +59,6 @@ public class Canal {
 		this.descripcion = descripcion;
 	}
 
-	public boolean isPublico() {
-		return publico;
-	}
-
-	public void setPublico(boolean publico) {
-		this.publico = publico;
-	}
-
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -74,14 +66,24 @@ public class Canal {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-//
-//	public Map<String, ListaReproduccion> getListas() {
-//		return listas;
-//	}
-//	
-//	public Map<String, Video> getVideos() {
-//		return videos;
-//	}
+
+	public Boolean getPublico() {
+		return publico;
+	}
+
+	public void setPublico(Boolean publico) {
+		this.publico = publico;
+	}
+
+	public List<Video> getVideos() {
+		return videos;
+	}
+
+	public List<ListaReproduccion> getListas() {
+		return listas;
+	}
+
+	
 //	
 //	//Operaciones
 //	public void agregarCategoriaALista(String nomL, Categoria cat) {

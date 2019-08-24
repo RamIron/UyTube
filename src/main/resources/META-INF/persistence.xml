@@ -10,6 +10,12 @@
 		<class>logica.Usuario</class>
 		<class>logica.Canal</class>
 		<class>logica.Categoria</class>
+		<class>logica.Elemento</class>
+		<class>logica.ListaReproduccion</class>
+		<class>logica.Video</class>
+		<class>logica.PorDefecto</class>
+		<class>logica.Particular</class>
+		<class>logica.Comentario</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />

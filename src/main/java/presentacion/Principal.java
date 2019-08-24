@@ -7,10 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import logica.Canal;
-import logica.Categoria;
-import logica.Socio;
-import logica.Usuario;
+import logica.*;
+
+
 
 public class Principal {
 	static void menu() {
@@ -21,19 +20,17 @@ public class Principal {
 	}
 
 	public static void main (String args[]) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Conexion");
-		EntityManager em = emf.createEntityManager();
+		
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
 		Socio s = new Socio("dfw", "ww");
 		em.persist(s);
 		em.getTransaction().commit();
-		em.close();
-		emf.close();	
+		
 		
 		
 		//Creacion Usuario
-		emf = Persistence.createEntityManagerFactory("Conexion");
-		em = emf.createEntityManager();
 		em.getTransaction().begin();
 		Date fecha = new Date(2010, 2, 10);
 		Usuario u = new Usuario("tincho", "martin", "navarrete", fecha , "asd@fsdfsd.com");
@@ -45,17 +42,46 @@ public class Principal {
 		em.persist(u);
 		em.persist(u2);
 		em.getTransaction().commit();
-		em.close();
-		emf.close();
 		
-		emf = Persistence.createEntityManagerFactory("Conexion");
-		em = emf.createEntityManager();
+		
+		
 		em.getTransaction().begin();
 		Categoria cat = new Categoria("Deportes");
 		em.persist(cat);
 		em.getTransaction().commit();
+		
+		
+
+		Elemento vid = new Video("Video de gatitos", "asds", fecha, 120, "youtube.com", true, c);
+		Elemento vid2 = new Video("Videos de putitas", "asds", fecha, 120, "youtube.com", true, c);
+		
+
+		Elemento lisP= new Particular("Lista de Videos de gatos", c, false);
+
+
+		Elemento lisD= new PorDefecto("Favoritos", c);
+
+		
+		ListaReproduccion lis = (ListaReproduccion) lisP;
+		
+		
+		lis.agregarVideo((Video) vid);
+		lis.agregarVideo((Video) vid2);
+
+		cat.agregarElemento(vid2);
+		cat.agregarElemento(lisP);
+		
+		Video v =(Video) vid;
+		v.crearComentario(u, fecha, "Soy un comentario");
+		
+		
+		//com1.crearRespuesta(u, fecha, "te respondo");
+		
+		
+		
 		em.close();
-		emf.close();
+		
+		
 		
 	}
 }

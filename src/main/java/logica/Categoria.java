@@ -12,8 +12,8 @@ public class Categoria {
 		@Id
 		private String nombre;
 		
-//		@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)
-//		private List<Elemento> elementos;
+		@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)
+		private List<Elemento> elementos = new ArrayList <Elemento>();
 		
 		
 		//METODOS
@@ -34,9 +34,9 @@ public class Categoria {
 			this.nombre = nombre;
 		}
 			
-//		public List<Elemento> getElementos() {
-//			return elementos;
-//		}
+		public List<Elemento> getElementos() {
+			return elementos;
+		}
 
 //		public List<DtElementoUsuario> obtenerElemCategoria(){
 //			List<DtElementoUsuario> res = new LinkedList<DtElementoUsuario>();
@@ -47,11 +47,19 @@ public class Categoria {
 //			}
 //			return res;
 //		}
-//		
-//		public void agregarVideo(Video v) {
-//			elementos.add(v);		}
-//		
-//		public void agregarLista(Particular p) {
-//			elementos.add(p);
-//		}
+		
+		public void agregarElemento(Elemento e) {
+			Conexion conexion = Conexion.getInstancia();
+			EntityManager em = conexion.getEntityManager();
+			em.getTransaction().begin();
+			elementos.add(e);
+			e.setCategoria(this);
+			em.persist(e);
+			em.persist(this);
+			em.getTransaction().commit();
+		}
+		
+		public void agregarLista(Particular p) {
+			elementos.add(p);
+		}
 }
