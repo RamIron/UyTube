@@ -100,12 +100,12 @@ public class Video extends Elemento {
 //	public List<Valoracion> getValoraciones() {
 //		return valoraciones;
 //	}
-//
-//	public List<Comentario> getComentarios() {
-//		return comentarios;
-//	}
-//
-//	
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	
 	
 	//Operaciones
 	
@@ -144,7 +144,7 @@ public class Video extends Elemento {
 //		DtElementoUsuario res = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
 //		return res;
 //	}
-//	
+	
 //	public void valorar(Usuario uVal, boolean val) {
 //		Valoracion v = new Valoracion(val, uVal, this);
 //		uVal.agregarValoracion(v);
