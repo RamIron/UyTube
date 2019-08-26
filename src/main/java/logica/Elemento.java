@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Elemento {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected int id; 
 	
 	private String nombre;

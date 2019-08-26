@@ -109,25 +109,39 @@ public class Canal {
 //			}
 //		
 //	}
-//	
-//	public void agregarCategoriaVideo(String nomV, Categoria cat) {
-//		Video v = this.videos.get(nomV);
-//		v.setCategoria(cat);
-//	}
-//	
-//	public void agregarLista(ListaReproduccion lista) {
-//		this.listas.put(lista.getNombre(), lista);
-//	}
-//	
-//	public void agregarLista(String nomL, boolean publico) {
-//		
-//	}
-//	
-//	public void agregarVideo(String nomV, String desc, Boolean publico, Date fPub, int dur, String url) {
-//		Video v = new Video(nomV, desc, fPub, dur, url, publico);
-//		this.videos.put(nomV, v);
-//	}
-//	
+	
+	public void agregarCategoriaVideo(String nomV, Categoria cat) {
+		/*Video v = this.videos.get(nomV);
+		v.setCategoria(cat);*/
+	}
+	
+	public void agregarListaParticular(String nomL, boolean publico) {
+		/*Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		Particular lisPar = new Particular(nomL, this, publico);
+		this.listas.add(lisPar);
+		em.persist(lisPar);
+		em.getTransaction().commit();*/
+	}
+	
+	public void agregarListaDefecto(String nomL) {
+		/*System.out.println("Entra al canal: " + this.getNombre());
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		PorDefecto def = new PorDefecto(nomL, this);
+		this.listas.add(def);
+		em.persist(def);
+		em.getTransaction().commit();*/
+	}
+	
+	public Video agregarVideo(String nomV, String desc, Calendar fPub, int dur, String url) {
+		Boolean publico = false;
+		Video v = new Video(nomV, desc, fPub, dur, url, publico, this);
+		return v;
+	}
+	
 //	public void agregarVideoLista(Video v, String nomList) {
 //		
 //	}

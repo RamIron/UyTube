@@ -25,7 +25,7 @@ public class Usuario {
 	private String apellido;
 	
 	@Column(name="FECHA_DE_NACIMIENTO")
-	private Date fNac;
+	private Calendar fNac;
 	
 	@Column(name="IMAGEN")
 	private String imagen;
@@ -36,8 +36,8 @@ public class Usuario {
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
 	
-	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Valoracion> valoraciones = new ArrayList<Valoracion>();
+//	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
+//	private List<Valoracion> valoraciones = new ArrayList<>();
 	
 	@ManyToMany(mappedBy="seguidos")
 	//@JoinTable(name="USUARIOS_SEGUIDOS")
@@ -57,7 +57,7 @@ public class Usuario {
 		super();
 	}
 	
-	public Usuario(String nickname, String nombre, String apellido, Date fNac, String correoE) {
+	public Usuario(String nickname, String nombre, String apellido, Calendar fNac, String correoE) {
 		super();
 		this.nickname = nickname;
 		this.nombre = nombre;
@@ -91,11 +91,11 @@ public class Usuario {
 		this.apellido = apellido;
 	}
 
-	public Date getfNac() {
+	public Calendar getfNac() {
 		return fNac;
 	}
 
-	public void setfNac(Date fNac) {
+	public void setfNac(Calendar fNac) {
 		this.fNac = fNac;
 	}
 
@@ -135,15 +135,31 @@ public class Usuario {
 	}
 
 	
-	public List<Valoracion> getValoraciones() {
-		return valoraciones;
-	}
+//	public List<Valoracion> getValoraciones() {
+//		return valoraciones;
+//	}
 
 	
 	//Operaciones
-	public void agregarCanal(Canal c) {
-		c.setUsuario(this);
-		this.canal = c;
+	public void agregarCanal() {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		try {
+			System.out.println("El canal se llamara: " + this.getNickname());
+			Canal c = new Canal(this.getNickname(), null, false);
+			c.setUsuario(this);
+			this.canal = c;
+			
+			em.getTransaction().begin();
+			em.persist(c);
+			em.getTransaction().commit();
+		} catch (Exception e){
+			if(e instanceof RollbackException)
+				if(em.getTransaction().isActive())
+					em.getTransaction().rollback();
+			throw new IllegalArgumentException("Hubo un error inesperado");
+		}	
+		
 	}
 //	
 //	public void agregarCategoriaALista(String nomL, Categoria cat) {
@@ -163,15 +179,15 @@ public class Usuario {
 //	public void agregarNombreCanal(String nomC) {
 //		this.canal.setNombre(nomC);
 //	}
-//	
-//	public void agregarSeguidor(Usuario u) {
-//		this.seguidores.add(u);
-//	}
 	
-	public void agregarValoracion(Valoracion val) {
-		this.valoraciones.add(val);
+	public void agregarSeguidor(Usuario u) {
+		this.seguidores.add(u);
 	}
 	
+//	public void agregarValoracion(Valoracion val) {
+//		this.valoraciones.add(val);
+//	}
+//	
 //	public void agregarVideo(String nomV, Boolean publico, String desc, Date fPub, int dur, String url) {
 //		this.canal.agregarVideo(nomV, desc, publico, fPub, dur, url);
 //	}
@@ -184,11 +200,11 @@ public class Usuario {
 //	public void agregarVideoLista(Video v, String nomList) {
 //		this.canal.agregarVideoLista(v, nomList);
 //	}
-//	
-//	public void dejarSeguirUsuario(Usuario u2) {
-//		this.seguidos.remove(u2);
-//	}
-//	
+	
+	public void dejarSeguirUsuario(Usuario u2) {
+		this.seguidos.remove(u2);
+	}
+	
 //	public void eliminarVideoDeLista(String nomVid, String nomList) {
 //		this.canal.eliminarVideoDeLista(nomVid, nomList);
 //	}
@@ -245,27 +261,27 @@ public class Usuario {
 //		return null;
 //	}
 //	
-//	public List<String> listarSeguidores() {
-//		List<String> dtSeguidores = new List<String>();
-//		Collection<Usuario> seguidores = this.getSeguidores();
-//		
-//		for(Usuario u:seguidores) {
-//			dtSeguidores.add(u.getNickname());
-//		}
-//		
-//		return dtSeguidores;
-//	}
-//	
-//	public List<String> listarSeguidos() {
-//		List<String> dtSeguidos = new List<String>();
-//		Collection<Usuario> seguidos = this.getSeguidos();
-//		
-//		for(Usuario u:seguidos) {
-//			dtSeguidos.add(u.getNickname());
-//		}
-//		
-//		return dtSeguidos;
-//	}
+	public List<String> listarSeguidores() {
+		List<String> dtSeguidores = new ArrayList<String>();
+		Collection<Usuario> seguidores = this.getSeguidores();
+		
+		for(Usuario u:seguidores) {
+			dtSeguidores.add(u.getNickname());
+		}
+		
+		return dtSeguidores;
+	}
+	
+	public List<String> listarSeguidos() {
+		List<String> dtSeguidos = new ArrayList<String>();
+		Collection<Usuario> seguidos = this.getSeguidos();
+		
+		for(Usuario u:seguidos) {
+			dtSeguidos.add(u.getNickname());
+		}
+		
+		return dtSeguidos;
+	}
 //	
 //	public List<DtComentario> obtenerComentariosVideo(String nomVid) {
 //		List<DtComentario> dtComentarios = this.canal.obtenerComentariosVideo(nomVid);
@@ -276,10 +292,10 @@ public class Usuario {
 //		Video v= this.canal.obtenerVideo(nomVid);
 //		return v;
 //	}
-//	
-//	public void quitarSeguidor(Usuario u1) {
-//		this.seguidores.remove(u1);
-//	}
+	
+	public void quitarSeguidor(Usuario u1) {
+		this.seguidores.remove(u1);
+	}
 	
 	public void seguirUsuario(Usuario u2) {
 		u2.getSeguidores().add(this);

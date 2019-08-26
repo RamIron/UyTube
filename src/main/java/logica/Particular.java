@@ -9,8 +9,8 @@ import datatypes.DtElementoUsuario;
 public class Particular extends ListaReproduccion{
 	private boolean publico;
 	
-//	@ManyToOne
-//	private Categoria categoria;
+	@ManyToOne
+	private Categoria categoria;
 
 	public Particular() {
 		super();

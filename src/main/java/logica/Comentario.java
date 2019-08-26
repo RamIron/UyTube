@@ -11,7 +11,7 @@ public class Comentario {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	private Date fecha;
+	private Calendar fecha;
 	private String texto;
 	
 	@ManyToOne
@@ -24,7 +24,7 @@ public class Comentario {
 	public Comentario() {
 		super();
 	}
-	public Comentario(Date fecha, String texto, Usuario usuario) {
+	public Comentario(Calendar fecha, String texto, Usuario usuario) {
 		super();
 		this.fecha = fecha;
 		this.texto = texto;
@@ -38,10 +38,10 @@ public class Comentario {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Date getFecha() {
+	public Calendar getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(Calendar fecha) {
 		this.fecha = fecha;
 	}
 	public String getTexto() {
@@ -62,7 +62,7 @@ public class Comentario {
 //	}*/
 //	
 	//Operaciones
-	public void crearRespuesta(Usuario uC, Date fCom, String texto) {
+	public void crearRespuesta(Usuario uC, Calendar fCom, String texto) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();

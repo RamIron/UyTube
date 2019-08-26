@@ -12,14 +12,14 @@ import datatypes.tipoElemento;
 public class Video extends Elemento {
 	//Atributos
 	private String descripcion;
-	private Date fPublicacion;
+	private Calendar fPublicacion;
 	private Integer duracion;
 	private String url;
 	
 	private boolean publico;
 		
-	@OneToMany(mappedBy="video",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Valoracion> valoraciones = new ArrayList<Valoracion>();
+//	@OneToMany(mappedBy="video",cascade=CascadeType.ALL,orphanRemoval=true)
+//	private List<Valoracion> valoraciones = new ArrayList<>();
 	
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Comentario> comentarios = new ArrayList<Comentario>();
@@ -30,7 +30,7 @@ public class Video extends Elemento {
 		super();
 	}
 
-	public Video(String nombre, String descripcion, Date fPublicacion, Integer duracion, String url, boolean publico) {
+	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico) {
 		super(nombre);
 		this.descripcion = descripcion;
 		this.fPublicacion = fPublicacion;
@@ -39,7 +39,7 @@ public class Video extends Elemento {
 		this.publico = publico;
 	}
 	
-	public Video(String nombre, String descripcion, Date fPublicacion, Integer duracion, String url, boolean publico, Canal canal) {
+	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico, Canal canal) {
 		super(nombre, canal);
 		this.descripcion = descripcion;
 		this.fPublicacion = fPublicacion;
@@ -65,11 +65,11 @@ public class Video extends Elemento {
 		this.descripcion = descripcion;
 	}
 
-	public Date getfPublicacion() {
+	public Calendar getfPublicacion() {
 		return fPublicacion;
 	}
 
-	public void setfPublicacion(Date fPublicacion) {
+	public void setfPublicacion(Calendar fPublicacion) {
 		this.fPublicacion = fPublicacion;
 	}
 
@@ -97,9 +97,9 @@ public class Video extends Elemento {
 		this.publico = publico;
 	}
 
-	public List<Valoracion> getValoraciones() {
-		return valoraciones;
-	}
+//	public List<Valoracion> getValoraciones() {
+//		return valoraciones;
+//	}
 
 	public List<Comentario> getComentarios() {
 		return comentarios;
@@ -109,7 +109,7 @@ public class Video extends Elemento {
 	
 	//Operaciones
 	
-	public void crearComentario(Usuario uC, Date fCom, String texto) {
+	public void crearComentario(Usuario uC, Calendar fCom, String texto) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
@@ -120,7 +120,7 @@ public class Video extends Elemento {
 		em.getTransaction().commit();
 	}
 	
-//	public void crearRespuesta(int idCom, Usuario uC, Date fCom, String texto) {
+//	public void crearRespuesta(int idCom, Usuario uC, Calendar fCom, String texto) {
 //		//hay que buscar en la lista general de comentarios
 //		Comentario c = comentarios.get(idCom);
 //		c.crearRespuesta(uC, fCom, texto);
@@ -145,9 +145,9 @@ public class Video extends Elemento {
 //		return res;
 //	}
 	
-	public void valorar(Usuario uVal, boolean val) {
-		Valoracion v = new Valoracion(val, uVal, this);
-		uVal.agregarValoracion(v);
-		this.valoraciones.add(v);
-	}
+//	public void valorar(Usuario uVal, boolean val) {
+//		Valoracion v = new Valoracion(val, uVal, this);
+//		uVal.agregarValoracion(v);
+//		this.valoraciones.add(v);
+//	}
 }
