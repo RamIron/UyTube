@@ -36,14 +36,14 @@ public class Usuario {
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
 	
-//	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
+	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
 	private ArrayList<Valoracion> valoraciones;
 	
 	@ManyToMany(mappedBy="seguidos")
-	private List<Usuario> seguidores;
+	private ArrayList<Usuario> seguidores;
 	
 	@ManyToMany
-	private List<Usuario> seguidos;
+	private ArrayList<Usuario> seguidos;
 
 	//Constructores
 	public Usuario() {
@@ -108,7 +108,7 @@ public class Usuario {
 		this.correoE = correoE;
 	}
 	
-	public List<Usuario> getSeguidos() {
+	public ArrayList<Usuario> getSeguidos() {
 		return seguidos;
 	}
 
@@ -116,7 +116,7 @@ public class Usuario {
 		this.seguidos = seguidos;
 	}
 
-	public List<Usuario> getSeguidores() {
+	public ArrayList<Usuario> getSeguidores() {
 		return seguidores;
 	}
 
@@ -182,9 +182,9 @@ public class Usuario {
 		this.seguidos.remove(u2);
 	}
 	
-//	public void eliminarVideoDeLista(String nomVid, String nomList) {
-//		this.canal.eliminarVideoDeLista(nomVid, nomList);
-//	}
+	public void eliminarVideoDeLista(String nomVid, String nomList) {
+		this.canal.eliminarVideoDeLista(nomVid, nomList);
+	}
 	
 	public Boolean existeListaDefecto(String nomL) {
 		return null;

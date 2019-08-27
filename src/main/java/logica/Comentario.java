@@ -2,6 +2,8 @@ package logica;
 
 import java.util.*;
 
+import javax.persistence.ManyToOne;
+
 import datatypes.DtComentario;
 import javax.persistence.*;
 
@@ -17,8 +19,7 @@ public class Comentario {
 	@ManyToOne
 	private Usuario usuario;
 	
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Comentario> respuestas;
+	private Map<Integer, Comentario> respuestas;
 	
 	//Constructores
 	public Comentario() {
@@ -64,7 +65,7 @@ public class Comentario {
 	//Operaciones
 	public void crearRespuesta(Usuario uC, Date fCom, String texto) {
 		Comentario c = new Comentario(fCom,texto,uC);
-		//respuestas.put(c.getId(), c);
+		respuestas.put(c.getId(), c);
 	}
 	
 	public List<DtComentario> getRespuestas(){
