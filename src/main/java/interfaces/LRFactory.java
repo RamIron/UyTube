@@ -14,8 +14,8 @@ private static LRFactory instancia = null;
 		return instancia;
 	}
 	
-	public ILIstaReproduccion getIListaReproduccion() {
-		return new CListaReproduccion();
-	}
+//	public ILIstaReproduccion getIListaReproduccion() {
+//		return new CListaReproduccion();
+//	}
 	
 }

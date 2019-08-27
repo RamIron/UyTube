@@ -14,7 +14,9 @@ import datatypes.DtVideo;
 
 @Entity
 public class Canal {
-
+	@Id
+	private Integer id;
+	
 	private String nombre;
 	
 	@Column(name="DESCRIPCION")
@@ -23,7 +25,7 @@ public class Canal {
 	@Column(name="PUBLICO")
 	private Boolean publico;
 	
-	@Id
+	
 	@OneToOne
 	private Usuario usuario;
 	
@@ -139,11 +141,11 @@ public class Canal {
 	
 	//public boolean existeListaParticular(String nomL) {}
 	
-	public ArrayList<String> listarListasDeUsuario() {}
-	
-	public ArrayList<String> listarListasParticulares() {}
-	
-	public ArrayList<String> listarVideosdeLista(String nomList) {}
+//	public ArrayList<String> listarListasDeUsuario() {}
+//	
+//	public ArrayList<String> listarListasParticulares() {}
+//	
+//	public ArrayList<String> listarVideosdeLista(String nomList) {}
 	
 	public ArrayList<DtComentario> obtenerComentariosVideo(String nomVid) {
 		Video v= this.videos.get(nomVid);
@@ -157,7 +159,7 @@ public class Canal {
 		return dtVid;
 	}
 	
-	public DtListaRep obtenerListaDeUsuario(String nomList) {}
+//	public DtListaRep obtenerListaDeUsuario(String nomList) {}
 	
 	public String obtenerUsuarioCanal() {
 		return this.usuario.getNickname();

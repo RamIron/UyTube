@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 
 @Entity
-@IdClass(ValoracionID.class)
+//@IdClass(ValoracionID.class)
 public class Valoracion {
 	private boolean gusta;
 	
