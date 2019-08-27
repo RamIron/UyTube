@@ -66,7 +66,15 @@ public class CUsuario implements IUsuario {
 	
 	@Override 
 	public boolean existeEmail(String email) {
-		return false;
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		TypedQuery<String> consulta = em.createNamedQuery("existeMail", String.class);
+		consulta.setParameter("correoE", email);
+		List<String> mails = consulta.getResultList();	
+		if(mails.contains(email))
+			return true;
+		else
+			return false;
 	}
 	
 	@Override 

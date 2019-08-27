@@ -10,6 +10,9 @@ import datatypes.DtComentario;
 import datatypes.DtListaRep;
 import datatypes.DtVideo;
 
+@NamedQueries( {
+	@NamedQuery(name = "existeMail", query = "select u.correoE from Usuario u where u.correoE = :correoE")
+} )
 @Entity
 @Table(name="USUARIOS")
 public class Usuario {

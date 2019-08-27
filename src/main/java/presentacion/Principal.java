@@ -55,55 +55,59 @@ public class Principal {
 			System.out.print("Correo Electronico: ");
 			String correoE = entrada.nextLine();
 			
-			System.out.println("Fecha de Nacimiento:");
-			System.out.print("Anio:");
-			int anio = Integer.parseInt(entrada.nextLine());
-			System.out.print("Mes:");
-			int mes = Integer.parseInt(entrada.nextLine());
-			System.out.print("Dia:");
-			int dia = Integer.parseInt(entrada.nextLine());
-			
-			Calendar fNac = Calendar.getInstance();
-	        fNac.set(anio, mes, dia);
-			
-			controlador.agregarUsuario(nick, nombre, apellido, fNac, correoE);
-			
-			System.out.print("Desea asociar una imagen de perfil? s/n: ");
-			char s_n = entrada.next().charAt(0);
-			entrada.nextLine();
-			if(s_n == 's') {
-				System.out.print("Ingrese la imagen: ");
-				String imagen = entrada.nextLine();
-				controlador.modificarImagen(imagen);
+			if(!controlador.existeEmail(correoE)) {
+				System.out.println("Fecha de Nacimiento:");
+				System.out.print("Anio:");
+				int anio = Integer.parseInt(entrada.nextLine());
+				System.out.print("Mes:");
+				int mes = Integer.parseInt(entrada.nextLine());
+				System.out.print("Dia:");
+				int dia = Integer.parseInt(entrada.nextLine());
+				
+				Calendar fNac = Calendar.getInstance();
+		        fNac.set(anio, mes, dia);
+				
+				controlador.agregarUsuario(nick, nombre, apellido, fNac, correoE);
+				
+				System.out.print("Desea asociar una imagen de perfil? s/n: ");
+				char s_n = entrada.next().charAt(0);
+				entrada.nextLine();
+				if(s_n == 's') {
+					System.out.print("Ingrese la imagen: ");
+					String imagen = entrada.nextLine();
+					controlador.modificarImagen(imagen);
+				}
+				
+				controlador.agregarCanal();
+				
+				System.out.print("Desea cambiar el nombre de su canal? (Por defecto se llama: " + nick + ") s/n : ");
+				s_n = entrada.next().charAt(0);
+				entrada.nextLine();
+				String nombreCanal = null;
+				if(s_n == 's') {
+					System.out.print("Ingrese el nuevo nombre de su canal:");
+					nombreCanal = entrada.nextLine();
+				}else {
+					nombreCanal = nick;
+				}
+				
+				System.out.print("Ingrese la descripcion de su canal: ");
+				String descCanal = entrada.nextLine();
+				
+				System.out.print("Su canal sera publico? s/n: ");
+				boolean publico = false;
+				s_n = entrada.next().charAt(0);
+				entrada.nextLine();
+				if(s_n == 's') {
+					publico = true;
+				}
+				
+				controlador.modificarInfoCanal(nombreCanal, descCanal, publico);
+				
+				controlador.limpiarControlador();
+			} else {
+				System.out.println("Ya eiste un usuario con ese Email");
 			}
-			
-			controlador.agregarCanal();
-			
-			System.out.print("Desea cambiar el nombre de su canal? (Por defecto se llama: " + nick + ") s/n : ");
-			s_n = entrada.next().charAt(0);
-			entrada.nextLine();
-			String nombreCanal = null;
-			if(s_n == 's') {
-				System.out.print("Ingrese el nuevo nombre de su canal:");
-				nombreCanal = entrada.nextLine();
-			}else {
-				nombreCanal = nick;
-			}
-			
-			System.out.print("Ingrese la descripcion de su canal: ");
-			String descCanal = entrada.nextLine();
-			
-			System.out.print("Su canal sera publico? s/n: ");
-			boolean publico = false;
-			s_n = entrada.next().charAt(0);
-			entrada.nextLine();
-			if(s_n == 's') {
-				publico = true;
-			}
-			
-			controlador.modificarInfoCanal(nombreCanal, descCanal, publico);
-			
-			controlador.limpiarControlador();
 		} else {
 			System.out.println("Ya existe un usuario con ese nickname");
 		}
