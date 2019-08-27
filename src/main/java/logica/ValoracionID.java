@@ -1,6 +1,6 @@
 package logica;
 
-/*import java.io.Serializable;
+import java.io.Serializable;
 
 public class ValoracionID implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -50,4 +50,4 @@ public class ValoracionID implements Serializable{
 			return false;
 		return true;
 	}
-}*/
+}

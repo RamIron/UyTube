@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 
 import org.hibernate.SessionFactory;
 
+import Manejadores.ManejadorUsuario;
 import datatypes.DtComentario;
 import datatypes.DtListaRep;
 import datatypes.DtValoracion;
@@ -79,30 +80,55 @@ public class CListaReproduccion implements IListaReproduccion {
 //		}
 	}
 	
+//	@Override 
+//	public void agregarListaParticular(String nick, String nomL, boolean publico) {
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		
+//		
+//		TypedQuery<String> query = em.createNamedQuery("existeListaParticular", String.class);
+//		query.setParameter("nombreLista", nomL);
+//		List<String> lista = query.getResultList();
+//		
+//		if(!lista.contains(nomL)) {
+//			try {
+//				this.uList = em.find(Usuario.class, nick);
+//				Canal userC = this.uList.getCanal();
+//				Elemento lisP= new Particular(nomL, userC, publico);
+//			} catch (Exception e){
+//				if(e instanceof RollbackException)
+//					if(em.getTransaction().isActive())
+//						em.getTransaction().rollback();
+//				throw new IllegalArgumentException("Hubo un error inesperado");
+//			}
+//		} else {
+//			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
+//		}
+//	}
+	
 	@Override 
 	public void agregarListaParticular(String nick, String nomL, boolean publico) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		
 		
 		TypedQuery<String> query = em.createNamedQuery("existeListaParticular", String.class);
 		query.setParameter("nombreLista", nomL);
 		List<String> lista = query.getResultList();
 		
-		if(!lista.contains(nomL)) {
-			try {
-				this.uList = em.find(Usuario.class, nick);
+		if(mU.existeUsuario(nick)) {
+			if(!lista.contains(nomL)) {
+				this.uList = mU.obtenerUsuario(nick);
 				Canal userC = this.uList.getCanal();
 				Elemento lisP= new Particular(nomL, userC, publico);
-			} catch (Exception e){
-				if(e instanceof RollbackException)
-					if(em.getTransaction().isActive())
-						em.getTransaction().rollback();
-				throw new IllegalArgumentException("Hubo un error inesperado");
+				mU.modificaDatosUsuario(this.uList);
+			}else {
+				throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
 			}
-		} else {
-			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
+		}else {
+			throw new IllegalArgumentException("No existe un usuario con nick: " + nick);
 		}
+		
 	}
 	
 	@Override 

@@ -1,6 +1,6 @@
 package logica;
 
-/*import javax.persistence.Entity;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -58,4 +58,4 @@ public class Valoracion {
 	}
 	
 	
-}*/
+}

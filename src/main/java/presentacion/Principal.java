@@ -32,6 +32,7 @@ public class Principal {
 							+ "7) Listar Categorias Existentes\n"
 							+ "8) Alta Video\n"
 							+ "9) Alta Lista de Reproduccion\n"
+							+ "10) Valorar Video\n"
 							+ "0) Salir\n"
 							+ "Opcion: ");
 	}
@@ -232,7 +233,9 @@ public class Principal {
 	static void altaListaReproduccion() {//Falta implementar
 		Scanner entrada = new Scanner (System.in);
 		LRFactory lf = LRFactory.getInstancia();
-		IListaReproduccion controlador = lf.getIListaReproduccion();
+		IListaReproduccion controladorLR = lf.getIListaReproduccion();
+		UFactory uf = UFactory.getInstancia();
+		IUsuario controladorU = uf.getIUsuario();
 		
 		System.out.print("Desea agregar una lista Por Defecto o Particular? d/p: ");
 		char d_p = entrada.next().charAt(0);
@@ -245,32 +248,57 @@ public class Principal {
 			System.out.print("Nickname del usuario: ");
 			String nick = entrada.nextLine();
 			
-			System.out.print("Ingrese el nombre de la Particular: ");
-			String particular = entrada.nextLine();
-			
-			System.out.print("Sera una lista publica? s/n: ");
-			char s_n = entrada.next().charAt(0);
-			boolean publico = false;
-			entrada.nextLine();
-			if(s_n == 's') {
-				publico = true;
+			if(controladorU.existeNickname(nick)) {
+				System.out.print("Ingrese el nombre de la Particular: ");
+				String particular = entrada.nextLine();
+				
+				System.out.print("Sera una lista publica? s/n: ");
+				char s_n = entrada.next().charAt(0);
+				boolean publico = false;
+				entrada.nextLine();
+				if(s_n == 's') {
+					publico = true;
+				}
+				
+				controladorLR.agregarListaParticular(nick, particular, publico);
+				
+	//			System.out.print("Desea asociar una Categoria? s/n: ");
+	//			s_n = entrada.next().charAt(0);
+	//			String categoria = null;
+	//			entrada.nextLine();
+	//			if(s_n == 's') {
+	//				System.out.print("Nombre de Categoria: ");
+	//				categoria = entrada.nextLine();
+	//				controlador.agregarCategoriaALista(categoria);
+	//			}
 			}
-			
-			controlador.agregarListaParticular(nick, particular, publico);
-			
-//			System.out.print("Desea asociar una Categoria? s/n: ");
-//			s_n = entrada.next().charAt(0);
-//			String categoria = null;
-//			entrada.nextLine();
-//			if(s_n == 's') {
-//				System.out.print("Nombre de Categoria: ");
-//				categoria = entrada.nextLine();
-//				controlador.agregarCategoriaALista(categoria);
-//			}
 		}
 		
-		controlador.limpiarControlador();
+		controladorLR.limpiarControlador();
 	}
+	
+	static void valorarVideo() {
+		Scanner entrada = new Scanner (System.in);
+		VFactory vf = VFactory.getInstancia();
+		IVideo controladorV = vf.getIVideo();
+		
+		/*System.out.print("Nickname del usuario: ");
+		String nick = entrada.nextLine();
+		
+		System.out.print("Nombre del video a valorar: ");
+		String video = entrada.nextLine();
+		
+		System.out.print("Le gusta? s/n: ");
+		char s_n = entrada.next().charAt(0);
+		boolean valoracion = false;
+		entrada.nextLine();
+		if(s_n == 's') {
+			valoracion = true;
+		}*/
+		
+		controladorV.valorarVideo("Las empanadas de la vieja", "mateo", true);
+	}
+	
 	
 	public static void main (String args[]) {
 		Scanner entrada = new Scanner(System.in);
@@ -306,6 +334,9 @@ public class Principal {
 					break;
 				case 9:
 					altaListaReproduccion();
+					break;
+				case 10:
+					valorarVideo();
 					break;
 				case 0:
 					System.out.println("adios");

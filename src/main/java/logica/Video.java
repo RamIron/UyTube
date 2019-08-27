@@ -18,8 +18,8 @@ public class Video extends Elemento {
 	
 	private boolean publico;
 		
-//	@OneToMany(mappedBy="video",cascade=CascadeType.ALL,orphanRemoval=true)
-//	private List<Valoracion> valoraciones = new ArrayList<>();
+	@OneToMany(mappedBy="video",cascade=CascadeType.ALL,orphanRemoval=true)
+	private List<Valoracion> valoraciones = new ArrayList<>();
 	
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Comentario> comentarios = new ArrayList<Comentario>();
@@ -149,5 +149,12 @@ public class Video extends Elemento {
 //		Valoracion v = new Valoracion(val, uVal, this);
 //		uVal.agregarValoracion(v);
 //		this.valoraciones.add(v);
+//
 //	}
+	
+	public void valorarVideo(boolean gusta, Usuario usuario, Video video) {
+		Valoracion val = new Valoracion(gusta, usuario, video);
+		valoraciones.add(val);
+		usuario.agregarValoracion(val);
+	}
 }

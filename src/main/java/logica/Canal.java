@@ -181,8 +181,12 @@ public class Canal {
 //		return v;
 //	}
 //	
-//	public void valorarVideo(String nomVid, Usuario uVal, boolean val) {
-//		Video v= this.videos.get(nomVid);
-//		v.valorar(uVal, val);
-//	}
+	public void valorarVideo(Video v, Usuario uVal, boolean val) {
+		v.valorarVideo(val, uVal, v);
+	}
+	
+	public Video obtenerVideo() {
+		Video v= this.videos.get(0);
+		return v;
+	}
 }
