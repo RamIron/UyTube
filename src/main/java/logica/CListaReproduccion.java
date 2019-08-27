@@ -9,6 +9,8 @@ import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.SessionFactory;
+
 import datatypes.DtComentario;
 import datatypes.DtListaRep;
 import datatypes.DtValoracion;
@@ -81,28 +83,26 @@ public class CListaReproduccion implements IListaReproduccion {
 	public void agregarListaParticular(String nick, String nomL, boolean publico) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		this.uList = em.find(Usuario.class, nick);
 		
-		Query query = em.createQuery("from Particular p where p.nombre = :nom");
-        query.setParameter("nom", nomL);
-        Particular part =(Particular)query.getSingleResult();
-       
-        Canal userC = this.uList.getCanal();
-		Elemento lisP= new Particular(nomL, userC, publico);
-
-//		if(part == null) { //Si la lista no existe
-//			try {
-//				Canal userC = this.uList.getCanal();
-//				Elemento lisP= new Particular(nomL, userC, publico);
-//			} catch (Exception e){
-//				if(e instanceof RollbackException)
-//					if(em.getTransaction().isActive())
-//						em.getTransaction().rollback();
-//				throw new IllegalArgumentException("Hubo un error inesperado");
-//			}
-//		} else {
-//			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
-//		}
+		
+		TypedQuery<String> query = em.createNamedQuery("existeListaParticular", String.class);
+		query.setParameter("nombreLista", nomL);
+		List<String> lista = query.getResultList();
+		
+		if(!lista.contains(nomL)) {
+			try {
+				this.uList = em.find(Usuario.class, nick);
+				Canal userC = this.uList.getCanal();
+				Elemento lisP= new Particular(nomL, userC, publico);
+			} catch (Exception e){
+				if(e instanceof RollbackException)
+					if(em.getTransaction().isActive())
+						em.getTransaction().rollback();
+				throw new IllegalArgumentException("Hubo un error inesperado");
+			}
+		} else {
+			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
+		}
 	}
 	
 	@Override 

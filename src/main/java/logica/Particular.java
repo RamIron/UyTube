@@ -6,6 +6,9 @@ import datatypes.DtElementoUsuario;
 
 @Entity
 @DiscriminatorValue("LP")
+@NamedQueries({
+@NamedQuery(name="existeListaParticular", query="select p.nombre from Particular p where p.nombre=:nombreLista")
+})
 public class Particular extends ListaReproduccion{
 	private boolean publico;
 	

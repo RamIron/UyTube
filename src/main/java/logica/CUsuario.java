@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 
+import Manejadores.ManejadorUsuario;
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
 import interfaces.IUsuario;
@@ -25,26 +26,20 @@ public class CUsuario implements IUsuario {
 		usr.agregarCanal();
 		this.can = this.usr.getCanal();
 	}
-	
+
 	
 	@Override 
 	public void agregarUsuario(String nick, String nom, String ape, Calendar fechaN, String email) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-	
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		try {
 			Usuario usuario = new Usuario(nick, nom, ape, fechaN, email);
-			em.getTransaction().begin();
-			em.persist(usuario);
-			em.getTransaction().commit();
+			mU.agregarUsuario(usuario);
 			this.usr = usuario;
 		} catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
-					em.getTransaction().rollback();
-			throw new IllegalArgumentException("Hubo un error inesperado");
+			throw e;
 		}	
 	}
+	
 	
 	@Override 
 	public void dejarDeSeguirUsuario(String seguidor, String seguido) {
@@ -76,13 +71,8 @@ public class CUsuario implements IUsuario {
 	
 	@Override 
 	public boolean existeNickname(String nick) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nick) == null){//Si no existe el nickname en la base
-			return false;
-		}else {
-			return true;
-		}
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		return mU.existeUsuario(nick);
 	}
 	
 	@Override
@@ -105,29 +95,15 @@ public class CUsuario implements IUsuario {
 	
 	@Override 
 	public List<String> listarUsuarios() {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		TypedQuery<String> consulta = em.createQuery("SELECT u.nickname FROM Usuario u", String.class);
-	    List<String> usuarios = consulta.getResultList();
-	    
-	    return usuarios;
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+	    return mU.listarUsuarios();
 	}
 	
 	@Override 
 	public void modificarImagen(String img) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		try {
-			this.usr.setImagen(img);
-			em.getTransaction().begin();
-			em.persist(this.usr);
-			em.getTransaction().commit();
-		}catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
-					em.getTransaction().rollback();
-			throw new IllegalArgumentException("Hubo un error inesperado");
-		}
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usr.setImagen(img);
+		mU.modificaDatosUsuario(this.usr);
 	}
 	
 	@Override 
@@ -194,6 +170,7 @@ public class CUsuario implements IUsuario {
 	
 	@Override 
 	public void seguirUsuario(String seguidor, String seguido) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		
