@@ -9,6 +9,9 @@ import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.SessionFactory;
+
+import Manejadores.ManejadorUsuario;
 import datatypes.DtComentario;
 import datatypes.DtListaRep;
 import datatypes.DtValoracion;
@@ -77,21 +80,19 @@ public class CListaReproduccion implements IListaReproduccion {
 //		}
 	}
 	
-	@Override 
-	public void agregarListaParticular(String nick, String nomL, boolean publico) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		this.uList = em.find(Usuario.class, nick);
-		
-		Query query = em.createQuery("from Particular p where p.nombre = :nom");
-        query.setParameter("nom", nomL);
-        Particular part =(Particular)query.getSingleResult();
-       
-        Canal userC = this.uList.getCanal();
-		Elemento lisP= new Particular(nomL, userC, publico);
-
-//		if(part == null) { //Si la lista no existe
+//	@Override 
+//	public void agregarListaParticular(String nick, String nomL, boolean publico) {
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		
+//		
+//		TypedQuery<String> query = em.createNamedQuery("existeListaParticular", String.class);
+//		query.setParameter("nombreLista", nomL);
+//		List<String> lista = query.getResultList();
+//		
+//		if(!lista.contains(nomL)) {
 //			try {
+//				this.uList = em.find(Usuario.class, nick);
 //				Canal userC = this.uList.getCanal();
 //				Elemento lisP= new Particular(nomL, userC, publico);
 //			} catch (Exception e){
@@ -103,6 +104,30 @@ public class CListaReproduccion implements IListaReproduccion {
 //		} else {
 //			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
 //		}
+//	}
+	
+	@Override 
+	public void agregarListaParticular(String nick, String nomL, boolean publico) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		TypedQuery<String> query = em.createNamedQuery("existeListaParticular", String.class);
+		query.setParameter("nombreLista", nomL);
+		List<String> lista = query.getResultList();
+		
+		if(mU.existeUsuario(nick)) {
+			if(!lista.contains(nomL)) {
+				this.uList = mU.obtenerUsuario(nick);
+				Canal userC = this.uList.getCanal();
+				Elemento lisP= new Particular(nomL, userC, publico);
+				mU.modificaDatosUsuario(this.uList);
+			}else {
+				throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
+			}
+		}else {
+			throw new IllegalArgumentException("No existe un usuario con nick: " + nick);
+		}
+		
 	}
 	
 	@Override 

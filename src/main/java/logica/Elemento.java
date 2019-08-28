@@ -8,7 +8,11 @@ import javax.persistence.*;
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Elemento {
 	@Id
+//	@SequenceGenerator(name = "elementoGenerator", sequenceName = "ELEMENTO_SEQUENCE", allocationSize = 1)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "elementoGenerator")
+	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	protected int id; 
 	
 	private String nombre;
@@ -60,6 +64,6 @@ public abstract class Elemento {
 	}
 	
 	
-//	public abstract DtElementoUsuario obtenerElemCategoria();
+	public abstract DtElementoUsuario obtenerElemCategoria();
 	
 }

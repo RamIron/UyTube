@@ -3,9 +3,13 @@ package logica;
 import javax.persistence.*;
 
 import datatypes.DtElementoUsuario;
+import datatypes.tipoElemento;
 
 @Entity
 @DiscriminatorValue("LP")
+@NamedQueries({
+@NamedQuery(name="existeListaParticular", query="select p.nombre from Particular p where p.nombre=:nombreLista")
+})
 public class Particular extends ListaReproduccion{
 	private boolean publico;
 	
@@ -56,9 +60,10 @@ public class Particular extends ListaReproduccion{
 //	//Operaciones
 //
 //	
-//	public DtElementoUsuario obtenerElemCategoria() {
-//		return null;
-//	}
+	public DtElementoUsuario obtenerElemCategoria() {
+		DtElementoUsuario particular = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA);
+		return particular;
+	}
 //	
 //	
 //

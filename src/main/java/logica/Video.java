@@ -18,8 +18,8 @@ public class Video extends Elemento {
 	
 	private boolean publico;
 		
-//	@OneToMany(mappedBy="video",cascade=CascadeType.ALL,orphanRemoval=true)
-//	private List<Valoracion> valoraciones = new ArrayList<>();
+	@OneToMany(mappedBy="video",cascade=CascadeType.ALL,orphanRemoval=true)
+	private List<Valoracion> valoraciones = new ArrayList<>();
 	
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Comentario> comentarios = new ArrayList<Comentario>();
@@ -32,11 +32,6 @@ public class Video extends Elemento {
 
 	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico) {
 		super(nombre);
-		this.descripcion = descripcion;
-		this.fPublicacion = fPublicacion;
-		this.duracion = duracion;
-		this.url = url;
-		this.publico = publico;
 	}
 	
 	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico, Canal canal) {
@@ -46,13 +41,13 @@ public class Video extends Elemento {
 		this.duracion = duracion;
 		this.url = url;
 		this.publico = publico;
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		em.getTransaction().begin();
-		canal.getVideos().add(this);
-		em.persist(canal);
-		em.persist(this);
-		em.getTransaction().commit();
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		em.getTransaction().begin();
+//		canal.getVideos().add(this);
+//		em.persist(canal);
+//		em.persist(this);
+//		em.getTransaction().commit();
 		
 	}
 
@@ -97,9 +92,9 @@ public class Video extends Elemento {
 		this.publico = publico;
 	}
 
-//	public List<Valoracion> getValoraciones() {
-//		return valoraciones;
-//	}
+	public List<Valoracion> getValoraciones() {
+		return valoraciones;
+	}
 
 	public List<Comentario> getComentarios() {
 		return comentarios;
@@ -110,14 +105,14 @@ public class Video extends Elemento {
 	//Operaciones
 	
 	public void crearComentario(Usuario uC, Calendar fCom, String texto) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		em.getTransaction().begin();
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		em.getTransaction().begin();
 		Comentario c = new Comentario(fCom, texto, uC);
 		comentarios.add(c);
-		em.persist(c);
-		em.persist(this);
-		em.getTransaction().commit();
+//		em.persist(c);
+//		em.persist(this);
+//		em.getTransaction().commit();
 	}
 	
 //	public void crearRespuesta(int idCom, Usuario uC, Calendar fCom, String texto) {
@@ -135,19 +130,30 @@ public class Video extends Elemento {
 //		}
 //		return res;
 //	}
-//	
-//	public ArrayList<DtComentario> obtenerComentariosVideo() {
-//		return null;
-//	}  ///esto debe ser un jTree
-//	
-//	public DtElementoUsuario obtenerElemCategoria() {
-//		DtElementoUsuario res = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
-//		return res;
-//	}
+
+	public DtElementoUsuario obtenerElemCategoria() {
+		DtElementoUsuario video = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
+		return video;
+	}
 	
+	public List<DtComentario> obtenerComentariosVideo() {
+		List<DtComentario> dtComs = new ArrayList<DtComentario>();
+		for(Comentario c:this.comentarios) {
+			DtComentario dtC = new DtComentario(c.getTexto());
+			dtComs.add(dtC);
+		}
+		return dtComs;
+	} 
 //	public void valorar(Usuario uVal, boolean val) {
 //		Valoracion v = new Valoracion(val, uVal, this);
 //		uVal.agregarValoracion(v);
 //		this.valoraciones.add(v);
+//
 //	}
+	
+	public void valorarVideo(boolean gusta, Usuario usuario, Video video) {
+//		Valoracion val = new Valoracion(gusta, usuario, video);
+//		valoraciones.add(val);
+//		usuario.agregarValoracion(val);
+	}
 }

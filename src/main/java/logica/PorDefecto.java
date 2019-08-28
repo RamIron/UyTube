@@ -20,10 +20,12 @@ public class PorDefecto extends ListaReproduccion{
 		super(nombre);
 	}
 
-//	@Override
-//	public DtElementoUsuario obtenerElemCategoria() {
-//		return null;
-//	}
+	@Override
+	public DtElementoUsuario obtenerElemCategoria() {
+		DtElementoUsuario defecto = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA);
+		return defecto;
+	}
+
 //		
 //	public boolean esParticular() {
 //		return false;

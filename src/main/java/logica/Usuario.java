@@ -10,6 +10,9 @@ import datatypes.DtComentario;
 import datatypes.DtListaRep;
 import datatypes.DtVideo;
 
+@NamedQueries( {
+	@NamedQuery(name = "existeMail", query = "select u.correoE from Usuario u where u.correoE = :correoE")
+} )
 @Entity
 @Table(name="USUARIOS")
 public class Usuario {
@@ -36,8 +39,8 @@ public class Usuario {
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
 	
-//	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
-//	private List<Valoracion> valoraciones = new ArrayList<>();
+	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
+	public List<Valoracion> valoraciones = new ArrayList<>();
 	
 	@ManyToMany(mappedBy="seguidos")
 	//@JoinTable(name="USUARIOS_SEGUIDOS")
@@ -46,17 +49,16 @@ public class Usuario {
 	@ManyToMany
 	private List<Usuario> seguidos = new ArrayList<Usuario>();
 
-	
-	
-	
-	
-	
-	
 	//Constructores
 	public Usuario() {
 		super();
 	}
 	
+	public Usuario(String nickname) {
+		super();
+		this.nickname = nickname;
+	}
+
 	public Usuario(String nickname, String nombre, String apellido, Calendar fNac, String correoE) {
 		super();
 		this.nickname = nickname;
@@ -134,32 +136,17 @@ public class Usuario {
 		this.canal = c;
 	}
 
-	
-//	public List<Valoracion> getValoraciones() {
-//		return valoraciones;
-//	}
+	public List<Valoracion> getValoraciones() {
+		return valoraciones;
+	}
+
 
 	
 	//Operaciones
 	public void agregarCanal() {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		try {
-			System.out.println("El canal se llamara: " + this.getNickname());
-			Canal c = new Canal(this.getNickname(), null, false);
-			c.setUsuario(this);
-			this.canal = c;
-			
-			em.getTransaction().begin();
-			em.persist(c);
-			em.getTransaction().commit();
-		} catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
-					em.getTransaction().rollback();
-			throw new IllegalArgumentException("Hubo un error inesperado");
-		}	
-		
+		Canal c = new Canal(this.getNickname(), null, false);
+		c.setUsuario(this);
+		this.canal = c;
 	}
 //	
 //	public void agregarCategoriaALista(String nomL, Categoria cat) {
@@ -184,6 +171,10 @@ public class Usuario {
 		this.seguidores.add(u);
 	}
 	
+	public void agregarValoracion(Valoracion val) {
+		this.valoraciones.add(val);
+	}
+
 //	public void agregarValoracion(Valoracion val) {
 //		this.valoraciones.add(val);
 //	}
@@ -204,11 +195,11 @@ public class Usuario {
 	public void dejarSeguirUsuario(Usuario u2) {
 		this.seguidos.remove(u2);
 	}
-	
+
 //	public void eliminarVideoDeLista(String nomVid, String nomList) {
 //		this.canal.eliminarVideoDeLista(nomVid, nomList);
 //	}
-//	
+
 //	public Boolean existeListaDefecto(String nomL) {
 //		return null;
 //	}
