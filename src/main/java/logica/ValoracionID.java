@@ -1,4 +1,4 @@
-package logica;
+/*package logica;
 
 import java.io.Serializable;
 
@@ -51,3 +51,4 @@ public class ValoracionID implements Serializable{
 		return true;
 	}
 }
+*/

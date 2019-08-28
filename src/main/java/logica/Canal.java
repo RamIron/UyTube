@@ -189,10 +189,7 @@ public class Canal {
 		boolean encontre = false;
 		int i=0;
 		while(!encontre && i<this.videos.size()-1) {
-			System.out.println("Video en arreglo: " + this.videos.get(i).getNombre());
-			System.out.println("Video buscado: " + nomVid);
-			String nombre = this.videos.get(i).getNombre();
-			if(nombre == nomVid) {
+			if(this.videos.get(i).getNombre().contentEquals(nomVid)) {
 				System.out.println("entra al if");
 				encontre = true;
 			}else {

@@ -53,7 +53,7 @@ public class Principal {
 		String nick = entrada.nextLine();
 		
 		if(!controlador.existeNickname(nick)) {//Si no existe el nickname
-		
+			
 			System.out.print("Nombre: ");
 			String nombre = entrada.nextLine();
 			
@@ -76,6 +76,7 @@ public class Principal {
 		        fNac.set(anio, mes, dia);
 				
 				controlador.agregarUsuario(nick, nombre, apellido, fNac, correoE);
+				//TODO: Agregar listas por defecto si ya existen
 				
 				System.out.print("Desea asociar una imagen de perfil? s/n: ");
 				char s_n = entrada.next().charAt(0);
