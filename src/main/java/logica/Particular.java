@@ -3,6 +3,7 @@ package logica;
 import javax.persistence.*;
 
 import datatypes.DtElementoUsuario;
+import datatypes.tipoElemento;
 
 @Entity
 @DiscriminatorValue("LP")
@@ -59,9 +60,10 @@ public class Particular extends ListaReproduccion{
 //	//Operaciones
 //
 //	
-//	public DtElementoUsuario obtenerElemCategoria() {
-//		return null;
-//	}
+	public DtElementoUsuario obtenerElemCategoria() {
+		DtElementoUsuario particular = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA);
+		return particular;
+	}
 //	
 //	
 //

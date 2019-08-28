@@ -60,6 +60,6 @@ public abstract class Elemento {
 	}
 	
 	
-//	public abstract DtElementoUsuario obtenerElemCategoria();
+	public abstract DtElementoUsuario obtenerElemCategoria();
 	
 }

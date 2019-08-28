@@ -140,10 +140,10 @@ public class Video extends Elemento {
 //		return null;
 //	}  ///esto debe ser un jTree
 //	
-//	public DtElementoUsuario obtenerElemCategoria() {
-//		DtElementoUsuario res = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
-//		return res;
-//	}
+	public DtElementoUsuario obtenerElemCategoria() {
+		DtElementoUsuario video = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
+		return video;
+	}
 	
 //	public void valorar(Usuario uVal, boolean val) {
 //		Valoracion v = new Valoracion(val, uVal, this);

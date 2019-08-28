@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import datatypes.DtElementoUsuario;
 import interfaces.CFactory;
 import interfaces.ICategoria;
 import interfaces.IListaReproduccion;
@@ -32,6 +33,7 @@ public class Principal {
 							+ "7) Listar Categorias Existentes\n"
 							+ "8) Alta Video\n"
 							+ "9) Alta Lista de Reproduccion\n"
+							+ "10) Consulta de categoria\n"
 							+ "0) Salir\n"
 							+ "Opcion: ");
 	}
@@ -106,7 +108,7 @@ public class Principal {
 				
 				controlador.limpiarControlador();
 			} else {
-				System.out.println("Ya eiste un usuario con ese Email");
+				System.out.println("Ya existe un usuario con ese Email");
 			}
 		} else {
 			System.out.println("Ya existe un usuario con ese nickname");
@@ -187,7 +189,7 @@ public class Principal {
 		} 
 	}
 	
-	static void altaVideo() {
+	static void altaVideo() { 
 		Scanner entrada = new Scanner (System.in);
 		VFactory vf = VFactory.getInstancia();
 		IVideo controlador = vf.getIVideo();
@@ -231,6 +233,30 @@ public class Principal {
 		}
 		
 		controlador.limpiarControlador();
+	}
+	
+	static void consultaCategoria() {
+		Scanner entrada = new Scanner (System.in);
+		CFactory cf = CFactory.getInstancia();
+		ICategoria controlador = cf.getICategoria();
+		
+		System.out.println("\nElija el nombre de la categoria a consultar: ");
+		listarCategorias();
+		String nomCat = entrada.nextLine();
+		if(controlador.existeCategoria(nomCat)) {
+			List<DtElementoUsuario> datos = controlador.listarElemCategoria(nomCat);
+			if(!datos.isEmpty()) {
+				for(int i=0; i<datos.size(); i++){
+				    System.out.println("\nPropietario del video: " + datos.get(i).getNickname() + 
+				    				    "\nNombre: " + datos.get(i).getNombreE() + 
+				    				    "\nTipo de archivo: " + datos.get(i).getTipo());
+				} 
+			}else {
+				System.out.println("La categoria seleccionada no tiene ningun elemento asignado");
+			}
+		} else {
+			System.out.println("No existe una categoria con ese nombre");
+		}
 	}
 	
 	static void altaListaReproduccion() {//Falta implementar
@@ -310,6 +336,9 @@ public class Principal {
 					break;
 				case 9:
 					altaListaReproduccion();
+					break;
+				case 10:
+					consultaCategoria();
 					break;
 				case 0:
 					System.out.println("adios");
