@@ -29,19 +29,10 @@ public class Video extends Elemento {
 	public Video() {
 		super();
 	}
-	
-	public Video(String nombre) {
+
+	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico) {
 		super(nombre);
 	}
-
-//	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico) {
-//		super(nombre);
-//		this.descripcion = descripcion;
-//		this.fPublicacion = fPublicacion;
-//		this.duracion = duracion;
-//		this.url = url;
-//		this.publico = publico;
-//	}
 	
 	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico, Canal canal) {
 		super(nombre, canal);
@@ -153,8 +144,6 @@ public class Video extends Elemento {
 		}
 		return dtComs;
 	} 
-	
-	
 //	public void valorar(Usuario uVal, boolean val) {
 //		Valoracion v = new Valoracion(val, uVal, this);
 //		uVal.agregarValoracion(v);

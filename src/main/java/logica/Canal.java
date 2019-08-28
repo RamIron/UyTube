@@ -69,6 +69,7 @@ public class Canal {
 
 	public Boolean getPublico() {
 		return publico;
+
 	}
 
 	public void setPublico(Boolean publico) {
@@ -142,7 +143,7 @@ public class Canal {
 		this.videos.add(v);
 		return v;
 	}
-	
+
 //	public void agregarVideoLista(Video v, String nomList) {
 //		
 //	}

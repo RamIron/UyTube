@@ -47,7 +47,7 @@ public class CUsuario implements IUsuario {
 	}
 	
 	
-	@Override 
+	@Override
 	public void dejarDeSeguirUsuario(String seguidor, String seguido) {		
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		
@@ -196,11 +196,20 @@ public class CUsuario implements IUsuario {
 		return null;
 	}
 	
+	public Boolean esCanalPublico(String nick) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		if(em.find(Usuario.class, nick) != null) {
+			this.usr = em.find(Usuario.class, nick);
+			return this.usr.getCanal().getPublico();
+		}else {
+			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
+		}
+	}
 	
 	@Override 
 	public void seguirUsuario(String seguidor, String seguido) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		
 		if(mU.existeUsuario(seguidor)) { //Si el usuario existe
 			if(mU.existeUsuario(seguido)) { //Si el segundo usuario existe
 				try {

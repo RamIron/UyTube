@@ -5,9 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.RollbackException;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 
 import Manejadores.ManejadorUsuario;
 import Manejadores.ManejadorVideo;
@@ -93,12 +91,13 @@ public class CVideo implements IVideo {
 	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {}
 	
 	@Override 
-	public void/*List<DtComentario>*/ obtenerComentariosVideo(String nomVid) {
+	public List<DtComentario> obtenerComentariosVideo(String nomVid) {
 		this.vid = this.usr.getCanal().obtenerVideo(nomVid);
 		System.out.println("El video seleccionado fue: " + this.vid.getNombre());//temporal
 		
 		/*List<DtComentario> dtComentarios = this.vid.obtenerComentariosVideo();
 		return dtComentarios;*/
+		return null;
 	}
 	
 	@Override 
@@ -125,7 +124,6 @@ public class CVideo implements IVideo {
 		}
 	}
 	
-
 	@Override 
 	public void valorarVideo(String nomVid, String nickVal, boolean val) {
 //		Conexion conexion = Conexion.getInstancia();
@@ -141,5 +139,11 @@ public class CVideo implements IVideo {
 //		}else {
 //			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 //		}
+	}
+	
+	@Override
+	public Boolean existeVideo(String nick, String nomV) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -111,7 +111,6 @@ public class CListaReproduccion implements IListaReproduccion {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		
 		TypedQuery<String> query = em.createNamedQuery("existeListaParticular", String.class);
 		query.setParameter("nombreLista", nomL);
 		List<String> lista = query.getResultList();

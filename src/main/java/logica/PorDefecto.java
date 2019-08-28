@@ -25,6 +25,7 @@ public class PorDefecto extends ListaReproduccion{
 		DtElementoUsuario defecto = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA);
 		return defecto;
 	}
+
 //		
 //	public boolean esParticular() {
 //		return false;

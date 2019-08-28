@@ -35,6 +35,8 @@ public interface IUsuario {
 	
 	public DtCanal obtenerInfoCanal();
 	
+	public Boolean esCanalPublico(String nick);
+	
 	public DtUsuario obtenerInfoUsuario(String nick);
 	
 	public void seguirUsuario(String seguidor, String seguido);

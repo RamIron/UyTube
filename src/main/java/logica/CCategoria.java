@@ -16,7 +16,7 @@ public class CCategoria implements ICategoria {
 	public Categoria cat;
 	
 	//Operaciones
-	
+
 	@Override 
 	public void altaCategoria(String nomC) throws IllegalArgumentException {
 		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
@@ -26,6 +26,7 @@ public class CCategoria implements ICategoria {
 			this.cat = c;
 		} catch (Exception e){
 			throw e;
+
 		}
 	}
 	
@@ -52,4 +53,5 @@ public class CCategoria implements ICategoria {
 		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
 		return mc.existeCategoria(nombre);
 	}
+
 }

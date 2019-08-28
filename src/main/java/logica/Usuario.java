@@ -49,7 +49,6 @@ public class Usuario {
 	@ManyToMany
 	private List<Usuario> seguidos = new ArrayList<Usuario>();
 
-	
 	//Constructores
 	public Usuario() {
 		super();
@@ -59,7 +58,7 @@ public class Usuario {
 		super();
 		this.nickname = nickname;
 	}
-	
+
 	public Usuario(String nickname, String nombre, String apellido, Calendar fNac, String correoE) {
 		super();
 		this.nickname = nickname;
@@ -137,10 +136,10 @@ public class Usuario {
 		this.canal = c;
 	}
 
-	
 	public List<Valoracion> getValoraciones() {
 		return valoraciones;
 	}
+
 
 	
 	//Operaciones
@@ -175,13 +174,31 @@ public class Usuario {
 	public void agregarValoracion(Valoracion val) {
 		this.valoraciones.add(val);
 	}
-	
 
+//	public void agregarValoracion(Valoracion val) {
+//		this.valoraciones.add(val);
+//	}
+//	
+//	public void agregarVideo(String nomV, Boolean publico, String desc, Date fPub, int dur, String url) {
+//		this.canal.agregarVideo(nomV, desc, publico, fPub, dur, url);
+//	}
+//	
+//	public void agregarVideoPrivado(String nomV, String desc, Date fPub, int dur, String url) {
+//		Boolean publico = false;
+//		this.canal.agregarVideo(nomV, desc, publico, fPub, dur, url);
+//	}
+//	
+//	public void agregarVideoLista(Video v, String nomList) {
+//		this.canal.agregarVideoLista(v, nomList);
+//	}
 	
 	public void dejarSeguirUsuario(Usuario u2) {
 		this.seguidos.remove(u2);
 	}
-	
+
+//	public void eliminarVideoDeLista(String nomVid, String nomList) {
+//		this.canal.eliminarVideoDeLista(nomVid, nomList);
+//	}
 
 //	public Boolean existeListaDefecto(String nomL) {
 //		return null;

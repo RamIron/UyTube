@@ -42,8 +42,8 @@ public class Categoria {
 			List<DtElementoUsuario> res = new LinkedList<DtElementoUsuario>();
 			DtElementoUsuario elem;
 			for(Elemento e: elementos) {
-				elem = e.obtenerElemCategoria();
-				res.add(elem);
+				//elem = e.obtenerElemCategoria();
+				//res.add(elem);
 			}
 			return res;
 		}
