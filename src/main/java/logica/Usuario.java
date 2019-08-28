@@ -25,7 +25,7 @@ public class Usuario {
 	private String apellido;
 	
 	@Column(name="FECHA_DE_NACIMIENTO")
-	private Date fNac;
+	private Calendar fNac;
 	
 	@Column(name="IMAGEN")
 	private String imagen;
@@ -36,21 +36,28 @@ public class Usuario {
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
 	
-	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
-	private ArrayList<Valoracion> valoraciones;
+//	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
+//	private List<Valoracion> valoraciones = new ArrayList<>();
 	
 	@ManyToMany(mappedBy="seguidos")
-	private ArrayList<Usuario> seguidores;
+	//@JoinTable(name="USUARIOS_SEGUIDOS")
+	private List<Usuario> seguidores = new ArrayList<Usuario>();
 	
 	@ManyToMany
-	private ArrayList<Usuario> seguidos;
+	private List<Usuario> seguidos = new ArrayList<Usuario>();
 
+	
+	
+	
+	
+	
+	
 	//Constructores
 	public Usuario() {
 		super();
 	}
 	
-	public Usuario(String nickname, String nombre, String apellido, Date fNac, String correoE) {
+	public Usuario(String nickname, String nombre, String apellido, Calendar fNac, String correoE) {
 		super();
 		this.nickname = nickname;
 		this.nombre = nombre;
@@ -84,11 +91,11 @@ public class Usuario {
 		this.apellido = apellido;
 	}
 
-	public Date getfNac() {
+	public Calendar getfNac() {
 		return fNac;
 	}
 
-	public void setfNac(Date fNac) {
+	public void setfNac(Calendar fNac) {
 		this.fNac = fNac;
 	}
 
@@ -108,21 +115,16 @@ public class Usuario {
 		this.correoE = correoE;
 	}
 	
-	public ArrayList<Usuario> getSeguidos() {
+	public List<Usuario> getSeguidos() {
 		return seguidos;
 	}
 
-	public void setSeguidos(ArrayList<Usuario> seguidos) {
-		this.seguidos = seguidos;
-	}
 
-	public ArrayList<Usuario> getSeguidores() {
+	public List<Usuario> getSeguidores() {
 		return seguidores;
 	}
 
-	public void setSeguidores(ArrayList<Usuario> seguidores) {
-		this.seguidores = seguidores;
-	}
+	
 	
 	public Canal getCanal() {
 		return this.canal;
@@ -133,113 +135,134 @@ public class Usuario {
 	}
 
 	
+//	public List<Valoracion> getValoraciones() {
+//		return valoraciones;
+//	}
+
+	
 	//Operaciones
-	public void agregarCanal(String desc, Boolean publico) {
-		Canal can = new Canal(this.getNickname(), desc, publico);
-		this.canal = can;
+	public void agregarCanal() {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		try {
+			System.out.println("El canal se llamara: " + this.getNickname());
+			Canal c = new Canal(this.getNickname(), null, false);
+			c.setUsuario(this);
+			this.canal = c;
+			
+			em.getTransaction().begin();
+			em.persist(c);
+			em.getTransaction().commit();
+		} catch (Exception e){
+			if(e instanceof RollbackException)
+				if(em.getTransaction().isActive())
+					em.getTransaction().rollback();
+			throw new IllegalArgumentException("Hubo un error inesperado");
+		}	
+		
 	}
-	
-	public void agregarCategoriaALista(String nomL, Categoria cat) {
-		this.canal.agregarCategoriaALista(nomL, cat);
-	}
-	
-	public void agregarCategoriaVideo(String nomV, Categoria cat) {
-		this.canal.agregarCategoriaVideo(nomV, cat);
-	}
-	
-	public void agregarLista(ListaReproduccion lista) {
-		this.canal.agregarLista(lista);
-	}
-	
-	public void agregarLista(String nomL, Boolean publico) {}
-	
-	public void agregarNombreCanal(String nomC) {
-		this.canal.setNombre(nomC);
-	}
+//	
+//	public void agregarCategoriaALista(String nomL, Categoria cat) {
+//		this.canal.agregarCategoriaALista(nomL, cat);
+//	}
+//	
+//	public void agregarCategoriaVideo(String nomV, Categoria cat) {
+//		this.canal.agregarCategoriaVideo(nomV, cat);
+//	}
+//	
+//	public void agregarLista(ListaReproduccion lista) {
+//		this.canal.agregarLista(lista);
+//	}
+//	
+//	public void agregarLista(String nomL, Boolean publico) {}
+//	
+//	public void agregarNombreCanal(String nomC) {
+//		this.canal.setNombre(nomC);
+//	}
 	
 	public void agregarSeguidor(Usuario u) {
 		this.seguidores.add(u);
 	}
 	
-	public void agregarValoracion(Valoracion val) {
-		this.valoraciones.add(val);
-	}
-	
-	public void agregarVideo(String nomV, Boolean publico, String desc, Date fPub, int dur, String url) {
-		this.canal.agregarVideo(nomV, desc, publico, fPub, dur, url);
-	}
-	
-	public void agregarVideoPrivado(String nomV, String desc, Date fPub, int dur, String url) {
-		Boolean publico = false;
-		this.canal.agregarVideo(nomV, desc, publico, fPub, dur, url);
-	}
-	
-	public void agregarVideoLista(Video v, String nomList) {
-		this.canal.agregarVideoLista(v, nomList);
-	}
+//	public void agregarValoracion(Valoracion val) {
+//		this.valoraciones.add(val);
+//	}
+//	
+//	public void agregarVideo(String nomV, Boolean publico, String desc, Date fPub, int dur, String url) {
+//		this.canal.agregarVideo(nomV, desc, publico, fPub, dur, url);
+//	}
+//	
+//	public void agregarVideoPrivado(String nomV, String desc, Date fPub, int dur, String url) {
+//		Boolean publico = false;
+//		this.canal.agregarVideo(nomV, desc, publico, fPub, dur, url);
+//	}
+//	
+//	public void agregarVideoLista(Video v, String nomList) {
+//		this.canal.agregarVideoLista(v, nomList);
+//	}
 	
 	public void dejarSeguirUsuario(Usuario u2) {
 		this.seguidos.remove(u2);
 	}
 	
-	public void eliminarVideoDeLista(String nomVid, String nomList) {
-		this.canal.eliminarVideoDeLista(nomVid, nomList);
-	}
-	
-	public Boolean existeListaDefecto(String nomL) {
-		return null;
-	}
-	
-	public Boolean existeListaParticular(String nomL) {
-		return null;
-	}
-	
-	public ArrayList<String> listarListasDeUsuario() {
-		return null;
-	}         
-	
-	public ArrayList<String> listarListasParticulares() {
-		return null;
-	}
-	
-	public ArrayList<String> listarVideosdeLista(String nomList) {
-		return null;
-	}
-	
-	public ArrayList<String> listarVideosDeUsuario (){
-		Map<String, Video> videosUsr = this.canal.getVideos();
-		ArrayList<String> videos = new ArrayList<String>();
-		
-		for (Map.Entry<String, Video> vs: videosUsr.entrySet()) {
-			String nomVideo = vs.getKey();
-			videos.add(nomVideo);
-		}
-		return videos;
-	}
-	
-	public void modificarInfoCanal(String nomC, String descC, Boolean publico) {
-		this.canal.setNombre(nomC);
-		this.canal.setDescripcion(descC);
-		this.canal.setPublico(publico);
-	}
-	
-	public DtCanal obtenerInfoCanal() {
-		DtCanal dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.isPublico());
-		
-		return dtCan;
-	}
-	
-	public DtVideo obtenerInfoVideo(String nomVid) {
-		DtVideo dtVid = this.canal.obtenerInfoVideo(nomVid);
-		return dtVid;
-	}
-	
-	public DtListaRep obtenerListaDeUsuario(String nomList) {
-		return null;
-	}
-	
-	public ArrayList<String> listarSeguidores() {
-		ArrayList<String> dtSeguidores = new ArrayList<String>();
+//	public void eliminarVideoDeLista(String nomVid, String nomList) {
+//		this.canal.eliminarVideoDeLista(nomVid, nomList);
+//	}
+//	
+//	public Boolean existeListaDefecto(String nomL) {
+//		return null;
+//	}
+//	
+//	public Boolean existeListaParticular(String nomL) {
+//		return null;
+//	}
+//	
+//	public List<String> listarListasDeUsuario() {
+//		return null;
+//	}         
+//	
+//	public List<String> listarListasParticulares() {
+//		return null;
+//	}
+//	
+//	public List<String> listarVideosdeLista(String nomList) {
+//		return null;
+//	}
+//	
+//	public List<String> listarVideosDeUsuario (){
+//		Map<String, Video> videosUsr = this.canal.getVideos();
+//		List<String> videos = new List<String>();
+//		
+//		for (Map.Entry<String, Video> vs: videosUsr.entrySet()) {
+//			String nomVideo = vs.getKey();
+//			videos.add(nomVideo);
+//		}
+//		return videos;
+//	}
+//	
+//	public void modificarInfoCanal(String nomC, String descC, Boolean publico) {
+//		this.canal.setNombre(nomC);
+//		this.canal.setDescripcion(descC);
+//		this.canal.setPublico(publico);
+//	}
+//	
+//	public DtCanal obtenerInfoCanal() {
+//		DtCanal dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.isPublico());
+//		
+//		return dtCan;
+//	}
+//	
+//	public DtVideo obtenerInfoVideo(String nomVid) {
+//		DtVideo dtVid = this.canal.obtenerInfoVideo(nomVid);
+//		return dtVid;
+//	}
+//	
+//	public DtListaRep obtenerListaDeUsuario(String nomList) {
+//		return null;
+//	}
+//	
+	public List<String> listarSeguidores() {
+		List<String> dtSeguidores = new ArrayList<String>();
 		Collection<Usuario> seguidores = this.getSeguidores();
 		
 		for(Usuario u:seguidores) {
@@ -249,8 +272,8 @@ public class Usuario {
 		return dtSeguidores;
 	}
 	
-	public ArrayList<String> listarSeguidos() {
-		ArrayList<String> dtSeguidos = new ArrayList<String>();
+	public List<String> listarSeguidos() {
+		List<String> dtSeguidos = new ArrayList<String>();
 		Collection<Usuario> seguidos = this.getSeguidos();
 		
 		for(Usuario u:seguidos) {
@@ -259,27 +282,28 @@ public class Usuario {
 		
 		return dtSeguidos;
 	}
-	
-	public ArrayList<DtComentario> obtenerComentariosVideo(String nomVid) {
-		ArrayList<DtComentario> dtComentarios = this.canal.obtenerComentariosVideo(nomVid);
-		return dtComentarios;
-	}
-	
-	public Video obtenerVideo(String nomVid) {
-		Video v= this.canal.obtenerVideo(nomVid);
-		return v;
-	}
+//	
+//	public List<DtComentario> obtenerComentariosVideo(String nomVid) {
+//		List<DtComentario> dtComentarios = this.canal.obtenerComentariosVideo(nomVid);
+//		return dtComentarios;
+//	}
+//	
+//	public Video obtenerVideo(String nomVid) {
+//		Video v= this.canal.obtenerVideo(nomVid);
+//		return v;
+//	}
 	
 	public void quitarSeguidor(Usuario u1) {
 		this.seguidores.remove(u1);
 	}
 	
 	public void seguirUsuario(Usuario u2) {
+		u2.getSeguidores().add(this);
 		this.seguidos.add(u2);
 	}
 	
-	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {
-		this.canal.valorarVideo(nomVid, uVal, val);
-	}
-	
+//	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {
+//		this.canal.valorarVideo(nomVid, uVal, val);
+//	}
+
 }

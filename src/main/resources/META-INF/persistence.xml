@@ -8,19 +8,19 @@
 	<persistence-unit name="Conexion">
 		<class>logica.Usuario</class>
 		<class>logica.Canal</class>
-		<class>logica.Elemento</class>
-		<class>logica.Video</class>
-		<class>logica.ListaReproduccion</class>
-		<class>logica.Particular</class>
-		<class>logica.PorDefecto</class>
-		<class>logica.Valoracion</class>
-		<class>logica.Comentario</class>
 		<class>logica.Categoria</class>
+		<class>logica.Elemento</class>
+		<class>logica.ListaReproduccion</class>
+		<class>logica.Video</class>
+		<class>logica.PorDefecto</class>
+		<class>logica.Particular</class>
+		<class>logica.Comentario</class>
+		<class>logica.Valoracion</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="create" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/UyTube"/>
 			<property name="javax.persistence.jdbc.user" value="postgres"/>
 			<property name="javax.persistence.jdbc.password" value="lapass"/>
 		</properties>

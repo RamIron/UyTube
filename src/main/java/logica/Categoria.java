@@ -13,7 +13,7 @@ public class Categoria {
 		private String nombre;
 		
 		@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)
-		private List<Elemento> elementos;
+		private List<Elemento> elementos = new ArrayList <Elemento>();
 		
 		
 		//METODOS
@@ -38,18 +38,26 @@ public class Categoria {
 			return elementos;
 		}
 
-		public List<DtElementoUsuario> obtenerElemCategoria(){
-			List<DtElementoUsuario> res = new LinkedList<DtElementoUsuario>();
-			DtElementoUsuario elem;
-			for(Elemento e: elementos) {
-				elem = e.obtenerElemCategoria();
-				res.add(elem);
-			}
-			return res;
-		}
+//		public List<DtElementoUsuario> obtenerElemCategoria(){
+//			List<DtElementoUsuario> res = new LinkedList<DtElementoUsuario>();
+//			DtElementoUsuario elem;
+//			for(Elemento e: elementos) {
+//				elem = e.obtenerElemCategoria();
+//				res.add(elem);
+//			}
+//			return res;
+//		}
 		
-		public void agregarVideo(Video v) {
-			elementos.add(v);		}
+		public void agregarElemento(Elemento e) {
+			Conexion conexion = Conexion.getInstancia();
+			EntityManager em = conexion.getEntityManager();
+			em.getTransaction().begin();
+			elementos.add(e);
+			e.setCategoria(this);
+			em.persist(e);
+			em.persist(this);
+			em.getTransaction().commit();
+		}
 		
 		public void agregarLista(Particular p) {
 			elementos.add(p);

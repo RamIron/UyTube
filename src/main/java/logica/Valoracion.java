@@ -1,8 +1,10 @@
 package logica;
 
-import javax.persistence.*;
-
-
+/*import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @IdClass(ValoracionID.class)
@@ -22,7 +24,6 @@ public class Valoracion {
 	//Constructores
 	public Valoracion() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Valoracion(boolean gusta, Usuario usuario, Video video) {
@@ -57,4 +58,4 @@ public class Valoracion {
 	}
 	
 	
-}
+}*/

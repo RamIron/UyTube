@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Elemento {
 	@Id
-	@GeneratedValue
-	private int id; 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected int id; 
 	
 	private String nombre;
 	
@@ -60,6 +60,6 @@ public abstract class Elemento {
 	}
 	
 	
-	public abstract DtElementoUsuario obtenerElemCategoria();
+//	public abstract DtElementoUsuario obtenerElemCategoria();
 	
 }

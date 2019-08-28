@@ -1,19 +1,17 @@
 package interfaces;
 
-import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
 
 public interface IUsuario {
 	
-	public void agregarCanal(String desc, boolean publico);
+	public void agregarCanal();
 	
-	public void agregarNombreCanal(String nomC);
-	
-	public void agregarUsuario(String nick, String nom, String ape, Date fechaN, String email);
+	public void agregarUsuario(String nick, String nom, String ape, Calendar fechaN, String email);
 	
 	public void dejarDeSeguirUsuario(String seguidor, String seguido);
 	
@@ -23,9 +21,9 @@ public interface IUsuario {
 	
 	public void limpiarControlador();
 	
-	public ArrayList<String> listarSeguidores();
+	public List<String> listarSeguidores();
 	
-	public ArrayList<String> listarSeguidos();
+	public List<String> listarSeguidos();
 	
 	public List<String> listarUsuarios();
 	
@@ -33,9 +31,11 @@ public interface IUsuario {
 	
 	public void modificarInfoCanal(String nomC, String descC, boolean publico);
 	
-	public void modificarInfoUsuario(String nick, String nomU, String apeU, Date fNacU, String imagen);
+	public void modificarInfoUsuario(String nick, String nomU, String apeU, Calendar fNacU, String imagen);
 	
 	public DtCanal obtenerInfoCanal();
+	
+	public Boolean esCanalPublico(String nick);
 	
 	public DtUsuario obtenerInfoUsuario(String nick);
 	

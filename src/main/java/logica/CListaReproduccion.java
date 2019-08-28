@@ -1,18 +1,21 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.RollbackException;
+import javax.persistence.TypedQuery;
 
 import datatypes.DtComentario;
 import datatypes.DtListaRep;
 import datatypes.DtValoracion;
 import datatypes.DtVideo;
-import interfaces.ILIstaReproduccion;
+import interfaces.IListaReproduccion;
 
-public class CListaReproduccion implements ILIstaReproduccion {
+public class CListaReproduccion implements IListaReproduccion {
 
 	private Usuario uVid;
 	private Usuario uList;
@@ -20,78 +23,86 @@ public class CListaReproduccion implements ILIstaReproduccion {
 	private ListaReproduccion lista;
 
 	@Override 
-	public void agregarCategoriaALista(String nick, String nomL, String nomC) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		if((em.find(Categoria.class, nomC) != null)) { //Si la categoria existe
-			if((em.find(Usuario.class, nick) != null)) { //Verificando que el nick exista
-				if((em.find(Particular.class, nomL) != null)) { //Verificando que la lista exista
-					this.uList = em.find(Usuario.class, nick);
-					Categoria cat = em.find(Categoria.class, nomC);
-					this.uList.agregarCategoriaALista(nomL, cat);
-				} else { 
-					throw new IllegalArgumentException("No existe una lista con el nombre ingresado");
-				}
-				em.close();
-			} else { 
-				throw new IllegalArgumentException("No existe un usuario con el nickname ingresado");
-			}
-			em.close();
-		} else { 
-			throw new IllegalArgumentException("No existe la categoria con el nombre ingresado");
-		}
-		em.close();
+	public void agregarCategoriaALista(String nomC) { // se debe recordar usuario y lista
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		if((em.find(Categoria.class, nomC) != null)) { //Si la categoria existe
+//			if((em.find(Usuario.class, nick) != null)) { //Verificando que el nick exista
+//				if((em.find(Particular.class, nomL) != null)) { //Verificando que la lista exista
+//					this.uList = em.find(Usuario.class, nick);
+//					Categoria cat = em.find(Categoria.class, nomC);
+//					this.uList.agregarCategoriaALista(nomL, cat);
+//				} else { 
+//					throw new IllegalArgumentException("No existe una lista con el nombre ingresado");
+//				}
+//				em.close();
+//			} else { 
+//				throw new IllegalArgumentException("No existe un usuario con el nickname ingresado");
+//			}
+//			em.close();
+//		} else { 
+//			throw new IllegalArgumentException("No existe la categoria con el nombre ingresado");
+//		}
 	}
 	
 	@Override 
 	public void agregarListaDefecto(String nomL) {	
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		Canal canalU = this.uList.obtenerCanalU();
-		if(em.find(PorDefecto.class, nomL) == null) { //Si la lista no existe
-			PorDefecto lisDef = new PorDefecto(nomL, canalU); //La creo asociada al canal del usuario que recuerda el controlador
-			try {
-			em.getTransaction().begin();
-			em.persist(lisDef);
-			em.getTransaction().commit();
-			} catch (Exception e){
-				if(e instanceof RollbackException)
-					if(em.getTransaction().isActive())
-						em.getTransaction().rollback();
-				throw new IllegalArgumentException("Hubo un error inesperado");
-			}
-			finally { 
-				em.close();
-			}
-		} else {
-			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
-		}
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		TypedQuery<Canal> consulta = em.createQuery("SELECT * FROM Canal c", Canal.class);
+//	    List<Canal> canales = consulta.getResultList();
+//	    for(Canal c:canales) {
+//			c.agregarListaDefecto(nomL);
+//	    	System.out.println("Entro");
+//			System.out.println(c.getNombre());
+//		}
+		
+//		if(em.find(PorDefecto.class, nomL) == null) { //Si la lista no existe
+//			TypedQuery<Canal> consulta = em.createQuery("SELECT * FROM Canal c", Canal.class);
+//		    List<Canal> canales = consulta.getResultList();
+//		    System.out.println("Llega aca");
+//			try {
+//				for(Canal c:canales) {
+//					//c.agregarListaDefecto(nomL);
+//					System.out.println(c.getNombre());
+//				}
+//			} catch (Exception e){
+//				if(e instanceof RollbackException)
+//					if(em.getTransaction().isActive())
+//						em.getTransaction().rollback();
+//				throw new IllegalArgumentException("Hubo un error inesperado");
+//			}
+//		} else {
+//			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
+//		}
 	}
 	
 	@Override 
 	public void agregarListaParticular(String nick, String nomL, boolean publico) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Usuario user = em.find(Usuario.class, nick);
-		Canal userC = user.obtenerCanalU();
-		if(em.find(Particular.class, nomL) == null) { //Si la lista no existe
-			Particular lisPar = new Particular(nomL, userC, publico); //La creo, asociada al canal del usuario que tiene nick que me pasan por parametro 
-			try {
-				em.getTransaction().begin();
-				em.persist(lisPar);
-				em.getTransaction().commit();
-			} catch (Exception e){
-				if(e instanceof RollbackException)
-					if(em.getTransaction().isActive())
-						em.getTransaction().rollback();
-				throw new IllegalArgumentException("Hubo un error inesperado");
-			}
-			finally { 
-				em.close();
-			}
-		} else {
-			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
-		}
+		this.uList = em.find(Usuario.class, nick);
+		
+		Query query = em.createQuery("from Particular p where p.nombre = :nom");
+        query.setParameter("nom", nomL);
+        Particular part =(Particular)query.getSingleResult();
+       
+        Canal userC = this.uList.getCanal();
+		Elemento lisP= new Particular(nomL, userC, publico);
+
+//		if(part == null) { //Si la lista no existe
+//			try {
+//				Canal userC = this.uList.getCanal();
+//				Elemento lisP= new Particular(nomL, userC, publico);
+//			} catch (Exception e){
+//				if(e instanceof RollbackException)
+//					if(em.getTransaction().isActive())
+//						em.getTransaction().rollback();
+//				throw new IllegalArgumentException("Hubo un error inesperado");
+//			}
+//		} else {
+//			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
+//		}
 	}
 	
 	@Override 
@@ -100,20 +111,28 @@ public class CListaReproduccion implements ILIstaReproduccion {
 	@Override 
 	public void eliminarVideoDeLista(String nickVid, String nomVid, String nomList) {}
 	
-	//@Override 
-	//public boolean existeListaDefecto(String nomL) {}
+	@Override 
+	public boolean existeListaDefecto(String nomL) {return false;}
 	
 	@Override 
-	public boolean existeListaParticular(String nick, String nomL) {}
+	public boolean existeListaParticular(String nick, String nomL) {return false;}
+	
+	@Override
+	public void limpiarControlador() { //Operacion para utilizar al final de cada caso de uso
+		this.lista = null;
+		this.uList = null;
+		this.uVid = null;
+		this.video = null;
+	}
 	
 	@Override 
-	public ArrayList<String> listarListasDeUsuario(String nick) {}
+	public List<String> listarListasDeUsuario(String nick) {return null;}
 	
 	@Override 
-	public ArrayList<String> listarListasParticulares(String nick) {}
+	public List<String> listarListasParticulares(String nick) {return null;}
 
 	@Override 
-	public ArrayList<String> listarVideosdeLista(String nomList) {}
+	public List<String> listarVideosdeLista(String nomList) {return null;}
 	
 	@Override 
 	public void modificarCategoria(String nick, String nomL, String nomC) {}
@@ -122,15 +141,23 @@ public class CListaReproduccion implements ILIstaReproduccion {
 	public void modificarInfoLista(String nick, String nomL, boolean publico) {}
 	
 	@Override 
-	public ArrayList<DtComentario> obtenerComentariosVideo(String nomVid) {}
+	public List<DtComentario> obtenerComentariosVideo(String nomVid) {
+		return null;
+	}
 	
 	@Override 
-	public DtVideo obtenerInfoVideo(String nomVid) {}
+	public DtVideo obtenerInfoVideo(String nomVid) {
+		return null;
+	}
 	
 	@Override 
-	public DtListaRep obtenerListaDeUsuario(String nomList) {}
+	public DtListaRep obtenerListaDeUsuario(String nomList) {
+		return null;
+	}
 	
 	@Override 
-	public ArrayList<DtValoracion> obtenerValoracionVideo(String nomVid) {}
+	public ArrayList<DtValoracion> obtenerValoracionVideo(String nomVid) {
+		return null;
+	}
 	
 }

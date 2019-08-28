@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -20,53 +21,46 @@ public class CUsuario implements IUsuario {
 	
 	//Operaciones
 	@Override 
-	public void agregarCanal(String desc, boolean publico) {
-		usr.agregarCanal(desc, publico);
+	public void agregarCanal() {
+		usr.agregarCanal();
 		this.can = this.usr.getCanal();
 	}
 	
-	@Override 
-	public void agregarNombreCanal(String nomC) {
-		this.agregarNombreCanal(nomC);
-	}
 	
 	@Override 
-	public void agregarUsuario(String nick, String nom, String ape, Date fechaN, String email) {
+	public void agregarUsuario(String nick, String nom, String ape, Calendar fechaN, String email) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nick) == null) { //Si no existe un usuario con ese nick
+	
+		try {
 			Usuario usuario = new Usuario(nick, nom, ape, fechaN, email);
-			try {
-				em.getTransaction().begin();
-				em.persist(usuario);
-				em.getTransaction().commit();
-				this.usr = usuario;
-			} catch (Exception e){
-				if(e instanceof RollbackException)
-					if(em.getTransaction().isActive())
-						em.getTransaction().rollback();
-				throw new IllegalArgumentException("Hubo un error inesperado");
-			}
-			finally { 
-				em.close();
-			}
-		} else {
-			throw new IllegalArgumentException("Ya existe un usuario con ese nick");
-		}
-		
+			em.getTransaction().begin();
+			em.persist(usuario);
+			em.getTransaction().commit();
+			this.usr = usuario;
+		} catch (Exception e){
+			if(e instanceof RollbackException)
+				if(em.getTransaction().isActive())
+					em.getTransaction().rollback();
+			throw new IllegalArgumentException("Hubo un error inesperado");
+		}	
 	}
 	
 	@Override 
 	public void dejarDeSeguirUsuario(String seguidor, String seguido) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		
+
 		if(em.find(Usuario.class, seguidor) != null) { //Si el usuario existe
 			if(em.find(Usuario.class, seguido) != null) { //Si el segundo usuario existe
+				em.getTransaction().begin();
 				Usuario USeguidor = em.find(Usuario.class, seguidor);
 				Usuario USeguido = em.find(Usuario.class, seguido);
-				USeguidor.seguirUsuario(USeguido);
+				em.persist(USeguidor);
+				em.persist(USeguido);
+				USeguidor.dejarSeguirUsuario(USeguido);
 				USeguido.agregarSeguidor(USeguidor);
+				em.getTransaction().commit();
 			}else {
 				throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 			}
@@ -85,10 +79,8 @@ public class CUsuario implements IUsuario {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		if(em.find(Usuario.class, nick) == null){//Si no existe el nickname en la base
-			em.close();
 			return false;
 		}else {
-			em.close();
 			return true;
 		}
 	}
@@ -100,14 +92,14 @@ public class CUsuario implements IUsuario {
 	}
 	
 	@Override 
-	public ArrayList<String> listarSeguidores() {
-		ArrayList<String> dtSeguidores = this.usr.listarSeguidores();
+	public List<String> listarSeguidores() {
+		List<String> dtSeguidores = this.usr.listarSeguidores();
 		return dtSeguidores;
 	}
 	
 	@Override 
-	public ArrayList<String> listarSeguidos() {
-		ArrayList<String> dtSeguidos = this.usr.listarSeguidos();
+	public List<String> listarSeguidos() {
+		List<String> dtSeguidos = this.usr.listarSeguidos();
 		return dtSeguidos;
 	}
 	
@@ -115,55 +107,101 @@ public class CUsuario implements IUsuario {
 	public List<String> listarUsuarios() {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		Query consulta = em.createQuery("SELECT u.nombre FROM Usuarios u", String.class);
+		TypedQuery<String> consulta = em.createQuery("SELECT u.nickname FROM Usuario u", String.class);
 	    List<String> usuarios = consulta.getResultList();
-	    em.close();
+	    
 	    return usuarios;
 	}
 	
 	@Override 
 	public void modificarImagen(String img) {
-		this.usr.setImagen(img);
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		try {
+			this.usr.setImagen(img);
+			em.getTransaction().begin();
+			em.persist(this.usr);
+			em.getTransaction().commit();
+		}catch (Exception e){
+			if(e instanceof RollbackException)
+				if(em.getTransaction().isActive())
+					em.getTransaction().rollback();
+			throw new IllegalArgumentException("Hubo un error inesperado");
+		}
 	}
 	
 	@Override 
 	public void modificarInfoCanal(String nomC, String descC, boolean publico) {
-		this.usr.modificarInfoCanal(nomC, descC, publico);
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		try {
+			em.getTransaction().begin();
+			em.persist(this.can);
+			this.can.setNombre(nomC);
+			this.can.setDescripcion(descC);
+			this.can.setPublico(publico);
+			em.getTransaction().commit();
+		}catch (Exception e){
+			if(e instanceof RollbackException)
+				if(em.getTransaction().isActive())
+					em.getTransaction().rollback();
+			throw new IllegalArgumentException("Hubo un error inesperado");
+		}	
 	}
 	
 	@Override 
-	public void modificarInfoUsuario(String nick, String nomU, String apeU, Date fNacU, String imagen) {
+	public void modificarInfoUsuario(String nick, String nomU, String apeU, Calendar fNacU, String imagen) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nick) != null) {
+		try {
 			this.usr = em.find(Usuario.class, nick);
+			em.getTransaction().begin();
+			em.persist(this.usr);
 			this.usr.setNombre(nomU);
 			this.usr.setApellido(apeU);
 			this.usr.setfNac(fNacU);
 			this.usr.setImagen(imagen);
-		}else {
-			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-		}
+			em.getTransaction().commit();
+		}catch (Exception e){
+			if(e instanceof RollbackException)
+				if(em.getTransaction().isActive())
+					em.getTransaction().rollback();
+			throw new IllegalArgumentException("Hubo un error inesperado");
+		}	
 		
 	}
 	
 	@Override 
 	public DtCanal obtenerInfoCanal() {
-		DtCanal dtCan = usr.obtenerInfoCanal();
-		return dtCan;
+//		DtCanal dtCan = usr.obtenerInfoCanal();
+//		return dtCan;
+		return null;
 	}
 	
 	@Override 
-	public DtUsuario obtenerInfoUsuario(String nick) {
+	public Boolean esCanalPublico(String nick) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		if(em.find(Usuario.class, nick) != null) {
 			this.usr = em.find(Usuario.class, nick);
-			DtUsuario dtUsr = new DtUsuario(usr.getNickname(), usr.getNombre(), usr.getApellido(), usr.getfNac(), usr.getImagen(), usr.getCorreoE());
-			return dtUsr;
+			return this.usr.getCanal().getPublico();
 		}else {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 		}
+	}
+	
+	@Override 
+	public DtUsuario obtenerInfoUsuario(String nick) {
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		if(em.find(Usuario.class, nick) != null) {
+//			this.usr = em.find(Usuario.class, nick);
+//			DtUsuario dtUsr = new DtUsuario(usr.getNickname(), usr.getNombre(), usr.getApellido(), usr.getfNac(), usr.getImagen(), usr.getCorreoE());
+//			return dtUsr;
+//		}else {
+//			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
+//		}
+		return null;
 	}
 	
 	@Override 
@@ -173,10 +211,21 @@ public class CUsuario implements IUsuario {
 		
 		if(em.find(Usuario.class, seguidor) != null) { //Si el usuario existe
 			if(em.find(Usuario.class, seguido) != null) { //Si el segundo usuario existe
-				Usuario USeguidor = em.find(Usuario.class, seguidor);
-				Usuario USeguido = em.find(Usuario.class, seguido);
-				USeguidor.seguirUsuario(USeguido);
-				USeguido.agregarSeguidor(USeguidor);
+				try {
+					em.getTransaction().begin();
+					Usuario USeguidor = em.find(Usuario.class, seguidor);
+					Usuario USeguido = em.find(Usuario.class, seguido);
+					em.persist(USeguidor);
+					em.persist(USeguido);
+					USeguidor.seguirUsuario(USeguido);
+					USeguido.agregarSeguidor(USeguidor);
+					em.getTransaction().commit();
+				}catch (Exception e){
+					if(e instanceof RollbackException)
+						if(em.getTransaction().isActive())
+							em.getTransaction().rollback();
+					throw new IllegalArgumentException("Hubo un error inesperado");
+				}	
 			}else {
 				throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 			}

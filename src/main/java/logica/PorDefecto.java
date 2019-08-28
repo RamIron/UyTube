@@ -1,9 +1,8 @@
 package logica;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
-import datatypes.DtElementoUsuario;
+import datatypes.*;
 
 @Entity
 @DiscriminatorValue("LD")
@@ -21,18 +20,18 @@ public class PorDefecto extends ListaReproduccion{
 		super(nombre);
 	}
 
-	@Override
-	public DtElementoUsuario obtenerElemCategoria() {
-		return null;
-	}
-		
-	public boolean esParticular() {
-		return false;
-	}
-
-	@Override
-	public boolean esPublico() {
-		return false;
-	}
-	
+//	@Override
+//	public DtElementoUsuario obtenerElemCategoria() {
+//		return null;
+//	}
+//		
+//	public boolean esParticular() {
+//		return false;
+//	}
+//
+//	@Override
+//	public boolean esPublico() {
+//		return false;
+//	}
+//	
 }

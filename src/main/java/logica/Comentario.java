@@ -2,8 +2,6 @@ package logica;
 
 import java.util.*;
 
-import javax.persistence.ManyToOne;
-
 import datatypes.DtComentario;
 import javax.persistence.*;
 
@@ -13,19 +11,20 @@ public class Comentario {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	private Date fecha;
+	private Calendar fecha;
 	private String texto;
 	
 	@ManyToOne
 	private Usuario usuario;
 	
-	private Map<Integer, Comentario> respuestas;
+	@OneToMany
+	private List<Comentario> respuestas = new ArrayList<Comentario>();
 	
 	//Constructores
 	public Comentario() {
 		super();
 	}
-	public Comentario(Date fecha, String texto, Usuario usuario) {
+	public Comentario(Calendar fecha, String texto, Usuario usuario) {
 		super();
 		this.fecha = fecha;
 		this.texto = texto;
@@ -39,10 +38,10 @@ public class Comentario {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Date getFecha() {
+	public Calendar getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(Calendar fecha) {
 		this.fecha = fecha;
 	}
 	public String getTexto() {
@@ -58,18 +57,25 @@ public class Comentario {
 		this.usuario = usuario;
 	}
 	
-	/*public Map<Integer, Comentario> getRespuestas() {
-		return respuestas;
-	}*/
-	
+//	/*public Map<Integer, Comentario> getRespuestas() {
+//		return respuestas;
+//	}*/
+//	
 	//Operaciones
-	public void crearRespuesta(Usuario uC, Date fCom, String texto) {
+	public void crearRespuesta(Usuario uC, Calendar fCom, String texto) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
 		Comentario c = new Comentario(fCom,texto,uC);
-		respuestas.put(c.getId(), c);
+		respuestas.add(c);
+		em.persist(c);
+		em.persist(this);
+		em.getTransaction().commit();
+		
 	}
 	
-	public List<DtComentario> getRespuestas(){
-		return null;
-	} //TODO
+//	public List<DtComentario> getRespuestas(){
+//		return null;
+//	} //TODO
 	
 }
