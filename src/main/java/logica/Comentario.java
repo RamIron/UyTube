@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Comentario {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 	private Calendar fecha;
 	private String texto;

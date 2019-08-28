@@ -5,10 +5,10 @@ import datatypes.*;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Elemento {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	protected int id; 
 	
 	private String nombre;

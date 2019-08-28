@@ -20,7 +20,7 @@ public interface IVideo {
 	 
 	 public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico);
 	 
-	 public List<DtComentario> obtenerComentariosVideo(String nomVid);
+	 public /*List<DtComentario>*/void obtenerComentariosVideo(String nomVid);
 	 
 	 public List<DtVideo> obtenerInfoVideo(String nomVid);
 	 

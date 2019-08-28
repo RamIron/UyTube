@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import datatypes.DtComentario;
 import interfaces.CFactory;
 import interfaces.ICategoria;
 import interfaces.IListaReproduccion;
@@ -17,6 +18,11 @@ import interfaces.IVideo;
 import interfaces.LRFactory;
 import interfaces.UFactory;
 import interfaces.VFactory;
+import logica.Canal;
+import logica.Conexion;
+import logica.Usuario;
+import logica.Valoracion;
+import logica.Video;
 
 
 
@@ -33,6 +39,7 @@ public class Principal {
 							+ "8) Alta Video\n"
 							+ "9) Alta Lista de Reproduccion\n"
 							+ "10) Valorar Video\n"
+							+ "11) Comentar Video\n"
 							+ "0) Salir\n"
 							+ "Opcion: ");
 	}
@@ -300,7 +307,61 @@ public class Principal {
 			valoracion = true;
 		}*/
 		
-		controladorV.valorarVideo("Las empanadas de la vieja", "mateo", true);
+//		controladorV.valorarVideo("Las empanadas de la vieja", "mateo", true);
+
+		/*Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		em.getTransaction().begin();
+		Video v = new Video ("empanadas", "fasdfsadf", null, 120, "sdafqwr", true);
+		
+		Usuario u = new Usuario("vieja", "perra", "loca", null, "perra@gmail");
+		Usuario u2 = new Usuario("vieja2", "perra2", "loca2", null, "perra@gmail2");
+		Canal c = new Canal ("vieja", "sdaqweqwe", true);
+		Canal c2 = new Canal ("vieja2", "sdaqweqwe2", true);
+		u.setCanal(c);
+		u2.setCanal(c2);
+		c.getVideos().add(v);
+		Valoracion va = new Valoracion(true, u2 ,v);
+		
+		em.persist(u);
+		em.persist(v);
+		em.persist(va);
+		em.getTransaction().commit();*/
+	}
+	
+	static void comentarVideo() {
+//		UFactory uf = UFactory.getInstancia();
+//		IUsuario controladorU = uf.getIUsuario();
+		VFactory vf = VFactory.getInstancia();
+		IVideo controladorV = vf.getIVideo();
+		Scanner entrada = new Scanner (System.in);
+		listarUsuarios();
+		
+		System.out.print("Listar videos de usuario: ");
+		String nickVideo = entrada.nextLine();
+		List<String> videosU = controladorV.listarVideosDeUsuario(nickVideo);
+		for(String v:videosU) {
+			System.out.println(v);
+		}
+		
+		System.out.print("Elija un1 video: ");
+		String nomVid = entrada.nextLine();
+		/*List<DtComentario> comentarios = controladorV.obtenerComentariosVideo(nomVid);
+		for(DtComentario c:comentarios) {
+			System.out.println(c.getTexto());
+		}*/
+		controladorV.obtenerComentariosVideo(nomVid);
+		
+		System.out.print("Usuario que contestara: ");
+		String nickComentario = entrada.nextLine();
+		
+		System.out.print("Comentario: ");
+		String texto = entrada.nextLine();
+		
+		
+		controladorV.realizarComentario(nickComentario, null, texto);
+		
+		controladorV.limpiarControlador();
 	}
 	
 	
@@ -341,6 +402,9 @@ public class Principal {
 					break;
 				case 10:
 					valorarVideo();
+					break;
+				case 11:
+					comentarVideo();
 					break;
 				case 0:
 					System.out.println("adios");

@@ -29,15 +29,19 @@ public class Video extends Elemento {
 	public Video() {
 		super();
 	}
-
-	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico) {
+	
+	public Video(String nombre) {
 		super(nombre);
-		this.descripcion = descripcion;
-		this.fPublicacion = fPublicacion;
-		this.duracion = duracion;
-		this.url = url;
-		this.publico = publico;
 	}
+
+//	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico) {
+//		super(nombre);
+//		this.descripcion = descripcion;
+//		this.fPublicacion = fPublicacion;
+//		this.duracion = duracion;
+//		this.url = url;
+//		this.publico = publico;
+//	}
 	
 	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico, Canal canal) {
 		super(nombre, canal);
@@ -46,13 +50,13 @@ public class Video extends Elemento {
 		this.duracion = duracion;
 		this.url = url;
 		this.publico = publico;
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		em.getTransaction().begin();
-		canal.getVideos().add(this);
-		em.persist(canal);
-		em.persist(this);
-		em.getTransaction().commit();
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		em.getTransaction().begin();
+//		canal.getVideos().add(this);
+//		em.persist(canal);
+//		em.persist(this);
+//		em.getTransaction().commit();
 		
 	}
 
@@ -97,9 +101,9 @@ public class Video extends Elemento {
 		this.publico = publico;
 	}
 
-//	public List<Valoracion> getValoraciones() {
-//		return valoraciones;
-//	}
+	public List<Valoracion> getValoraciones() {
+		return valoraciones;
+	}
 
 	public List<Comentario> getComentarios() {
 		return comentarios;
@@ -110,14 +114,14 @@ public class Video extends Elemento {
 	//Operaciones
 	
 	public void crearComentario(Usuario uC, Calendar fCom, String texto) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		em.getTransaction().begin();
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		em.getTransaction().begin();
 		Comentario c = new Comentario(fCom, texto, uC);
 		comentarios.add(c);
-		em.persist(c);
-		em.persist(this);
-		em.getTransaction().commit();
+//		em.persist(c);
+//		em.persist(this);
+//		em.getTransaction().commit();
 	}
 	
 //	public void crearRespuesta(int idCom, Usuario uC, Calendar fCom, String texto) {
@@ -135,11 +139,16 @@ public class Video extends Elemento {
 //		}
 //		return res;
 //	}
-//	
-//	public ArrayList<DtComentario> obtenerComentariosVideo() {
-//		return null;
-//	}  ///esto debe ser un jTree
-//	
+	
+	public List<DtComentario> obtenerComentariosVideo() {
+		List<DtComentario> dtComs = new ArrayList<DtComentario>();
+		for(Comentario c:this.comentarios) {
+			DtComentario dtC = new DtComentario(c.getTexto());
+			dtComs.add(dtC);
+		}
+		return dtComs;
+	} 
+	
 //	public DtElementoUsuario obtenerElemCategoria() {
 //		DtElementoUsuario res = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
 //		return res;
@@ -153,8 +162,8 @@ public class Video extends Elemento {
 //	}
 	
 	public void valorarVideo(boolean gusta, Usuario usuario, Video video) {
-		Valoracion val = new Valoracion(gusta, usuario, video);
-		valoraciones.add(val);
-		usuario.agregarValoracion(val);
+//		Valoracion val = new Valoracion(gusta, usuario, video);
+//		valoraciones.add(val);
+//		usuario.agregarValoracion(val);
 	}
 }
