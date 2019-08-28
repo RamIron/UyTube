@@ -14,15 +14,13 @@ public interface IVideo {
 	 
 	 public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url);
 	 
-	 public void agregarVideoPrivado(String nick, String nomV, String desc, Calendar fPub, int dur, String url);
-	 
 	 public void limpiarControlador();
 	 
 	 public List<String> listarVideosDeUsuario(String nick);
 	 
 	 public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico);
 	 
-	 public List<DtComentario> obtenerComentariosVideo(String nomVid);
+	 public /*List<DtComentario>*/void obtenerComentariosVideo(String nomVid);
 	 
 	 public List<DtVideo> obtenerInfoVideo(String nomVid);
 	 

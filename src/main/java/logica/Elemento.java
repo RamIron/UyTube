@@ -8,7 +8,8 @@ import javax.persistence.*;
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Elemento {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "elementoGenerator", sequenceName = "ELEMENTO_SEQUENCE", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "elementoGenerator")
 	protected int id; 
 	
 	private String nombre;

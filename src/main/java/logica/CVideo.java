@@ -7,7 +7,10 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
+import javax.persistence.TypedQuery;
 
+import Manejadores.ManejadorUsuario;
+import Manejadores.ManejadorVideo;
 import datatypes.DtComentario;
 import datatypes.DtValoracion;
 import datatypes.DtVideo;
@@ -38,35 +41,21 @@ public class CVideo implements IVideo {
 		}
 	}
 	
+	
 	@Override 
 	public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nick) != null) {
-			try {
-				this.usr = em.find(Usuario.class, nick);
-				this.vid = this.usr.getCanal().agregarVideo(nomV, desc, fPub, dur, url);
-			} catch (Exception e){
-				if(e instanceof RollbackException)
-					if(em.getTransaction().isActive())
-						em.getTransaction().rollback();
-				throw new IllegalArgumentException("Hubo un error inesperado");
-			}
-			
+		ManejadorVideo mV = ManejadorVideo.getInstancia();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		if(mU.existeUsuario(nick)) {
+			this.usr = mU.obtenerUsuario(nick);
+			this.vid = this.usr.getCanal().agregarVideo(nomV, desc, fPub, dur, url);
+			mV.agregarVideo(this.vid);
+			mU.modificaDatosUsuario(this.usr);
 		}else {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 		}
 	}
 	
-	@Override	
-	public void agregarVideoPrivado(String nick, String nomV, String desc, Calendar fPub, int dur, String url) {
-		/*Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nick) != null) {
-			this.usr = em.find(Usuario.class, nick);
-			this.usr.agregarVideo(nomV, publico, desc, fPub, dur, url);
-		}*/
-	}
 	
 	@Override
 	public void limpiarControlador() { //Operacion para utilizar al final de cada caso de uso
@@ -74,9 +63,9 @@ public class CVideo implements IVideo {
 		this.usr = null;
 	}
 	
-	@Override
+	/*@Override
 	public List<String> listarVideosDeUsuario(String nick) {
-		/*Conexion conexion = Conexion.getInstancia();
+		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		if(em.find(Usuario.class, nick) != null) {
 			this.usr = em.find(Usuario.class, nick);
@@ -84,18 +73,32 @@ public class CVideo implements IVideo {
 			return videos;
 		}else {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-		}*/
+		}
 		return null;
+	}*/
+	
+	@Override
+	public List<String> listarVideosDeUsuario(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		if(mU.existeUsuario(nick)) {
+			this.usr = mU.obtenerUsuario(nick);
+			List<String> videosU = this.usr.getCanal().obtenerNombreVideos();
+			return videosU;
+		}else {
+			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
+		}
 	}
 	
 	@Override 
 	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {}
 	
 	@Override 
-	public List<DtComentario> obtenerComentariosVideo(String nomVid) {
-//		List<DtComentario> dtComentarios = this.usr.obtenerComentariosVideo(nomVid);
-//		return dtComentarios;
-		return null;
+	public void/*List<DtComentario>*/ obtenerComentariosVideo(String nomVid) {
+		this.vid = this.usr.getCanal().obtenerVideo(nomVid);
+		System.out.println("El video seleccionado fue: " + this.vid.getNombre());//temporal
+		
+		/*List<DtComentario> dtComentarios = this.vid.obtenerComentariosVideo();
+		return dtComentarios;*/
 	}
 	
 	@Override 
@@ -112,15 +115,29 @@ public class CVideo implements IVideo {
 	public void responderComentario(int idCom, String nick, Calendar fcom, String texto) {}
 	
 	@Override 
-	public void realizarComentario(String nick, Calendar fCom, String texto) {}
+	public void realizarComentario(String nick, Calendar fCom, String texto) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		if(mU.existeUsuario(nick)) {
+			Usuario usrCom = mU.obtenerUsuario(nick);
+			this.vid.crearComentario(usrCom, fCom, texto);
+			mU.modificaDatosUsuario(this.usr);
+			mU.modificaDatosUsuario(usrCom);
+		}
+	}
 	
+
 	@Override 
 	public void valorarVideo(String nomVid, String nickVal, boolean val) {
 //		Conexion conexion = Conexion.getInstancia();
 //		EntityManager em = conexion.getEntityManager();
+//		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+//		
+//		Usuario ramiro = mU.obtenerUsuario("ram");
+//		Video v = ramiro.getCanal().obtenerVideo();
+//		
 //		if(em.find(Usuario.class, nickVal) != null) {
 //			Usuario usrVal = em.find(Usuario.class, nickVal);
-//			this.usr.valorarVideo(nomVid, usrVal, val);
+//			ramiro.getCanal().valorarVideo(v, usrVal, true);
 //		}else {
 //			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 //		}

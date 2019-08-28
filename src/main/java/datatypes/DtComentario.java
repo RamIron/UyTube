@@ -22,6 +22,11 @@ public class DtComentario {
 		this.texto = texto;
 		this.respuestas = respuestas;
 	}
+	
+	public DtComentario(String texto) { //temporal
+		super();
+		this.texto = texto;
+	}
 
 	public Integer getId() {
 		return id;

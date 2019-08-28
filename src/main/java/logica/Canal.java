@@ -139,6 +139,7 @@ public class Canal {
 	public Video agregarVideo(String nomV, String desc, Calendar fPub, int dur, String url) {
 		Boolean publico = false;
 		Video v = new Video(nomV, desc, fPub, dur, url, publico, this);
+		this.videos.add(v);
 		return v;
 	}
 	
@@ -158,11 +159,9 @@ public class Canal {
 //	
 //	public ArrayList<String> listarVideosdeLista(String nomList) {}
 //	
-//	public ArrayList<DtComentario> obtenerComentariosVideo(String nomVid) {
-//		Video v= this.videos.get(nomVid);
-//		ArrayList<DtComentario> dtComentarios = v.obtenerComentariosVideo();
-//		return dtComentarios;
-//	}
+//	public List<DtComentario> obtenerComentariosVideo(String nomVid) {}
+	
+
 //	
 //	public DtVideo obtenerInfoVideo(String nomVid) {
 //		Video v= this.videos.get(nomVid);
@@ -175,14 +174,43 @@ public class Canal {
 //	public String obtenerUsuarioCanal() {
 //		return this.usuario.getNickname();
 //	}
-//	
+	
+	public List<String> obtenerNombreVideos(){
+		List<String> videosU = new ArrayList<String>();
+		for(Video v:this.videos) {
+			videosU.add(v.getNombre());
+		}
+		return videosU;
+	}
+	
+	
+	public Video obtenerVideo(String nomVid) {
+		System.out.println("Entra aca");
+		boolean encontre = false;
+		int i=0;
+		while(!encontre && i<this.videos.size()-1) {
+			if(this.videos.get(i).getNombre().contentEquals(nomVid)) {
+				System.out.println("entra al if");
+				encontre = true;
+			}else {
+				i++;
+			}
+		}
+			
+		return this.videos.get(i);
+	}
+	
 //	public Video obtenerVideo(String nomVid) {
 //		Video v= this.videos.get(nomVid);
 //		return v;
 //	}
 //	
-//	public void valorarVideo(String nomVid, Usuario uVal, boolean val) {
-//		Video v= this.videos.get(nomVid);
-//		v.valorar(uVal, val);
+//	public void valorarVideo(Video v, Usuario uVal, boolean val) {
+//		v.valorarVideo(val, uVal, v);
+//	}
+//	
+//	public Video obtenerVideo() {
+//		Video v= this.videos.get(0);
+//		return v;
 //	}
 }

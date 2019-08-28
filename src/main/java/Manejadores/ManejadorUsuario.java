@@ -46,7 +46,7 @@ public class ManejadorUsuario {
 		}
 	}
 	
-	public Usuario buscarUsuario(String nickname){
+	public Usuario obtenerUsuario(String nickname){
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
 		return em.find(Usuario.class, nickname);
