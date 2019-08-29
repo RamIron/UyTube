@@ -5,7 +5,9 @@ package Manejadores;
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
 
+import logica.Categoria;
 import logica.Conexion;
+import logica.Usuario;
 import logica.Video;
 
 public class ManejadorVideo {
@@ -32,6 +34,13 @@ public class ManejadorVideo {
 					em.getTransaction().rollback();
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}
+	}
+	
+	public Boolean existeVideo(String nick, String nomV) {
+		Conexion conexion=Conexion.getInstancia();
+		EntityManager em =conexion.getEntityManager();
+		Usuario u = em.find(Usuario.class, nick);
+		return u.getCanal().existeVideo(nomV);
 	}
 	
 }

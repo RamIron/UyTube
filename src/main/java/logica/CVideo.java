@@ -130,7 +130,7 @@ public class CVideo implements IVideo {
 	
 	@Override
 	public Boolean existeVideo(String nick, String nomV) {
-		// TODO Auto-generated method stub
-		return false;
+		ManejadorVideo mV = ManejadorVideo.getInstancia();
+		return mV.existeVideo(nick, nomV);
 	}
 }

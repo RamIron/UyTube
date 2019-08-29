@@ -54,7 +54,7 @@ public class AltaVideo extends JInternalFrame {
 	private JComboBox<Integer> fAnio = new JComboBox<Integer>();
 	private JComboBox categoria = new JComboBox();
 	private JButton btnAgregar = new JButton("Agregar");
-	private JLabel lblMsgExiste = new JLabel("Ya existe un video con este nombre.");
+	private JLabel lblMsgExiste = new JLabel("Ya existe un video con este nombre en el canal.");
 	private JLabel lblMsgError = new JLabel("Error: falta completar algun campo.");
 	private JLabel lblMsgExito = new JLabel("El video fue agregado con exito.");
 	private JLabel lblMsgErrorUsr = new JLabel("Debe seleccionar un usuario");
@@ -182,13 +182,14 @@ public class AltaVideo extends JInternalFrame {
 		getContentPane().add(lblCategoria);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Hay que ver errores anotados en cuadernola mateo
 				reiniciarMsg();
 				if(nomVid.getText().isEmpty() || duracion.getText().isEmpty() || url.getText().isEmpty() ||
 					descripcion.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null)) {
 					lblMsgError.setVisible(true);
 				}else if(iV.existeVideo(usr, nomVid.getText())) {
 					lblMsgExiste.setVisible(true);
-				}else if(duracion.getText().chars().allMatch( Character::isDigit )){
+				}else if(!duracion.getText().chars().allMatch(Character::isDigit)){
 					lblMsgErrorNum.setVisible(true);
 				}else {
 					Calendar fPub = Calendar.getInstance();
