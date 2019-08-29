@@ -51,6 +51,7 @@ public class MenuPrincipal extends JFrame {
 	
 	private AltaUsuario altaUsuarioIF;
 	private ListarUsuario listarUsuarioIF;
+	private ConsultaUsuario consultaUsuarioIF;
 	
 	private AltaVideo altaVideoIF;
 	
@@ -102,6 +103,9 @@ public class MenuPrincipal extends JFrame {
 		listarUsuarioIF = new ListarUsuario(iU);
 		listarUsuarioIF.setLocation(0, 0);
 		
+		consultaUsuarioIF = new ConsultaUsuario(iU);
+		consultaUsuarioIF.setLocation(0, 0);
+		
 		//Video
 		VFactory fV = VFactory.getInstancia();
 		IVideo iV = fV.getIVideo();
@@ -139,6 +143,12 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		mnUsuario.add(mntmListarTodos);
+		mntmConsultarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				consultaUsuarioIF.cargarElementos(iU);
+				consultaUsuarioIF.setVisible(true);
+			}
+		});
 		
 		
 		mnUsuario.add(mntmConsultarUsuario);
@@ -232,6 +242,7 @@ public class MenuPrincipal extends JFrame {
 		
 		contentPane.add(altaUsuarioIF);
 		contentPane.add(listarUsuarioIF);
+		contentPane.add(consultaUsuarioIF);
 		
 		contentPane.add(altaVideoIF);
 		
