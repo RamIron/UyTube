@@ -1,3 +1,6 @@
+//TODO agregar verificacion de duracion que sea numero, usar http://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringUtils.html#isNumeric-java.lang.CharSequence-
+
+
 package presentacion;
 
 import java.awt.EventQueue;
@@ -17,6 +20,9 @@ import interfaces.IVideo;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
+
+import org.dom4j.util.StringUtils;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -30,6 +36,8 @@ import javax.swing.JDesktopPane;
 import java.awt.Color;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AltaVideo extends JInternalFrame {
 
@@ -50,6 +58,7 @@ public class AltaVideo extends JInternalFrame {
 	private JLabel lblMsgError = new JLabel("Error: falta completar algun campo.");
 	private JLabel lblMsgExito = new JLabel("El video fue agregado con exito.");
 	private JLabel lblMsgErrorUsr = new JLabel("Debe seleccionar un usuario");
+	private JLabel lblMsgErrorNum = new JLabel("Deben ser numeros");
 	private final JLabel lblListaDeUsuarios = new JLabel("Lista de Usuarios");
 
 	/**
@@ -90,7 +99,8 @@ public class AltaVideo extends JInternalFrame {
 		scrollPane.setBounds(36, 50, 198, 345);
 		getContentPane().add(scrollPane);
 		
-		listaUsr  = new JList();
+		DefaultListModel<String> listaU = new DefaultListModel<String>();
+		listaUsr  = new JList(listaU);
 		scrollPane.setViewportView(listaUsr);
 		listaUsr.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
@@ -178,6 +188,8 @@ public class AltaVideo extends JInternalFrame {
 					lblMsgError.setVisible(true);
 				}else if(iV.existeVideo(usr, nomVid.getText())) {
 					lblMsgExiste.setVisible(true);
+				}else if(duracion.getText().chars().allMatch( Character::isDigit )){
+					lblMsgErrorNum.setVisible(true);
 				}else {
 					Calendar fPub = Calendar.getInstance();
 			        fPub.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
@@ -217,17 +229,20 @@ public class AltaVideo extends JInternalFrame {
 		lblListaDeUsuarios.setBounds(70, 24, 137, 15);
 		
 		getContentPane().add(lblListaDeUsuarios);
+		
+		
+		lblMsgErrorNum.setForeground(Color.RED);
+		lblMsgErrorNum.setBounds(459, 228, 219, 15);
+		getContentPane().add(lblMsgErrorNum);
 
 	}
 	
 	public void cargarUsuarios(IUsuario iU) {
 		List<String> usuarios = iU.listarUsuarios();
-		DefaultListModel<String> listaU = new DefaultListModel<String>();
-		int i = 0;
 		for(String u: usuarios) {
-			listaU.add(i++, u);
+			((DefaultListModel) listaUsr.getModel()).addElement(u);
 		}
-		listaUsr.setModel(listaU);
+
 	}
 	
 	public void cargarCategorias(ICategoria iC) {
@@ -239,8 +254,7 @@ public class AltaVideo extends JInternalFrame {
 	}
 	
 	public void limpiarListas() {
-		DefaultListModel<String> listaU = new DefaultListModel<String>();
-		listaUsr.setModel(listaU);
+		((DefaultListModel) listaUsr.getModel()).clear();
 		categoria.removeAllItems();
 	}
 	
@@ -268,6 +282,7 @@ public class AltaVideo extends JInternalFrame {
 		lblMsgError.setVisible(false);
 		lblMsgExito.setVisible(false);
 		lblMsgErrorUsr.setVisible(false);
+		lblMsgErrorNum.setVisible(false);
 	}
 	
 	public void reiniciarVal() {
@@ -290,5 +305,17 @@ public class AltaVideo extends JInternalFrame {
 		habilitarFormVid(false);
 		reiniciarVal();
 		reiniciarMsg();
+	}
+
+	public static boolean esNumero(String str) { 
+		for (char c : str.toCharArray()){
+	        if (!Character.isDigit(c)) {
+	        	System.out.print("false");
+	        	return false;
+	        }
+	    }
+		System.out.print("true");
+	    return true;
+
 	}
 }

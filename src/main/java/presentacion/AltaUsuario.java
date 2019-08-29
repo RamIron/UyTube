@@ -1,22 +1,35 @@
 package presentacion;
 
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import interfaces.IUsuario;
 
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
 
@@ -40,7 +53,9 @@ public class AltaUsuario extends JInternalFrame {
 	private JLabel lblMsgExito = new JLabel("El usuario ha sido ingresado con exito.");
 	private JCheckBox chckbxCanalPublico = new JCheckBox("Canal Publico");
 	private JCheckBox chckbxPersonalizarNombreDel = new JCheckBox("Personalizar nombre del canal");
-	private JCheckBox lblInsertarImagenDe = new JCheckBox("Insertar imagen de perfil");
+	private JCheckBox chckbxInsertarImagenDe = new JCheckBox("Insertar imagen de perfil");
+	private final JLabel lblImagen = new JLabel("");
+	private JButton btnSelecFoto = new JButton("Seleccionar");
 
 	/**
 	 * Create the frame.
@@ -71,22 +86,22 @@ public class AltaUsuario extends JInternalFrame {
 		getContentPane().add(lblFechaDeNacimento);
 		
 		nick = new JTextField();
-		nick.setBounds(184, 25, 190, 19);
+		nick.setBounds(184, 25, 202, 19);
 		getContentPane().add(nick);
 		nick.setColumns(10);
 		
 		nombre = new JTextField();
-		nombre.setBounds(184, 72, 190, 19);
+		nombre.setBounds(184, 72, 202, 19);
 		getContentPane().add(nombre);
 		nombre.setColumns(10);
 		
 		apellido = new JTextField();
-		apellido.setBounds(184, 122, 190, 19);
+		apellido.setBounds(184, 122, 202, 19);
 		getContentPane().add(apellido);
 		apellido.setColumns(10);
 		
 		email = new JTextField();
-		email.setBounds(184, 173, 190, 19);
+		email.setBounds(184, 173, 202, 19);
 		getContentPane().add(email);
 		email.setColumns(10);
 
@@ -160,24 +175,20 @@ public class AltaUsuario extends JInternalFrame {
 		getContentPane().add(desCanal);
 		
 		
-		lblInsertarImagenDe.addChangeListener(new ChangeListener() {
+		chckbxInsertarImagenDe.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				agregarFoto = ! agregarFoto;
-				img.setEnabled(agregarFoto);
+				btnSelecFoto.setEnabled(agregarFoto);
 			}
 		});
-		lblInsertarImagenDe.setBounds(67, 289, 284, 15);
-		getContentPane().add(lblInsertarImagenDe);
+		chckbxInsertarImagenDe.setBounds(67, 289, 284, 15);
+		getContentPane().add(chckbxInsertarImagenDe);
 		
 		img = new JTextField();
 		img.setEnabled(false);
-		img.setBounds(184, 342, 190, 19);
+		img.setBounds(23, 325, 238, 19);
 		getContentPane().add(img);
 		img.setColumns(10);
-		
-		JLabel lblImagenDePerfil = new JLabel("Imagen de perfil");
-		lblImagenDePerfil.setBounds(23, 344, 148, 15);
-		getContentPane().add(lblImagenDePerfil);
 		
 		
 		lblMsgError.setForeground(Color.RED);
@@ -247,6 +258,44 @@ public class AltaUsuario extends JInternalFrame {
 		getContentPane().add(chckbxCanalPublico);
 		
 		
+		btnSelecFoto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JFileChooser abrir = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
+				FileNameExtensionFilter filter = new FileNameExtensionFilter( "jpeg, jpg, png o bmp", "jpeg", "png", "jpg", "bmp");
+				abrir.setFileFilter(filter);
+				int r = abrir.showOpenDialog(null); 
+				if (r == JFileChooser.APPROVE_OPTION) { 
+					img.setText(abrir.getSelectedFile().getAbsolutePath()); 
+					
+					//SOLO PARA PROBAR
+					
+					try {
+						String path = abrir.getSelectedFile().getAbsolutePath();
+						mostrarImg(path);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					//FIN
+				} 
+				
+			}
+		});
+		btnSelecFoto.setBounds(270, 325, 117, 19);
+		getContentPane().add(btnSelecFoto);
+		btnSelecFoto.setEnabled(false);
+		
+		lblImagen.setBackground(Color.WHITE);
+		lblImagen.setBounds(23, 374, 100, 70);
+		
+		getContentPane().add(lblImagen);
+		
+		
 		
 
 	}
@@ -267,7 +316,10 @@ public class AltaUsuario extends JInternalFrame {
 		publico = false;
 		chckbxCanalPublico = new JCheckBox("Canal Publico");
 		chckbxPersonalizarNombreDel = new JCheckBox("Personalizar nombre del canal");
-		lblInsertarImagenDe = new JCheckBox("Insertar imagen de perfil");
+		chckbxInsertarImagenDe = new JCheckBox("Insertar imagen de perfil");
+		btnSelecFoto.setEnabled(false);
+		nomCanal.setEnabled(false);
+		lblImagen.setIcon(null);
 		borrarMsg();
 	}
 	public void borrarMsg() {
@@ -276,4 +328,29 @@ public class AltaUsuario extends JInternalFrame {
 		lblMsgErrorNick.setVisible(false);
 		lblMsgErrorEmail.setVisible(false);
 	}
+	
+	public void mostrarImg(final String filename) throws Exception
+	  {
+	    SwingUtilities.invokeLater(new Runnable()
+	    {
+	      public void run()
+	      {
+	                
+	        BufferedImage image = null;
+	        try
+	        {
+	          image = ImageIO.read(new File(filename));
+	        }
+	        catch (Exception e)
+	        {
+	          e.printStackTrace();
+	          System.exit(1);
+	        }
+	        ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(100, 70, Image.SCALE_FAST));
+	        lblImagen.setIcon(imageIcon);
+
+
+	      }
+	    });
+	  }
 }
