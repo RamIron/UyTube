@@ -19,7 +19,7 @@ public class Canal {
 	private String descripcion;
 	
 	@Column(name="PUBLICO")
-	private Boolean publico;
+	private boolean publico;
 	
 	@OneToOne
 	private Usuario usuario;
@@ -116,14 +116,10 @@ public class Canal {
 		v.setCategoria(cat);*/
 	}
 	
-	public void agregarListaParticular(String nomL, boolean publico) {
-		/*Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		em.getTransaction().begin();
+	public Particular agregarListaParticular(String nomL, boolean publico) {
 		Particular lisPar = new Particular(nomL, this, publico);
 		this.listas.add(lisPar);
-		em.persist(lisPar);
-		em.getTransaction().commit();*/
+		return lisPar;
 	}
 	
 	public void agregarListaDefecto(String nomL) {
@@ -151,9 +147,18 @@ public class Canal {
 //	public void eliminarVideoDeLista(Video v, String nomList) {}
 //	
 //	//public boolean existeListaDefecto(String nomL) {}
-//	
-//	//public boolean existeListaParticular(String nomL) {}
-//	
+	
+	public boolean existeListaParticular(String nomL) {
+		for(ListaReproduccion lr:this.listas) {
+			if (lr instanceof Particular) {
+				if(lr.getNombre().contentEquals(nomL)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 //	public ArrayList<String> listarListasDeUsuario() {}
 //	
 //	public ArrayList<String> listarListasParticulares() {}

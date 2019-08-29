@@ -21,13 +21,13 @@ public abstract class ListaReproduccion extends Elemento {
 
 	public ListaReproduccion(String nombre, Canal canal) {
 		super(nombre, canal);
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		em.getTransaction().begin();
-		canal.getListas().add(this);
-		em.persist(canal);
-		em.persist(this);
-		em.getTransaction().commit();
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		em.getTransaction().begin();
+//		canal.getListas().add(this);
+//		em.persist(canal);
+//		em.persist(this);
+//		em.getTransaction().commit();
 	}
 
 	public ListaReproduccion(String nombre) {
@@ -42,12 +42,12 @@ public abstract class ListaReproduccion extends Elemento {
 	
 	//Operaciones
 	public void agregarVideo(Video v) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		em.getTransaction().begin();
-		videos.add(v);
-		em.persist(this);
-		em.getTransaction().commit();
+//		Conexion conexion = Conexion.getInstancia();
+//		EntityManager em = conexion.getEntityManager();
+//		em.getTransaction().begin();
+//		videos.add(v);
+//		em.persist(this);
+//		em.getTransaction().commit();
 		
 	}
 	

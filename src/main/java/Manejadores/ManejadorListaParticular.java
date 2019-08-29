@@ -1,30 +1,29 @@
 package Manejadores;
 
-//import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
 
 import logica.Conexion;
+import logica.Particular;
 import logica.Video;
 
-public class ManejadorVideo {
-	private static ManejadorVideo instancia = null;
+public class ManejadorListaParticular {
+	private static ManejadorListaParticular instancia = null;
 	
-	private ManejadorVideo(){}
+	private ManejadorListaParticular(){}
 	
-	public static ManejadorVideo getInstancia() {
+	public static ManejadorListaParticular getInstancia() {
 		if (instancia == null)
-			instancia = new ManejadorVideo();
+			instancia = new ManejadorListaParticular();
 		return instancia;
 	}
 	
-	public void agregarVideo(Video video) {
+	public void agregarListaParticular(Particular particular) {
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
 		try {
 			em.getTransaction().begin();
-			em.persist(video);
+			em.persist(particular);
 			em.getTransaction().commit();
 		} catch (Exception e){
 			if(e instanceof RollbackException)
@@ -33,5 +32,4 @@ public class ManejadorVideo {
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}
 	}
-	
 }

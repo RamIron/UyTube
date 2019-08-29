@@ -11,6 +11,8 @@ import javax.persistence.TypedQuery;
 
 import org.hibernate.SessionFactory;
 
+import Manejadores.ManejadorCategoria;
+import Manejadores.ManejadorListaParticular;
 import Manejadores.ManejadorUsuario;
 import datatypes.DtComentario;
 import datatypes.DtListaRep;
@@ -26,26 +28,13 @@ public class CListaReproduccion implements IListaReproduccion {
 	private ListaReproduccion lista;
 
 	@Override 
-	public void agregarCategoriaALista(String nomC) { // se debe recordar usuario y lista
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		if((em.find(Categoria.class, nomC) != null)) { //Si la categoria existe
-//			if((em.find(Usuario.class, nick) != null)) { //Verificando que el nick exista
-//				if((em.find(Particular.class, nomL) != null)) { //Verificando que la lista exista
-//					this.uList = em.find(Usuario.class, nick);
-//					Categoria cat = em.find(Categoria.class, nomC);
-//					this.uList.agregarCategoriaALista(nomL, cat);
-//				} else { 
-//					throw new IllegalArgumentException("No existe una lista con el nombre ingresado");
-//				}
-//				em.close();
-//			} else { 
-//				throw new IllegalArgumentException("No existe un usuario con el nickname ingresado");
-//			}
-//			em.close();
-//		} else { 
-//			throw new IllegalArgumentException("No existe la categoria con el nombre ingresado");
-//		}
+	public void agregarCategoriaALista(String nomC) {
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		if(mC.existeCategoria(nomC)) {
+			Categoria cat = mC.obtenerCategoria(nomC);
+			cat.agregarElemento(this.lista);
+			mC.modificarCategoria(cat);
+		}
 	}
 	
 	@Override 
@@ -80,54 +69,14 @@ public class CListaReproduccion implements IListaReproduccion {
 //		}
 	}
 	
-//	@Override 
-//	public void agregarListaParticular(String nick, String nomL, boolean publico) {
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		
-//		
-//		TypedQuery<String> query = em.createNamedQuery("existeListaParticular", String.class);
-//		query.setParameter("nombreLista", nomL);
-//		List<String> lista = query.getResultList();
-//		
-//		if(!lista.contains(nomL)) {
-//			try {
-//				this.uList = em.find(Usuario.class, nick);
-//				Canal userC = this.uList.getCanal();
-//				Elemento lisP= new Particular(nomL, userC, publico);
-//			} catch (Exception e){
-//				if(e instanceof RollbackException)
-//					if(em.getTransaction().isActive())
-//						em.getTransaction().rollback();
-//				throw new IllegalArgumentException("Hubo un error inesperado");
-//			}
-//		} else {
-//			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
-//		}
-//	}
 	
 	@Override 
-	public void agregarListaParticular(String nick, String nomL, boolean publico) {
+	public void agregarListaParticular(String nomL, boolean publico) {
+		ManejadorListaParticular mLP = ManejadorListaParticular.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		TypedQuery<String> query = em.createNamedQuery("existeListaParticular", String.class);
-		query.setParameter("nombreLista", nomL);
-		List<String> lista = query.getResultList();
-		
-		if(mU.existeUsuario(nick)) {
-			if(!lista.contains(nomL)) {
-				this.uList = mU.obtenerUsuario(nick);
-				Canal userC = this.uList.getCanal();
-				Elemento lisP= new Particular(nomL, userC, publico);
-				mU.modificaDatosUsuario(this.uList);
-			}else {
-				throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
-			}
-		}else {
-			throw new IllegalArgumentException("No existe un usuario con nick: " + nick);
-		}
-		
+		this.uList = mU.obtenerUsuario(this.uList.getNickname());
+		this.lista = this.uList.getCanal().agregarListaParticular(nomL, publico);
+		mLP.agregarListaParticular((Particular)this.lista);
 	}
 	
 	@Override 
@@ -137,10 +86,19 @@ public class CListaReproduccion implements IListaReproduccion {
 	public void eliminarVideoDeLista(String nickVid, String nomVid, String nomList) {}
 	
 	@Override 
+	public boolean esCanalPublico() {
+		return this.uList.getCanal().getPublico();
+	}
+	
+	@Override 
 	public boolean existeListaDefecto(String nomL) {return false;}
 	
 	@Override 
-	public boolean existeListaParticular(String nick, String nomL) {return false;}
+	public boolean existeListaParticular(String nick, String nomL) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.uList = mU.obtenerUsuario(nick);
+		return this.uList.getCanal().existeListaParticular(nomL);
+	}
 	
 	@Override
 	public void limpiarControlador() { //Operacion para utilizar al final de cada caso de uso

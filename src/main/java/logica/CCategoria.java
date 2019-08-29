@@ -34,7 +34,7 @@ public class CCategoria implements ICategoria {
 	public List<DtElementoUsuario> listarElemCategoria(String nomC) {
 		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
 		if(mc.existeCategoria(nomC)) { //si existe la categoria
-			this.cat = mc.buscarCategoria(nomC);
+			this.cat = mc.obtenerCategoria(nomC);
 			List<DtElementoUsuario> elementos = this.cat.obtenerElemCategoria();
 			return elementos;	
 		} else {

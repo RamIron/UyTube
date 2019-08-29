@@ -1,24 +1,28 @@
 package logica;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+//import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Valoracion {
 	@Id
 	@SequenceGenerator(name = "valoracionGenerator", sequenceName = "VALORACION_SEQUENCE", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "valoracionGenerator")
-	private Integer id;
+	private int id;
 	
 	private boolean gusta;
 	
-	//@Id 
 	@ManyToOne
-	@JoinColumn(insertable=false, updatable=false)
+//	@JoinColumn(insertable=false, updatable=false)
 	private Usuario usuario;
 	
-	//@Id 
 	@ManyToOne
-	@JoinColumn(insertable=false, updatable=false)
+//	@JoinColumn(insertable=false, updatable=false)
 	private Video video;
 	
 	//Constructores

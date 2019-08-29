@@ -40,7 +40,7 @@ public class Usuario {
 	private Canal canal;
 	
 	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
-	public List<Valoracion> valoraciones = new ArrayList<>();
+	private List<Valoracion> valoraciones = new ArrayList<>();
 	
 	@ManyToMany(mappedBy="seguidos")
 	//@JoinTable(name="USUARIOS_SEGUIDOS")

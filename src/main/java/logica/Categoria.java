@@ -12,7 +12,7 @@ public class Categoria {
 		@Id
 		private String nombre;
 		
-		@OneToMany(mappedBy="categoria",cascade=CascadeType.ALL,orphanRemoval=true)
+		@OneToMany(mappedBy="categoria"/*,cascade=CascadeType.ALL,orphanRemoval=true*/)
 		private List<Elemento> elementos = new ArrayList <Elemento>();
 		
 		
@@ -49,14 +49,14 @@ public class Categoria {
 		}
 		
 		public void agregarElemento(Elemento e) {
-			Conexion conexion = Conexion.getInstancia();
-			EntityManager em = conexion.getEntityManager();
-			em.getTransaction().begin();
+//			Conexion conexion = Conexion.getInstancia();
+//			EntityManager em = conexion.getEntityManager();
+//			em.getTransaction().begin();
 			elementos.add(e);
 			e.setCategoria(this);
-			em.persist(e);
-			em.persist(this);
-			em.getTransaction().commit();
+//			em.persist(e);
+//			em.persist(this);
+//			em.getTransaction().commit();
 		}
 		
 		public void agregarLista(Particular p) {

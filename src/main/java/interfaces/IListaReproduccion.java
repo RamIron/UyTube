@@ -13,11 +13,13 @@ public interface IListaReproduccion {
 	
 	public void agregarListaDefecto(String nomL);
 	
-	public void agregarListaParticular(String nick, String nomL, boolean publico);
+	public void agregarListaParticular(String nomL, boolean publico);
 	
 	public void agregarVideoLista(String nomVid, String nomList);
 	
 	public void eliminarVideoDeLista(String nickVid, String nomVid, String nomList);
+	
+	public boolean esCanalPublico();
 	
 	public boolean existeListaDefecto(String nomL);
 	

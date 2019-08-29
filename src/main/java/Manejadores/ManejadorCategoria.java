@@ -11,7 +11,7 @@ import logica.Conexion;
 import logica.Usuario;
 import logica.Categoria;
 
-public class ManejadorCategoria {
+	public class ManejadorCategoria {
 
 	private static ManejadorCategoria instancia = null;
 		
@@ -38,7 +38,23 @@ public class ManejadorCategoria {
 		}
 	}
 	
-	public Categoria buscarCategoria(String nombre){
+	public void modificarCategoria(Categoria categoria) {
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		try {
+			em.getTransaction().begin();
+			//em.persist(categoria);
+			em.merge(categoria);
+			em.getTransaction().commit();
+		} catch (Exception e){
+			if(e instanceof RollbackException)
+				if(em.getTransaction().isActive())
+					em.getTransaction().rollback();
+			throw new IllegalArgumentException("Hubo un error inesperado");
+		}
+	}
+	
+	public Categoria obtenerCategoria(String nombre){
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
 		return em.find(Categoria.class, nombre);

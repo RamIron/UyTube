@@ -29,10 +29,6 @@ public class Video extends Elemento {
 	public Video() {
 		super();
 	}
-
-	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico) {
-		super(nombre);
-	}
 	
 	public Video(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url, boolean publico, Canal canal) {
 		super(nombre, canal);
@@ -41,14 +37,6 @@ public class Video extends Elemento {
 		this.duracion = duracion;
 		this.url = url;
 		this.publico = publico;
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		em.getTransaction().begin();
-//		canal.getVideos().add(this);
-//		em.persist(canal);
-//		em.persist(this);
-//		em.getTransaction().commit();
-		
 	}
 
 	//Getters & Setters
@@ -105,14 +93,8 @@ public class Video extends Elemento {
 	//Operaciones
 	
 	public void crearComentario(Usuario uC, Calendar fCom, String texto) {
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		em.getTransaction().begin();
 		Comentario c = new Comentario(fCom, texto, uC);
 		comentarios.add(c);
-//		em.persist(c);
-//		em.persist(this);
-//		em.getTransaction().commit();
 	}
 	
 //	public void crearRespuesta(int idCom, Usuario uC, Calendar fCom, String texto) {
@@ -130,11 +112,6 @@ public class Video extends Elemento {
 //		}
 //		return res;
 //	}
-
-	public DtElementoUsuario obtenerElemCategoria() {
-		DtElementoUsuario video = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
-		return video;
-	}
 	
 	public List<DtComentario> obtenerComentariosVideo() {
 		List<DtComentario> dtComs = new ArrayList<DtComentario>();
@@ -144,6 +121,13 @@ public class Video extends Elemento {
 		}
 		return dtComs;
 	} 
+
+	public DtElementoUsuario obtenerElemCategoria() {
+		DtElementoUsuario video = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
+		return video;
+	}
+	
+	
 //	public void valorar(Usuario uVal, boolean val) {
 //		Valoracion v = new Valoracion(val, uVal, this);
 //		uVal.agregarValoracion(v);
@@ -151,9 +135,9 @@ public class Video extends Elemento {
 //
 //	}
 	
-	public void valorarVideo(boolean gusta, Usuario usuario, Video video) {
-//		Valoracion val = new Valoracion(gusta, usuario, video);
-//		valoraciones.add(val);
-//		usuario.agregarValoracion(val);
+	public void valorarVideo(boolean gusta, Usuario usrVal) {
+		Valoracion val = new Valoracion(gusta, usrVal, this);
+		valoraciones.add(val);
+		usrVal.agregarValoracion(val);
 	}
 }

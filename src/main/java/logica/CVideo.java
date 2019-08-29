@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.persistence.*;
 
+import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorUsuario;
 import Manejadores.ManejadorVideo;
 import datatypes.DtComentario;
@@ -21,21 +22,11 @@ public class CVideo implements IVideo {
 	//Operaciones
 	@Override 
 	public void agregarCategoria(String nomC) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		if(em.find(Categoria.class, nomC) != null) {
-			try {
-				Categoria cat = em.find(Categoria.class, nomC);
-			    cat.agregarElemento(this.vid);
-			    System.out.println("Llega aca");
-			} catch (Exception e){
-				if(e instanceof RollbackException)
-					if(em.getTransaction().isActive())
-						em.getTransaction().rollback();
-				throw new IllegalArgumentException("Hubo un error inesperado");
-			}
-		}else {
-			throw new java.lang.RuntimeException("No existe una categoria con ese nombre");
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		if(mC.existeCategoria(nomC)) {
+			Categoria cat = mC.obtenerCategoria(nomC);
+			cat.agregarElemento(this.vid);
+			mC.modificarCategoria(cat);
 		}
 	}
 	
@@ -48,7 +39,6 @@ public class CVideo implements IVideo {
 			this.usr = mU.obtenerUsuario(nick);
 			this.vid = this.usr.getCanal().agregarVideo(nomV, desc, fPub, dur, url);
 			mV.agregarVideo(this.vid);
-			mU.modificaDatosUsuario(this.usr);
 		}else {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 		}
@@ -91,13 +81,11 @@ public class CVideo implements IVideo {
 	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {}
 	
 	@Override 
-	public List<DtComentario> obtenerComentariosVideo(String nomVid) {
+	public void/*List<DtComentario>*/ obtenerComentariosVideo(String nomVid) {
 		this.vid = this.usr.getCanal().obtenerVideo(nomVid);
-		System.out.println("El video seleccionado fue: " + this.vid.getNombre());//temporal
 		
 		/*List<DtComentario> dtComentarios = this.vid.obtenerComentariosVideo();
 		return dtComentarios;*/
-		return null;
 	}
 	
 	@Override 
@@ -125,21 +113,20 @@ public class CVideo implements IVideo {
 	}
 	
 	@Override 
-	public void valorarVideo(String nomVid, String nickVal, boolean val) {
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-//		
-//		Usuario ramiro = mU.obtenerUsuario("ram");
-//		Video v = ramiro.getCanal().obtenerVideo();
-//		
-//		if(em.find(Usuario.class, nickVal) != null) {
-//			Usuario usrVal = em.find(Usuario.class, nickVal);
-//			ramiro.getCanal().valorarVideo(v, usrVal, true);
-//		}else {
-//			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-//		}
+	public void valorarVideo(String nickVal, boolean val) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ManejadorVideo mV = ManejadorVideo.getInstancia();
+		
+		if(mU.existeUsuario(nickVal)) {
+			Usuario usrVal = mU.obtenerUsuario(nickVal);
+			this.vid.valorarVideo(val, usrVal);
+			mU.modificaDatosUsuario(usrVal);
+			mV.agregarVideo(this.vid);
+		}else {
+			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
+		}
 	}
+
 	
 	@Override
 	public Boolean existeVideo(String nick, String nomV) {
