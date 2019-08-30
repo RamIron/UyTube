@@ -115,9 +115,14 @@ public class Video extends Elemento {
 	
 	public List<DtComentario> obtenerComentariosVideo() {
 		List<DtComentario> dtComs = new ArrayList<DtComentario>();
-		for(Comentario c:this.comentarios) {
-			DtComentario dtC = new DtComentario(c.getTexto());
-			dtComs.add(dtC);
+		for(Comentario c : this.comentarios) {	
+			if(!c.getRespuestas().isEmpty()) {
+				DtComentario dtC = new DtComentario(c.getId(), c.getUsuario().getNickname(), c.getFecha(),c.getTexto(), c.listarRespuestas());	
+				dtComs.add(dtC);
+			} else {
+				DtComentario dtC = new DtComentario(c.getId(), c.getUsuario().getNickname(), c.getFecha(),c.getTexto());
+				dtComs.add(dtC);
+			}
 		}
 		return dtComs;
 	} 

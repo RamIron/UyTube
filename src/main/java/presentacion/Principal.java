@@ -24,6 +24,7 @@ public class Principal {
 							+ "9) Alta Lista de Reproduccion\n"
 							+ "10) Valorar Video\n"
 							+ "11) Comentar Video\n"
+							+ "12) Consulta de Video\n"
 							+ "0) Salir\n"
 							+ "Opcion: ");
 	}
@@ -381,7 +382,30 @@ public class Principal {
 		controladorV.limpiarControlador();
 	}
 	
-
+	static void consultaVideo() {
+		VFactory vf = VFactory.getInstancia();
+		IVideo controladorV = vf.getIVideo();
+		Scanner entrada = new Scanner (System.in);
+		listarUsuarios();
+		
+		System.out.print("Listar videos de usuario: ");
+		String nickVideo = entrada.nextLine();
+		List<String> videosU = controladorV.listarVideosDeUsuario(nickVideo);
+		for(String v:videosU) {
+			System.out.println(v);
+		}
+		
+		System.out.print("Elija un1 video: ");
+		String nomVid = entrada.nextLine();
+		
+		List<DtComentario> comentarios = controladorV.obtenerComentariosVideo(nomVid); 
+		
+		for(int i=0; i<comentarios.size(); i++){
+		    System.out.println("Comentario: " + comentarios.get(i).getTexto());
+		} 
+		
+	}
+		
 	public static void main (String args[]) {
 		Scanner entrada = new Scanner(System.in);
 		int opcion;
@@ -422,6 +446,9 @@ public class Principal {
 					break;
 				case 11:
 					comentarVideo();
+					break;
+				case 12:
+					consultaVideo();
 					break;
 				case 0:
 					System.out.println("adios");

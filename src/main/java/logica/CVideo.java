@@ -30,8 +30,6 @@ public class CVideo implements IVideo {
 		}
 	}
 	
-	
-	
 	@Override 
 	public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url){
 		ManejadorVideo mV = ManejadorVideo.getInstancia();
@@ -48,7 +46,6 @@ public class CVideo implements IVideo {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 		}
 	}
-	
 	
 	@Override
 	public void limpiarControlador() { //Operacion para utilizar al final de cada caso de uso
@@ -86,11 +83,9 @@ public class CVideo implements IVideo {
 	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {}
 	
 	@Override 
-	public void/*List<DtComentario>*/ obtenerComentariosVideo(String nomVid) {
+	public List<DtComentario> obtenerComentariosVideo(String nomVid) {
 		this.vid = this.usr.getCanal().obtenerVideo(nomVid);
-		
-		/*List<DtComentario> dtComentarios = this.vid.obtenerComentariosVideo();
-		return dtComentarios;*/
+		return this.vid.obtenerComentariosVideo();
 	}
 	
 	@Override 

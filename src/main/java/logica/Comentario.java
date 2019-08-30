@@ -58,10 +58,10 @@ public class Comentario {
 		this.usuario = usuario;
 	}
 	
-//	/*public Map<Integer, Comentario> getRespuestas() {
-//		return respuestas;
-//	}*/
-//	
+	public List<Comentario> getRespuestas() {
+		return respuestas;
+	}
+	
 	//Operaciones
 	public void crearRespuesta(Usuario uC, Calendar fCom, String texto) {
 		Conexion conexion = Conexion.getInstancia();
@@ -75,8 +75,14 @@ public class Comentario {
 		
 	}
 	
-//	public List<DtComentario> getRespuestas(){
-//		return null;
-//	} //TODO
-	
+	public List<DtComentario> listarRespuestas(){
+		List<DtComentario> retorno = new ArrayList<DtComentario>();
+		if(!this.getRespuestas().isEmpty()) {
+			for(Comentario c : respuestas) {
+				DtComentario res = new DtComentario(c.getId(), c.getTexto(), c.getFecha(), c.getTexto(), c.listarRespuestas());
+				retorno.add(res);
+			}
+		}
+		return retorno;
+	}	
 }

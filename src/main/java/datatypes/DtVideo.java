@@ -5,7 +5,7 @@ import java.util.*;
 public class DtVideo {
 	private String nombre;
 	private String descripcion;
-	private Date fPublicacion;
+	private Calendar fPublicacion;
 	private Integer duracion;
 	private String url;
 	private Boolean publico;
@@ -15,7 +15,7 @@ public class DtVideo {
 		super();
 	}
 
-	public DtVideo(String nombre, String descripcion, Date fPublicacion, Integer duracion, String url,
+	public DtVideo(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url,
 			Boolean publico) {
 		super();
 		this.nombre = nombre;
@@ -34,7 +34,7 @@ public class DtVideo {
 		return descripcion;
 	}
 
-	public Date getfPublicacion() {
+	public Calendar getfPublicacion() {
 		return fPublicacion;
 	}
 

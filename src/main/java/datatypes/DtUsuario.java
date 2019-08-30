@@ -6,7 +6,7 @@ public class DtUsuario {
 	private String nickname;
 	private String nombre;
 	private String apellido;
-	private Date fNac;
+	private Calendar fNac;
 	private String imagen;
 	private String correoE;
 	
@@ -15,7 +15,7 @@ public class DtUsuario {
 		super();
 	}
 
-	public DtUsuario(String nickname, String nombre, String apellido, Date fNac, String imagen, String correoE) {
+	public DtUsuario(String nickname, String nombre, String apellido, Calendar fNac, String imagen, String correoE) {
 		super();
 		this.nickname = nickname;
 		this.nombre = nombre;
@@ -37,7 +37,7 @@ public class DtUsuario {
 		return apellido;
 	}
 
-	public Date getfNac() {
+	public Calendar getfNac() {
 		return fNac;
 	}
 
