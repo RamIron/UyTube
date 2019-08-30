@@ -6,6 +6,7 @@ import datatypes.DtComentario;
 import datatypes.DtListaRep;
 import datatypes.DtValoracion;
 import datatypes.DtVideo;
+import datatypes.DtVideoUsuario;
 
 public interface IListaReproduccion {
 
@@ -15,11 +16,11 @@ public interface IListaReproduccion {
 	
 	public void agregarListaParticular(String nomL, boolean publico);
 	
-	public void agregarVideoLista(String nomVid, String nomList);
+	public void agregarVideoListaParticular(String nickVideo, String nomVid, String nomList);
 	
 	public void eliminarVideoDeLista(String nickVid, String nomVid, String nomList);
 	
-	public boolean esCanalPublico();
+	public boolean existeLista(String nomL);
 	
 	public boolean existeListaDefecto(String nomL);
 	
@@ -31,7 +32,7 @@ public interface IListaReproduccion {
 	
 	public List<String> listarListasParticulares(String nick);
 	
-	public List<String> listarVideosdeLista(String nomList);
+	public List<DtVideoUsuario> listarVideosdeLista(String nomList);
 	
 	public void modificarCategoria(String nick, String nomL, String nomC);
 	
