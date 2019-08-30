@@ -32,13 +32,17 @@ public class CVideo implements IVideo {
 	
 	
 	@Override 
-	public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url) {
+	public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url){
 		ManejadorVideo mV = ManejadorVideo.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		if(mU.existeUsuario(nick)) {
 			this.usr = mU.obtenerUsuario(nick);
 			this.vid = this.usr.getCanal().agregarVideo(nomV, desc, fPub, dur, url);
-			mV.agregarVideo(this.vid);
+			if(!existeVideo(usr.getNickname(), nomV)) {
+				mV.agregarVideo(this.vid);
+			} else {
+				throw new java.lang.RuntimeException("Ya existe un video con ese nombre");
+			}
 		}else {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 		}
@@ -130,7 +134,10 @@ public class CVideo implements IVideo {
 	
 	@Override
 	public Boolean existeVideo(String nick, String nomV) {
-		ManejadorVideo mV = ManejadorVideo.getInstancia();
-		return mV.existeVideo(nick, nomV);
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario u = mU.obtenerUsuario(nick);
+		return u.getCanal().existeVideo(nomV);
 	}
+	
+	
 }

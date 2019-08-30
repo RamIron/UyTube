@@ -28,6 +28,7 @@ public class ManejadorVideo {
 			em.getTransaction().begin();
 			em.persist(video);
 			em.getTransaction().commit();
+			System.out.println("Ya esta en la base de datos");
 		} catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())
@@ -35,12 +36,4 @@ public class ManejadorVideo {
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}
 	}
-	
-	public Boolean existeVideo(String nick, String nomV) {
-		Conexion conexion=Conexion.getInstancia();
-		EntityManager em =conexion.getEntityManager();
-		Usuario u = em.find(Usuario.class, nick);
-		return u.getCanal().existeVideo(nomV);
-	}
-	
 }

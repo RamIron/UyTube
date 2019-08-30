@@ -103,10 +103,13 @@ public class AltaVideo extends JInternalFrame {
 		listaUsr  = new JList(listaU);
 		scrollPane.setViewportView(listaUsr);
 		listaUsr.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				int i = listaUsr.getSelectedIndex();
+		public void valueChanged(ListSelectionEvent e) {
+			int i = listaUsr.getSelectedIndex();
+			System.out.println("Soy i: " + i);
+			if(i > 0) {
 				usr = listaUsr.getModel().getElementAt(i).toString();
 			}
+		}	
 		});
 		listaUsr.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
@@ -181,13 +184,12 @@ public class AltaVideo extends JInternalFrame {
 		lblCategoria.setBounds(282, 359, 70, 15);
 		getContentPane().add(lblCategoria);
 		btnAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)  {
 				//Hay que ver errores anotados en cuadernola mateo
 				reiniciarMsg();
 				if(nomVid.getText().isEmpty() || duracion.getText().isEmpty() || url.getText().isEmpty() ||
 					descripcion.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null)) {
 					lblMsgError.setVisible(true);
-				}else if(iV.existeVideo(usr, nomVid.getText())) {
 					lblMsgExiste.setVisible(true);
 				}else if(!duracion.getText().chars().allMatch(Character::isDigit)){
 					lblMsgErrorNum.setVisible(true);
@@ -195,13 +197,13 @@ public class AltaVideo extends JInternalFrame {
 					Calendar fPub = Calendar.getInstance();
 			        fPub.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
 					iV.agregarVideo(usr, nomVid.getText(), descripcion.getText(), fPub, Integer.parseInt(duracion.getText()), url.getText());
-					
 					if(categoria.getSelectedIndex() != 0) {
 						iV.agregarCategoria(categoria.getSelectedItem().toString());
 					}
 					inicializar(iU, iC);
 					lblMsgExito.setVisible(true);
 				}
+				
 			}
 		});
 		
@@ -240,10 +242,10 @@ public class AltaVideo extends JInternalFrame {
 	
 	public void cargarUsuarios(IUsuario iU) {
 		List<String> usuarios = iU.listarUsuarios();
+		((DefaultListModel) listaUsr.getModel()).addElement("");
 		for(String u: usuarios) {
 			((DefaultListModel) listaUsr.getModel()).addElement(u);
 		}
-
 	}
 	
 	public void cargarCategorias(ICategoria iC) {
@@ -299,6 +301,8 @@ public class AltaVideo extends JInternalFrame {
 	}
 	
 	public void inicializar(IUsuario iU, ICategoria iC) {
+		iC.limpiarControlador();
+		iU.limpiarControlador();
 		limpiarListas();
 		cargarUsuarios(iU);
 		cargarCategorias(iC);
