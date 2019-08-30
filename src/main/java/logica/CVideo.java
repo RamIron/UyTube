@@ -31,6 +31,7 @@ public class CVideo implements IVideo {
 	}
 	
 	
+	
 	@Override 
 	public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url){
 		ManejadorVideo mV = ManejadorVideo.getInstancia();
