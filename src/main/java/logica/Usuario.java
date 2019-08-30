@@ -236,13 +236,12 @@ public class Usuario {
 //		this.canal.setDescripcion(descC);
 //		this.canal.setPublico(publico);
 //	}
-//	
-//	public DtCanal obtenerInfoCanal() {
-//		DtCanal dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.isPublico());
-//		
-//		return dtCan;
-//	}
-//	
+	
+	public DtCanal obtenerInfoCanal() {
+		DtCanal dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.getPublico());
+		return dtCan;
+	}
+	
 //	public DtVideo obtenerInfoVideo(String nomVid) {
 //		DtVideo dtVid = this.canal.obtenerInfoVideo(nomVid);
 //		return dtVid;

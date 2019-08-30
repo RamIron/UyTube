@@ -87,32 +87,35 @@ public class MenuPrincipal extends JFrame {
 	 */
 	public MenuPrincipal() {
 		setTitle("UyTube");
-		//Categoria
 		CFactory fC = CFactory.getInstancia();
 		ICategoria iC = fC.getICategoria();
 		
+		VFactory fV = VFactory.getInstancia();
+		IVideo iV = fV.getIVideo();
+		
+		UFactory fU = UFactory.getInstancia();
+		IUsuario iU = fU.getIUsuario();
+		
+		LRFactory fL = LRFactory.getInstancia();
+		IListaReproduccion iL = fL.getIListaReproduccion(); 
+
+		//Categoria
 		altaCategoriaIF = new AltaCategoria(iC);
 		altaCategoriaIF.setBounds(0, 0, 800, 542);
 		listarCategoriaIF = new ListarCategoria(iC);
 		listarCategoriaIF.setBounds(0, 0, 800, 542);
 		
 		//Usuario
-		UFactory fU = UFactory.getInstancia();
-		IUsuario iU = fU.getIUsuario();
-		
 		altaUsuarioIF = new AltaUsuario(iU);
 		altaUsuarioIF.setLocation(0, 0);
 		
 		listarUsuarioIF = new ListarUsuario(iU);
 		listarUsuarioIF.setLocation(0, 0);
 		
-		consultaUsuarioIF = new ConsultaUsuario(iU);
+		consultaUsuarioIF = new ConsultaUsuario(iU, iV, iL);
 		consultaUsuarioIF.setLocation(0, 0);
 		
 		//Video
-		VFactory fV = VFactory.getInstancia();
-		IVideo iV = fV.getIVideo();
-		
 		altaVideoIF = new AltaVideo(iU, iC, iV);
 		listarUsuarioIF.setLocation(0, 0);
 		
