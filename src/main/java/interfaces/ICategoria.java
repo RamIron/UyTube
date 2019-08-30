@@ -15,4 +15,6 @@ public interface ICategoria {
 	
 	public boolean existeCategoria(String nombre);
 	
+	public void limpiarControlador();
+	
 }

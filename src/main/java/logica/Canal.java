@@ -270,6 +270,20 @@ public class Canal {
 		return this.videos.get(i);
 	}
 	
+	public boolean existeVideo(String nomVid) {
+		boolean existe = false;
+		int i=0;
+		while(!existe && i<this.videos.size()-1) {
+			if(this.videos.get(i).getNombre().contentEquals(nomVid)) {
+				existe = true;
+			}else {
+				i++;
+			}
+		}
+			
+		return existe;
+	}
+	
 //	public Video obtenerVideo(String nomVid) {
 //		Video v= this.videos.get(nomVid);
 //		return v;

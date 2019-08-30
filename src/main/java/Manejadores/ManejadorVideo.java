@@ -5,7 +5,9 @@ package Manejadores;
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
 
+import logica.Categoria;
 import logica.Conexion;
+import logica.Usuario;
 import logica.Video;
 
 public class ManejadorVideo {
@@ -26,6 +28,7 @@ public class ManejadorVideo {
 			em.getTransaction().begin();
 			em.persist(video);
 			em.getTransaction().commit();
+			System.out.println("Ya esta en la base de datos");
 		} catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())
