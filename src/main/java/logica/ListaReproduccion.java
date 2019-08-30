@@ -42,13 +42,7 @@ public abstract class ListaReproduccion extends Elemento {
 	
 	//Operaciones
 	public void agregarVideo(Video v) {
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		em.getTransaction().begin();
-//		videos.add(v);
-//		em.persist(this);
-//		em.getTransaction().commit();
-		
+		videos.add(v);
 	}
 	
 //	public void eliminarVideo(String nickV, String nomVid) {
@@ -59,19 +53,23 @@ public abstract class ListaReproduccion extends Elemento {
 //			}
 //		}
 //	}
-//	
+	
+	public void eliminarVideo(Video v) {
+		videos.remove(v);
+	}
+	
 //	public abstract boolean esParticular();
 //	
 //	public abstract boolean esPublico();
-//	
-//	public List<DtVideoUsuario> listarVideos() {
-//		List<DtVideoUsuario> res = new ArrayList<DtVideoUsuario>();
-//		for(Video v: videos) {
-//			DtVideoUsuario vid = new DtVideoUsuario(v.getCanal().getUsuario().getNickname(), v.getNombre());
-//			res.add(vid);
-//		}
-//		return res;
-//	}
+	
+	public List<DtVideoUsuario> listarVideos() {
+		List<DtVideoUsuario> res = new ArrayList<DtVideoUsuario>();
+		for(Video v: videos) {
+			DtVideoUsuario vid = new DtVideoUsuario(v.getCanal().getUsuario().getNickname(), v.getNombre());
+			res.add(vid);
+		}
+		return res;
+	}
 //	
 //	public Map<Integer, DtComentario> obtenerComentariosVideo(String nickV, String nomVid) {
 //		return null;
