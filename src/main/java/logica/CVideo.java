@@ -32,13 +32,17 @@ public class CVideo implements IVideo {
 	
 	
 	@Override 
-	public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url) {
+	public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url){
 		ManejadorVideo mV = ManejadorVideo.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		if(mU.existeUsuario(nick)) {
 			this.usr = mU.obtenerUsuario(nick);
 			this.vid = this.usr.getCanal().agregarVideo(nomV, desc, fPub, dur, url);
-			mV.agregarVideo(this.vid);
+			if(!existeVideo(usr.getNickname(), nomV)) {
+				mV.agregarVideo(this.vid);
+			} else {
+				throw new java.lang.RuntimeException("Ya existe un video con ese nombre");
+			}
 		}else {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 		}
@@ -51,34 +55,40 @@ public class CVideo implements IVideo {
 		this.usr = null;
 	}
 	
-	/*@Override
-	public List<String> listarVideosDeUsuario(String nick) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nick) != null) {
-			this.usr = em.find(Usuario.class, nick);
-			ArrayList<String> videos = this.usr.listarVideosDeUsuario();
-			return videos;
-		}else {
-			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-		}
-		return null;
-	}*/
-	
 	@Override
-	public List<String> listarVideosDeUsuario(String nick) {
+	public List<String> listarVideosDeUsuario(String nick){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		if(mU.existeUsuario(nick)) {
 			this.usr = mU.obtenerUsuario(nick);
-			List<String> videosU = this.usr.getCanal().obtenerNombreVideos();
-			return videosU;
+			return this.usr.getCanal().obtenerNombreVideos();
+		}else {
+			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
+		}
+	}
+	
+	
+	@Override
+	public List<String> listarVideosPublicosDeUsuario(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		if(mU.existeUsuario(nick)) {
+			this.usr = mU.obtenerUsuario(nick);
+			return this.usr.getCanal().obtenerNombreVideosPublicos();
 		}else {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 		}
 	}
 	
 	@Override 
-	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {}
+	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {
+		ManejadorVideo mV = ManejadorVideo.getInstancia();
+		this.vid.setNombre(nomV);
+		this.vid.setDescripcion(desc);
+		this.vid.setfPublicacion(fecha);
+		this.vid.setDuracion(dur);
+		this.vid.setUrl(url);
+		this.vid.setPublico(publico);
+		mV.modificarVideo(this.vid);
+	}
 	
 	@Override 
 	public void/*List<DtComentario>*/ obtenerComentariosVideo(String nomVid) {
@@ -89,8 +99,9 @@ public class CVideo implements IVideo {
 	}
 	
 	@Override 
-	public List<DtVideo> obtenerInfoVideo(String nomVid) {
-		return null;
+	public DtVideo obtenerInfoVideo(String nomVid) {
+		this.vid = this.usr.getCanal().obtenerVideo(nomVid);
+		return this.usr.getCanal().obtenerInfoVideo(nomVid);
 	}
 	
 	@Override 
@@ -130,7 +141,10 @@ public class CVideo implements IVideo {
 	
 	@Override
 	public Boolean existeVideo(String nick, String nomV) {
-		// TODO Auto-generated method stub
-		return false;
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario u = mU.obtenerUsuario(nick);
+		return u.getCanal().existeVideo(nomV);
 	}
+	
+	
 }

@@ -53,5 +53,9 @@ public class CCategoria implements ICategoria {
 		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
 		return mc.existeCategoria(nombre);
 	}
+	
+	public void limpiarControlador() { //Operacion para utilizar al final de cada caso de uso
+		this.cat = null;
+	}
 
 }

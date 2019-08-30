@@ -82,6 +82,9 @@ public class MenuPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	/**
+	 * 
+	 */
 	public MenuPrincipal() {
 		setTitle("UyTube");
 		//Categoria
