@@ -20,7 +20,10 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
+import interfaces.IListaReproduccion;
 import interfaces.IUsuario;
+import interfaces.IVideo;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -60,7 +63,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ConsultaUsuario(IUsuario iU) {
+	public ConsultaUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL) {
 		setRootPaneCheckingEnabled(false);
 		setTitle("Consultar un usuario");
 		setBounds(100, 100, 800, 542);
@@ -300,10 +303,16 @@ public class ConsultaUsuario extends JInternalFrame {
 				}
 				
 				//VIDEOS
-				//List<string> videos = iU. //TODO
+				List<String> videos = iV.listarVideosDeUsuario(usr);
+				for(String v: videos) {
+					((DefaultListModel) listaVid.getModel()).addElement(v);
+				}
 				
-				//LISTA DE REPRODUCCION
-				//TODO
+				//LISTAS DE REPRODUCCION
+				List<String> listasRep = iL.listarListasDeUsuario(usr);
+				for(String lP: listasRep) {
+					((DefaultListModel) listaLisRep.getModel()).addElement(lP);
+				}
 			}
 		});
 		scrollListaUsr.setViewportView(listaUsr);
