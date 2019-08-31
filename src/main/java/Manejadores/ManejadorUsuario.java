@@ -65,8 +65,7 @@ public class ManejadorUsuario {
 		EntityManager em = conexion.getEntityManager();
 		try {
 			em.getTransaction().begin();
-//			em.persist(usuario);
-			em.merge(usuario);
+			em.persist(usuario);
 			em.getTransaction().commit();
 		}catch (Exception e){
 			if(e instanceof RollbackException)

@@ -57,6 +57,7 @@ public class Canal {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+		System.out.println(descripcion);
 	}
 
 	public Usuario getUsuario() {
