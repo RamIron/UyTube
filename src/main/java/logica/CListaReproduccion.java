@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 import org.hibernate.SessionFactory;
 
 import Manejadores.ManejadorCategoria;
+import Manejadores.ManejadorPorDefecto;
 //import Manejadores.ManejadorListaParticular;
 import Manejadores.ManejadorUsuario;
 import datatypes.DtComentario;
@@ -40,56 +41,44 @@ public class CListaReproduccion implements IListaReproduccion {
 	
 	@Override 
 	public void agregarListaDefecto(String nomL) {	
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		TypedQuery<Canal> consulta = em.createQuery("SELECT * FROM Canal c", Canal.class);
-//	    List<Canal> canales = consulta.getResultList();
-//	    for(Canal c:canales) {
-//			c.agregarListaDefecto(nomL);
-//	    	System.out.println("Entro");
-//			System.out.println(c.getNombre());
-//		}
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ManejadorPorDefecto mPD = ManejadorPorDefecto.getInstancia();
+		List<Usuario> usuarios = mU.obtenerUsuarios();
 		
-//		if(em.find(PorDefecto.class, nomL) == null) { //Si la lista no existe
-//			TypedQuery<Canal> consulta = em.createQuery("SELECT * FROM Canal c", Canal.class);
-//		    List<Canal> canales = consulta.getResultList();
-//		    System.out.println("Llega aca");
-//			try {
-//				for(Canal c:canales) {
-//					//c.agregarListaDefecto(nomL);
-//					System.out.println(c.getNombre());
-//				}
-//			} catch (Exception e){
-//				if(e instanceof RollbackException)
-//					if(em.getTransaction().isActive())
-//						em.getTransaction().rollback();
-//				throw new IllegalArgumentException("Hubo un error inesperado");
-//			}
-//		} else {
-//			throw new IllegalArgumentException("Ya existe una lista con el nombre ingresado");
-//		}
+	    for(Usuario u:usuarios) {
+			u.getCanal().agregarListaDefecto(nomL);
+	    	mU.modificaDatosUsuario(u);
+		}
+		
+	    NombrePorDefecto nomPD = new NombrePorDefecto(nomL);
+		mPD.agregarPorDefecto(nomPD);
 	}
 	
 	
 	@Override 
 	public void agregarListaParticular(String nomL, boolean publico) {
-		//ManejadorListaParticular mLP = ManejadorListaParticular.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.uList = mU.obtenerUsuario(this.uList.getNickname());
 		this.lista = this.uList.getCanal().agregarListaParticular(nomL, publico);
 		mU.modificaDatosUsuario(uList);
-		//mLP.agregarListaParticular((Particular)this.lista);
 	}
 	
 	@Override 
 	public void agregarVideoListaParticular(String nickVideo, String nomVid, String nomList) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		//ManejadorListaParticular mLP = ManejadorListaParticular.getInstancia();
 		this.uVid = mU.obtenerUsuario(nickVideo);
 		this.video = this.uVid.getCanal().obtenerVideo(nomVid);
-		Particular particular = (Particular) this.uList.getCanal().agregarVideoListaParticular(this.video, nomList);
-		//mLP.modificarListaParticular(particular);
-		mU.modificaDatosUsuario(this.uVid);
+		this.uList.getCanal().agregarVideoListaParticular(this.video, nomList);
+		mU.modificaDatosUsuario(this.uList);
+	}
+	
+	@Override 
+	public void agregarVideoListaPorDefecto(String nickVideo, String nomVid, String nomList) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.uVid = mU.obtenerUsuario(nickVideo);
+		this.video = this.uVid.getCanal().obtenerVideo(nomVid);
+		this.uList.getCanal().agregarVideoListaPorDefecto(this.video, nomList);
+		mU.modificaDatosUsuario(this.uList);
 	}
 	
 	@Override 
@@ -112,7 +101,8 @@ public class CListaReproduccion implements IListaReproduccion {
 	
 	@Override 
 	public boolean existeListaDefecto(String nomL) {
-		return false;
+		ManejadorPorDefecto mPD = ManejadorPorDefecto.getInstancia();
+		return mPD.existePorDefecto(nomL);
 	}
 	
 	@Override 
@@ -140,14 +130,17 @@ public class CListaReproduccion implements IListaReproduccion {
 	@Override 
 	public List<String> listarListasParticulares(String nick) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(mU.existeUsuario(nick)) {
-			this.uList = mU.obtenerUsuario(nick);
-			return this.uList.getCanal().listarListasParticulares();
-		}else {
-			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-		}
+		this.uList = mU.obtenerUsuario(nick);
+		return this.uList.getCanal().listarListasParticulares();
 	}
 
+	@Override 
+	public List<String> listarListasPorDefecto(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.uList = mU.obtenerUsuario(nick);
+		return this.uList.getCanal().listarListasPorDefecto();
+	}
+	
 	@Override 
 	public List<DtVideoUsuario> listarVideosdeLista(String nomList) {
 		return this.uList.getCanal().listarVideosdeLista(nomList);

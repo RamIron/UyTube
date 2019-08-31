@@ -124,14 +124,8 @@ public class Canal {
 	}
 	
 	public void agregarListaDefecto(String nomL) {
-		/*System.out.println("Entra al canal: " + this.getNombre());
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		em.getTransaction().begin();
 		PorDefecto def = new PorDefecto(nomL, this);
 		this.listas.add(def);
-		em.persist(def);
-		em.getTransaction().commit();*/
 	}
 	
 	public Video agregarVideo(String nomV, String desc, Calendar fPub, int dur, String url) {
@@ -141,16 +135,24 @@ public class Canal {
 		return v;
 	}
 
-	public ListaReproduccion agregarVideoListaParticular(Video v, String nomList) {
+	public void agregarVideoListaParticular(Video v, String nomList) {
 		for(ListaReproduccion lr:this.listas) {
 			if (lr instanceof Particular) {
 				if(lr.getNombre().contentEquals(nomList)) {
 					lr.agregarVideo(v);
-					return lr;
 				}
 			}
 		}
-		return null;
+	}
+	
+	public void agregarVideoListaPorDefecto(Video v, String nomList) {
+		for(ListaReproduccion lr:this.listas) {
+			if (lr instanceof PorDefecto) {
+				if(lr.getNombre().contentEquals(nomList)) {
+					lr.agregarVideo(v);
+				}
+			}
+		}
 	}
 	
 	public void eliminarVideoDeLista(Video v, String nomList) {
@@ -190,6 +192,16 @@ public class Canal {
 			nomListas.add(lr.getNombre());
 		}
 		return nomListas;
+	}
+	
+	public List<String> listarListasPorDefecto() {
+		List<String> listasDefectoU = new ArrayList<String>();
+		for(ListaReproduccion lr:this.listas) {
+			if(lr instanceof PorDefecto) {
+				listasDefectoU.add(lr.getNombre());
+			}
+		}
+		return listasDefectoU;
 	}
 	
 	public List<String> listarListasParticulares() {
