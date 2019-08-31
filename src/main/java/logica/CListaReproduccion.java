@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 import org.hibernate.SessionFactory;
 
 import Manejadores.ManejadorCategoria;
-import Manejadores.ManejadorListaParticular;
+//import Manejadores.ManejadorListaParticular;
 import Manejadores.ManejadorUsuario;
 import datatypes.DtComentario;
 import datatypes.DtListaRep;
@@ -73,22 +73,23 @@ public class CListaReproduccion implements IListaReproduccion {
 	
 	@Override 
 	public void agregarListaParticular(String nomL, boolean publico) {
-		ManejadorListaParticular mLP = ManejadorListaParticular.getInstancia();
+		//ManejadorListaParticular mLP = ManejadorListaParticular.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.uList = mU.obtenerUsuario(this.uList.getNickname());
 		this.lista = this.uList.getCanal().agregarListaParticular(nomL, publico);
-		mLP.agregarListaParticular((Particular)this.lista);
+		mU.modificaDatosUsuario(uList);
+		//mLP.agregarListaParticular((Particular)this.lista);
 	}
 	
 	@Override 
 	public void agregarVideoListaParticular(String nickVideo, String nomVid, String nomList) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		ManejadorListaParticular mLP = ManejadorListaParticular.getInstancia();
+		//ManejadorListaParticular mLP = ManejadorListaParticular.getInstancia();
 		this.uVid = mU.obtenerUsuario(nickVideo);
 		this.video = this.uVid.getCanal().obtenerVideo(nomVid);
 		Particular particular = (Particular) this.uList.getCanal().agregarVideoListaParticular(this.video, nomList);
-		mLP.modificarListaParticular(particular);
-		
+		//mLP.modificarListaParticular(particular);
+		mU.modificaDatosUsuario(this.uVid);
 	}
 	
 	@Override 

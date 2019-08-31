@@ -1,4 +1,4 @@
-package Manejadores;
+/*package Manejadores;
 
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
@@ -47,4 +47,4 @@ public class ManejadorListaParticular {
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}
 	}
-}
+}*/

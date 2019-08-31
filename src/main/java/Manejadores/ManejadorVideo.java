@@ -1,4 +1,4 @@
-package Manejadores;
+/*package Manejadores;
 
 //import java.util.List;
 
@@ -52,4 +52,4 @@ public class ManejadorVideo {
 		}
 	}
 	
-}
+}*/
