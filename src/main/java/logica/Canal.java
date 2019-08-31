@@ -230,7 +230,7 @@ public class Canal {
 	public DtVideo obtenerInfoVideo(String nomVid) {
 		for(Video v:this.videos) {
 			if(v.getNombre().contentEquals(nomVid)) {
-				DtVideo dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico());
+				DtVideo dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), v.getCategoria().getNombre());
 				return dtVid;
 			}
 		}
