@@ -223,9 +223,8 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(lblSeguidores);
 		
 		
-		//img.setIcon(new ImageIcon("/home/martin/eclipse-workspace/obligatorio 1/UyTube/src/main/resources/img/default.png"));
 		try {
-		mostrarImg("/home/martin/eclipse-workspace/obligatorio 1/UyTube/src/main/resources/img/default.png");
+		mostrarImg("src/main/resources/img/default.png");
 		img.setBounds(230, 51, 120, 120);
 		} catch (IOException e1) {
 			
@@ -279,10 +278,23 @@ public class ConsultaUsuario extends JInternalFrame {
 //				fDia.addItem(null);
 //				fMes.addItem(null);		//TODO
 //				fAnio.addItem(null);
-				try {
-					mostrarImg(infoU.getImagen());
-				} catch (Exception e1) {
-					e1.printStackTrace();
+				if(!infoU.getImagen().isEmpty()) {
+					try {
+						mostrarImg(infoU.getImagen());
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}					
+				}else {
+					try {
+						mostrarImg("/home/martin/eclipse-workspace/obligatorio 1/UyTube/src/main/resources/img/default.png");
+						img.setBounds(230, 51, 120, 120);
+						} catch (IOException e1) {
+							
+							e1.printStackTrace();
+						} catch (Exception e1) {
+							
+							e1.printStackTrace();
+						}
 				}
 				
 				//INFO CANAL
@@ -290,29 +302,29 @@ public class ConsultaUsuario extends JInternalFrame {
 				desCanal.setText(infoC.getDescripcion());
 				chckbxCanalPublico.setSelected(infoC.getPublico());
 				
-				//SEGUIDORES
-				List<String> seguidores = iU.listarSeguidores();
-				for(String u: seguidores) {
-					((DefaultListModel) listaSeguidores.getModel()).addElement(u);
-				}
-				
-				//SEGUIDOS
-				List<String> seguidos = iU.listarSeguidos();
-				for(String u: seguidos) {
-					((DefaultListModel) listaSeguidos.getModel()).addElement(u);
-				}
-				
-				//VIDEOS
-				List<String> videos = iV.listarVideosDeUsuario(usr);
-				for(String v: videos) {
-					((DefaultListModel) listaVid.getModel()).addElement(v);
-				}
-				
-				//LISTAS DE REPRODUCCION
-				List<String> listasRep = iL.listarListasDeUsuario(usr);
-				for(String lP: listasRep) {
-					((DefaultListModel) listaLisRep.getModel()).addElement(lP);
-				}
+//				//SEGUIDORES
+//				List<String> seguidores = iU.listarSeguidores();
+//				for(String u: seguidores) {
+//					((DefaultListModel) listaSeguidores.getModel()).addElement(u);
+//				}
+//				
+//				//SEGUIDOS
+//				List<String> seguidos = iU.listarSeguidos();
+//				for(String u: seguidos) {
+//					((DefaultListModel) listaSeguidos.getModel()).addElement(u);
+//				}
+//				
+//				//VIDEOS
+//				List<String> videos = iV.listarVideosDeUsuario(usr);
+//				for(String v: videos) {
+//					((DefaultListModel) listaVid.getModel()).addElement(v);
+//				}
+//				
+//				//LISTAS DE REPRODUCCION
+//				List<String> listasRep = iL.listarListasDeUsuario(usr);
+//				for(String lP: listasRep) {
+//					((DefaultListModel) listaLisRep.getModel()).addElement(lP);
+//				}
 			}
 		});
 		scrollListaUsr.setViewportView(listaUsr);

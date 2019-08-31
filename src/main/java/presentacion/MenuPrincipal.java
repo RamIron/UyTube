@@ -77,6 +77,7 @@ public class MenuPrincipal extends JFrame {
 		altaUsuarioIF.setVisible(false);
 		listarUsuarioIF.setVisible(false);
 		altaVideoIF.setVisible(false);
+		consultaUsuarioIF.setVisible(false);
 	}
 	
 	/**
@@ -151,6 +152,7 @@ public class MenuPrincipal extends JFrame {
 		mnUsuario.add(mntmListarTodos);
 		mntmConsultarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
 				consultaUsuarioIF.cargarElementos(iU);
 				consultaUsuarioIF.setVisible(true);
 			}
