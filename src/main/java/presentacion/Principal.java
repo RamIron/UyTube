@@ -143,6 +143,7 @@ public class Principal {
 		String uSeguido = entrada.nextLine();
 		
 		controlador.seguirUsuario(uSeguidor, uSeguido);
+		controlador.limpiarControlador();
 	}
 	
 	static void dejarDeSeguirUsuario() {
@@ -158,6 +159,7 @@ public class Principal {
 		String uSeguido = entrada.nextLine();
 		
 		controlador.dejarDeSeguirUsuario(uSeguidor, uSeguido);
+		controlador.limpiarControlador();
 	}
 	
 	static void altaCategoria() {

@@ -189,15 +189,10 @@ public class CUsuario implements IUsuario {
 		return res;
 	}
 	
-	public Boolean esCanalPublico(String nick) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nick) != null) {
-			this.usr = em.find(Usuario.class, nick);
-			return this.usr.getCanal().getPublico();
-		}else {
-			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-		}
+	public boolean esCanalPublico(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usr = mU.obtenerUsuario(nick);
+		return this.usr.getCanal().getPublico();
 	}
 	
 	@Override 

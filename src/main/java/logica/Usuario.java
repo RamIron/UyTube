@@ -39,8 +39,8 @@ public class Usuario {
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
 	
-	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Valoracion> valoraciones = new ArrayList<>();
+	/*@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
+	private List<Valoracion> valoraciones = new ArrayList<>();*/
 	
 	@ManyToMany(mappedBy="seguidos")
 	//@JoinTable(name="USUARIOS_SEGUIDOS")
@@ -136,9 +136,9 @@ public class Usuario {
 		this.canal = c;
 	}
 
-	public List<Valoracion> getValoraciones() {
+	/*public List<Valoracion> getValoraciones() {
 		return valoraciones;
-	}
+	}*/
 
 
 	
@@ -171,9 +171,9 @@ public class Usuario {
 		this.seguidores.add(u);
 	}
 	
-	public void agregarValoracion(Valoracion val) {
+	/*public void agregarValoracion(Valoracion val) {
 		this.valoraciones.add(val);
-	}
+	}*/
 
 //	public void agregarValoracion(Valoracion val) {
 //		this.valoraciones.add(val);

@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorUsuario;
-import Manejadores.ManejadorVideo;
+//import Manejadores.ManejadorVideo;
 import datatypes.DtComentario;
 import datatypes.DtValoracion;
 import datatypes.DtVideo;
@@ -23,29 +23,28 @@ public class CVideo implements IVideo {
 	@Override 
 	public void agregarCategoria(String nomC) {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		if(mC.existeCategoria(nomC)) {
 			Categoria cat = mC.obtenerCategoria(nomC);
 			cat.agregarElemento(this.vid);
 			mC.modificarCategoria(cat);
+			//mU.modificaDatosUsuario(this.vid.getCanal().getUsuario());
 		}
 	}
 	
 	
 	@Override 
 	public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url){
-		ManejadorVideo mV = ManejadorVideo.getInstancia();
+		//ManejadorVideo mV = ManejadorVideo.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(mU.existeUsuario(nick)) {
-			this.usr = mU.obtenerUsuario(nick);
-			this.vid = this.usr.getCanal().agregarVideo(nomV, desc, fPub, dur, url);
-			if(!existeVideo(usr.getNickname(), nomV)) {
-				mV.agregarVideo(this.vid);
-			} else {
-				throw new java.lang.RuntimeException("Ya existe un video con ese nombre");
-			}
-		}else {
-			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-		}
+		this.usr = mU.obtenerUsuario(nick);
+		this.vid = this.usr.getCanal().agregarVideo(nomV, desc, fPub, dur, url);
+		mU.modificaDatosUsuario(this.usr);
+		/*if(!existeVideo(usr.getNickname(), nomV)) {
+			mV.agregarVideo(this.vid);
+		} else {
+			throw new java.lang.RuntimeException("Ya existe un video con ese nombre");
+		}*/
 	}
 	
 	
@@ -58,36 +57,30 @@ public class CVideo implements IVideo {
 	@Override
 	public List<String> listarVideosDeUsuario(String nick){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(mU.existeUsuario(nick)) {
-			this.usr = mU.obtenerUsuario(nick);
-			return this.usr.getCanal().obtenerNombreVideos();
-		}else {
-			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-		}
+		this.usr = mU.obtenerUsuario(nick);
+		return this.usr.getCanal().obtenerNombreVideos();
 	}
 	
 	
 	@Override
 	public List<String> listarVideosPublicosDeUsuario(String nick) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(mU.existeUsuario(nick)) {
-			this.usr = mU.obtenerUsuario(nick);
-			return this.usr.getCanal().obtenerNombreVideosPublicos();
-		}else {
-			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-		}
+		this.usr = mU.obtenerUsuario(nick);
+		return this.usr.getCanal().obtenerNombreVideosPublicos();
 	}
 	
 	@Override 
 	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {
-		ManejadorVideo mV = ManejadorVideo.getInstancia();
+		//ManejadorVideo mV = ManejadorVideo.getInstancia();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.vid.setNombre(nomV);
 		this.vid.setDescripcion(desc);
 		this.vid.setfPublicacion(fecha);
 		this.vid.setDuracion(dur);
 		this.vid.setUrl(url);
 		this.vid.setPublico(publico);
-		mV.modificarVideo(this.vid);
+		mU.modificaDatosUsuario(this.usr);
+		//mV.modificarVideo(this.vid);
 	}
 	
 	@Override 
@@ -126,13 +119,15 @@ public class CVideo implements IVideo {
 	@Override 
 	public void valorarVideo(String nickVal, boolean val) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		ManejadorVideo mV = ManejadorVideo.getInstancia();
+		//ManejadorVideo mV = ManejadorVideo.getInstancia();
 		
 		if(mU.existeUsuario(nickVal)) {
 			Usuario usrVal = mU.obtenerUsuario(nickVal);
 			this.vid.valorarVideo(val, usrVal);
-			mU.modificaDatosUsuario(usrVal);
-			mV.agregarVideo(this.vid);
+			
+			mU.modificaDatosUsuario(this.usr);
+			//mU.modificaDatosUsuario(usrVal);
+			//mV.agregarVideo(this.vid);
 		}else {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 		}

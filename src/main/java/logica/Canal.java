@@ -134,7 +134,7 @@ public class Canal {
 	}
 	
 	public Video agregarVideo(String nomV, String desc, Calendar fPub, int dur, String url) {
-		Boolean publico = false;
+		boolean publico = false;
 		Video v = new Video(nomV, desc, fPub, dur, url, publico, this);
 		this.videos.add(v);
 		return v;
