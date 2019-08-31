@@ -28,6 +28,7 @@ public class ManejadorVideo {
 			em.getTransaction().begin();
 			em.persist(video);
 			em.getTransaction().commit();
+			em.close();
 			System.out.println("Ya esta en la base de datos");
 		} catch (Exception e){
 			if(e instanceof RollbackException)

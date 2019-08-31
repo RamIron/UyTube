@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.persistence.*;
 
 import Manejadores.ManejadorCategoria;
+import Manejadores.ManejadorComentario;
 import Manejadores.ManejadorUsuario;
 //import Manejadores.ManejadorVideo;
 import datatypes.DtComentario;
@@ -32,7 +33,6 @@ public class CVideo implements IVideo {
 		}
 	}
 	
-	
 	@Override 
 	public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url){
 		//ManejadorVideo mV = ManejadorVideo.getInstancia();
@@ -46,7 +46,6 @@ public class CVideo implements IVideo {
 			throw new java.lang.RuntimeException("Ya existe un video con ese nombre");
 		}*/
 	}
-	
 	
 	@Override
 	public void limpiarControlador() { //Operacion para utilizar al final de cada caso de uso
@@ -84,11 +83,9 @@ public class CVideo implements IVideo {
 	}
 	
 	@Override 
-	public void/*List<DtComentario>*/ obtenerComentariosVideo(String nomVid) {
+	public List<DtComentario> obtenerComentariosVideo(String nomVid) {
 		this.vid = this.usr.getCanal().obtenerVideo(nomVid);
-		
-		/*List<DtComentario> dtComentarios = this.vid.obtenerComentariosVideo();
-		return dtComentarios;*/
+		return this.vid.obtenerComentariosVideo();
 	}
 	
 	@Override 
@@ -103,7 +100,21 @@ public class CVideo implements IVideo {
 	}
 	
 	@Override 
-	public void responderComentario(int idCom, String nick, Calendar fcom, String texto) {}
+	public void responderComentario(int idCom, String nick, Calendar fcom, String texto) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ManejadorComentario mC = ManejadorComentario.getInstancia();
+		if(mU.existeUsuario(nick)) {
+			Usuario usrRes = mU.obtenerUsuario(nick);
+			if(mC.existeComentario(idCom)) {
+				Comentario c = mC.obtenerComentario(idCom);
+				c.crearRespuesta(usrRes, fcom, texto);
+			} else {
+				throw new java.lang.RuntimeException("No existe el comentario ingresado");
+			}
+		} else {
+			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
+		}
+	}
 	
 	@Override 
 	public void realizarComentario(String nick, Calendar fCom, String texto) {

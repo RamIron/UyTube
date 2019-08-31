@@ -394,6 +394,14 @@ public class Principal {
 			System.out.println("No existe un usuario con nickname: " + nickVideo);
 		}
 		
+		System.out.print("Elija un1 video: ");
+		String nomVid = entrada.nextLine();
+		//TODO: listar comentarios
+		List<DtComentario> comentarios = controladorV.obtenerComentariosVideo(nomVid);
+		for(DtComentario c:comentarios) {
+			System.out.println(c.getTexto());
+		}
+		controladorV.obtenerComentariosVideo(nomVid);
 		
 		controladorV.limpiarControlador();
 		controladorU.limpiarControlador();

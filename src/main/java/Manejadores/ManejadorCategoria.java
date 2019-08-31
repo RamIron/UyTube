@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import logica.Conexion;
 import logica.Usuario;
 import logica.Categoria;
+import logica.Comentario;
 
 	public class ManejadorCategoria {
 
@@ -30,6 +31,7 @@ import logica.Categoria;
 			em.getTransaction().begin();
 			em.persist(categoria);
 			em.getTransaction().commit();
+			em.close();
 		} catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())
@@ -43,9 +45,9 @@ import logica.Categoria;
 		EntityManager em = conexion.getEntityManager();
 		try {
 			em.getTransaction().begin();
-			//em.persist(categoria);
-			em.merge(categoria);
+			em.persist(categoria);
 			em.getTransaction().commit();
+			em.close();
 		} catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())
@@ -57,7 +59,9 @@ import logica.Categoria;
 	public Categoria obtenerCategoria(String nombre){
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
-		return em.find(Categoria.class, nombre);
+		Categoria categoria = em.find(Categoria.class, nombre);
+		em.close();
+		return categoria;
 	}
 	
 	public List<String> listarCategorias() {
@@ -65,16 +69,20 @@ import logica.Categoria;
 		EntityManager em = conexion.getEntityManager();
 		TypedQuery<String> consulta = em.createQuery("SELECT c.nombre FROM Categoria c", String.class);
 	    List<String> categorias = consulta.getResultList();
+	    em.close();
 	    return categorias;
 	}
 	
 	public boolean existeCategoria(String nomC) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		if(em.find(Categoria.class, nomC) != null)
+		if(em.find(Categoria.class, nomC) != null) {
+			em.close();
 			return true;
-		else 
+		} else {
+			em.close();
 			return false;
+		}
 	}
 	
 	
