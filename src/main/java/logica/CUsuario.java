@@ -32,7 +32,7 @@ public class CUsuario implements IUsuario {
 			throw e;
 		}	
 	}
-
+	
 	
 	@Override 
 	public void agregarUsuario(String nick, String nom, String ape, Calendar fechaN, String email) {
@@ -145,6 +145,7 @@ public class CUsuario implements IUsuario {
 		try {
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			this.can.setNombre(nomC);
+			System.out.println(descC);
 			this.can.setDescripcion(descC);
 			this.can.setPublico(publico);
 			mU.modificaDatosUsuario(this.usr);

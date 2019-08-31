@@ -148,6 +148,8 @@ public class Usuario {
 		c.setUsuario(this);
 		this.canal = c;
 	}
+	
+
 //	
 //	public void agregarCategoriaALista(String nomL, Categoria cat) {
 //		this.canal.agregarCategoriaALista(nomL, cat);

@@ -15,7 +15,7 @@ public interface IUsuario {
 	
 	public void dejarDeSeguirUsuario(String seguidor, String seguido);
 	
-	public boolean esCanalPublico(String nick);
+	public Boolean esCanalPublico(String nick);
 	
 	public boolean existeEmail(String email);
 	

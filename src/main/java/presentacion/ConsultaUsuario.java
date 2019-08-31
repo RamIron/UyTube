@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -57,8 +58,11 @@ public class ConsultaUsuario extends JInternalFrame {
 	private final JLabel lblImagen = new JLabel("");
 	private JButton btnSelecFoto = new JButton("Seleccionar");
 	private final JScrollPane scrollDescCanal = new JScrollPane();
-	JLabel img = new JLabel("");
-
+	private JList listaSeguidores = new JList();
+	private JList listaSeguidos = new JList();
+	private JLabel img = new JLabel("");
+	private JList listaVid = new JList();
+	private JList listaLisRep = new JList();
 
 	/**
 	 * Create the frame.
@@ -77,7 +81,7 @@ public class ConsultaUsuario extends JInternalFrame {
 				ConsultaUsuario.this.setVisible(false);
 			}
 		});
-		btnSalir.setBounds(23, 244, 168, 25);
+		btnSalir.setBounds(201, 209, 168, 25);
 		getContentPane().add(btnSalir);
 		
 		
@@ -197,6 +201,69 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(lblPublico);
 		
 		JButton btnSeleccionarUsuario = new JButton("Seleccionar");
+		btnSeleccionarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				iU.limpiarControlador();
+				resetearFormulario();
+				int i = listaUsr.getSelectedIndex();
+				String usr = listaUsr.getModel().getElementAt(i).toString();
+				DtUsuario infoU = iU.obtenerInfoUsuario(usr);
+				DtCanal infoC =iU.obtenerInfoCanal();
+				
+				//INFO USUARIO
+				nick.setText(infoU.getNickname());
+				nombre.setText(infoU.getNombre());
+				apellido.setText(infoU.getApellido());
+				email.setText(infoU.getCorreoE());
+				fDia.setSelectedIndex(infoU.getfNac().get(Calendar.DAY_OF_MONTH));
+				fMes.setSelectedIndex(infoU.getfNac().get(Calendar.MONTH));
+				fAnio.setSelectedItem(infoU.getfNac().get(Calendar.YEAR));
+				try {
+					mostrarImg(infoU.getImagen());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}					
+
+				
+				//INFO CANAL
+				nomCanal.setText(infoC.getNombre());
+				desCanal.setText(infoC.getDescripcion());
+				System.out.println(infoC.getDescripcion());
+				chckbxCanalPublico.setSelected(infoC.getPublico());
+				
+				//SEGUIDORES
+				List<String> seguidores = iU.listarSeguidores();
+				if(!seguidores.isEmpty()) {
+					for(String u: seguidores) {
+						((DefaultListModel) listaSeguidores.getModel()).addElement(u);
+					}					
+				}
+				
+				//SEGUIDOS
+				List<String> seguidos = iU.listarSeguidos();
+				if(!seguidos.isEmpty()) {
+					for(String u: seguidos) {
+						((DefaultListModel) listaSeguidos.getModel()).addElement(u);
+					}					
+				}
+				
+				//VIDEOS
+				List<String> videos = iV.listarVideosDeUsuario(usr);
+				if(!videos.isEmpty()) {
+					for(String v: videos) {
+						((DefaultListModel) listaVid.getModel()).addElement(v);
+					}
+				}
+				
+				//LISTAS DE REPRODUCCION
+				List<String> listasRep = iL.listarListasDeUsuario(usr);
+				if(!listasRep.isEmpty()) {
+					for(String lP: listasRep) {
+						((DefaultListModel) listaLisRep.getModel()).addElement(lP);
+					}
+				}
+			}
+		});
 		btnSeleccionarUsuario.setBounds(23, 209, 168, 25);
 		getContentPane().add(btnSeleccionarUsuario);
 		
@@ -204,14 +271,16 @@ public class ConsultaUsuario extends JInternalFrame {
 		scrollSeguidores.setBounds(586, 217, 168, 108);
 		getContentPane().add(scrollSeguidores);
 		
-		JList listaSeguidores = new JList();
+		DefaultListModel<String> listaS1 = new DefaultListModel<String>();
+		listaSeguidores.setModel(listaS1);
 		scrollSeguidores.setViewportView(listaSeguidores);
 		
 		JScrollPane scrollSeguidos = new JScrollPane();
 		scrollSeguidos.setBounds(391, 217, 168, 108);
 		getContentPane().add(scrollSeguidos);
 		
-		JList listaSeguidos = new JList();
+		DefaultListModel<String> listaS2 = new DefaultListModel<String>();
+		listaSeguidos.setModel(listaS2);
 		scrollSeguidos.setViewportView(listaSeguidos);
 		
 		JLabel lblSeguidos = new JLabel("Seguidos");
@@ -223,9 +292,8 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(lblSeguidores);
 		
 		
-		//img.setIcon(new ImageIcon("/home/martin/eclipse-workspace/obligatorio 1/UyTube/src/main/resources/img/default.png"));
 		try {
-		mostrarImg("/home/martin/eclipse-workspace/obligatorio 1/UyTube/src/main/resources/img/default.png");
+		mostrarImg("src/main/resources/img/default.png");
 		img.setBounds(230, 51, 120, 120);
 		} catch (IOException e1) {
 			
@@ -237,25 +305,27 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(img);
 		
 		JScrollPane scrollVid = new JScrollPane();
-		scrollVid.setBounds(23, 310, 138, 188);
+		scrollVid.setBounds(23, 276, 138, 187);
 		getContentPane().add(scrollVid);
 		
-		JList listaVid = new JList();
+		DefaultListModel<String> listaV = new DefaultListModel<String>();
+		listaVid.setModel(listaV);
 		scrollVid.setViewportView(listaVid);
 		
 		JScrollPane scrollLisRep = new JScrollPane();
-		scrollLisRep.setBounds(188, 311, 138, 187);
+		scrollLisRep.setBounds(188, 277, 138, 187);
 		getContentPane().add(scrollLisRep);
 		
-		JList listaLisRep = new JList();
+		DefaultListModel<String> listaL = new DefaultListModel<String>();
+		listaLisRep.setModel(listaL);
 		scrollLisRep.setViewportView(listaLisRep);
 		
 		JLabel lblVideos = new JLabel("Videos");
-		lblVideos.setBounds(67, 283, 70, 15);
+		lblVideos.setBounds(70, 261, 49, 15);
 		getContentPane().add(lblVideos);
 		
 		JLabel lblListasDeReproduccion = new JLabel("Listas");
-		lblListasDeReproduccion.setBounds(230, 284, 58, 15);
+		lblListasDeReproduccion.setBounds(241, 261, 39, 15);
 		getContentPane().add(lblListasDeReproduccion);
 		
 		JScrollPane scrollListaUsr = new JScrollPane();
@@ -265,57 +335,18 @@ public class ConsultaUsuario extends JInternalFrame {
 		listaUsr  = new JList();
 		listaUsr.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				iU.limpiarControlador();
-				int i = listaUsr.getSelectedIndex();
-				String usr = listaUsr.getModel().getElementAt(i).toString();
-				DtUsuario infoU = iU.obtenerInfoUsuario(usr);
-				DtCanal infoC =iU.obtenerInfoCanal();
 				
-				//INFO USUARIO
-				nick.setText(infoU.getNickname());
-				nombre.setText(infoU.getNombre());
-				apellido.setText(infoU.getApellido());
-				email.setText(infoU.getCorreoE());
-//				fDia.addItem(null);
-//				fMes.addItem(null);		//TODO
-//				fAnio.addItem(null);
-				try {
-					mostrarImg(infoU.getImagen());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				
-				//INFO CANAL
-				nomCanal.setText(infoC.getNombre());
-				desCanal.setText(infoC.getDescripcion());
-				chckbxCanalPublico.setSelected(infoC.getPublico());
-				
-				//SEGUIDORES
-				List<String> seguidores = iU.listarSeguidores();
-				for(String u: seguidores) {
-					((DefaultListModel) listaSeguidores.getModel()).addElement(u);
-				}
-				
-				//SEGUIDOS
-				List<String> seguidos = iU.listarSeguidos();
-				for(String u: seguidos) {
-					((DefaultListModel) listaSeguidos.getModel()).addElement(u);
-				}
-				
-				//VIDEOS
-				List<String> videos = iV.listarVideosDeUsuario(usr);
-				for(String v: videos) {
-					((DefaultListModel) listaVid.getModel()).addElement(v);
-				}
-				
-				//LISTAS DE REPRODUCCION
-				List<String> listasRep = iL.listarListasDeUsuario(usr);
-				for(String lP: listasRep) {
-					((DefaultListModel) listaLisRep.getModel()).addElement(lP);
-				}
 			}
 		});
 		scrollListaUsr.setViewportView(listaUsr);
+		
+		JButton btnSelecVideo = new JButton("Seleccionar");
+		btnSelecVideo.setBounds(23, 475, 138, 23);
+		getContentPane().add(btnSelecVideo);
+		
+		JButton btnSelecLista = new JButton("Seleccionar");
+		btnSelecLista.setBounds(188, 475, 138, 23);
+		getContentPane().add(btnSelecLista);
 
 	}
 	
@@ -342,9 +373,9 @@ public class ConsultaUsuario extends JInternalFrame {
 		email.setText("");
 		nomCanal.setText("");
 		img.setText("");
-		fDia = new JComboBox<Integer>();
-		fMes = new JComboBox<Integer>();
-		fAnio = new JComboBox<Integer>();
+		fDia.setSelectedIndex(0);
+		fMes.setSelectedIndex(0);
+		fAnio.setSelectedIndex(0);
 		desCanal.setText("");
 		agregarFoto = false;
 		agregarNomCanal = false;
@@ -352,7 +383,13 @@ public class ConsultaUsuario extends JInternalFrame {
 		chckbxCanalPublico = new JCheckBox("Canal Publico");
 		nomCanal.setEnabled(false);
 		lblImagen.setIcon(null);
+		((DefaultListModel) listaSeguidores.getModel()).clear();
+		((DefaultListModel) listaSeguidos.getModel()).clear();
+		((DefaultListModel) listaVid.getModel()).clear();
+		((DefaultListModel) listaLisRep.getModel()).clear();
 	}
+	
+	
 	
 	public void mostrarImg(final String filename) throws Exception
 	  {
