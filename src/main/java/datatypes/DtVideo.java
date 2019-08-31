@@ -9,6 +9,7 @@ public class DtVideo {
 	private Integer duracion;
 	private String url;
 	private Boolean publico;
+	private String categoria;
 	
 	//Constructor
 	public DtVideo() {
@@ -16,7 +17,7 @@ public class DtVideo {
 	}
 
 	public DtVideo(String nombre, String descripcion, Calendar fPublicacion, Integer duracion, String url,
-			Boolean publico) {
+			Boolean publico, String categoria) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
@@ -24,7 +25,9 @@ public class DtVideo {
 		this.duracion = duracion;
 		this.url = url;
 		this.publico = publico;
+		this.categoria = categoria;
 	}
+
 
 	public String getNombre() {
 		return nombre;
@@ -48,7 +51,12 @@ public class DtVideo {
 
 	public Boolean getPublico() {
 		return publico;
+	}
+
+	public String getCategoria() {
+		return categoria;
 	} 
+	
 	
 	
 	

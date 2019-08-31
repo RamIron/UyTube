@@ -5,16 +5,24 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JInternalFrame;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 import interfaces.*;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.JLabel;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class MenuPrincipal extends JFrame {
 
@@ -54,6 +62,9 @@ public class MenuPrincipal extends JFrame {
 	private ConsultaUsuario consultaUsuarioIF;
 	
 	private AltaVideo altaVideoIF;
+	private ConsultaVideo consultaVideoIF;
+	private final JLabel fondo = new JLabel("");
+	private final JLabel logo = new JLabel("");
 	
 	/**
 	 * Launch the application.
@@ -78,6 +89,7 @@ public class MenuPrincipal extends JFrame {
 		listarUsuarioIF.setVisible(false);
 		altaVideoIF.setVisible(false);
 		consultaUsuarioIF.setVisible(false);
+		consultaVideoIF.setVisible(false);
 	}
 	
 	/**
@@ -87,6 +99,7 @@ public class MenuPrincipal extends JFrame {
 	 * 
 	 */
 	public MenuPrincipal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Martin\\Desktop\\UyTube\\src\\main\\resources\\img\\logo.png"));
 		setTitle("UyTube");
 		CFactory fC = CFactory.getInstancia();
 		ICategoria iC = fC.getICategoria();
@@ -119,6 +132,9 @@ public class MenuPrincipal extends JFrame {
 		//Video
 		altaVideoIF = new AltaVideo(iU, iC, iV);
 		listarUsuarioIF.setLocation(0, 0);
+		
+		consultaVideoIF = new ConsultaVideo(iU, iV, iC);
+		consultaVideoIF.setLocation(0, 0);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -183,6 +199,12 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		mnVideo.add(mntmModificarVideo);
+		mntmConsultarVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				consultaVideoIF.inicializar(iU, iC);
+				consultaVideoIF.setVisible(true);
+			}
+		});
 		
 		
 		mnVideo.add(mntmConsultarVideo);
@@ -253,6 +275,14 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(consultaUsuarioIF);
 		
 		contentPane.add(altaVideoIF);
+		contentPane.add(consultaVideoIF);
+		logo.setBounds(140, 300, 616, 225);
+		contentPane.add(logo);
+		logo.setIcon(new ImageIcon("src/main/resources/img/logo.png"));
+		fondo.setIcon(new ImageIcon("src/main/resources/img/fondo.jpg"));
+		fondo.setBounds(0, 0, 800, 550);
+		
+		contentPane.add(fondo);
 		
 		LimpiarFrame();
 	}
