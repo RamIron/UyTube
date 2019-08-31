@@ -25,6 +25,7 @@ public class ManejadorListaParticular {
 			em.getTransaction().begin();
 			em.persist(particular);
 			em.getTransaction().commit();
+			em.close();
 		} catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())

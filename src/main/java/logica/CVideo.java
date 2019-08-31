@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.persistence.*;
 
 import Manejadores.ManejadorCategoria;
+import Manejadores.ManejadorComentario;
 import Manejadores.ManejadorUsuario;
 import Manejadores.ManejadorVideo;
 import datatypes.DtComentario;
@@ -53,20 +54,6 @@ public class CVideo implements IVideo {
 		this.usr = null;
 	}
 	
-	/*@Override
-	public List<String> listarVideosDeUsuario(String nick) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nick) != null) {
-			this.usr = em.find(Usuario.class, nick);
-			ArrayList<String> videos = this.usr.listarVideosDeUsuario();
-			return videos;
-		}else {
-			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-		}
-		return null;
-	}*/
-	
 	@Override
 	public List<String> listarVideosDeUsuario(String nick) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
@@ -99,7 +86,21 @@ public class CVideo implements IVideo {
 	}
 	
 	@Override 
-	public void responderComentario(int idCom, String nick, Calendar fcom, String texto) {}
+	public void responderComentario(int idCom, String nick, Calendar fcom, String texto) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ManejadorComentario mC = ManejadorComentario.getInstancia();
+		if(mU.existeUsuario(nick)) {
+			Usuario usrRes = mU.obtenerUsuario(nick);
+			if(mC.existeComentario(idCom)) {
+				Comentario c = mC.obtenerComentario(idCom);
+				c.crearRespuesta(usrRes, fcom, texto);
+			} else {
+				throw new java.lang.RuntimeException("No existe el comentario ingresado");
+			}
+		} else {
+			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
+		}
+	}
 	
 	@Override 
 	public void realizarComentario(String nick, Calendar fCom, String texto) {

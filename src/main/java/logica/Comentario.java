@@ -72,7 +72,6 @@ public class Comentario {
 		em.persist(c);
 		em.persist(this);
 		em.getTransaction().commit();
-		
 	}
 	
 	public List<DtComentario> listarRespuestas(){

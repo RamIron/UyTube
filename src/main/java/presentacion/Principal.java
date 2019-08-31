@@ -364,10 +364,10 @@ public class Principal {
 		System.out.print("Elija un1 video: ");
 		String nomVid = entrada.nextLine();
 		//TODO: listar comentarios
-		/*List<DtComentario> comentarios = controladorV.obtenerComentariosVideo(nomVid);
+		List<DtComentario> comentarios = controladorV.obtenerComentariosVideo(nomVid);
 		for(DtComentario c:comentarios) {
 			System.out.println(c.getTexto());
-		}*/
+		}
 		controladorV.obtenerComentariosVideo(nomVid);
 		
 		System.out.print("Usuario que contestara: ");
