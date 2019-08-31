@@ -31,7 +31,7 @@ import logica.Comentario;
 			em.getTransaction().begin();
 			em.persist(categoria);
 			em.getTransaction().commit();
-			em.close();
+			//em.close();
 		} catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())
@@ -47,7 +47,7 @@ import logica.Comentario;
 			em.getTransaction().begin();
 			em.persist(categoria);
 			em.getTransaction().commit();
-			em.close();
+			//em.close();
 		} catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())
@@ -60,7 +60,7 @@ import logica.Comentario;
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
 		Categoria categoria = em.find(Categoria.class, nombre);
-		em.close();
+		//em.close();
 		return categoria;
 	}
 	

@@ -26,10 +26,10 @@ public class ManejadorUsuario {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		if(em.find(Usuario.class, nick) == null){//Si no existe el nickname en la base
-			em.close();
+			//em.close();
 			return false;
 		}else {
-			em.close();
+			//em.close();
 			return true;
 		}
 	}
@@ -41,7 +41,7 @@ public class ManejadorUsuario {
 			em.getTransaction().begin();
 			em.persist(usuario);
 			em.getTransaction().commit();
-			em.close();
+			//em.close();
 		} catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())
@@ -54,7 +54,7 @@ public class ManejadorUsuario {
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
 		Usuario usuario = em.find(Usuario.class, nickname);
-		em.close();
+		//em.close();
 		return usuario;
 	}
 	
@@ -63,7 +63,7 @@ public class ManejadorUsuario {
 		EntityManager em = conexion.getEntityManager();
 		TypedQuery<String> consulta = em.createQuery("SELECT u.nickname FROM Usuario u", String.class);
 	    List<String> usuarios = consulta.getResultList();
-	    em.close();
+	    //em.close();
 	    return usuarios;
 	}
 	
@@ -74,7 +74,7 @@ public class ManejadorUsuario {
 			em.getTransaction().begin();
 			em.persist(usuario);
 			em.getTransaction().commit();
-			em.close();
+			//em.close();
 		}catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())

@@ -23,7 +23,7 @@ public class ManejadorComentario {
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
 		Comentario comentario = em.find(Comentario.class, id);
-		em.close();
+		//em.close();
 		return comentario;
 	}
 	
@@ -31,10 +31,10 @@ public class ManejadorComentario {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		if(em.find(Comentario.class, id) == null){
-			em.close();
+			//em.close();
 			return false;
 		}else {
-			em.close();
+			//em.close();
 			return true;
 		}
 	}
@@ -46,7 +46,7 @@ public class ManejadorComentario {
 			em.getTransaction().begin();
 			em.persist(comentario);
 			em.getTransaction().commit();
-			em.close();
+			//em.close();
 		} catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())

@@ -190,7 +190,7 @@ public class CUsuario implements IUsuario {
 		return res;
 	}
 	
-	public boolean esCanalPublico(String nick) {
+	public Boolean esCanalPublico(String nick) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.usr = mU.obtenerUsuario(nick);
 		return this.usr.getCanal().getPublico();
