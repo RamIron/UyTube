@@ -24,7 +24,9 @@ public class Principal {
 							+ "9) Alta Lista de Reproduccion\n"
 							+ "10) Valorar Video\n"
 							+ "11) Comentar Video\n"
-							+ "12) Consulta de Video\n"
+							+ "12) Modificar Datos de Video\n"
+							+ "13) Agregar Video a Lista de Reproduccion\n"
+							+ "14) Quitar Video de Lista de Reproduccion\n"
 							+ "0) Salir\n"
 							+ "Opcion: ");
 	}
@@ -141,6 +143,7 @@ public class Principal {
 		String uSeguido = entrada.nextLine();
 		
 		controlador.seguirUsuario(uSeguidor, uSeguido);
+		controlador.limpiarControlador();
 	}
 	
 	static void dejarDeSeguirUsuario() {
@@ -156,6 +159,7 @@ public class Principal {
 		String uSeguido = entrada.nextLine();
 		
 		controlador.dejarDeSeguirUsuario(uSeguidor, uSeguido);
+		controlador.limpiarControlador();
 	}
 	
 	static void altaCategoria() {
@@ -276,7 +280,7 @@ public class Principal {
 				
 				if(!controladorLR.existeListaParticular(nick, particular)) {
 					boolean publico = false;
-					if(controladorLR.esCanalPublico()) {
+					if(controladorU.esCanalPublico(nick)) {
 						System.out.print("Sera una lista publica? s/n: ");
 						char s_n = entrada.next().charAt(0);
 						entrada.nextLine();
@@ -309,7 +313,7 @@ public class Principal {
 		controladorU.limpiarControlador();
 		controladorLR.limpiarControlador();
 	}
-	
+
 	static void valorarVideo() {
 		Scanner entrada = new Scanner (System.in);
 		VFactory vf = VFactory.getInstancia();
@@ -350,15 +354,44 @@ public class Principal {
 	static void comentarVideo() {
 		VFactory vf = VFactory.getInstancia();
 		IVideo controladorV = vf.getIVideo();
+		UFactory uf = UFactory.getInstancia();
+		IUsuario controladorU = uf.getIUsuario();
 		Scanner entrada = new Scanner (System.in);
 		listarUsuarios();
 		
 		System.out.print("Listar videos de usuario: ");
 		String nickVideo = entrada.nextLine();
-		//TODO: verificar que el canal es publico, y luego listar los videos publicos
-		List<String> videosU = controladorV.listarVideosDeUsuario(nickVideo);
-		for(String v:videosU) {
-			System.out.println(v);
+		if(controladorU.existeNickname(nickVideo)) {
+			if(controladorU.esCanalPublico(nickVideo)) {
+				List<String> videosU = controladorV.listarVideosPublicosDeUsuario(nickVideo);
+				if(!videosU.isEmpty()) {
+					for(String v:videosU) {
+						System.out.println(v);
+					}
+					
+					System.out.print("Elija un video: ");
+					String nomVid = entrada.nextLine();
+					//TODO: listar comentarios
+					/*List<DtComentario> comentarios = controladorV.obtenerComentariosVideo(nomVid);
+					for(DtComentario c:comentarios) {
+						System.out.println(c.getTexto());
+					}*/
+					controladorV.obtenerComentariosVideo(nomVid);
+					
+					System.out.print("Usuario que contestara: ");
+					String nickComentario = entrada.nextLine();
+					
+					System.out.print("Comentario: ");
+					String texto = entrada.nextLine();
+					
+					//TODO: asignar fecha a comentario
+					controladorV.realizarComentario(nickComentario, null, texto);
+				}else {
+					System.out.println("El usuario no tiene videos publicos");
+				}
+			}
+		}else {
+			System.out.println("No existe un usuario con nickname: " + nickVideo);
 		}
 		
 		System.out.print("Elija un1 video: ");
@@ -370,42 +403,203 @@ public class Principal {
 		}
 		controladorV.obtenerComentariosVideo(nomVid);
 		
-		System.out.print("Usuario que contestara: ");
-		String nickComentario = entrada.nextLine();
-		
-		System.out.print("Comentario: ");
-		String texto = entrada.nextLine();
-		
-		
-		controladorV.realizarComentario(nickComentario, null, texto);
-		
 		controladorV.limpiarControlador();
+		controladorU.limpiarControlador();
 	}
 	
-	static void consultaVideo() {
+	static void modificarDatosVideo() {
 		VFactory vf = VFactory.getInstancia();
 		IVideo controladorV = vf.getIVideo();
+		UFactory uf = UFactory.getInstancia();
+		IUsuario controladorU = uf.getIUsuario();
 		Scanner entrada = new Scanner (System.in);
 		listarUsuarios();
 		
 		System.out.print("Listar videos de usuario: ");
 		String nickVideo = entrada.nextLine();
-		List<String> videosU = controladorV.listarVideosDeUsuario(nickVideo);
-		for(String v:videosU) {
-			System.out.println(v);
+		
+		if(controladorU.existeNickname(nickVideo)) {
+			List<String> videosU = controladorV.listarVideosDeUsuario(nickVideo);
+			if(!videosU.isEmpty()) {
+				for(String v:videosU) {
+					System.out.println(v);
+				}
+				
+				System.out.print("Elija un video para modificar: ");
+				String nomVid = entrada.nextLine();
+				DtVideo dtVid = controladorV.obtenerInfoVideo(nomVid);
+				if(dtVid != null) {
+					System.out.println("Nombre:" + dtVid.getNombre() +
+										"\nDescripcion: " + dtVid.getDescripcion() +
+										"\nFecha de Publicacion: " + dtVid.getfPublicacion() +
+										"\nDuracion: " + dtVid.getDuracion() +
+										"\nurl: " + dtVid.getUrl() +
+										"\nEs publico: " + dtVid.getPublico());
+					
+					System.out.print("Nuevo nombre del video: ");
+					String nomV = entrada.nextLine();
+					
+					System.out.print("Nueva descripcion del video: ");
+					String desc = entrada.nextLine();
+					
+					System.out.println("Nueva fecha:");
+					System.out.print("Anio:");
+					int anio = Integer.parseInt(entrada.nextLine());
+					System.out.print("Mes:");
+					int mes = Integer.parseInt(entrada.nextLine());
+					System.out.print("Dia:");
+					int dia = Integer.parseInt(entrada.nextLine());
+					
+					Calendar fPub = Calendar.getInstance();
+					fPub.set(anio, mes, dia);
+					
+					System.out.print("Nueva duracion del video: ");
+					int dur = Integer.parseInt(entrada.nextLine());
+					
+					System.out.print("Nueva URL del video: ");
+					String url = entrada.nextLine();
+					
+					System.out.print("Sera publico? s/n: ");
+					char s_n = entrada.next().charAt(0);
+					boolean publico = false;
+					entrada.nextLine();
+					if(s_n == 's') {
+						publico = true;
+					}
+					
+					controladorV.modificarInfoVideo(nomV, desc, fPub, dur, url, publico);
+					
+				}else {
+					System.out.println("No existe el video: " + nomVid);
+				}
+
+			}else {
+				System.out.println("El usuario no tiene videos");
+			}
+		}else {
+			System.out.println("No existe un usuario con nickname: " + nickVideo);
 		}
 		
-		System.out.print("Elija un1 video: ");
-		String nomVid = entrada.nextLine();
 		
-		List<DtComentario> comentarios = controladorV.obtenerComentariosVideo(nomVid); 
-		
-		for(int i=0; i<comentarios.size(); i++){
-		    System.out.println("Comentario: " + comentarios.get(i).getTexto());
-		} 
-		
+		controladorV.limpiarControlador();
+		controladorU.limpiarControlador();
 	}
+	
+	static void agregarVideoALista() {
+		VFactory vf = VFactory.getInstancia();
+		LRFactory lf = LRFactory.getInstancia();
+		UFactory uf = UFactory.getInstancia();
+		IVideo controladorV = vf.getIVideo();
+		IListaReproduccion controladorLR = lf.getIListaReproduccion();
+		IUsuario controladorU = uf.getIUsuario();
 		
+		Scanner entrada = new Scanner (System.in);
+		listarUsuarios();
+		
+		System.out.print("Listar videos de usuario: ");
+		String nickVideo = entrada.nextLine();
+		
+		if(controladorU.existeNickname(nickVideo)) {
+			if(controladorU.esCanalPublico(nickVideo)) {
+				List<String> videosU = controladorV.listarVideosPublicosDeUsuario(nickVideo);
+				if(!videosU.isEmpty()) {
+					for(String v:videosU) {
+						System.out.println(v);
+					}
+					System.out.print("\n");
+					listarUsuarios();
+					System.out.print("Elija un usuario al que agregara video a su lista: ");
+					String nickLista = entrada.nextLine();
+					
+					if(controladorU.existeNickname(nickLista)) {
+					
+						System.out.print("Elija un video para agregar a una lista: ");
+						String nomVid = entrada.nextLine();
+						//TODO: fijarse si existe el video
+						
+						System.out.print("Desea agregarlo a una lista Por Defecto o Particular? d/p: ");
+						char d_p = entrada.next().charAt(0);
+						entrada.nextLine();
+						if(d_p == 'd') {
+							System.out.print("Ingrese el nombre de la Por Defecto: ");
+							String defecto = entrada.nextLine();
+							//controlador.agregarListaDefecto(defecto);
+							//TODO: implementar lo de lista por defecto
+						}else if(d_p == 'p'){	
+							List<String> dtPart = controladorLR.listarListasParticulares(nickLista);
+							for(String lp:dtPart) {
+								System.out.println(lp);
+							}
+							System.out.print("Elija el nombre de la lista particular: ");
+							String nomLisPar = entrada.nextLine();
+							
+							if(controladorLR.existeListaParticular(nickLista, nomLisPar)) {
+								controladorLR.agregarVideoListaParticular(nickVideo, nomVid, nomLisPar);
+							}else {
+								System.out.println("No existe esa lista para ese usuario");
+							}
+						}
+					}else {
+						System.out.println("No existe un usuario con nickname: " + nickLista);
+					}
+	
+				}else {
+					System.out.println("El usuario no tiene videos");
+				}
+			}else {
+				System.out.println("El canal no es publico");
+			}
+		}else {
+			System.out.println("No existe un usuario con nickname: " + nickVideo);
+		}
+	}
+	
+	static void quitarVideoDeLista() {
+		VFactory vf = VFactory.getInstancia();
+		LRFactory lf = LRFactory.getInstancia();
+		UFactory uf = UFactory.getInstancia();
+		IVideo controladorV = vf.getIVideo();
+		IListaReproduccion controladorLR = lf.getIListaReproduccion();
+		IUsuario controladorU = uf.getIUsuario();
+		
+		Scanner entrada = new Scanner (System.in);
+		listarUsuarios();
+		
+		System.out.print("Listar listas de usuario: ");
+		String nickLista = entrada.nextLine();
+		
+		if(controladorU.existeNickname(nickLista)) {
+			List<String> listas = controladorLR.listarListasDeUsuario(nickLista);
+			if(!listas.isEmpty()) {
+				for(String lista:listas) {
+					System.out.println(lista);
+				}
+				System.out.print("Elija el nombre de la lista: ");
+				String nomLista = entrada.nextLine();
+				
+				if(controladorLR.existeLista(nomLista)) {
+					List<DtVideoUsuario> videos = controladorLR.listarVideosdeLista(nomLista);
+					for(DtVideoUsuario video:videos) {
+						System.out.println("Video: " + video.getNombreE() + " - De usuario: " + video.getNickname());
+					}
+					
+					System.out.print("Elija el video a eliminar de lista: ");
+					String nomVideo = entrada.nextLine();
+					System.out.print("Elija el nick del video: ");
+					String nickVid = entrada.nextLine();
+					controladorLR.eliminarVideoDeLista(nickVid, nomVideo, nomLista);
+				}else {
+					System.out.println("No existe esa lista para ese usuario");
+				}
+			}else {
+				System.out.println("El usuario no tiene listas");
+			}
+		}
+		
+		controladorU.limpiarControlador();
+		controladorLR.limpiarControlador();
+	}
+
 	public static void main (String args[]) {
 		Scanner entrada = new Scanner(System.in);
 		int opcion;
@@ -448,7 +642,13 @@ public class Principal {
 					comentarVideo();
 					break;
 				case 12:
-					consultaVideo();
+					modificarDatosVideo();
+					break;
+				case 13:
+					agregarVideoALista();
+					break;
+				case 14:
+					quitarVideoDeLista();
 					break;
 				case 0:
 					System.out.println("adios");

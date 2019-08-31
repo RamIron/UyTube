@@ -51,6 +51,7 @@ public class MenuPrincipal extends JFrame {
 	
 	private AltaUsuario altaUsuarioIF;
 	private ListarUsuario listarUsuarioIF;
+	private ConsultaUsuario consultaUsuarioIF;
 	
 	private AltaVideo altaVideoIF;
 	
@@ -76,6 +77,7 @@ public class MenuPrincipal extends JFrame {
 		altaUsuarioIF.setVisible(false);
 		listarUsuarioIF.setVisible(false);
 		altaVideoIF.setVisible(false);
+		consultaUsuarioIF.setVisible(false);
 	}
 	
 	/**
@@ -86,29 +88,35 @@ public class MenuPrincipal extends JFrame {
 	 */
 	public MenuPrincipal() {
 		setTitle("UyTube");
-		//Categoria
 		CFactory fC = CFactory.getInstancia();
 		ICategoria iC = fC.getICategoria();
 		
+		VFactory fV = VFactory.getInstancia();
+		IVideo iV = fV.getIVideo();
+		
+		UFactory fU = UFactory.getInstancia();
+		IUsuario iU = fU.getIUsuario();
+		
+		LRFactory fL = LRFactory.getInstancia();
+		IListaReproduccion iL = fL.getIListaReproduccion(); 
+
+		//Categoria
 		altaCategoriaIF = new AltaCategoria(iC);
 		altaCategoriaIF.setBounds(0, 0, 800, 542);
 		listarCategoriaIF = new ListarCategoria(iC);
 		listarCategoriaIF.setBounds(0, 0, 800, 542);
 		
 		//Usuario
-		UFactory fU = UFactory.getInstancia();
-		IUsuario iU = fU.getIUsuario();
-		
 		altaUsuarioIF = new AltaUsuario(iU);
 		altaUsuarioIF.setLocation(0, 0);
 		
 		listarUsuarioIF = new ListarUsuario(iU);
 		listarUsuarioIF.setLocation(0, 0);
 		
-		//Video
-		VFactory fV = VFactory.getInstancia();
-		IVideo iV = fV.getIVideo();
+		consultaUsuarioIF = new ConsultaUsuario(iU, iV, iL);
+		consultaUsuarioIF.setLocation(0, 0);
 		
+		//Video
 		altaVideoIF = new AltaVideo(iU, iC, iV);
 		listarUsuarioIF.setLocation(0, 0);
 		
@@ -142,6 +150,13 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		mnUsuario.add(mntmListarTodos);
+		mntmConsultarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
+				consultaUsuarioIF.cargarElementos(iU);
+				consultaUsuarioIF.setVisible(true);
+			}
+		});
 		
 		
 		mnUsuario.add(mntmConsultarUsuario);
@@ -235,6 +250,7 @@ public class MenuPrincipal extends JFrame {
 		
 		contentPane.add(altaUsuarioIF);
 		contentPane.add(listarUsuarioIF);
+		contentPane.add(consultaUsuarioIF);
 		
 		contentPane.add(altaVideoIF);
 		

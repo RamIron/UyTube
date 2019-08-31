@@ -21,20 +21,20 @@ public class Valoracion {
 //	@JoinColumn(insertable=false, updatable=false)
 	private Usuario usuario;
 	
-	@ManyToOne
+	/*@ManyToOne
 //	@JoinColumn(insertable=false, updatable=false)
-	private Video video;
+	private Video video;*/
 	
 	//Constructores
 	public Valoracion() {
 		super();
 	}
 	
-	public Valoracion(boolean gusta, Usuario usuario, Video video) {
+	public Valoracion(boolean gusta, Usuario usuario/*, Video video*/) {
 		super();
 		this.gusta = gusta;
 		this.usuario = usuario;
-		this.video = video;
+//		this.video = video;
 	}
 	
 	//Getters & Setters
@@ -53,11 +53,11 @@ public class Valoracion {
 		this.usuario = usuario;
 	}
 	
-	public Video getVideo() {
+	/*public Video getVideo() {
 		return video;
 	}
 	
 	public void setVideo(Video video) {
 		this.video = video;
-	}
+	}*/
 }

@@ -12,12 +12,13 @@ import javax.persistence.TypedQuery;
 import org.hibernate.SessionFactory;
 
 import Manejadores.ManejadorCategoria;
-import Manejadores.ManejadorListaParticular;
+//import Manejadores.ManejadorListaParticular;
 import Manejadores.ManejadorUsuario;
 import datatypes.DtComentario;
 import datatypes.DtListaRep;
 import datatypes.DtValoracion;
 import datatypes.DtVideo;
+import datatypes.DtVideoUsuario;
 import interfaces.IListaReproduccion;
 
 public class CListaReproduccion implements IListaReproduccion {
@@ -72,26 +73,47 @@ public class CListaReproduccion implements IListaReproduccion {
 	
 	@Override 
 	public void agregarListaParticular(String nomL, boolean publico) {
-		ManejadorListaParticular mLP = ManejadorListaParticular.getInstancia();
+		//ManejadorListaParticular mLP = ManejadorListaParticular.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.uList = mU.obtenerUsuario(this.uList.getNickname());
 		this.lista = this.uList.getCanal().agregarListaParticular(nomL, publico);
-		mLP.agregarListaParticular((Particular)this.lista);
+		mU.modificaDatosUsuario(uList);
+		//mLP.agregarListaParticular((Particular)this.lista);
 	}
 	
 	@Override 
-	public void agregarVideoLista(String nomVid, String nomList) {}
-	
-	@Override 
-	public void eliminarVideoDeLista(String nickVid, String nomVid, String nomList) {}
-	
-	@Override 
-	public boolean esCanalPublico() {
-		return this.uList.getCanal().getPublico();
+	public void agregarVideoListaParticular(String nickVideo, String nomVid, String nomList) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		//ManejadorListaParticular mLP = ManejadorListaParticular.getInstancia();
+		this.uVid = mU.obtenerUsuario(nickVideo);
+		this.video = this.uVid.getCanal().obtenerVideo(nomVid);
+		Particular particular = (Particular) this.uList.getCanal().agregarVideoListaParticular(this.video, nomList);
+		//mLP.modificarListaParticular(particular);
+		mU.modificaDatosUsuario(this.uVid);
 	}
 	
 	@Override 
-	public boolean existeListaDefecto(String nomL) {return false;}
+	public void eliminarVideoDeLista(String nickVid, String nomVid, String nomList) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		if(mU.existeUsuario(nickVid)) {
+			this.uVid = mU.obtenerUsuario(nickVid);
+			this.video = this.uVid.getCanal().obtenerVideo(nomVid);	
+			this.uList.getCanal().eliminarVideoDeLista(this.video, nomList);
+			mU.modificaDatosUsuario(this.uList);
+		}else {
+			throw new IllegalArgumentException("No existe un usuario con ese nickname");
+		}
+	}
+	
+	@Override 
+	public boolean existeLista(String nomL) {
+		return this.uList.getCanal().existeLista(nomL);
+	}
+	
+	@Override 
+	public boolean existeListaDefecto(String nomL) {
+		return false;
+	}
 	
 	@Override 
 	public boolean existeListaParticular(String nick, String nomL) {
@@ -109,13 +131,27 @@ public class CListaReproduccion implements IListaReproduccion {
 	}
 	
 	@Override 
-	public List<String> listarListasDeUsuario(String nick) {return null;}
+	public List<String> listarListasDeUsuario(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.uList = mU.obtenerUsuario(nick);
+		return this.uList.getCanal().listarListasDeUsuario();
+	}
 	
 	@Override 
-	public List<String> listarListasParticulares(String nick) {return null;}
+	public List<String> listarListasParticulares(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		if(mU.existeUsuario(nick)) {
+			this.uList = mU.obtenerUsuario(nick);
+			return this.uList.getCanal().listarListasParticulares();
+		}else {
+			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
+		}
+	}
 
 	@Override 
-	public List<String> listarVideosdeLista(String nomList) {return null;}
+	public List<DtVideoUsuario> listarVideosdeLista(String nomList) {
+		return this.uList.getCanal().listarVideosdeLista(nomList);
+	}
 	
 	@Override 
 	public void modificarCategoria(String nick, String nomL, String nomC) {}

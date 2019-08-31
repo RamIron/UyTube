@@ -223,6 +223,8 @@ public class AltaUsuario extends JInternalFrame {
 			        iU.agregarUsuario(nick.getText(), nombre.getText(), apellido.getText(), fNac, email.getText());
 			        if(agregarFoto) {
 			        	iU.modificarImagen(img.getText());
+			        }else {
+			        	iU.modificarImagen("src/main/resources/img/default.png");
 			        }
 			        iU.agregarCanal();
 			        if(agregarNomCanal) {
@@ -230,6 +232,9 @@ public class AltaUsuario extends JInternalFrame {
 			        }else {
 			        	iU.modificarInfoCanal(nick.getText(), desCanal.getText(), publico);
 			        }
+			        
+			        // TODO agregar listas por defecto
+			        
 			        resetearFormulario();
 			        lblMsgExito.setVisible(true);
 				}
@@ -268,20 +273,14 @@ public class AltaUsuario extends JInternalFrame {
 				if (r == JFileChooser.APPROVE_OPTION) { 
 					img.setText(abrir.getSelectedFile().getAbsolutePath()); 
 					
-					//SOLO PARA PROBAR
-					
 					try {
 						String path = abrir.getSelectedFile().getAbsolutePath();
 						mostrarImg(path);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
-					//FIN
 				} 
 				
 			}
@@ -307,9 +306,9 @@ public class AltaUsuario extends JInternalFrame {
 		email.setText("");
 		nomCanal.setText("");
 		img.setText("");
-		fDia = new JComboBox<Integer>();
-		fMes = new JComboBox<Integer>();
-		fAnio = new JComboBox<Integer>();
+		fDia.setSelectedIndex(0);
+		fMes.setSelectedIndex(0);
+		fAnio.setSelectedIndex(0);
 		desCanal.setText("");
 		agregarFoto = false;
 		agregarNomCanal = false;

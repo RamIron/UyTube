@@ -39,8 +39,8 @@ public class Usuario {
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
 	
-	@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Valoracion> valoraciones = new ArrayList<>();
+	/*@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
+	private List<Valoracion> valoraciones = new ArrayList<>();*/
 	
 	@ManyToMany(mappedBy="seguidos")
 	//@JoinTable(name="USUARIOS_SEGUIDOS")
@@ -136,9 +136,9 @@ public class Usuario {
 		this.canal = c;
 	}
 
-	public List<Valoracion> getValoraciones() {
+	/*public List<Valoracion> getValoraciones() {
 		return valoraciones;
-	}
+	}*/
 
 
 	
@@ -148,6 +148,8 @@ public class Usuario {
 		c.setUsuario(this);
 		this.canal = c;
 	}
+	
+
 //	
 //	public void agregarCategoriaALista(String nomL, Categoria cat) {
 //		this.canal.agregarCategoriaALista(nomL, cat);
@@ -171,9 +173,9 @@ public class Usuario {
 		this.seguidores.add(u);
 	}
 	
-	public void agregarValoracion(Valoracion val) {
+	/*public void agregarValoracion(Valoracion val) {
 		this.valoraciones.add(val);
-	}
+	}*/
 
 //	public void agregarValoracion(Valoracion val) {
 //		this.valoraciones.add(val);
@@ -236,13 +238,12 @@ public class Usuario {
 //		this.canal.setDescripcion(descC);
 //		this.canal.setPublico(publico);
 //	}
-//	
-//	public DtCanal obtenerInfoCanal() {
-//		DtCanal dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.isPublico());
-//		
-//		return dtCan;
-//	}
-//	
+	
+	public DtCanal obtenerInfoCanal() {
+		DtCanal dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.getPublico());
+		return dtCan;
+	}
+	
 //	public DtVideo obtenerInfoVideo(String nomVid) {
 //		DtVideo dtVid = this.canal.obtenerInfoVideo(nomVid);
 //		return dtVid;

@@ -32,7 +32,7 @@ public class CUsuario implements IUsuario {
 			throw e;
 		}	
 	}
-
+	
 	
 	@Override 
 	public void agregarUsuario(String nick, String nom, String ape, Calendar fechaN, String email) {
@@ -145,6 +145,7 @@ public class CUsuario implements IUsuario {
 		try {
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			this.can.setNombre(nomC);
+			System.out.println(descC);
 			this.can.setDescripcion(descC);
 			this.can.setPublico(publico);
 			mU.modificaDatosUsuario(this.usr);
@@ -177,34 +178,22 @@ public class CUsuario implements IUsuario {
 	
 	@Override 
 	public DtCanal obtenerInfoCanal() {
-//		DtCanal dtCan = usr.obtenerInfoCanal();
-//		return dtCan;
-		return null;
+		DtCanal dtCan = usr.obtenerInfoCanal();
+		return dtCan;
 	}
 	
 	@Override 
 	public DtUsuario obtenerInfoUsuario(String nick) {
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		if(em.find(Usuario.class, nick) != null) {
-//			this.usr = em.find(Usuario.class, nick);
-//			DtUsuario dtUsr = new DtUsuario(usr.getNickname(), usr.getNombre(), usr.getApellido(), usr.getfNac(), usr.getImagen(), usr.getCorreoE());
-//			return dtUsr;
-//		}else {
-//			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-//		}
-		return null;
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		usr = mU.obtenerUsuario(nick);
+		DtUsuario res = new DtUsuario(nick, usr.getNombre(), usr.getApellido(), usr.getfNac(), usr.getImagen(), usr.getCorreoE());
+		return res;
 	}
 	
-	public Boolean esCanalPublico(String nick) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nick) != null) {
-			this.usr = em.find(Usuario.class, nick);
-			return this.usr.getCanal().getPublico();
-		}else {
-			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
-		}
+	public boolean esCanalPublico(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usr = mU.obtenerUsuario(nick);
+		return this.usr.getCanal().getPublico();
 	}
 	
 	@Override 

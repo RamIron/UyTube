@@ -15,6 +15,8 @@ public interface IUsuario {
 	
 	public void dejarDeSeguirUsuario(String seguidor, String seguido);
 	
+	public Boolean esCanalPublico(String nick);
+	
 	public boolean existeEmail(String email);
 	
 	public boolean existeNickname(String nick);
@@ -34,8 +36,6 @@ public interface IUsuario {
 	public void modificarInfoUsuario(String nick, String nomU, String apeU, Calendar fNacU, String imagen);
 	
 	public DtCanal obtenerInfoCanal();
-	
-	public Boolean esCanalPublico(String nick);
 	
 	public DtUsuario obtenerInfoUsuario(String nick);
 	

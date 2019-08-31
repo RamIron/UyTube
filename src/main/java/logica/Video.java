@@ -4,7 +4,6 @@ import java.util.*;
 import javax.persistence.*;
 import datatypes.DtComentario;
 import datatypes.DtElementoUsuario;
-import datatypes.DtValoracion;
 import datatypes.tipoElemento;
 
 @Entity
@@ -18,7 +17,7 @@ public class Video extends Elemento {
 	
 	private boolean publico;
 		
-	@OneToMany(mappedBy="video",cascade=CascadeType.ALL,orphanRemoval=true)
+	@OneToMany(/*mappedBy="video",*/cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Valoracion> valoraciones = new ArrayList<>();
 	
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
@@ -141,8 +140,7 @@ public class Video extends Elemento {
 //	}
 	
 	public void valorarVideo(boolean gusta, Usuario usrVal) {
-		Valoracion val = new Valoracion(gusta, usrVal, this);
-		valoraciones.add(val);
-		usrVal.agregarValoracion(val);
+		Valoracion val = new Valoracion(gusta, usrVal);
+		this.valoraciones.add(val);
 	}
 }
