@@ -122,7 +122,7 @@ public class Principal {
 	
 
 	
-	static void modificarUsuario() { //Sin terminar
+	static void modificarUsuario() {
 		listarUsuarios();
 		Scanner entrada = new Scanner (System.in);
 		UFactory uf = UFactory.getInstancia();
@@ -131,6 +131,42 @@ public class Principal {
 		System.out.print("Nickname del usuario a modificar: ");
 		String nick = entrada.nextLine();
 		
+		DtUsuario dtUsr = controlador.obtenerInfoUsuario(nick);
+		
+		System.out.println("Nickname: " + dtUsr.getNickname() +
+							"\nNombre: " + dtUsr.getNombre() +
+							"\nApellido: " + dtUsr.getApellido() +
+							"\nImagen: " + dtUsr.getImagen() +
+							"\nCorreo: " + dtUsr.getCorreoE());
+		
+		System.out.print("Nombre: ");
+		String nombre = entrada.nextLine();
+		
+		System.out.print("Apellido: ");
+		String apellido = entrada.nextLine();
+		
+		System.out.println("Fecha de Nacimiento:");
+		System.out.print("Anio:");
+		int anio = Integer.parseInt(entrada.nextLine());
+		System.out.print("Mes:");
+		int mes = Integer.parseInt(entrada.nextLine());
+		System.out.print("Dia:");
+		int dia = Integer.parseInt(entrada.nextLine());
+		
+		Calendar fNac = Calendar.getInstance();
+        fNac.set(anio, mes, dia);
+        
+        System.out.print("Ingrese la imagen: ");
+		String imagen = entrada.nextLine();
+        
+        controlador.modificarInfoUsuario(nombre, apellido, fNac, imagen);
+        
+        DtCanal dtCan = controlador.obtenerInfoCanal();
+        System.out.println("Nombre: " + dtCan.getNombre() +
+							"\nDescripcion: " + dtCan.getDescripcion() +
+							"\nPublico: " + dtCan.getPublico());
+        
+        controlador.limpiarControlador();
 	}
 	
 	static void seguirUsuario() {
@@ -683,6 +719,7 @@ public class Principal {
 			controladorLR.modificarCategoria(nomC);
 		}
 	}
+	
 	
 	public static void main (String args[]) {
 		Scanner entrada = new Scanner(System.in);

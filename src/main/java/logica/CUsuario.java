@@ -150,7 +150,6 @@ public class CUsuario implements IUsuario {
 		try {
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			this.can.setNombre(nomC);
-			System.out.println(descC);
 			this.can.setDescripcion(descC);
 			this.can.setPublico(publico);
 			mU.modificaDatosUsuario(this.usr);
@@ -160,25 +159,17 @@ public class CUsuario implements IUsuario {
 	}
 	
 	@Override 
-	public void modificarInfoUsuario(String nick, String nomU, String apeU, Calendar fNacU, String imagen) {
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
+	public void modificarInfoUsuario(String nomU, String apeU, Calendar fNacU, String imagen) {
 		try {
-			this.usr = em.find(Usuario.class, nick);
-			em.getTransaction().begin();
-			em.persist(this.usr);
+			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			this.usr.setNombre(nomU);
 			this.usr.setApellido(apeU);
 			this.usr.setfNac(fNacU);
 			this.usr.setImagen(imagen);
-			em.getTransaction().commit();
-		}catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
-					em.getTransaction().rollback();
-			throw new IllegalArgumentException("Hubo un error inesperado");
-		}	
-		
+			mU.modificaDatosUsuario(this.usr);
+		} catch (Exception e){
+			throw e;
+		}
 	}
 	
 	@Override 
