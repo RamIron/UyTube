@@ -23,6 +23,7 @@ import java.awt.Toolkit;
 import javax.swing.JLabel;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JTabbedPane;
 
 public class MenuPrincipal extends JFrame {
 
@@ -67,9 +68,14 @@ public class MenuPrincipal extends JFrame {
 	private ValorarVideo valorarVideoIF;
 	private AltaLista altaListaIF;
 	private ModificarVideo modificarVideoIF;
+	private AgregarVideoLista agregarVideoListaIF;
 	
 	private final JLabel fondo = new JLabel("");
 	private final JLabel logo = new JLabel("");
+	/**
+	 * @wbp.nonvisual location=87,-31
+	 */
+	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	
 	/**
 	 * Launch the application.
@@ -99,6 +105,7 @@ public class MenuPrincipal extends JFrame {
 		valorarVideoIF.setVisible(false);
 		altaListaIF.setVisible(false);
 		modificarVideoIF.setVisible(false);
+		agregarVideoListaIF.setVisible(false);
 	}
 	
 	/**
@@ -147,6 +154,9 @@ public class MenuPrincipal extends JFrame {
 		//Lista
 		altaListaIF = new AltaLista(iU, iC, iL);
 		altaVideoIF.setLocation(0, 0);
+		
+		agregarVideoListaIF = new AgregarVideoLista(iV, iU, iL);
+		agregarVideoListaIF.setLocation(0, 0);
 		
 		//Usuario
 		altaUsuarioIF = new AltaUsuario(iU);
@@ -278,6 +288,13 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		mnListaDeReproduccion.add(mntmConsultarLista);
+		mntmAgregarVideoA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
+				agregarVideoListaIF.inicializar();
+				agregarVideoListaIF.setVisible(true);
+			}
+		});
 		
 		
 		mnListaDeReproduccion.add(mntmAgregarVideoA);
@@ -333,6 +350,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(modificarVideoIF);
 		
 		contentPane.add(altaListaIF);
+		contentPane.add(agregarVideoListaIF);
 		
 		logo.setBounds(140, 300, 616, 225);
 		contentPane.add(logo);
