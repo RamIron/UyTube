@@ -17,11 +17,19 @@ import interfaces.IVideo;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
+import datatypes.DtComentario;
+import datatypes.DtValoracion;
+import datatypes.DtVideo;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JTree;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
@@ -33,109 +41,176 @@ import javax.swing.event.ChangeEvent;
 
 public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta video, faltan cosas
 
-	private JList listaUsr;
-	private String usr = "";
-	private JTextField nomVid;
-	private JTextField duracion;
-	private JTextField url;
-	private JButton btnSelecUsr = new JButton("Seleccionar Usuario");
+	private JList listaUsr = new JList();
+	private JTextField nomVid = new JTextField();
+	private JTextField duracion = new JTextField();
+	private JTextField url = new JTextField();
+	private JButton btnSeleccionarUsuario = new JButton("Seleccionar");
 	private JScrollPane scrollPane = new JScrollPane();
 	private JTextArea descripcion = new JTextArea();
 	private JComboBox<Integer> fDia = new JComboBox<Integer>();
 	private JComboBox<Integer> fMes = new JComboBox<Integer>();
 	private JComboBox<Integer> fAnio = new JComboBox<Integer>();
-	private JCheckBox chckbxVideoPublico = new JCheckBox("Video publico");
 	private JComboBox categoria = new JComboBox();
-	private JButton btnAgregar = new JButton("Agregar");
-	private JLabel lblMsgExiste = new JLabel("Ya existe un video con este nombre.");
+	private JList listaVid = new JList();
+	private JButton btnSelecVid = new JButton("Seleccionar");
+	private JCheckBox publico = new JCheckBox("");
+	private DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios");
+	private boolean esPublico = false;
+	private JLabel lblMsgExiste = new JLabel("Ya existe un video con este nombre en el canal.");
 	private JLabel lblMsgError = new JLabel("Error: falta completar algun campo.");
 	private JLabel lblMsgExito = new JLabel("El video fue agregado con exito.");
 	private JLabel lblMsgErrorUsr = new JLabel("Debe seleccionar un usuario");
-	private final JLabel lblListaDeUsuarios = new JLabel("Lista de Usuarios");
-	private Boolean videoPublico = false;
+	private JLabel lblMsgErrorNum = new JLabel("Deben ser numeros");
+	private final JLabel lblMsgErrorVid = new JLabel("Debe seleccionar un video");
+	
+	private IVideo iV;
+	private IUsuario iU;
+	private ICategoria iC;
+
 
 	/**
 	 * Create the frame.
 	 */
 	public ModificarVideo(IUsuario iU, ICategoria iC, IVideo iV) {
 		
-//		inicializar(iU, iC);
-		
-		setTitle("Agregar un video");
-		setBounds(0, 0, 800, 542);
-		ModificarVideo.this.setVisible(false);
+		this.iV = iV;
+		this.iU = iU;
+		this.iC = iC;
+		setTitle("Modificar video");
+		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);
 		
 		JButton btnSalir = new JButton("Salir");
-		btnSalir.setBounds(629, 473, 117, 25);
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inicializar();	
+				((DefaultListModel) listaVid.getModel()).clear();
+				listaVid.setEnabled(false);
 				ModificarVideo.this.setVisible(false);
 			}
 		});
+		btnSalir.setBounds(606, 476, 168, 25);
 		getContentPane().add(btnSalir);
 		
-		btnSelecUsr.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JScrollPane scrollListaUsr = new JScrollPane();
+		scrollListaUsr.setBounds(23, 26, 168, 190);
+		getContentPane().add(scrollListaUsr);
+		
+		listaUsr  = new JList();
+		DefaultListModel<String> listaU = new DefaultListModel<String>();
+		listaUsr.setModel(listaU);
+		scrollListaUsr.setViewportView(listaUsr);
+		
+		
+		btnSeleccionarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				reiniciarMsg();
-				if(usr.isEmpty()) {
+				int i = listaUsr.getSelectedIndex();
+				System.out.println(i);
+				if(i < 0) {
 					lblMsgErrorUsr.setVisible(true);
 				}else {
-					habilitarFormUsr(false);
-					habilitarFormVid(true);
-					if(iU.esCanalPublico(usr)) {
-						chckbxVideoPublico.setEnabled(true);
+					String usr = listaUsr.getModel().getElementAt(i).toString();
+					((DefaultListModel) listaVid.getModel()).clear();
+					List<String> videos = iV.listarVideosDeUsuario(usr);
+					if(!videos.isEmpty()) {
+						for(String v: videos) {
+							((DefaultListModel) listaVid.getModel()).addElement(v);
+						}
 					}
+					listaUsr.setEnabled(false);
+					btnSeleccionarUsuario.setEnabled(false);
+					
+					listaVid.setEnabled(true);
+					btnSelecVid.setEnabled(true);					
 				}
 			}
 		});
 		
+		btnSeleccionarUsuario.setBounds(23, 229, 168, 25);
+		getContentPane().add(btnSeleccionarUsuario);
 		
-		btnSelecUsr.setBounds(36, 438, 198, 25);
-		getContentPane().add(btnSelecUsr);
+		JLabel lblUsuarios = new JLabel("Usuarios");
+		lblUsuarios.setBounds(76, 12, 58, 14);
+		getContentPane().add(lblUsuarios);
+		
+		JScrollPane scrollListaVid = new JScrollPane();
+		scrollListaVid.setBounds(201, 26, 168, 190);
+		getContentPane().add(scrollListaVid);
 		
 		
-		scrollPane.setBounds(36, 50, 198, 345);
-		getContentPane().add(scrollPane);
+		listaVid.setEnabled(false);
+		listaVid.setModel(new DefaultListModel<String>());
+		scrollListaVid.setViewportView(listaVid);
 		
-		listaUsr  = new JList();
-		scrollPane.setViewportView(listaUsr);
-		listaUsr.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				int i = listaUsr.getSelectedIndex();
-				usr = listaUsr.getModel().getElementAt(i).toString();
+		JLabel lblVideos = new JLabel("Videos");
+		lblVideos.setBounds(263, 12, 46, 14);
+		getContentPane().add(lblVideos);
+		btnSelecVid.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i = listaVid.getSelectedIndex();
+				reiniciarMsg();
+				if(i < 0) {
+					lblMsgErrorVid.setVisible(true);
+				}else {
+					listaVid.setEnabled(false);
+					btnSelecVid.setEnabled(false);
+					String vid = listaVid.getModel().getElementAt(i).toString();
+					DtVideo infoV = iV.obtenerInfoVideo(vid);
+					nomVid.setText(infoV.getNombre());
+					duracion.setText(infoV.getDuracion().toString());
+					url.setText(infoV.getUrl());
+					descripcion.setText(infoV.getDescripcion());
+					fDia.setSelectedIndex(infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH));
+					fMes.setSelectedIndex(infoV.getfPublicacion().get(Calendar.MONTH));
+					fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
+					if(infoV.getCategoria() == null) {
+						categoria.setSelectedIndex(0);
+					} else {
+						categoria.setSelectedItem(infoV.getCategoria());					
+					}
+					publico.setSelected(infoV.getPublico());
+					esPublico = infoV.getPublico();
+					
+				}
+				
 			}
 		});
-		listaUsr.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		
+		btnSelecVid.setEnabled(false);
+		btnSelecVid.setBounds(201, 230, 168, 23);
+		getContentPane().add(btnSelecVid);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(282, 50, 70, 15);
+		lblNombre.setBounds(420, 14, 70, 15);
 		getContentPane().add(lblNombre);
 		
 		nomVid = new JTextField();
-		nomVid.setBounds(449, 48, 313, 19);
+		nomVid.setBounds(555, 11, 219, 19);
 		getContentPane().add(nomVid);
 		nomVid.setColumns(10);
 		
 		JLabel lblDescripcion = new JLabel("Descripcion");
-		lblDescripcion.setBounds(282, 97, 107, 15);
+		lblDescripcion.setBounds(420, 62, 107, 15);
 		getContentPane().add(lblDescripcion);
 		
 		
-		descripcion.setBounds(449, 97, 313, 63);
+		descripcion.setBounds(555, 58, 219, 63);
 		getContentPane().add(descripcion);
 		
 		JLabel lblDuracion = new JLabel("Duracion (segundos)");
-		lblDuracion.setBounds(282, 203, 149, 15);
+		lblDuracion.setBounds(420, 135, 149, 15);
 		getContentPane().add(lblDuracion);
 		
 		duracion = new JTextField();
-		duracion.setBounds(449, 201, 313, 19);
+		duracion.setBounds(555, 132, 219, 19);
 		getContentPane().add(duracion);
 		duracion.setColumns(10);
 		
 		
-		fDia.setBounds(449, 302, 49, 24);
+		fDia.setBounds(572, 214, 49, 24);
 		fDia.addItem(null);
 		for(Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
@@ -143,7 +218,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		getContentPane().add(fDia);
 		
 		
-		fMes.setBounds(510, 302, 52, 24);
+		fMes.setBounds(633, 214, 52, 24);
 		fMes.addItem(null);
 		for(Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
@@ -151,7 +226,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		getContentPane().add(fMes);
 		
 		
-		fAnio.setBounds(574, 302, 77, 24);
+		fAnio.setBounds(697, 214, 77, 24);
 		fAnio.addItem(null);
 		for(Integer i=1920; i<=2019; i++) {
 			fAnio.addItem(i);
@@ -159,64 +234,74 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		getContentPane().add(fAnio);
 		
 		JLabel lblUrl = new JLabel("URL");
-		lblUrl.setBounds(282, 257, 70, 15);
+		lblUrl.setBounds(420, 188, 70, 15);
 		getContentPane().add(lblUrl);
 		
 		url = new JTextField();
-		url.setBounds(449, 255, 313, 19);
+		url.setBounds(555, 185, 219, 19);
 		getContentPane().add(url);
 		url.setColumns(10);
 		
 		JLabel lblFechaDePublicacion = new JLabel("Fecha de publicacion");
-		lblFechaDePublicacion.setBounds(282, 307, 148, 15);
+		lblFechaDePublicacion.setBounds(420, 218, 148, 15);
 		getContentPane().add(lblFechaDePublicacion);
-		chckbxVideoPublico.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				videoPublico = ! videoPublico;
+		
+		
+		categoria.setBounds(555, 249, 219, 24);
+		getContentPane().add(categoria);
+		
+		JLabel lblCategoria = new JLabel("Categoria");
+		lblCategoria.setBounds(420, 258, 70, 15);
+		getContentPane().add(lblCategoria);
+		
+		JLabel lblVideoPublico = new JLabel("Video publico");
+		lblVideoPublico.setBounds(420, 296, 98, 14);
+		getContentPane().add(lblVideoPublico);
+		publico.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				esPublico = ! esPublico;
 			}
 		});
 		
 		
-		chckbxVideoPublico.setBounds(449, 407, 129, 23);
-		getContentPane().add(chckbxVideoPublico);
+		publico.setBounds(556, 291, 27, 23);
+		getContentPane().add(publico);
 		
-		
-		categoria.setBounds(449, 354, 313, 24);
-		getContentPane().add(categoria);
-		
-		JLabel lblCategoria = new JLabel("Categoria");
-		lblCategoria.setBounds(282, 359, 70, 15);
-		getContentPane().add(lblCategoria);
-		btnAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//Hay que ver errores anotados en cuadernola mateo
 				reiniciarMsg();
+				int i = listaVid.getSelectedIndex();
+				String vid = listaVid.getModel().getElementAt(i).toString();
+				i = listaUsr.getSelectedIndex();
+				String usr = listaUsr.getModel().getElementAt(i).toString();
 				if(nomVid.getText().isEmpty() || duracion.getText().isEmpty() || url.getText().isEmpty() ||
 					descripcion.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null)) {
 					lblMsgError.setVisible(true);
-				}else if(iV.existeVideo(usr, nomVid.getText())) {
 					lblMsgExiste.setVisible(true);
-				}else {
+				}else if(!duracion.getText().chars().allMatch(Character::isDigit)){
+					lblMsgErrorNum.setVisible(true);
+//				}else if(iV.existeVideo(usr, vid)){
+//				lblMsgExiste.setVisible(true);
+				}else{
 					Calendar fPub = Calendar.getInstance();
 			        fPub.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
-					iV.agregarVideo(usr, nomVid.getText(), descripcion.getText(), fPub, Integer.parseInt(duracion.getText()), url.getText());
-					//TODO falta el tema de la privacidad en el constructor
-					
+					iV.modificarInfoVideo(nomVid.getText(), descripcion.getText(), fPub, Integer.parseInt(duracion.getText()), url.getText(), esPublico);
 					if(categoria.getSelectedIndex() != 0) {
 						iV.agregarCategoria(categoria.getSelectedItem().toString());
 					}
-					inicializar(iU, iC);
+					inicializar();
 					lblMsgExito.setVisible(true);
 				}
 			}
 		});
-		
-		
-		btnAgregar.setBounds(474, 473, 117, 25);
-		getContentPane().add(btnAgregar);
+		btnModificar.setBounds(428, 476, 168, 25);
+		getContentPane().add(btnModificar);
 		
 		
 		lblMsgExiste.setForeground(Color.RED);
-		lblMsgExiste.setBounds(459, 70, 303, 15);
+		lblMsgExiste.setBounds(528, 32, 303, 15);
 		getContentPane().add(lblMsgExiste);
 		
 		
@@ -229,16 +314,21 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		lblMsgExito.setBounds(492, 443, 254, 15);
 		getContentPane().add(lblMsgExito);
 		lblMsgErrorUsr.setForeground(Color.RED);
-		lblMsgErrorUsr.setBounds(36, 407, 219, 15);
+		lblMsgErrorUsr.setBounds(33, 265, 149, 15);
 		
 		getContentPane().add(lblMsgErrorUsr);
-		lblListaDeUsuarios.setBounds(70, 24, 137, 15);
 		
-		getContentPane().add(lblListaDeUsuarios);
-
+		
+		lblMsgErrorNum.setForeground(Color.RED);
+		lblMsgErrorNum.setBounds(555, 159, 219, 15);
+		getContentPane().add(lblMsgErrorNum);
+		lblMsgErrorVid.setForeground(Color.RED);
+		lblMsgErrorVid.setBounds(211, 264, 168, 14);
+		
+		getContentPane().add(lblMsgErrorVid);
+		
 	}
-	
-	public void cargarUsuarios(IUsuario iU) {
+	public void cargarElementos() {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
@@ -247,49 +337,63 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		}
 		listaUsr.setModel(listaU);
 	}
+		
 	
-	public void cargarCategorias(ICategoria iC) {
-		List<String> categorias = iC.listarCategorias();
-		categoria.addItem("<Sin categoria>");
-		for(String c: categorias) {
-			categoria.addItem(c);
+	public void cargarComentarios(String nomVid) {
+		List<DtComentario> listaCom = iV.obtenerComentariosVideo(nomVid);
+		for(DtComentario c: listaCom) {
+			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
+			cargarRespuestas(nodo, c.getRespuestas());
+			raiz.add(nodo);
 		}
 	}
 	
-	public void limpiarListas() {
+	public void cargarLeGusta(IVideo iV, String nomVid) {
+		List<DtValoracion> listaVal = iV.obtenerValoracionVideo();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
-		listaUsr.setModel(listaU);
-		categoria.removeAllItems();
+		int i = 0;
+		for(DtValoracion v: listaVal) {
+			if(!listaVal.isEmpty()) {
+				if(v.getGusta()) {
+					listaU.add(i++, v.getNickname());
+				}
+			}
+		}	
 	}
 	
-	public void habilitarFormVid(Boolean flag) {
-		
-		nomVid.setEnabled(flag);
-		duracion.setEnabled(flag);
-		url.setEnabled(flag);
-		descripcion.setEnabled(flag);
-		fDia.setEnabled(flag);
-		fMes.setEnabled(flag);
-		fAnio.setEnabled(flag);
-		chckbxVideoPublico.setEnabled(false);
-		categoria.setEnabled(flag);
-		btnAgregar.setEnabled(flag);
-		
+	public void cargarNoGusta(IVideo iV, String nomVid) {
+		List<DtValoracion> listaVal = iV.obtenerValoracionVideo();
+		DefaultListModel<String> listaU = new DefaultListModel<String>();
+		int i = 0;
+		for(DtValoracion v: listaVal) {
+			if(!listaVal.isEmpty()) {
+				if(!v.getGusta()) {
+					listaU.add(i++, v.getNickname());
+				}
+			}
+		}
 	}
 	
-	public void habilitarFormUsr(Boolean flag) {
-		listaUsr.setEnabled(flag);
-		btnSelecUsr.setEnabled(flag);
+	public void cargarRespuestas(DefaultMutableTreeNode padre, List<DtComentario> com) {
+		for(DtComentario c: com) {
+			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
+				cargarRespuestas(nodo, c.getRespuestas());	
+			padre.add(nodo);
+		}
+
 	}
 	
-	public void reiniciarMsg() {
-		lblMsgExiste.setVisible(false);
-		lblMsgError.setVisible(false);
-		lblMsgExito.setVisible(false);
-		lblMsgErrorUsr.setVisible(false);
+	public void limpiarLista() {	
+		((DefaultListModel) listaVid.getModel()).clear();
+		listaVid.setEnabled(false);
+	    
 	}
 	
-	public void reiniciarVal() {
+	public void limpiarForm() {
+		btnSeleccionarUsuario.setEnabled(true);
+		((DefaultListModel) listaUsr.getModel()).clear();
+		listaUsr.setEnabled(true);
+		btnSelecVid.setEnabled(false);
 		nomVid.setText("");
 		duracion.setText("");
 		url.setText("");
@@ -297,20 +401,63 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		fDia.setSelectedIndex(-1);
 		fMes.setSelectedIndex(-1);
 		fAnio.setSelectedIndex(-1);
-		chckbxVideoPublico.setSelected(false);
 		categoria.setSelectedIndex(-1);
-		usr = "";
 	}
 	
-	public void inicializar(IUsuario iU, ICategoria iC) {
-		videoPublico = false;
-		reiniciarVal();
+	public void cargarCategorias() {
+		categoria.removeAllItems();
+		List<String> categorias = iC.listarCategorias();
+		categoria.addItem("<Sin categoria>");
+		for(String c: categorias) {
+			categoria.addItem(c);
+		}
+	}
+	
+	public void inicializar() {
 		reiniciarMsg();
-		limpiarListas();
-		cargarUsuarios(iU);
-		cargarCategorias(iC);
-		habilitarFormUsr(true);
-		habilitarFormVid(false);
-		
+		cargarCategorias();
+		limpiarLista();
+		limpiarForm();
+		cargarElementos();
+	}
+	
+	public void cargarVideo(String nick, String vid) {
+		iV.setUsr(nick);
+		listaUsr.setEnabled(false);
+		btnSeleccionarUsuario.setEnabled(false);
+		listaVid.setEnabled(false);
+		btnSelecVid.setEnabled(false);
+		DtVideo infoV = iV.obtenerInfoVideo(vid);
+		nomVid.setText(infoV.getNombre());
+		duracion.setText(infoV.getDuracion().toString());
+		url.setText(infoV.getUrl());
+		descripcion.setText(infoV.getDescripcion());
+		fDia.setSelectedIndex(infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH));
+		fMes.setSelectedIndex(infoV.getfPublicacion().get(Calendar.MONTH));
+		fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
+		categoria.setSelectedItem(infoV.getCategoria());
+		publico.setSelected(infoV.getPublico());
+		cargarComentarios(vid);
+	}
+	
+	public static boolean esNumero(String str) { 
+		for (char c : str.toCharArray()){
+	        if (!Character.isDigit(c)) {
+	        	System.out.print("false");
+	        	return false;
+	        }
+	    }
+		System.out.print("true");
+	    return true;
+
+	}
+	
+	public void reiniciarMsg() {
+		lblMsgExiste.setVisible(false);
+		lblMsgError.setVisible(false);
+		lblMsgExito.setVisible(false);
+		lblMsgErrorUsr.setVisible(false);
+		lblMsgErrorNum.setVisible(false);
+		lblMsgErrorVid.setVisible(false);
 	}
 }
