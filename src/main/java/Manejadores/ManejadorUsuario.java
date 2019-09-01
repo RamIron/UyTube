@@ -1,13 +1,11 @@
 package Manejadores;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 
-import logica.Comentario;
 import logica.Conexion;
 import logica.Usuario;
 
@@ -26,10 +24,8 @@ public class ManejadorUsuario {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		if(em.find(Usuario.class, nick) == null){//Si no existe el nickname en la base
-			//em.close();
 			return false;
 		}else {
-			//em.close();
 			return true;
 		}
 	}
@@ -41,7 +37,6 @@ public class ManejadorUsuario {
 			em.getTransaction().begin();
 			em.persist(usuario);
 			em.getTransaction().commit();
-			//em.close();
 		} catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())
@@ -54,8 +49,15 @@ public class ManejadorUsuario {
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
 		Usuario usuario = em.find(Usuario.class, nickname);
-		//em.close();
 		return usuario;
+	}
+	
+	public List<Usuario> obtenerUsuarios(){
+		Conexion conexion=Conexion.getInstancia();
+		EntityManager em =conexion.getEntityManager();
+		TypedQuery<Usuario> consulta = em.createQuery("FROM Usuario", Usuario.class);
+	    List<Usuario> usuarios = consulta.getResultList();
+	    return usuarios;
 	}
 	
 	public List<String> listarUsuarios(){
@@ -63,7 +65,6 @@ public class ManejadorUsuario {
 		EntityManager em = conexion.getEntityManager();
 		TypedQuery<String> consulta = em.createQuery("SELECT u.nickname FROM Usuario u", String.class);
 	    List<String> usuarios = consulta.getResultList();
-	    //em.close();
 	    return usuarios;
 	}
 	
@@ -74,7 +75,6 @@ public class ManejadorUsuario {
 			em.getTransaction().begin();
 			em.persist(usuario);
 			em.getTransaction().commit();
-			//em.close();
 		}catch (Exception e){
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())

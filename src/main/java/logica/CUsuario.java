@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
-
+import Manejadores.ManejadorPorDefecto;
 import Manejadores.ManejadorUsuario;
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
@@ -25,8 +25,13 @@ public class CUsuario implements IUsuario {
 	public void agregarCanal() {
 		try {
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+			ManejadorPorDefecto mPD = ManejadorPorDefecto.getInstancia();
 			usr.agregarCanal();
 			this.can = this.usr.getCanal();
+			List<String> listasPorDefecto = mPD.getNombresPorDefecto();
+			for(String nomPD:listasPorDefecto) {
+				this.can.agregarListaDefecto(nomPD);
+			}
 			mU.modificaDatosUsuario(this.usr);
 		} catch (Exception e){
 			throw e;

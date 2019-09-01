@@ -69,7 +69,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	 */
 	public ConsultaUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL) {
 		setRootPaneCheckingEnabled(false);
-		setTitle("Consultar un usuario");
+		setTitle("Consultar usuario");
 		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);
 		ConsultaUsuario.this.setVisible(false);
@@ -84,10 +84,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		btnSalir.setBounds(201, 209, 168, 25);
 		getContentPane().add(btnSalir);
 		
-		
-		setTitle("Consultar usuario");
-		setBounds(100, 100, 800, 542);
-		getContentPane().setLayout(null);
+
 		
 		JLabel lblNickname = new JLabel("Nickname");
 		lblNickname.setBounds(391, 51, 70, 15);
@@ -361,9 +358,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	}
 	
 	public void limpiarLista() {
-//		DefaultListModel<String> listaUsr = new DefaultListModel<String>();
-//		listaUsr.setModel(listaUsr);
-		//TODO
+		((DefaultListModel) listaUsr.getModel()).clear();
 	}
 	
 	public void resetearFormulario() {

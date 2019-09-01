@@ -127,7 +127,7 @@ public class AltaUsuario extends JInternalFrame {
 		
 		fAnio.setBounds(309, 220, 77, 24);
 		fAnio.addItem(null);
-		for(Integer i=1920; i<=2019; i++) {
+		for(Integer i=2019; i>=1900; i--) {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);

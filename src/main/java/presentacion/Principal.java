@@ -62,7 +62,6 @@ public class Principal {
 		        fNac.set(anio, mes, dia);
 				
 				controlador.agregarUsuario(nick, nombre, apellido, fNac, correoE);
-				//TODO: Agregar listas por defecto si ya existen
 				
 				System.out.print("Desea asociar una imagen de perfil? s/n: ");
 				char s_n = entrada.next().charAt(0);
@@ -267,8 +266,7 @@ public class Principal {
 		if(d_p == 'd') {
 			System.out.print("Ingrese el nombre de la Por Defecto: ");
 			String defecto = entrada.nextLine();
-			//controlador.agregarListaDefecto(defecto);
-			//TODO: implementar lo de lista por defecto
+			controladorLR.agregarListaDefecto(defecto);
 		}else if(d_p == 'p'){
 			listarUsuarios();
 			System.out.print("Nickname del usuario: ");
@@ -323,7 +321,7 @@ public class Principal {
 		
 		System.out.print("Listar videos de usuario: ");
 		String nickVideo = entrada.nextLine();
-		List<String> videosU = controladorV.listarVideosDeUsuario(nickVideo);
+		List<String> videosU = controladorV.listarVideosPublicosDeUsuario(nickVideo);
 		for(String v:videosU) {
 			System.out.println(v);
 		}
@@ -335,8 +333,6 @@ public class Principal {
 		
 		System.out.print("Nickname del usuario que valorara: ");
 		String nickVal = entrada.nextLine();
-		
-		//TODO: se debe de poder cambiar la valoracion
 		
 		System.out.print("Le gusta? s/n: ");
 		char s_n = entrada.next().charAt(0);
@@ -521,13 +517,21 @@ public class Principal {
 						char d_p = entrada.next().charAt(0);
 						entrada.nextLine();
 						if(d_p == 'd') {
+							List<String> porDefecto = controladorLR.listarListasPorDefecto(nickLista);
+							for(String lp:porDefecto) {
+								System.out.println(lp);
+							}
 							System.out.print("Ingrese el nombre de la Por Defecto: ");
-							String defecto = entrada.nextLine();
-							//controlador.agregarListaDefecto(defecto);
-							//TODO: implementar lo de lista por defecto
+							String nomLisDefecto = entrada.nextLine();
+							
+							if(controladorLR.existeListaDefecto(nomLisDefecto)) {
+								controladorLR.agregarVideoListaPorDefecto(nickVideo, nomVid, nomLisDefecto);
+							}else {
+								System.out.println("No existe esa lista para ese usuario");
+							}
 						}else if(d_p == 'p'){	
-							List<String> dtPart = controladorLR.listarListasParticulares(nickLista);
-							for(String lp:dtPart) {
+							List<String> particulares = controladorLR.listarListasParticulares(nickLista);
+							for(String lp:particulares) {
 								System.out.println(lp);
 							}
 							System.out.print("Elija el nombre de la lista particular: ");
@@ -657,31 +661,5 @@ public class Principal {
 					System.out.println("Opcion invalida, intente nuevamente");
 			}
 		}while(opcion != 0);
-		
-		
-//		/*
-//		Elemento lisP= new Particular("Lista de Videos de gatos", c, false);
-//
-//
-//		Elemento lisD= new PorDefecto("Favoritos", c);
-//
-//		
-//		ListaReproduccion lis = (ListaReproduccion) lisP;
-//		
-//		
-//		lis.agregarVideo((Video) vid);
-//		lis.agregarVideo((Video) vid2);
-//
-//		cat.agregarElemento(vid2);
-//		cat.agregarElemento(lisP);
-//		
-//		Video v =(Video) vid;
-//		v.crearComentario(u, fecha, "Soy un comentario");
-//		
-//		
-//		//com1.crearRespuesta(u, fecha, "te respondo");
-//		
-//		
-//		em.close();*/
 	}
 }

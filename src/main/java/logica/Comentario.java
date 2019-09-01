@@ -78,7 +78,7 @@ public class Comentario {
 		List<DtComentario> retorno = new ArrayList<DtComentario>();
 		if(!this.getRespuestas().isEmpty()) {
 			for(Comentario c : respuestas) {
-				DtComentario res = new DtComentario(c.getId(), c.getTexto(), c.getFecha(), c.getTexto(), c.listarRespuestas());
+				DtComentario res = new DtComentario(c.getId(), c.getUsuario().getNickname(), c.getFecha(), c.getTexto(), c.listarRespuestas());
 				retorno.add(res);
 			}
 		}
