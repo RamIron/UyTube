@@ -26,10 +26,16 @@ import datatypes.DtVideo;
 import interfaces.IListaReproduccion;
 import interfaces.IUsuario;
 import interfaces.IVideo;
+import java.awt.Color;
 
 public class AgregarVideoLista extends JInternalFrame {
 	private JList listaUsrV;
 	private JButton btnSelecUsrV = new JButton("Seleccionar");
+	private JList listUsrL = new JList();
+	private JList listList = new JList();
+	private JButton btnSelecUsrL = new JButton("Seleccionar");
+	private JButton btnSelecLista = new JButton("Seleccionar");
+	private JButton btnAgregar = new JButton("Agregar");
 	private JScrollPane scrollPane = new JScrollPane();
 	private JList listaVid = new JList();
 	private JButton btnSelecVid = new JButton("Seleccionar");
@@ -37,6 +43,16 @@ public class AgregarVideoLista extends JInternalFrame {
 	private IVideo iV;
 	private IUsuario iU;
 	private IListaReproduccion iL;
+	private Boolean seleccionoVideo = false;
+	private Boolean seleccionoLista = false;
+	private String usuarioVideo = "";
+	private String nomVid = "";
+	private String usuarioLista = "";
+	private String nomLista = "";
+	
+	
+	JLabel lblFaltanSeleccionarDatos = new JLabel("Faltan seleccionar datos");
+	JLabel lblSeHaAgregado = new JLabel("Se ha agregado video");
 	
 	public AgregarVideoLista(IVideo iV, IUsuario iU, IListaReproduccion iL) {
 		this.iV = iV;
@@ -67,10 +83,10 @@ public class AgregarVideoLista extends JInternalFrame {
 		
 		btnSelecUsrV.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int i = listaUsrV.getSelectedIndex();
-				String usr = listaUsrV.getModel().getElementAt(i).toString();
+				int u = listaUsrV.getSelectedIndex();
+				usuarioVideo = listaUsrV.getModel().getElementAt(u).toString();
 				((DefaultListModel) listaVid.getModel()).clear();
-				List<String> videos = iV.listarVideosDeUsuario(usr);
+				List<String> videos = iV.listarVideosDeUsuario(usuarioVideo);
 				if(!videos.isEmpty()) {
 					for(String v: videos) {
 						((DefaultListModel) listaVid.getModel()).addElement(v);
@@ -100,6 +116,7 @@ public class AgregarVideoLista extends JInternalFrame {
 		listaVid.setModel(new DefaultListModel<String>());
 		scrollListaVid.setViewportView(listaVid);
 		
+		
 		JLabel lblVideos = new JLabel("Videos");
 		lblVideos.setBounds(263, 12, 46, 14);
 		getContentPane().add(lblVideos);
@@ -107,9 +124,11 @@ public class AgregarVideoLista extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				listaVid.setEnabled(false);
 				btnSelecVid.setEnabled(false);
-				int i = listaVid.getSelectedIndex();
-				String vid = listaVid.getModel().getElementAt(i).toString();
-				
+				int v = listaVid.getSelectedIndex();
+				nomVid = listaVid.getModel().getElementAt(v).toString();
+				seleccionoVideo = true;
+				listaUsrV.setEnabled(true);
+				btnSelecUsrL.setEnabled(true);			
 				//TODO
 			}
 		});
@@ -127,40 +146,94 @@ public class AgregarVideoLista extends JInternalFrame {
 		scrollListaUsrL.setBounds(23, 280, 168, 190);
 		getContentPane().add(scrollListaUsrL);
 		
-		JList listUsrL = new JList();
 		scrollListaUsrL.setViewportView(listUsrL);
 		
 		JScrollPane scrollListaLis = new JScrollPane();
 		scrollListaLis.setBounds(201, 280, 168, 190);
 		getContentPane().add(scrollListaLis);
-		
-		JList list = new JList();
-		list.setEnabled(false);
-		scrollListaLis.setViewportView(list);
-		
+
+		listList.setModel(new DefaultListModel<String>());
+		listList.setEnabled(false);
+		scrollListaLis.setViewportView(listList);
+	
 		JLabel lblListasDeReproduccion = new JLabel("Listas de Reproduccion");
 		lblListasDeReproduccion.setBounds(231, 265, 127, 14);
 		getContentPane().add(lblListasDeReproduccion);
+		btnSelecUsrL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listList.setEnabled(true);
+				btnSelecLista.setEnabled(true);
+				int i = listUsrL.getSelectedIndex();
+				usuarioLista = listUsrL.getModel().getElementAt(i).toString();
+				((DefaultListModel) listList.getModel()).clear();
+				List<String> listas = iL.listarListasDeUsuario(usuarioLista);
+				if(!listas.isEmpty()) {
+					for(String l: listas) {
+						((DefaultListModel) listList.getModel()).addElement(l);
+					}
+				}
+			}
+		});
 		
-		JButton btnSelecUsrL = new JButton("Seleccionar");
 		btnSelecUsrL.setBounds(23, 477, 168, 23);
 		getContentPane().add(btnSelecUsrL);
 		
-		JButton btnSelecLista = new JButton("Seleccionar");
 		btnSelecLista.setEnabled(false);
 		btnSelecLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				seleccionoLista = true;
+				btnAgregar.setEnabled(true);
+				int i = listList.getSelectedIndex();
+				nomLista = listList.getModel().getElementAt(i).toString();
+				
+				
+			
 			}
 		});
 		btnSelecLista.setBounds(201, 477, 168, 23);
 		getContentPane().add(btnSelecLista);
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(seleccionoVideo == true && seleccionoLista == true) {
+//					int u = listaUsrV.getSelectedIndex();
+//					String usuarioVideo = listaUsrV.getModel().getElementAt(u).toString();
+//					
+//					int v = listaVid.getSelectedIndex();
+//					String nomVid = listaVid.getModel().getElementAt(v).toString();
+//					
+//					int l = listList.getSelectedIndex();
+//					String nomList = listList.getModel().getElementAt(l).toString();
+//					
+//					int u2 = listUsrL.getSelectedIndex();
+//					String usuarioLista = listUsrL.getModel().getElementAt(u2).toString();
+					
+					System.out.println(usuarioLista + nomVid + nomLista);
+					if(iL.existeListaParticular(usuarioLista, nomLista)) {
+						iL.agregarVideoListaPorDefecto(usuarioVideo, nomVid, nomLista);
+					} else {
+						iL.agregarVideoListaParticular(usuarioVideo, nomVid, nomLista);
+					}
+					lblSeHaAgregado.setVisible(true);
+				} else {
+					lblFaltanSeleccionarDatos.setVisible(true);
+				}
+			
+			
+			}
+		});
 		
-		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.setEnabled(false);
 		btnAgregar.setBounds(606, 439, 168, 25);
 		getContentPane().add(btnAgregar);
+		lblFaltanSeleccionarDatos.setForeground(new Color(255, 0, 0));
+		lblFaltanSeleccionarDatos.setBounds(595, 412, 195, 15);
+		getContentPane().add(lblFaltanSeleccionarDatos);
+		lblSeHaAgregado.setForeground(new Color(124, 252, 0));
+		lblSeHaAgregado.setBounds(606, 412, 155, 15);
+		getContentPane().add(lblSeHaAgregado);
 		
 	}
+	
 	public void cargarElementos() {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
@@ -169,8 +242,18 @@ public class AgregarVideoLista extends JInternalFrame {
 			listaU.add(i++, u);
 		}
 		listaUsrV.setModel(listaU);
+		listUsrL.setModel(listaU);
 	}
 		
+//	public void cargarElementosLista() {
+//		List<String> usuarios = iU.listarUsuarios();
+//		DefaultListModel<String> listaU = new DefaultListModel<String>();
+//		int i = 0;
+//		for(String u: usuarios) {
+//			listaU.add(i++, u);
+//		}
+//		listUsrL.setModel(listaU);
+//	}
 	
 	public void cargarComentarios(String nomVid) {
 		List<DtComentario> listaCom = iV.obtenerComentariosVideo(nomVid);
@@ -181,8 +264,6 @@ public class AgregarVideoLista extends JInternalFrame {
 		}
 	}
 	
-	
-	
 	public void cargarRespuestas(DefaultMutableTreeNode padre, List<DtComentario> com) {
 		for(DtComentario c: com) {
 			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
@@ -192,15 +273,14 @@ public class AgregarVideoLista extends JInternalFrame {
 
 	}
 	
-	
 	public void limpiarLista() {
 		((DefaultListModel) listaUsrV.getModel()).clear();
 	}
 	
 	public void LimpiarForm() {
-		//TODO
+		lblSeHaAgregado.setVisible(false);
+		lblFaltanSeleccionarDatos.setVisible(false);
 	}
-	
 	
 	public void inicializar() {
 		limpiarLista();
