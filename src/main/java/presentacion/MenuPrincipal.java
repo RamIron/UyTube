@@ -65,6 +65,7 @@ public class MenuPrincipal extends JFrame {
 	private ConsultaVideo consultaVideoIF;
 	private ComentarVideo comentarVideoIF; 
 	private ValorarVideo valorarVideoIF;
+	private AltaLista altaListaIF;
 	
 	private final JLabel fondo = new JLabel("");
 	private final JLabel logo = new JLabel("");
@@ -95,6 +96,7 @@ public class MenuPrincipal extends JFrame {
 		consultaVideoIF.setVisible(false);
 		comentarVideoIF.setVisible(false);
 		valorarVideoIF.setVisible(false);
+		altaListaIF.setVisible(false);
 	}
 	
 	/**
@@ -136,6 +138,10 @@ public class MenuPrincipal extends JFrame {
 		
 		valorarVideoIF = new ValorarVideo(iV, iU);
 		valorarVideoIF.setLocation(0, 0);
+		
+		//Lista
+		altaListaIF = new AltaLista(iU, iC, iL);
+		altaVideoIF.setLocation(0, 0);
 		
 		//Usuario
 		altaUsuarioIF = new AltaUsuario(iU);
@@ -214,6 +220,7 @@ public class MenuPrincipal extends JFrame {
 		mnVideo.add(mntmModificarVideo);
 		mntmConsultarVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
 				consultaVideoIF.inicializar();
 				consultaVideoIF.setVisible(true);
 			}
@@ -223,6 +230,7 @@ public class MenuPrincipal extends JFrame {
 		mnVideo.add(mntmConsultarVideo);
 		mntmComentar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
 				comentarVideoIF.inicializar(iU);
 				comentarVideoIF.setVisible(true);
 			}
@@ -232,6 +240,7 @@ public class MenuPrincipal extends JFrame {
 		mnVideo.add(mntmComentar);
 		mntmValorar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
 				valorarVideoIF.inicializar(iU);
 				valorarVideoIF.setVisible(true);
 			}
@@ -242,6 +251,13 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		menuBar.add(mnListaDeReproduccion);
+		mntmAgregarLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
+				altaListaIF.inicializar(iU, iC);
+				altaListaIF.setVisible(true);
+			}
+		});
 		
 		
 		mnListaDeReproduccion.add(mntmAgregarLista);
@@ -304,7 +320,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(comentarVideoIF);
 		contentPane.add(valorarVideoIF);
 		
-		
+		contentPane.add(altaListaIF);
 		
 		logo.setBounds(140, 300, 616, 225);
 		contentPane.add(logo);

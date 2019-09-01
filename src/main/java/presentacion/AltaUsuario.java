@@ -314,6 +314,7 @@ public class AltaUsuario extends JInternalFrame {
 		agregarNomCanal = false;
 		publico = false;
 		chckbxCanalPublico = new JCheckBox("Canal Publico");
+		chckbxCanalPublico.setSelected(false); 
 		chckbxPersonalizarNombreDel = new JCheckBox("Personalizar nombre del canal");
 		chckbxInsertarImagenDe = new JCheckBox("Insertar imagen de perfil");
 		btnSelecFoto.setEnabled(false);
