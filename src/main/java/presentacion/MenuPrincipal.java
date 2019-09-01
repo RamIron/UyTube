@@ -60,6 +60,7 @@ public class MenuPrincipal extends JFrame {
 	private AltaUsuario altaUsuarioIF;
 	private ListarUsuario listarUsuarioIF;
 	private ConsultaUsuario consultaUsuarioIF;
+	private SeguirUsuario seguirUsuarioIF;
 	
 	private AltaVideo altaVideoIF;
 	private ConsultaVideo consultaVideoIF;
@@ -99,6 +100,7 @@ public class MenuPrincipal extends JFrame {
 		valorarVideoIF.setVisible(false);
 		altaListaIF.setVisible(false);
 		modificarVideoIF.setVisible(false);
+		seguirUsuarioIF.setVisible(false);
 	}
 	
 	/**
@@ -158,6 +160,8 @@ public class MenuPrincipal extends JFrame {
 		consultaUsuarioIF = new ConsultaUsuario(iU, iV, iL, consultaVideoIF);
 		consultaUsuarioIF.setLocation(0, 0);
 		
+		seguirUsuarioIF = new SeguirUsuario(iU);
+		seguirUsuarioIF.setLocation(0, 0);
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -200,6 +204,13 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		mnUsuario.add(mntmConsultarUsuario);
+		mntmSeguir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LimpiarFrame();
+				seguirUsuarioIF.inicializar(iU);
+				seguirUsuarioIF.setVisible(true);
+			}
+		});
 		
 		
 		mnUsuario.add(mntmSeguir);
@@ -222,7 +233,7 @@ public class MenuPrincipal extends JFrame {
 		mntmModificarVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LimpiarFrame();
-				modificarVideoIF.inicializar(iU, iC);
+				modificarVideoIF.inicializar();
 				modificarVideoIF.setVisible(true);
 			}
 		});
@@ -325,6 +336,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(altaUsuarioIF);
 		contentPane.add(listarUsuarioIF);
 		contentPane.add(consultaUsuarioIF);
+		contentPane.add(seguirUsuarioIF);
 		
 		contentPane.add(altaVideoIF);
 		contentPane.add(consultaVideoIF);
