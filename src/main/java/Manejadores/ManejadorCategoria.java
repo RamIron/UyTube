@@ -69,7 +69,7 @@ import logica.Comentario;
 		EntityManager em = conexion.getEntityManager();
 		TypedQuery<String> consulta = em.createQuery("SELECT c.nombre FROM Categoria c", String.class);
 	    List<String> categorias = consulta.getResultList();
-	    em.close();
+	    //em.close();
 	    return categorias;
 	}
 	
@@ -77,10 +77,10 @@ import logica.Comentario;
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		if(em.find(Categoria.class, nomC) != null) {
-			em.close();
+			//em.close();
 			return true;
 		} else {
-			em.close();
+			//em.close();
 			return false;
 		}
 	}
