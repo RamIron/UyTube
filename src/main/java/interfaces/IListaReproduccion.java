@@ -18,6 +18,8 @@ public interface IListaReproduccion {
 	
 	public void agregarVideoListaParticular(String nickVideo, String nomVid, String nomList);
 	
+	public void agregarVideoListaPorDefecto(String nickVideo, String nomVid, String nomList);
+	
 	public void eliminarVideoDeLista(String nickVid, String nomVid, String nomList);
 	
 	public boolean existeLista(String nomL);
@@ -31,6 +33,8 @@ public interface IListaReproduccion {
 	public List<String> listarListasDeUsuario(String nick);
 	
 	public List<String> listarListasParticulares(String nick);
+	
+	public List<String> listarListasPorDefecto(String nick);
 	
 	public List<DtVideoUsuario> listarVideosdeLista(String nomList);
 	

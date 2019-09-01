@@ -12,7 +12,7 @@ public class Categoria {
 		@Id
 		private String nombre;
 		
-		@OneToMany(mappedBy="categoria",cascade=CascadeType.MERGE/*,orphanRemoval=true*/)
+		@OneToMany(mappedBy="categoria",cascade=CascadeType.MERGE)
 		private List<Elemento> elementos = new ArrayList <Elemento>();
 		
 		

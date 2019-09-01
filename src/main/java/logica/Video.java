@@ -18,7 +18,7 @@ public class Video extends Elemento {
 	private boolean publico;
 		
 	@OneToMany(/*mappedBy="video",*/cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Valoracion> valoraciones = new ArrayList<>();
+	private List<Valoracion> valoraciones = new ArrayList<Valoracion>();
 	
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Comentario> comentarios = new ArrayList<Comentario>();
@@ -132,15 +132,18 @@ public class Video extends Elemento {
 	}
 	
 	
-//	public void valorar(Usuario uVal, boolean val) {
-//		Valoracion v = new Valoracion(val, uVal, this);
-//		uVal.agregarValoracion(v);
-//		this.valoraciones.add(v);
-//
-//	}
-	
 	public void valorarVideo(boolean gusta, Usuario usrVal) {
-		Valoracion val = new Valoracion(gusta, usrVal);
-		this.valoraciones.add(val);
+		boolean existe = false;
+		for(Valoracion vals : this.valoraciones) {
+			if(usrVal.equals(vals.getUsuario())) {
+				existe = true;
+				vals.setGusta(gusta);
+				vals.setUsuario(usrVal);
+			}
+		}
+		if(!existe) {
+			Valoracion val = new Valoracion(gusta, usrVal);
+			this.valoraciones.add(val);
+		}
 	}
 }
