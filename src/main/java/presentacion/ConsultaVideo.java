@@ -144,7 +144,6 @@ public class ConsultaVideo extends JInternalFrame {
 				categoria.setSelectedItem(infoV.getCategoria());
 				publico.setSelected(infoV.getPublico());
 				cargarComentarios(vid);
-				System.out.println("SOY IVIDEO: " + iV);
 				cargarLeGusta(iV, vid);
 				cargarNoGusta(iV, vid);
 				listaLeGusta.setEnabled(true);
