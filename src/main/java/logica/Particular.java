@@ -47,7 +47,6 @@ public class Particular extends ListaReproduccion{
 		this.publico = publico;
 	}
 	
-	
 //	public Categoria getCatergoria() {
 //		return categoria;
 //	}

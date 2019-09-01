@@ -38,9 +38,9 @@ public interface IListaReproduccion {
 	
 	public List<DtVideoUsuario> listarVideosdeLista(String nomList);
 	
-	public void modificarCategoria(String nick, String nomL, String nomC);
+	public void modificarCategoria(String nomC);
 	
-	public void modificarInfoLista(String nick, String nomL, boolean publico);
+	public void modificarInfoLista(String nomL, boolean publico);
 	
 	public List<DtComentario> obtenerComentariosVideo(String nomVid);
 	

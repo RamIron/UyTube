@@ -42,8 +42,8 @@ public class Categoria {
 			List<DtElementoUsuario> res = new LinkedList<DtElementoUsuario>();
 			DtElementoUsuario elem;
 			for(Elemento e: elementos) {
-				//elem = e.obtenerElemCategoria();
-				//res.add(elem);
+				elem = e.obtenerElemCategoria();
+				res.add(elem);
 			}
 			return res;
 		}
@@ -55,5 +55,10 @@ public class Categoria {
 		
 		public void agregarLista(Particular p) {
 			elementos.add(p);
+		}
+		
+		public void quitarElemento(Elemento e) {
+			e.setCategoria(null);
+			elementos.remove(e);
 		}
 }
