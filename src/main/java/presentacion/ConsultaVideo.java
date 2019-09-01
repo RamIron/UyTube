@@ -130,6 +130,9 @@ public class ConsultaVideo extends JInternalFrame {
 				categoria.setSelectedItem(infoV.getCategoria());
 				publico.setSelected(infoV.getPublico());
 				cargarComentarios(iV, vid);
+				System.out.println("SOY IVIDEO: " + iV);
+				cargarLeGusta(iV, vid);
+				cargarNoGusta(iV, vid);
 				//TODO
 			}
 		});
@@ -282,6 +285,35 @@ public class ConsultaVideo extends JInternalFrame {
 			cargarRespuestas(nodo, c.getRespuestas());
 			raiz.add(nodo);
 		}
+	}
+	
+	public void cargarLeGusta(IVideo iV, String nomVid) {
+		List<DtValoracion> listaVal = iV.obtenerValoracionVideo();
+		DefaultListModel<String> listaU = new DefaultListModel<String>();
+		int i = 0;
+		System.out.println("SOY LISTA VAL: " + listaVal);
+		for(DtValoracion v: listaVal) {
+			if(!listaVal.isEmpty()) {
+				if(v.getGusta()) {
+					listaU.add(i++, v.getNickname());
+				}
+			}
+		}	
+		listaLeGusta.setModel(listaU);
+	}
+	
+	public void cargarNoGusta(IVideo iV, String nomVid) {
+		List<DtValoracion> listaVal = iV.obtenerValoracionVideo();
+		DefaultListModel<String> listaU = new DefaultListModel<String>();
+		int i = 0;
+		for(DtValoracion v: listaVal) {
+			if(!listaVal.isEmpty()) {
+				if(!v.getGusta()) {
+					listaU.add(i++, v.getNickname());
+				}
+			}
+		}
+		listaNoGusta.setModel(listaU);
 	}
 	
 	public void cargarRespuestas(DefaultMutableTreeNode padre, List<DtComentario> com) {
