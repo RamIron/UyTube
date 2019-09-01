@@ -61,6 +61,7 @@ public class MenuPrincipal extends JFrame {
 	private ListarUsuario listarUsuarioIF;
 	private ConsultaUsuario consultaUsuarioIF;
 	private SeguirUsuario seguirUsuarioIF;
+	private DejarSeguirUsuario dejarSeguirUsuarioIF;
 	
 	private AltaVideo altaVideoIF;
 	private ConsultaVideo consultaVideoIF;
@@ -101,6 +102,7 @@ public class MenuPrincipal extends JFrame {
 		altaListaIF.setVisible(false);
 		modificarVideoIF.setVisible(false);
 		seguirUsuarioIF.setVisible(false);
+		dejarSeguirUsuarioIF.setVisible(false);
 	}
 	
 	/**
@@ -163,6 +165,9 @@ public class MenuPrincipal extends JFrame {
 		seguirUsuarioIF = new SeguirUsuario(iU);
 		seguirUsuarioIF.setLocation(0, 0);
 		
+		dejarSeguirUsuarioIF = new DejarSeguirUsuario(iU);
+		dejarSeguirUsuarioIF.setLocation(0, 0);
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -214,6 +219,13 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		mnUsuario.add(mntmSeguir);
+		mntmDejarDeSeguir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			LimpiarFrame();
+			dejarSeguirUsuarioIF.inicializar(iU);
+			dejarSeguirUsuarioIF.setVisible(true);
+			}
+		});
 		
 		
 		mnUsuario.add(mntmDejarDeSeguir);
@@ -337,6 +349,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(listarUsuarioIF);
 		contentPane.add(consultaUsuarioIF);
 		contentPane.add(seguirUsuarioIF);
+		contentPane.add(dejarSeguirUsuarioIF);
 		
 		contentPane.add(altaVideoIF);
 		contentPane.add(consultaVideoIF);
