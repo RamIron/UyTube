@@ -71,7 +71,12 @@ public class ConsultaUsuario extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ConsultaUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ConsultaVideo cvIF) {
+		
+//		limpiarLista();
+//		resetearFormulario();
+		
 		this.cvIF = cvIF;
+		
 		setRootPaneCheckingEnabled(false);
 		setTitle("Consultar usuario");
 		setBounds(100, 100, 800, 542);

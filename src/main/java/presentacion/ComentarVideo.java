@@ -52,6 +52,7 @@ public class ComentarVideo extends JInternalFrame {
 	
 	public ComentarVideo(IUsuario iU, IVideo iV) {
 		
+		
 		setTitle("Comentar video");
 		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);
@@ -60,6 +61,7 @@ public class ComentarVideo extends JInternalFrame {
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ComentarVideo.this.setVisible(false);
+				
 			}
 		});
 		btnSalir.setBounds(606, 477, 168, 25);
@@ -256,7 +258,7 @@ public class ComentarVideo extends JInternalFrame {
 				if(comentario.getText().isEmpty() || fDia.getSelectedIndex() == 0 || fMes.getSelectedIndex() == 0 || fAnio.getSelectedIndex() == 0) {
 					lblMsgError.setVisible(true);
 				} else {
-					int i = listaUsrV.getSelectedIndex();
+					int i = listaUsrC.getSelectedIndex();
 					String usr = listaUsrC.getModel().getElementAt(i).toString();
 					Calendar fPub = Calendar.getInstance();
 					fPub.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
@@ -293,7 +295,6 @@ public class ComentarVideo extends JInternalFrame {
 		
 	}
 	
-	
 	public void cargarComentarios(IVideo iV, String nomVid) {
 		List<DtComentario> listaCom = iV.obtenerComentariosVideo(nomVid);
 		for(DtComentario c: listaCom) {
@@ -312,7 +313,6 @@ public class ComentarVideo extends JInternalFrame {
 
 	}
 	
-
 	public void cargarElementos(IUsuario iU) {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
@@ -323,8 +323,6 @@ public class ComentarVideo extends JInternalFrame {
 		listaUsrV.setModel(listaU);
 		listaUsrC.setModel(listaU);
 	}
-	
-	
 	
 	public void limpiarLista() {
 		((DefaultListModel) listaUsrV.getModel()).clear();
@@ -364,6 +362,5 @@ public class ComentarVideo extends JInternalFrame {
 		cargarElementos(iU);
 		resetearMensajes();
 	}
-	
 	
 }

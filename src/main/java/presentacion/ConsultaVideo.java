@@ -29,10 +29,10 @@ import javax.swing.JCheckBox;
 import javax.swing.tree.DefaultTreeModel;
 
 public class ConsultaVideo extends JInternalFrame {
-	private JList listaUsr;
-	private JTextField nomVid;
-	private JTextField duracion;
-	private JTextField url;
+	private JList listaUsr = new JList();
+	private JTextField nomVid = new JTextField();
+	private JTextField duracion = new JTextField();
+	private JTextField url = new JTextField();
 	private JButton btnSeleccionarUsuario = new JButton("Seleccionar");
 	private JScrollPane scrollPane = new JScrollPane();
 	private JTextArea descripcion = new JTextArea();
@@ -55,6 +55,7 @@ public class ConsultaVideo extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ConsultaVideo(IUsuario iU, IVideo iV, ICategoria iC) {
+		
 		this.iV = iV;
 		this.iU = iU;
 		this.iC = iC;
@@ -65,6 +66,13 @@ public class ConsultaVideo extends JInternalFrame {
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				inicializar();
+				((DefaultListModel) listaLeGusta.getModel()).clear();
+				listaLeGusta.setEnabled(false);
+				((DefaultListModel) listaNoGusta.getModel()).clear();
+				listaNoGusta.setEnabled(false);		
+				((DefaultListModel) listaVid.getModel()).clear();
+				listaVid.setEnabled(false);
 				ConsultaVideo.this.setVisible(false);
 			}
 		});
@@ -135,10 +143,12 @@ public class ConsultaVideo extends JInternalFrame {
 				fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
 				categoria.setSelectedItem(infoV.getCategoria());
 				publico.setSelected(infoV.getPublico());
-				cargarComentarios(iV, vid);
+				cargarComentarios(vid);
 				System.out.println("SOY IVIDEO: " + iV);
 				cargarLeGusta(iV, vid);
 				cargarNoGusta(iV, vid);
+				listaLeGusta.setEnabled(true);
+				listaNoGusta.setEnabled(true);	
 				//TODO
 			}
 		});
@@ -179,7 +189,7 @@ public class ConsultaVideo extends JInternalFrame {
 		fDia.setEnabled(false);
 		
 		
-		fDia.setBounds(555, 175, 49, 24);
+		fDia.setBounds(572, 175, 49, 24);
 		fDia.addItem(null);
 		for(Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
@@ -188,7 +198,7 @@ public class ConsultaVideo extends JInternalFrame {
 		fMes.setEnabled(false);
 		
 		
-		fMes.setBounds(628, 175, 52, 24);
+		fMes.setBounds(633, 175, 52, 24);
 		fMes.addItem(null);
 		for(Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
@@ -242,11 +252,11 @@ public class ConsultaVideo extends JInternalFrame {
 		scrollNoGusta.setViewportView(listaNoGusta);
 		
 		JLabel lblLesGusta = new JLabel("les gusta");
-		lblLesGusta.setBounds(472, 286, 46, 14);
+		lblLesGusta.setBounds(465, 281, 105, 14);
 		getContentPane().add(lblLesGusta);
 		
 		JLabel lblNoLesGusta = new JLabel("no les gusta");
-		lblNoLesGusta.setBounds(658, 286, 70, 14);
+		lblNoLesGusta.setBounds(653, 283, 122, 14);
 		getContentPane().add(lblNoLesGusta);
 		
 		JScrollPane scrollComentarios = new JScrollPane();
@@ -293,7 +303,6 @@ public class ConsultaVideo extends JInternalFrame {
 		List<DtValoracion> listaVal = iV.obtenerValoracionVideo();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		System.out.println("SOY LISTA VAL: " + listaVal);
 		for(DtValoracion v: listaVal) {
 			if(!listaVal.isEmpty()) {
 				if(v.getGusta()) {
@@ -327,13 +336,31 @@ public class ConsultaVideo extends JInternalFrame {
 
 	}
 	
-	
 	public void limpiarLista() {
-		((DefaultListModel) listaUsr.getModel()).clear();
+//		((DefaultListModel) listaLeGusta.getModel()).clear();
+//		listaLeGusta.setEnabled(false);
+//		((DefaultListModel) listaNoGusta.getModel()).clear();
+//		listaNoGusta.setEnabled(false);		
+//		((DefaultListModel) listaVid.getModel()).clear();
+//		listaVid.setEnabled(false);
+	    raiz.removeAllChildren();
+		((DefaultTreeModel) comentarios.getModel()).reload();
+		comentarios.setEnabled(true);
 	}
 	
-	public void LimpiarForm() {
-		//TODO
+	public void limpiarForm() {
+		btnSeleccionarUsuario.setEnabled(true);
+		((DefaultListModel) listaUsr.getModel()).clear();
+		listaUsr.setEnabled(true);
+		btnSelecVid.setEnabled(false);
+		nomVid.setText("");
+		duracion.setText("");
+		url.setText("");
+		descripcion.setText("");
+		fDia.setSelectedIndex(-1);
+		fMes.setSelectedIndex(-1);
+		fAnio.setSelectedIndex(-1);
+		categoria.setSelectedIndex(-1);
 	}
 	
 	public void cargarCategorias() {
@@ -347,7 +374,7 @@ public class ConsultaVideo extends JInternalFrame {
 	public void inicializar() {
 		cargarCategorias();
 		limpiarLista();
-		LimpiarForm();
+		limpiarForm();
 		cargarElementos();
 	}
 	
