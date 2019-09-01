@@ -33,7 +33,7 @@ public class ConsultaVideo extends JInternalFrame {
 	private JTextField nomVid;
 	private JTextField duracion;
 	private JTextField url;
-	private JButton btnSelecUsr = new JButton("Seleccionar Usuario");
+	private JButton btnSeleccionarUsuario = new JButton("Seleccionar");
 	private JScrollPane scrollPane = new JScrollPane();
 	private JTextArea descripcion = new JTextArea();
 	private JComboBox<Integer> fDia = new JComboBox<Integer>();
@@ -47,11 +47,17 @@ public class ConsultaVideo extends JInternalFrame {
 	private JTree comentarios = new JTree();
 	private JCheckBox publico = new JCheckBox("");
 	private DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios");
+	private IVideo iV;
+	private IUsuario iU;
+	private ICategoria iC;
 
 	/**
 	 * Create the frame.
 	 */
 	public ConsultaVideo(IUsuario iU, IVideo iV, ICategoria iC) {
+		this.iV = iV;
+		this.iU = iU;
+		this.iC = iC;
 		setTitle("Consultar video");
 		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);
@@ -74,7 +80,7 @@ public class ConsultaVideo extends JInternalFrame {
 		listaUsr.setModel(listaU);
 		scrollListaUsr.setViewportView(listaUsr);
 		
-		JButton btnSeleccionarUsuario = new JButton("Seleccionar");
+		
 		btnSeleccionarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = listaUsr.getSelectedIndex();
@@ -129,7 +135,7 @@ public class ConsultaVideo extends JInternalFrame {
 				fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
 				categoria.setSelectedItem(infoV.getCategoria());
 				publico.setSelected(infoV.getPublico());
-				cargarComentarios(iV, vid);
+				cargarComentarios(vid);
 				//TODO
 			}
 		});
@@ -259,12 +265,8 @@ public class ConsultaVideo extends JInternalFrame {
 		getContentPane().add(publico);
 		
 		
-		///////////////////////
-//		DefaultMutableTreeNode nodo = new DefaultMutableTreeNode("hola");
-//		raiz.add(nodo);
-		/////////
 	}
-	public void cargarElementos(IUsuario iU) {
+	public void cargarElementos() {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
@@ -275,7 +277,7 @@ public class ConsultaVideo extends JInternalFrame {
 	}
 		
 	
-	public void cargarComentarios(IVideo iV, String nomVid) {
+	public void cargarComentarios(String nomVid) {
 		List<DtComentario> listaCom = iV.obtenerComentariosVideo(nomVid);
 		for(DtComentario c: listaCom) {
 			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
@@ -302,7 +304,7 @@ public class ConsultaVideo extends JInternalFrame {
 		//TODO
 	}
 	
-	public void cargarCategorias(ICategoria iC) {
+	public void cargarCategorias() {
 		List<String> categorias = iC.listarCategorias();
 		categoria.addItem("<Sin categoria>");
 		for(String c: categorias) {
@@ -310,10 +312,29 @@ public class ConsultaVideo extends JInternalFrame {
 		}
 	}
 	
-	public void inicializar(IUsuario iU, ICategoria iC) {
-		cargarCategorias(iC);
+	public void inicializar() {
+		cargarCategorias();
 		limpiarLista();
 		LimpiarForm();
-		cargarElementos(iU);
+		cargarElementos();
+	}
+	
+	public void cargarVideo(String nick, String vid) {
+		iV.setUsr(nick);
+		listaUsr.setEnabled(false);
+		btnSeleccionarUsuario.setEnabled(false);
+		listaVid.setEnabled(false);
+		btnSelecVid.setEnabled(false);
+		DtVideo infoV = iV.obtenerInfoVideo(vid);
+		nomVid.setText(infoV.getNombre());
+		duracion.setText(infoV.getDuracion().toString());
+		url.setText(infoV.getUrl());
+		descripcion.setText(infoV.getDescripcion());
+		fDia.setSelectedIndex(infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH));
+		fMes.setSelectedIndex(infoV.getfPublicacion().get(Calendar.MONTH));
+		fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
+		categoria.setSelectedItem(infoV.getCategoria());
+		publico.setSelected(infoV.getPublico());
+		cargarComentarios(vid);
 	}
 }
