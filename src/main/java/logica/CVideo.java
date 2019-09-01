@@ -151,6 +151,17 @@ public class CVideo implements IVideo {
 		Usuario u = mU.obtenerUsuario(nick);
 		return u.getCanal().existeVideo(nomV);
 	}
+
+	@Override
+	public void setUsr(String usr) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usr = mU.obtenerUsuario(usr);
+	}
+
+	@Override
+	public void setVid(String vid) {
+		this.vid = usr.getCanal().obtenerVideo(vid);
+	}
 	
 	
 }

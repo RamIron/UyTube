@@ -35,5 +35,9 @@ public interface IVideo {
 	 public void valorarVideo(String nickVal, boolean val);
 	 
 	 public Boolean existeVideo(String nick, String nomV);
+
+	 public void setUsr(String usr);
+
+	 public void setVid(String vid);
 	
 }
