@@ -65,6 +65,9 @@ public class AltaVideo extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public AltaVideo(IUsuario iU, ICategoria iC, IVideo iV) {
+		
+//		inicializar(iU, iC);
+		
 		setTitle("Agregar un video");
 		setBounds(0, 0, 800, 542);
 		AltaVideo.this.setVisible(false);

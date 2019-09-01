@@ -58,6 +58,9 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 	 * Create the frame.
 	 */
 	public ModificarVideo(IUsuario iU, ICategoria iC, IVideo iV) {
+		
+//		inicializar(iU, iC);
+		
 		setTitle("Agregar un video");
 		setBounds(0, 0, 800, 542);
 		ModificarVideo.this.setVisible(false);

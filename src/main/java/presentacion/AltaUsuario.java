@@ -61,6 +61,10 @@ public class AltaUsuario extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public AltaUsuario(IUsuario iU) {
+		
+//		resetearFormulario();
+//		borrarMsg();
+		
 		setTitle("Agregar usuario");
 		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);
