@@ -30,7 +30,6 @@ import java.awt.Font;
 public class ComentarVideo extends JInternalFrame {
 	
 	private JList listaUsrV;
-	private JButton btnSelecUsr = new JButton("Seleccionar Usuario");
 	private JList listaVid = new JList();
 	private JButton btnSelecVid = new JButton("Seleccionar");
 	private JTree comentarios = new JTree();
@@ -47,6 +46,8 @@ public class ComentarVideo extends JInternalFrame {
 	private JButton btnSeleccionarUC = new JButton("Seleccionar");
 	private final JLabel lblMsgError = new JLabel("Faltan completar campos");
 	private final JLabel lblMsgExito = new JLabel("Se agrego el comentario");
+	private final JLabel lblMsgErrorSelec = new JLabel("Debe seleccionar un comentario");
+	JButton btnSeleccionarUsuario = new JButton("Seleccionar");
 	
 	
 	public ComentarVideo(IUsuario iU, IVideo iV) {
@@ -61,7 +62,7 @@ public class ComentarVideo extends JInternalFrame {
 				ComentarVideo.this.setVisible(false);
 			}
 		});
-		btnSalir.setBounds(606, 476, 168, 25);
+		btnSalir.setBounds(606, 477, 168, 25);
 		getContentPane().add(btnSalir);
 		
 		JScrollPane scrollListaUsr = new JScrollPane();
@@ -73,7 +74,7 @@ public class ComentarVideo extends JInternalFrame {
 		listaUsrV.setModel(listaU);
 		scrollListaUsr.setViewportView(listaUsrV);
 		
-		JButton btnSeleccionarUsuario = new JButton("Seleccionar");
+		
 		btnSeleccionarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = listaUsrV.getSelectedIndex();
@@ -134,7 +135,7 @@ public class ComentarVideo extends JInternalFrame {
 		fDia.setEnabled(false);
 		
 		
-		fDia.setBounds(212, 303, 49, 24);
+		fDia.setBounds(405, 304, 49, 24);
 		fDia.addItem(null);
 		for(Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
@@ -143,7 +144,7 @@ public class ComentarVideo extends JInternalFrame {
 		fMes.setEnabled(false);
 		
 		
-		fMes.setBounds(273, 303, 52, 24);
+		fMes.setBounds(466, 304, 52, 24);
 		fMes.addItem(null);
 		for(Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
@@ -152,7 +153,7 @@ public class ComentarVideo extends JInternalFrame {
 		fAnio.setEnabled(false);
 		
 		
-		fAnio.setBounds(335, 303, 77, 24);
+		fAnio.setBounds(528, 304, 77, 24);
 		fAnio.addItem(null);
 		for(Integer i=2019; i>=2000; i--) {
 			fAnio.addItem(i);
@@ -188,14 +189,18 @@ public class ComentarVideo extends JInternalFrame {
 		getContentPane().add(btnNuevoComentario);
 		btnResponderComentario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnNuevoComentario.setEnabled(false);
-				btnResponderComentario.setEnabled(false);
-				nuevoComentario = false;
-				btnNuevoComentario.setEnabled(false);
-				btnResponderComentario.setEnabled(false);
-				btnSeleccionarUC.setEnabled(true);
-				listaUsrC.setEnabled(true);
-				//TODO: ver como se captura el id del comentario
+				resetearMensajes();
+				if(comentarios.getLastSelectedPathComponent() == null) {
+					lblMsgErrorSelec.setVisible(true);
+				}else {
+					btnNuevoComentario.setEnabled(false);
+					btnResponderComentario.setEnabled(false);
+					nuevoComentario = false;
+					btnNuevoComentario.setEnabled(false);
+					btnResponderComentario.setEnabled(false);
+					btnSeleccionarUC.setEnabled(true);
+					listaUsrC.setEnabled(true);					
+				}
 				
 			}
 		});
@@ -210,10 +215,11 @@ public class ComentarVideo extends JInternalFrame {
 		getContentPane().add(scrollUsrC);
 		
 		listaUsrC.setEnabled(false);
+		listaUsrC.setModel(new DefaultListModel<String>());
 		scrollUsrC.setViewportView(listaUsrC);
 		
 		JLabel lblUsuarioARealizar = new JLabel("Usuario a realizar comentario");
-		lblUsuarioARealizar.setBounds(37, 274, 143, 14);
+		lblUsuarioARealizar.setBounds(37, 274, 154, 14);
 		getContentPane().add(lblUsuarioARealizar);
 		btnSeleccionarUC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -231,15 +237,15 @@ public class ComentarVideo extends JInternalFrame {
 		getContentPane().add(btnSeleccionarUC);
 		
 		JLabel lblNewLabel = new JLabel("Fecha");
-		lblNewLabel.setBounds(281, 274, 46, 14);
+		lblNewLabel.setBounds(323, 309, 46, 14);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblComentario = new JLabel("Comentario");
-		lblComentario.setBounds(283, 338, 113, 14);
+		lblComentario.setBounds(323, 344, 77, 14);
 		getContentPane().add(lblComentario);
 		
 		comentario.setEnabled(false);
-		comentario.setBounds(225, 363, 168, 121);
+		comentario.setBounds(405, 339, 349, 94);
 		getContentPane().add(comentario);
 		
 		
@@ -267,19 +273,23 @@ public class ComentarVideo extends JInternalFrame {
 				}
 			}
 		});
-		btnConfirmar.setBounds(460, 477, 103, 23);
+		btnConfirmar.setBounds(428, 477, 168, 25);
 		getContentPane().add(btnConfirmar);
 		
 		comentarios.setModel(new DefaultTreeModel(raiz));
 		lblMsgError.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblMsgError.setForeground(Color.RED);
-		lblMsgError.setBounds(452, 448, 134, 14);
+		lblMsgError.setBounds(528, 452, 178, 14);
 		
 		getContentPane().add(lblMsgError);
 		lblMsgExito.setForeground(new Color(127, 255, 0));
-		lblMsgExito.setBounds(452, 448, 134, 14);
+		lblMsgExito.setBounds(528, 452, 178, 14);
 		
 		getContentPane().add(lblMsgExito);
+		lblMsgErrorSelec.setForeground(Color.RED);
+		lblMsgErrorSelec.setBounds(503, 264, 161, 14);
+		
+		getContentPane().add(lblMsgErrorSelec);
 		
 	}
 	
@@ -318,15 +328,34 @@ public class ComentarVideo extends JInternalFrame {
 	
 	public void limpiarLista() {
 		((DefaultListModel) listaUsrV.getModel()).clear();
+		listaUsrV.setEnabled(true);
+		((DefaultListModel) listaVid.getModel()).clear();
+		listaVid.setEnabled(false);
+		((DefaultListModel) listaUsrC.getModel()).clear();
+		listaUsrC.setEnabled(false);
+		raiz.removeAllChildren();
+		((DefaultTreeModel) comentarios.getModel()).reload();
+		comentarios.setEnabled(false);
 	}
 	
 	public void LimpiarForm() {
-		//TODO
+		btnSeleccionarUsuario.setEnabled(true);
+		btnSelecVid.setEnabled(false);
+		fDia.setSelectedIndex(0);
+		fMes.setSelectedIndex(0);
+		fAnio.setSelectedIndex(0);
+		btnNuevoComentario.setEnabled(false);
+		btnResponderComentario.setEnabled(false);
+		nuevoComentario = false;
+		btnConfirmar.setEnabled(false);
+		comentario.setText("");
+		btnSeleccionarUC.setEnabled(false);
 	}
 	
 	public void resetearMensajes() {
 		lblMsgError.setVisible(false);
 		lblMsgExito.setVisible(false);
+		lblMsgErrorSelec.setVisible(false);
 	}
 	
 	public void inicializar(IUsuario iU) {
