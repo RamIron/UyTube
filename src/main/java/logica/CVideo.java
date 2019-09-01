@@ -96,7 +96,7 @@ public class CVideo implements IVideo {
 	
 	@Override 
 	public List<DtValoracion> obtenerValoracionVideo() {
-		return null;
+		return this.vid.listarValoraciones();
 	}
 	
 	@Override 

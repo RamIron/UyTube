@@ -4,6 +4,7 @@ import java.util.*;
 import javax.persistence.*;
 import datatypes.DtComentario;
 import datatypes.DtElementoUsuario;
+import datatypes.DtValoracion;
 import datatypes.tipoElemento;
 
 @Entity
@@ -103,14 +104,14 @@ public class Video extends Elemento {
 //		
 //	}
 		
-//	public List<DtValoracion> listarValoraciones() {
-//		List<DtValoracion> res = new ArrayList<DtValoracion>();
-//		for(Valoracion val: valoraciones) {
-//			DtValoracion v = new DtValoracion(val.getUsuario().getNickname(), val.isGusta());
-//			res.add(v);
-//		}
-//		return res;
-//	}
+	public List<DtValoracion> listarValoraciones() {
+		List<DtValoracion> res = new ArrayList<DtValoracion>();
+		for(Valoracion val: valoraciones) {
+			DtValoracion v = new DtValoracion(val.getUsuario().getNickname(), val.isGusta());
+			res.add(v);
+		}
+		return res;
+	}
 	
 	public List<DtComentario> obtenerComentariosVideo() {
 		List<DtComentario> dtComs = new ArrayList<DtComentario>();
