@@ -54,6 +54,8 @@ public abstract class ListaReproduccion extends Elemento {
 //	public abstract boolean esParticular();
 //	
 	public abstract boolean isPublico();
+//	
+//	public abstract void setPublico(boolean publico);
 	
 	public List<DtVideoUsuario> listarVideos() {
 		List<DtVideoUsuario> res = new ArrayList<DtVideoUsuario>();
@@ -90,4 +92,5 @@ public abstract class ListaReproduccion extends Elemento {
 //	public DtElementoUsuario obtenerElemCategoria() {
 //		return new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA);
 //	}
+
 }

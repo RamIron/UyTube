@@ -28,6 +28,7 @@ public class Principal {
 							+ "13) Agregar Video a Lista de Reproduccion\n"
 							+ "14) Quitar Video de Lista de Reproduccion\n"
 							+ "15) Consulta de Lista de Reproduccion\n"
+							+ "16) Modificar Lista de Reproduccion\n"
 							+ "0) Salir\n"
 							+ "Opcion: ");
 	}
@@ -118,6 +119,8 @@ public class Principal {
 		    System.out.println(usuarios.get(i));
 		} 
 	}
+	
+
 	
 	static void modificarUsuario() { //Sin terminar
 		listarUsuarios();
@@ -614,10 +617,10 @@ public class Principal {
 		listarUsuarios();
 		
 		System.out.print("Listar listas de usuario: ");
-		String nickVideo = entrada.nextLine();
+		String nickLista = entrada.nextLine();
 		
-		if(controladorU.existeNickname(nickVideo)) {
-			List<String> listas = controladorLR.listarListasDeUsuario(nickVideo);
+		if(controladorU.existeNickname(nickLista)) {
+			List<String> listas = controladorLR.listarListasDeUsuario(nickLista);
 			if(!listas.isEmpty()) {
 				for(String lista:listas) {
 					System.out.println(lista);
@@ -640,6 +643,45 @@ public class Principal {
 		}
 		controladorU.limpiarControlador();
 		controladorLR.limpiarControlador();
+	}
+	
+	static void modificarListaReproduccion(){
+		UFactory uf = UFactory.getInstancia();
+		IUsuario controladorU = uf.getIUsuario();
+		LRFactory lf = LRFactory.getInstancia();
+		IListaReproduccion controladorLR = lf.getIListaReproduccion();
+		Scanner entrada = new Scanner (System.in);
+		listarUsuarios();
+		
+		System.out.print("Listar listas de usuario: ");
+		String nickLista = entrada.nextLine();
+		
+		if(controladorU.existeNickname(nickLista)) {
+			List<String> particulares = controladorLR.listarListasParticulares(nickLista);
+			for(String lp:particulares) {
+				System.out.println(lp);
+			}
+			System.out.print("Elija el nombre de la lista particular: ");
+			String nomLisPar = entrada.nextLine();
+			
+			DtListaRep dtLisRep = controladorLR.obtenerListaDeUsuario(nomLisPar);
+			System.out.println("Nombre de lista: " + dtLisRep.getNombre() +
+								"\nEs publica?: " + dtLisRep.getPublico());
+			
+			System.out.print("Sera publica? s/n: ");
+			boolean publico = false;
+			char s_n = entrada.next().charAt(0);
+			entrada.nextLine();
+			if(s_n == 's') {
+				publico = true;
+			}
+			controladorLR.modificarInfoLista(nomLisPar, publico);
+			
+			listarCategorias();
+			System.out.print("Elija categoria: ");
+			String nomC = entrada.nextLine();
+			controladorLR.modificarCategoria(nomC);
+		}
 	}
 	
 	public static void main (String args[]) {
@@ -694,6 +736,9 @@ public class Principal {
 					break;
 				case 15:
 					consultaDeLista();
+					break;
+				case 16:
+					modificarListaReproduccion();
 					break;
 				case 0:
 					System.out.println("adios");

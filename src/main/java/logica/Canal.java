@@ -267,6 +267,19 @@ public class Canal {
 		return null;
 	}
 	
+	public ListaReproduccion obtenerLista(String nomLis) {
+		boolean encontre = false;
+		int i=0;
+		while(!encontre && i<this.listas.size()-1) {
+			if(nomLis.contentEquals(this.listas.get(i).getNombre())){
+				encontre = true;
+			}else {
+				i++;
+			}
+		}
+		return this.listas.get(i);
+	}
+	
 	public List<String> obtenerNombreVideosPublicos(){
 		List<String> videosU = new ArrayList<String>();
 		for(Video v:this.videos) {
