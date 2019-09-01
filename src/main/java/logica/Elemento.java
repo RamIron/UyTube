@@ -15,7 +15,7 @@ public abstract class Elemento {
 	private String nombre;
 	
 	@ManyToOne
-	private Categoria categoria;
+	protected Categoria categoria;
 	
 	@ManyToOne
 	private Canal canal;

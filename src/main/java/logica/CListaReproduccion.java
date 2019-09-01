@@ -147,10 +147,27 @@ public class CListaReproduccion implements IListaReproduccion {
 	}
 	
 	@Override 
-	public void modificarCategoria(String nick, String nomL, String nomC) {}
+	public void modificarCategoria(String nomC) {
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		if(mC.existeCategoria(nomC)) {
+			//Debo obtener la categoria de la lista, para esa categoria sacar la lista
+			Particular part = (Particular) this.lista;
+			Categoria catPart = part.getCategoria();
+			catPart.quitarElemento(part);
+			
+			Categoria cat = mC.obtenerCategoria(nomC);
+			cat.agregarElemento(this.lista);
+			mC.modificarCategoria(catPart);
+			mC.modificarCategoria(cat);
+		}
+	}
 	
 	@Override 
-	public void modificarInfoLista(String nick, String nomL, boolean publico) {}
+	public void modificarInfoLista(String nomL, boolean publico) {
+		this.lista = this.uList.getCanal().obtenerLista(nomL);
+		Particular part = (Particular) this.lista;
+		part.setPublico(publico);
+	}
 	
 	@Override 
 	public List<DtComentario> obtenerComentariosVideo(String nomVid) {
@@ -164,7 +181,7 @@ public class CListaReproduccion implements IListaReproduccion {
 	
 	@Override 
 	public DtListaRep obtenerListaDeUsuario(String nomList) {
-		return null;
+		return this.uList.getCanal().obtenerListaDeUsuario(nomList);
 	}
 	
 	@Override 

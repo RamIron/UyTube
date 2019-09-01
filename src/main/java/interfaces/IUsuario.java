@@ -33,7 +33,7 @@ public interface IUsuario {
 	
 	public void modificarInfoCanal(String nomC, String descC, boolean publico);
 	
-	public void modificarInfoUsuario(String nick, String nomU, String apeU, Calendar fNacU, String imagen);
+	public void modificarInfoUsuario(String nomU, String apeU, Calendar fNacU, String imagen);
 	
 	public DtCanal obtenerInfoCanal();
 	

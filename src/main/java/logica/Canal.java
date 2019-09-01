@@ -232,9 +232,22 @@ public class Canal {
 //		DtVideo dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico());
 //		return dtVid;
 //	}
-//	
-//	public DtListaRep obtenerListaDeUsuario(String nomList) {}
-//	
+	
+	public DtListaRep obtenerListaDeUsuario(String nomList) {
+		for(ListaReproduccion lr:this.listas) {
+			if(nomList.contentEquals(lr.getNombre())) {
+				if(lr instanceof Particular) {
+					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true);
+					return dtLisRep;
+				}else if(lr instanceof PorDefecto) {
+					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), false, false);
+					return dtLisRep;
+				}
+			}
+		}
+		return null;
+	}
+	
 //	public String obtenerUsuarioCanal() {
 //		return this.usuario.getNickname();
 //	}
@@ -252,6 +265,19 @@ public class Canal {
 			}
 		}
 		return null;
+	}
+	
+	public ListaReproduccion obtenerLista(String nomLis) {
+		boolean encontre = false;
+		int i=0;
+		while(!encontre && i<this.listas.size()-1) {
+			if(nomLis.contentEquals(this.listas.get(i).getNombre())){
+				encontre = true;
+			}else {
+				i++;
+			}
+		}
+		return this.listas.get(i);
 	}
 	
 	public List<String> obtenerNombreVideosPublicos(){

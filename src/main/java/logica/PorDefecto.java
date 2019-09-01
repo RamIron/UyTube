@@ -26,6 +26,12 @@ public class PorDefecto extends ListaReproduccion{
 		return defecto;
 	}
 
+	@Override
+	public boolean isPublico() {
+		return false;
+	}
+
+
 //		
 //	public boolean esParticular() {
 //		return false;

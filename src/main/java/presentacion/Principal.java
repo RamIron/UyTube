@@ -27,6 +27,8 @@ public class Principal {
 							+ "12) Modificar Datos de Video\n"
 							+ "13) Agregar Video a Lista de Reproduccion\n"
 							+ "14) Quitar Video de Lista de Reproduccion\n"
+							+ "15) Consulta de Lista de Reproduccion\n"
+							+ "16) Modificar Lista de Reproduccion\n"
 							+ "0) Salir\n"
 							+ "Opcion: ");
 	}
@@ -118,7 +120,9 @@ public class Principal {
 		} 
 	}
 	
-	static void modificarUsuario() { //Sin terminar
+
+	
+	static void modificarUsuario() {
 		listarUsuarios();
 		Scanner entrada = new Scanner (System.in);
 		UFactory uf = UFactory.getInstancia();
@@ -127,6 +131,42 @@ public class Principal {
 		System.out.print("Nickname del usuario a modificar: ");
 		String nick = entrada.nextLine();
 		
+		DtUsuario dtUsr = controlador.obtenerInfoUsuario(nick);
+		
+		System.out.println("Nickname: " + dtUsr.getNickname() +
+							"\nNombre: " + dtUsr.getNombre() +
+							"\nApellido: " + dtUsr.getApellido() +
+							"\nImagen: " + dtUsr.getImagen() +
+							"\nCorreo: " + dtUsr.getCorreoE());
+		
+		System.out.print("Nombre: ");
+		String nombre = entrada.nextLine();
+		
+		System.out.print("Apellido: ");
+		String apellido = entrada.nextLine();
+		
+		System.out.println("Fecha de Nacimiento:");
+		System.out.print("Anio:");
+		int anio = Integer.parseInt(entrada.nextLine());
+		System.out.print("Mes:");
+		int mes = Integer.parseInt(entrada.nextLine());
+		System.out.print("Dia:");
+		int dia = Integer.parseInt(entrada.nextLine());
+		
+		Calendar fNac = Calendar.getInstance();
+        fNac.set(anio, mes, dia);
+        
+        System.out.print("Ingrese la imagen: ");
+		String imagen = entrada.nextLine();
+        
+        controlador.modificarInfoUsuario(nombre, apellido, fNac, imagen);
+        
+        DtCanal dtCan = controlador.obtenerInfoCanal();
+        System.out.println("Nombre: " + dtCan.getNombre() +
+							"\nDescripcion: " + dtCan.getDescripcion() +
+							"\nPublico: " + dtCan.getPublico());
+        
+        controlador.limpiarControlador();
 	}
 	
 	static void seguirUsuario() {
@@ -604,6 +644,83 @@ public class Principal {
 		controladorLR.limpiarControlador();
 	}
 
+	static void consultaDeLista() {
+		UFactory uf = UFactory.getInstancia();
+		IUsuario controladorU = uf.getIUsuario();
+		LRFactory lf = LRFactory.getInstancia();
+		IListaReproduccion controladorLR = lf.getIListaReproduccion();
+		Scanner entrada = new Scanner (System.in);
+		listarUsuarios();
+		
+		System.out.print("Listar listas de usuario: ");
+		String nickLista = entrada.nextLine();
+		
+		if(controladorU.existeNickname(nickLista)) {
+			List<String> listas = controladorLR.listarListasDeUsuario(nickLista);
+			if(!listas.isEmpty()) {
+				for(String lista:listas) {
+					System.out.println(lista);
+				}
+				System.out.print("Elegir lista: ");
+				String nomList = entrada.nextLine();
+				
+				DtListaRep dtLisRep = controladorLR.obtenerListaDeUsuario(nomList);
+				System.out.println("Nombre de lista: " + dtLisRep.getNombre() +
+									"\nEs publica?: " + dtLisRep.getPublico() + 
+									"\nEs particular?: " + dtLisRep.getEsParticular());
+				
+				List<DtVideoUsuario> videos = controladorLR.listarVideosdeLista(nomList);
+				for(DtVideoUsuario video:videos) {
+					System.out.println("Video: " + video.getNombreE() + " - De usuario: " + video.getNickname());
+				}
+			}else {
+				System.out.println("El usuario no tiene listas");
+			}
+		}
+		controladorU.limpiarControlador();
+		controladorLR.limpiarControlador();
+	}
+	
+	static void modificarListaReproduccion(){
+		UFactory uf = UFactory.getInstancia();
+		IUsuario controladorU = uf.getIUsuario();
+		LRFactory lf = LRFactory.getInstancia();
+		IListaReproduccion controladorLR = lf.getIListaReproduccion();
+		Scanner entrada = new Scanner (System.in);
+		listarUsuarios();
+		
+		System.out.print("Listar listas de usuario: ");
+		String nickLista = entrada.nextLine();
+		
+		if(controladorU.existeNickname(nickLista)) {
+			List<String> particulares = controladorLR.listarListasParticulares(nickLista);
+			for(String lp:particulares) {
+				System.out.println(lp);
+			}
+			System.out.print("Elija el nombre de la lista particular: ");
+			String nomLisPar = entrada.nextLine();
+			
+			DtListaRep dtLisRep = controladorLR.obtenerListaDeUsuario(nomLisPar);
+			System.out.println("Nombre de lista: " + dtLisRep.getNombre() +
+								"\nEs publica?: " + dtLisRep.getPublico());
+			
+			System.out.print("Sera publica? s/n: ");
+			boolean publico = false;
+			char s_n = entrada.next().charAt(0);
+			entrada.nextLine();
+			if(s_n == 's') {
+				publico = true;
+			}
+			controladorLR.modificarInfoLista(nomLisPar, publico);
+			
+			listarCategorias();
+			System.out.print("Elija categoria: ");
+			String nomC = entrada.nextLine();
+			controladorLR.modificarCategoria(nomC);
+		}
+	}
+	
+	
 	public static void main (String args[]) {
 		Scanner entrada = new Scanner(System.in);
 		int opcion;
@@ -653,6 +770,12 @@ public class Principal {
 					break;
 				case 14:
 					quitarVideoDeLista();
+					break;
+				case 15:
+					consultaDeLista();
+					break;
+				case 16:
+					modificarListaReproduccion();
 					break;
 				case 0:
 					System.out.println("adios");
