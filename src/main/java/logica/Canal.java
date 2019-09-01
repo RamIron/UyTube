@@ -232,9 +232,22 @@ public class Canal {
 //		DtVideo dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico());
 //		return dtVid;
 //	}
-//	
-//	public DtListaRep obtenerListaDeUsuario(String nomList) {}
-//	
+	
+	public DtListaRep obtenerListaDeUsuario(String nomList) {
+		for(ListaReproduccion lr:this.listas) {
+			if(nomList.contentEquals(lr.getNombre())) {
+				if(lr instanceof Particular) {
+					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true);
+					return dtLisRep;
+				}else if(lr instanceof PorDefecto) {
+					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), false, false);
+					return dtLisRep;
+				}
+			}
+		}
+		return null;
+	}
+	
 //	public String obtenerUsuarioCanal() {
 //		return this.usuario.getNickname();
 //	}

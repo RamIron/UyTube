@@ -38,11 +38,10 @@ public class Particular extends ListaReproduccion{
 
 	//Getters & Setters
 	
-//	@Override
-//	public boolean esPublico() {
-//		// TODO Auto-generated method stub
-//		return publico;
-//	} 
+	@Override
+	public boolean isPublico() {
+		return publico;
+	} 
 	
 	public void setPublico(boolean publico) {
 		this.publico = publico;

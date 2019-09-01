@@ -27,6 +27,7 @@ public class Principal {
 							+ "12) Modificar Datos de Video\n"
 							+ "13) Agregar Video a Lista de Reproduccion\n"
 							+ "14) Quitar Video de Lista de Reproduccion\n"
+							+ "15) Consulta de Lista de Reproduccion\n"
 							+ "0) Salir\n"
 							+ "Opcion: ");
 	}
@@ -604,6 +605,43 @@ public class Principal {
 		controladorLR.limpiarControlador();
 	}
 
+	static void consultaDeLista() {
+		UFactory uf = UFactory.getInstancia();
+		IUsuario controladorU = uf.getIUsuario();
+		LRFactory lf = LRFactory.getInstancia();
+		IListaReproduccion controladorLR = lf.getIListaReproduccion();
+		Scanner entrada = new Scanner (System.in);
+		listarUsuarios();
+		
+		System.out.print("Listar listas de usuario: ");
+		String nickVideo = entrada.nextLine();
+		
+		if(controladorU.existeNickname(nickVideo)) {
+			List<String> listas = controladorLR.listarListasDeUsuario(nickVideo);
+			if(!listas.isEmpty()) {
+				for(String lista:listas) {
+					System.out.println(lista);
+				}
+				System.out.print("Elegir lista: ");
+				String nomList = entrada.nextLine();
+				
+				DtListaRep dtLisRep = controladorLR.obtenerListaDeUsuario(nomList);
+				System.out.println("Nombre de lista: " + dtLisRep.getNombre() +
+									"\nEs publica?: " + dtLisRep.getPublico() + 
+									"\nEs particular?: " + dtLisRep.getEsParticular());
+				
+				List<DtVideoUsuario> videos = controladorLR.listarVideosdeLista(nomList);
+				for(DtVideoUsuario video:videos) {
+					System.out.println("Video: " + video.getNombreE() + " - De usuario: " + video.getNickname());
+				}
+			}else {
+				System.out.println("El usuario no tiene listas");
+			}
+		}
+		controladorU.limpiarControlador();
+		controladorLR.limpiarControlador();
+	}
+	
 	public static void main (String args[]) {
 		Scanner entrada = new Scanner(System.in);
 		int opcion;
@@ -653,6 +691,9 @@ public class Principal {
 					break;
 				case 14:
 					quitarVideoDeLista();
+					break;
+				case 15:
+					consultaDeLista();
 					break;
 				case 0:
 					System.out.println("adios");

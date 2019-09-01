@@ -164,7 +164,7 @@ public class CListaReproduccion implements IListaReproduccion {
 	
 	@Override 
 	public DtListaRep obtenerListaDeUsuario(String nomList) {
-		return null;
+		return this.uList.getCanal().obtenerListaDeUsuario(nomList);
 	}
 	
 	@Override 
