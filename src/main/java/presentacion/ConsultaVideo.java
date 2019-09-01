@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import datatypes.*;
 import interfaces.ICategoria;
@@ -25,6 +26,7 @@ import interfaces.IVideo;
 import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.JCheckBox;
+import javax.swing.tree.DefaultTreeModel;
 
 public class ConsultaVideo extends JInternalFrame {
 	private JList listaUsr;
@@ -44,6 +46,7 @@ public class ConsultaVideo extends JInternalFrame {
 	private JList listaNoGusta = new JList();
 	private JTree comentarios = new JTree();
 	private JCheckBox publico = new JCheckBox("");
+	private DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios");
 
 	/**
 	 * Create the frame.
@@ -126,6 +129,7 @@ public class ConsultaVideo extends JInternalFrame {
 				fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
 				categoria.setSelectedItem(infoV.getCategoria());
 				publico.setSelected(infoV.getPublico());
+				cargarComentarios(iV, vid);
 				//TODO
 			}
 		});
@@ -240,8 +244,10 @@ public class ConsultaVideo extends JInternalFrame {
 		scrollComentarios.setBounds(23, 278, 349, 181);
 		getContentPane().add(scrollComentarios);
 		
+		comentarios.setModel(new DefaultTreeModel(raiz));
 		
-		comentarios.setRootVisible(false);
+		
+		//comentarios.setRootVisible(false);
 		scrollComentarios.setViewportView(comentarios);
 		
 		JLabel lblVideoPublico = new JLabel("Video publico");
@@ -251,6 +257,12 @@ public class ConsultaVideo extends JInternalFrame {
 		
 		publico.setBounds(556, 252, 27, 23);
 		getContentPane().add(publico);
+		
+		
+		///////////////////////
+//		DefaultMutableTreeNode nodo = new DefaultMutableTreeNode("hola");
+//		raiz.add(nodo);
+		/////////
 	}
 	public void cargarElementos(IUsuario iU) {
 		List<String> usuarios = iU.listarUsuarios();
@@ -261,12 +273,26 @@ public class ConsultaVideo extends JInternalFrame {
 		}
 		listaUsr.setModel(listaU);
 	}
+		
 	
-	private void cargarComentarios(IVideo iV, String nomVid) {
+	public void cargarComentarios(IVideo iV, String nomVid) {
 		List<DtComentario> listaCom = iV.obtenerComentariosVideo(nomVid);
-		
-		
+		for(DtComentario c: listaCom) {
+			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
+			cargarRespuestas(nodo, c.getRespuestas());
+			raiz.add(nodo);
+		}
 	}
+	
+	public void cargarRespuestas(DefaultMutableTreeNode padre, List<DtComentario> com) {
+		for(DtComentario c: com) {
+			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
+				cargarRespuestas(nodo, c.getRespuestas());	
+			padre.add(nodo);
+		}
+
+	}
+	
 	
 	public void limpiarLista() {
 		((DefaultListModel) listaUsr.getModel()).clear();

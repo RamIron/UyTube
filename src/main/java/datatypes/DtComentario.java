@@ -8,7 +8,7 @@ public class DtComentario {
 	private String nickname;
 	private Calendar fecha;
 	private String texto;
-	private List<DtComentario> respuestas;
+	private List<DtComentario> respuestas = new ArrayList<DtComentario>();
 	
 	public DtComentario() {
 	
@@ -55,6 +55,12 @@ public class DtComentario {
 	public List<DtComentario> getRespuestas() {
 		return respuestas;
 	}
+
+	@Override
+	public String toString() {
+		return nickname + " : " + fecha.get(Calendar.DAY_OF_MONTH) + "/" + fecha.get(Calendar.MONTH) + "/" + fecha.get(Calendar.YEAR) + " > " + texto ;
+	}
+	
 	
 }
 

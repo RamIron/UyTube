@@ -63,6 +63,8 @@ public class MenuPrincipal extends JFrame {
 	
 	private AltaVideo altaVideoIF;
 	private ConsultaVideo consultaVideoIF;
+	private ComentarVideo comentarVideoIF; 
+	
 	private final JLabel fondo = new JLabel("");
 	private final JLabel logo = new JLabel("");
 	
@@ -90,6 +92,7 @@ public class MenuPrincipal extends JFrame {
 		altaVideoIF.setVisible(false);
 		consultaUsuarioIF.setVisible(false);
 		consultaVideoIF.setVisible(false);
+		comentarVideoIF.setVisible(false);
 	}
 	
 	/**
@@ -131,7 +134,10 @@ public class MenuPrincipal extends JFrame {
 		
 		//Video
 		altaVideoIF = new AltaVideo(iU, iC, iV);
-		listarUsuarioIF.setLocation(0, 0);
+		altaVideoIF.setLocation(0, 0);
+		
+		comentarVideoIF = new ComentarVideo(iU, iV);
+		comentarVideoIF.setLocation(0, 0);
 		
 		consultaVideoIF = new ConsultaVideo(iU, iV, iC);
 		consultaVideoIF.setLocation(0, 0);
@@ -208,6 +214,12 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		mnVideo.add(mntmConsultarVideo);
+		mntmComentar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				comentarVideoIF.inicializar(iU);
+				comentarVideoIF.setVisible(true);
+			}
+		});
 		
 		
 		mnVideo.add(mntmComentar);
@@ -276,6 +288,7 @@ public class MenuPrincipal extends JFrame {
 		
 		contentPane.add(altaVideoIF);
 		contentPane.add(consultaVideoIF);
+		contentPane.add(comentarVideoIF);
 		logo.setBounds(140, 300, 616, 225);
 		contentPane.add(logo);
 		logo.setIcon(new ImageIcon("src/main/resources/img/logo.png"));
