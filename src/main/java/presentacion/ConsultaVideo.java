@@ -135,7 +135,7 @@ public class ConsultaVideo extends JInternalFrame {
 				fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
 				categoria.setSelectedItem(infoV.getCategoria());
 				publico.setSelected(infoV.getPublico());
-				cargarComentarios(iV, vid);
+				cargarComentarios(vid);
 				System.out.println("SOY IVIDEO: " + iV);
 				cargarLeGusta(iV, vid);
 				cargarNoGusta(iV, vid);
