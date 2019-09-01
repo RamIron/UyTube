@@ -66,6 +66,7 @@ public class MenuPrincipal extends JFrame {
 	private ComentarVideo comentarVideoIF; 
 	private ValorarVideo valorarVideoIF;
 	private AltaLista altaListaIF;
+	private ModificarVideo modificarVideoIF;
 	
 	private final JLabel fondo = new JLabel("");
 	private final JLabel logo = new JLabel("");
@@ -97,6 +98,7 @@ public class MenuPrincipal extends JFrame {
 		comentarVideoIF.setVisible(false);
 		valorarVideoIF.setVisible(false);
 		altaListaIF.setVisible(false);
+		modificarVideoIF.setVisible(false);
 	}
 	
 	/**
@@ -138,6 +140,9 @@ public class MenuPrincipal extends JFrame {
 		
 		valorarVideoIF = new ValorarVideo(iV, iU);
 		valorarVideoIF.setLocation(0, 0);
+		
+		modificarVideoIF = new ModificarVideo(iU, iC, iV);
+		modificarVideoIF.setLocation(0, 0);
 		
 		//Lista
 		altaListaIF = new AltaLista(iU, iC, iL);
@@ -209,12 +214,18 @@ public class MenuPrincipal extends JFrame {
 				LimpiarFrame();
 				altaVideoIF.inicializar(iU, iC);
 				altaVideoIF.setVisible(true);
-				System.out.print("llego al final del boton");
 			}
 		});
 		
 		
 		mnVideo.add(mntmAgregarVideo);
+		mntmModificarVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LimpiarFrame();
+				modificarVideoIF.inicializar(iU, iC);
+				modificarVideoIF.setVisible(true);
+			}
+		});
 		
 		
 		mnVideo.add(mntmModificarVideo);
@@ -319,6 +330,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(consultaVideoIF);
 		contentPane.add(comentarVideoIF);
 		contentPane.add(valorarVideoIF);
+		contentPane.add(modificarVideoIF);
 		
 		contentPane.add(altaListaIF);
 		
