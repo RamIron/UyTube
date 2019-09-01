@@ -208,7 +208,7 @@ public class AgregarVideoLista extends JInternalFrame {
 //					String usuarioLista = listUsrL.getModel().getElementAt(u2).toString();
 					
 					System.out.println(usuarioLista + nomVid + nomLista);
-					if(iL.existeListaParticular(usuarioLista, nomLista)) {
+					if(!iL.existeListaParticular(usuarioLista, nomLista)) {
 						iL.agregarVideoListaPorDefecto(usuarioVideo, nomVid, nomLista);
 					} else {
 						iL.agregarVideoListaParticular(usuarioVideo, nomVid, nomLista);
