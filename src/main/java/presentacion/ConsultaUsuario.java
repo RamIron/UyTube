@@ -63,11 +63,15 @@ public class ConsultaUsuario extends JInternalFrame {
 	private JLabel img = new JLabel("");
 	private JList listaVid = new JList();
 	private JList listaLisRep = new JList();
+	
+	
+	private ConsultaVideo cvIF;
 
 	/**
 	 * Create the frame.
 	 */
-	public ConsultaUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL) {
+	public ConsultaUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ConsultaVideo cvIF) {
+		this.cvIF = cvIF;
 		setRootPaneCheckingEnabled(false);
 		setTitle("Consultar usuario");
 		setBounds(100, 100, 800, 542);
@@ -338,6 +342,19 @@ public class ConsultaUsuario extends JInternalFrame {
 		scrollListaUsr.setViewportView(listaUsr);
 		
 		JButton btnSelecVideo = new JButton("Seleccionar");
+		btnSelecVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int i = listaUsr.getSelectedIndex();
+				String usr = listaUsr.getModel().getElementAt(i).toString();
+				i = listaVid.getSelectedIndex();
+				String vid = listaVid.getModel().getElementAt(i).toString();
+				cvIF.inicializar();
+				cvIF.cargarVideo(usr, vid);
+				ConsultaUsuario.this.setVisible(false);
+				cvIF.setVisible(true);
+				
+			}
+		});
 		btnSelecVideo.setBounds(23, 475, 138, 23);
 		getContentPane().add(btnSelecVideo);
 		
