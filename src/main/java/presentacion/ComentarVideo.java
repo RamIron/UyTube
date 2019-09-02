@@ -220,8 +220,8 @@ public class ComentarVideo extends JInternalFrame {
 		listaUsrC.setModel(new DefaultListModel<String>());
 		scrollUsrC.setViewportView(listaUsrC);
 		
-		JLabel lblUsuarioARealizar = new JLabel("Usuario a realizar comentario");
-		lblUsuarioARealizar.setBounds(37, 274, 154, 14);
+		JLabel lblUsuarioARealizar = new JLabel("Usuario a comentar");
+		lblUsuarioARealizar.setBounds(37, 278, 150, 14);
 		getContentPane().add(lblUsuarioARealizar);
 		btnSeleccionarUC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -239,11 +239,11 @@ public class ComentarVideo extends JInternalFrame {
 		getContentPane().add(btnSeleccionarUC);
 		
 		JLabel lblNewLabel = new JLabel("Fecha");
-		lblNewLabel.setBounds(323, 309, 46, 14);
+		lblNewLabel.setBounds(311, 309, 46, 14);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblComentario = new JLabel("Comentario");
-		lblComentario.setBounds(323, 344, 77, 14);
+		lblComentario.setBounds(311, 340, 105, 14);
 		getContentPane().add(lblComentario);
 		
 		comentario.setEnabled(false);
@@ -289,7 +289,7 @@ public class ComentarVideo extends JInternalFrame {
 		
 		getContentPane().add(lblMsgExito);
 		lblMsgErrorSelec.setForeground(Color.RED);
-		lblMsgErrorSelec.setBounds(503, 264, 161, 14);
+		lblMsgErrorSelec.setBounds(473, 264, 254, 14);
 		
 		getContentPane().add(lblMsgErrorSelec);
 		

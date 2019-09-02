@@ -184,7 +184,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		getContentPane().add(btnSelecVid);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(420, 14, 70, 15);
+		lblNombre.setBounds(400, 12, 70, 15);
 		getContentPane().add(lblNombre);
 		
 		nomVid = new JTextField();
@@ -193,7 +193,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		nomVid.setColumns(10);
 		
 		JLabel lblDescripcion = new JLabel("Descripcion");
-		lblDescripcion.setBounds(420, 62, 107, 15);
+		lblDescripcion.setBounds(400, 58, 107, 15);
 		getContentPane().add(lblDescripcion);
 		
 		
@@ -201,7 +201,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		getContentPane().add(descripcion);
 		
 		JLabel lblDuracion = new JLabel("Duracion (segundos)");
-		lblDuracion.setBounds(420, 135, 149, 15);
+		lblDuracion.setBounds(400, 134, 149, 15);
 		getContentPane().add(lblDuracion);
 		
 		duracion = new JTextField();
@@ -234,7 +234,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		getContentPane().add(fAnio);
 		
 		JLabel lblUrl = new JLabel("URL");
-		lblUrl.setBounds(420, 188, 70, 15);
+		lblUrl.setBounds(400, 187, 70, 15);
 		getContentPane().add(lblUrl);
 		
 		url = new JTextField();
@@ -243,7 +243,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		url.setColumns(10);
 		
 		JLabel lblFechaDePublicacion = new JLabel("Fecha de publicacion");
-		lblFechaDePublicacion.setBounds(420, 218, 148, 15);
+		lblFechaDePublicacion.setBounds(400, 219, 148, 15);
 		getContentPane().add(lblFechaDePublicacion);
 		
 		
@@ -251,11 +251,11 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		getContentPane().add(categoria);
 		
 		JLabel lblCategoria = new JLabel("Categoria");
-		lblCategoria.setBounds(420, 258, 70, 15);
+		lblCategoria.setBounds(400, 254, 70, 15);
 		getContentPane().add(lblCategoria);
 		
 		JLabel lblVideoPublico = new JLabel("Video publico");
-		lblVideoPublico.setBounds(420, 296, 98, 14);
+		lblVideoPublico.setBounds(400, 300, 98, 14);
 		getContentPane().add(lblVideoPublico);
 		publico.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
@@ -270,7 +270,6 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Hay que ver errores anotados en cuadernola mateo
 				reiniciarMsg();
 				int i = listaVid.getSelectedIndex();
 				String vid = listaVid.getModel().getElementAt(i).toString();
@@ -282,8 +281,6 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 					lblMsgExiste.setVisible(true);
 				}else if(!duracion.getText().chars().allMatch(Character::isDigit)){
 					lblMsgErrorNum.setVisible(true);
-//				}else if(iV.existeVideo(usr, vid)){
-//				lblMsgExiste.setVisible(true);
 				}else{
 					Calendar fPub = Calendar.getInstance();
 			        fPub.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
@@ -314,16 +311,16 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		lblMsgExito.setBounds(492, 443, 254, 15);
 		getContentPane().add(lblMsgExito);
 		lblMsgErrorUsr.setForeground(Color.RED);
-		lblMsgErrorUsr.setBounds(33, 265, 149, 15);
+		lblMsgErrorUsr.setBounds(12, 264, 202, 15);
 		
 		getContentPane().add(lblMsgErrorUsr);
 		
 		
 		lblMsgErrorNum.setForeground(Color.RED);
-		lblMsgErrorNum.setBounds(555, 159, 219, 15);
+		lblMsgErrorNum.setBounds(601, 158, 219, 15);
 		getContentPane().add(lblMsgErrorNum);
 		lblMsgErrorVid.setForeground(Color.RED);
-		lblMsgErrorVid.setBounds(211, 264, 168, 14);
+		lblMsgErrorVid.setBounds(211, 264, 248, 14);
 		
 		getContentPane().add(lblMsgErrorVid);
 		

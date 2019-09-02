@@ -134,7 +134,7 @@ public class AltaVideo extends JInternalFrame {
 		getContentPane().add(descripcion);
 		
 		JLabel lblDuracion = new JLabel("Duracion (segundos)");
-		lblDuracion.setBounds(282, 203, 149, 15);
+		lblDuracion.setBounds(282, 203, 161, 15);
 		getContentPane().add(lblDuracion);
 		
 		duracion = new JTextField();

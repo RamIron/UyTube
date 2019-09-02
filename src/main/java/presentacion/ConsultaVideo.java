@@ -112,7 +112,7 @@ public class ConsultaVideo extends JInternalFrame {
 		getContentPane().add(btnSeleccionarUsuario);
 		
 		JLabel lblUsuarios = new JLabel("Usuarios");
-		lblUsuarios.setBounds(76, 12, 58, 14);
+		lblUsuarios.setBounds(76, 12, 98, 14);
 		getContentPane().add(lblUsuarios);
 		
 		JScrollPane scrollListaVid = new JScrollPane();
@@ -125,7 +125,7 @@ public class ConsultaVideo extends JInternalFrame {
 		scrollListaVid.setViewportView(listaVid);
 		
 		JLabel lblVideos = new JLabel("Videos");
-		lblVideos.setBounds(263, 12, 46, 14);
+		lblVideos.setBounds(263, 12, 106, 14);
 		getContentPane().add(lblVideos);
 		btnSelecVid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -158,7 +158,7 @@ public class ConsultaVideo extends JInternalFrame {
 		getContentPane().add(btnSelecVid);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(420, 14, 70, 15);
+		lblNombre.setBounds(404, 12, 70, 15);
 		getContentPane().add(lblNombre);
 		
 		nomVid = new JTextField();
@@ -168,7 +168,7 @@ public class ConsultaVideo extends JInternalFrame {
 		nomVid.setColumns(10);
 		
 		JLabel lblDescripcion = new JLabel("Descripcion");
-		lblDescripcion.setBounds(420, 47, 107, 15);
+		lblDescripcion.setBounds(404, 43, 107, 15);
 		getContentPane().add(lblDescripcion);
 		descripcion.setEnabled(false);
 		
@@ -177,7 +177,7 @@ public class ConsultaVideo extends JInternalFrame {
 		getContentPane().add(descripcion);
 		
 		JLabel lblDuracion = new JLabel("Duracion (segundos)");
-		lblDuracion.setBounds(420, 120, 149, 15);
+		lblDuracion.setBounds(404, 119, 149, 15);
 		getContentPane().add(lblDuracion);
 		
 		duracion = new JTextField();
@@ -214,7 +214,7 @@ public class ConsultaVideo extends JInternalFrame {
 		getContentPane().add(fAnio);
 		
 		JLabel lblUrl = new JLabel("URL");
-		lblUrl.setBounds(420, 149, 70, 15);
+		lblUrl.setBounds(404, 148, 70, 15);
 		getContentPane().add(lblUrl);
 		
 		url = new JTextField();
@@ -224,7 +224,7 @@ public class ConsultaVideo extends JInternalFrame {
 		url.setColumns(10);
 		
 		JLabel lblFechaDePublicacion = new JLabel("Fecha de publicacion");
-		lblFechaDePublicacion.setBounds(420, 179, 148, 15);
+		lblFechaDePublicacion.setBounds(404, 180, 148, 15);
 		getContentPane().add(lblFechaDePublicacion);
 		categoria.setEnabled(false);
 		
@@ -233,7 +233,7 @@ public class ConsultaVideo extends JInternalFrame {
 		getContentPane().add(categoria);
 		
 		JLabel lblCategoria = new JLabel("Categoria");
-		lblCategoria.setBounds(420, 219, 70, 15);
+		lblCategoria.setBounds(404, 215, 70, 15);
 		getContentPane().add(lblCategoria);
 		
 		JScrollPane scrollLeGusta = new JScrollPane();
@@ -269,7 +269,7 @@ public class ConsultaVideo extends JInternalFrame {
 		scrollComentarios.setViewportView(comentarios);
 		
 		JLabel lblVideoPublico = new JLabel("Video publico");
-		lblVideoPublico.setBounds(420, 257, 98, 14);
+		lblVideoPublico.setBounds(404, 255, 98, 14);
 		getContentPane().add(lblVideoPublico);
 		
 		

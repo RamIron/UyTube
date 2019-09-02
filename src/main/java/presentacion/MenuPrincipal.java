@@ -70,9 +70,11 @@ public class MenuPrincipal extends JFrame {
 	private ConsultaVideo consultaVideoIF;
 	private ComentarVideo comentarVideoIF; 
 	private ValorarVideo valorarVideoIF;
+	
 	private AltaLista altaListaIF;
 	private ModificarVideo modificarVideoIF;
 	private AgregarVideoLista agregarVideoListaIF;
+	private ModificarLista modificarListaIF;
 	
 	private final JLabel fondo = new JLabel("");
 
@@ -113,6 +115,7 @@ public class MenuPrincipal extends JFrame {
 		modificarVideoIF.setVisible(false);
 		seguirUsuarioIF.setVisible(false);
 		dejarSeguirUsuarioIF.setVisible(false);
+		modificarListaIF.setVisible(false);
 	}
 	
 	/**
@@ -165,6 +168,9 @@ public class MenuPrincipal extends JFrame {
 		
 		agregarVideoListaIF = new AgregarVideoLista(iV, iU, iL);
 		agregarVideoListaIF.setLocation(0, 0);
+		
+		modificarListaIF = new ModificarLista(iU, iL, iC);
+		modificarListaIF.setLocation(0, 0);
 		
 		//Usuario
 		altaUsuarioIF = new AltaUsuario(iU);
@@ -306,13 +312,18 @@ public class MenuPrincipal extends JFrame {
 				altaListaIF.setVisible(true);
 			}
 		});
-		
+				
 		
 		mnListaDeReproduccion.add(mntmAgregarLista);
-		
+		mntmModificarLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
+				modificarListaIF.inicializar(iU, iC, iL);
+				modificarListaIF.setVisible(true);
+			}
+		});
 		
 		mnListaDeReproduccion.add(mntmModificarLista);
-		
 		
 		mnListaDeReproduccion.add(mntmConsultarLista);
 		mntmAgregarVideoA.addActionListener(new ActionListener() {
@@ -361,9 +372,6 @@ public class MenuPrincipal extends JFrame {
 		
 		mnCategoria.add(mntmConsultarCategoria);
 		
-		
-		
-		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -388,6 +396,7 @@ public class MenuPrincipal extends JFrame {
 		
 		contentPane.add(altaListaIF);
 		contentPane.add(agregarVideoListaIF);
+		contentPane.add(modificarListaIF);
 		
 //		logo.setBounds(140, 300, 616, 225);
 //		contentPane.add(logo);

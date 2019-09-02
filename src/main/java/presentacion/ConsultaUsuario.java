@@ -331,7 +331,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(lblVideos);
 		
 		JLabel lblListasDeReproduccion = new JLabel("Listas");
-		lblListasDeReproduccion.setBounds(241, 261, 39, 15);
+		lblListasDeReproduccion.setBounds(236, 261, 77, 15);
 		getContentPane().add(lblListasDeReproduccion);
 		
 		JScrollPane scrollListaUsr = new JScrollPane();

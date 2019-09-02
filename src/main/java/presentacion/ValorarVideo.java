@@ -87,7 +87,7 @@ public class ValorarVideo extends JInternalFrame {
 		getContentPane().add(btnSelecUVid);
 		
 		JLabel lblUsuarios = new JLabel("Usuarios");
-		lblUsuarios.setBounds(76, 12, 58, 14);
+		lblUsuarios.setBounds(76, 12, 85, 14);
 		getContentPane().add(lblUsuarios);
 		
 		JScrollPane scrollListaVid = new JScrollPane();
@@ -100,7 +100,7 @@ public class ValorarVideo extends JInternalFrame {
 		scrollListaVid.setViewportView(listaVid);
 		
 		JLabel lblVideos = new JLabel("Videos");
-		lblVideos.setBounds(263, 12, 46, 14);
+		lblVideos.setBounds(263, 12, 85, 14);
 		getContentPane().add(lblVideos);
 		btnSelecVid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -128,7 +128,7 @@ public class ValorarVideo extends JInternalFrame {
 		scrollUsrVal.setViewportView(listaUsrVal);
 		
 		JLabel lblUsuarioARealizar = new JLabel("Valorador");
-		lblUsuarioARealizar.setBounds(440, 12, 85, 14);
+		lblUsuarioARealizar.setBounds(428, 12, 85, 14);
 		getContentPane().add(lblUsuarioARealizar);
 		btnSeleccionarUVal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -145,7 +145,7 @@ public class ValorarVideo extends JInternalFrame {
 		btnSeleccionarUVal.setBounds(379, 230, 168, 23);
 		getContentPane().add(btnSeleccionarUVal);
 		lblMsgExito.setForeground(new Color(127, 255, 0));
-		lblMsgExito.setBounds(621, 452, 132, 14);
+		lblMsgExito.setBounds(624, 451, 132, 14);
 		
 		getContentPane().add(lblMsgExito);
 		
