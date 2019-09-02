@@ -70,7 +70,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ConsultaUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ConsultaVideo cvIF) {
+	public ConsultaUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ConsultaVideo cvIF, ConsultaListaRep clIF) {
 		
 //		limpiarLista();
 //		resetearFormulario();
@@ -364,6 +364,18 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(btnSelecVideo);
 		
 		JButton btnSelecLista = new JButton("Seleccionar");
+		btnSelecLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int i = listaUsr.getSelectedIndex();
+				String usr = listaUsr.getModel().getElementAt(i).toString();
+				i = listaLisRep.getSelectedIndex();
+				String lis = listaLisRep.getModel().getElementAt(i).toString();
+				clIF.inicializar();
+				clIF.cargarLista(usr, lis);
+				ConsultaUsuario.this.setVisible(false);
+				clIF.setVisible(true);
+			}
+		});
 		btnSelecLista.setBounds(188, 475, 138, 23);
 		getContentPane().add(btnSelecLista);
 

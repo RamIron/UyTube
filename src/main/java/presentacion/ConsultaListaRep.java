@@ -51,7 +51,7 @@ public class ConsultaListaRep extends JInternalFrame {
 	public ConsultaListaRep(IUsuario iU, IListaReproduccion iL, ConsultaVideo cV) {
 		this.iU = iU;
 		this.iL = iL;
-		setTitle("Consultar video");
+		setTitle("Consultar una lista de reproduccion");
 		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);
 		
@@ -258,7 +258,7 @@ public class ConsultaListaRep extends JInternalFrame {
 		if(!videos.isEmpty()) {
 			TableModel modelo = (DefaultTableModel) tablaVid.getModel();
 			for(DtVideoUsuario v: videos) {
-				((DefaultTableModel) modelo).addRow(new Object[]{v.getNombreE(), v.getNombreE()});
+				((DefaultTableModel) modelo).addRow(new Object[]{v.getNombreE(), v.getNickname()});
 			}
 		}
 	}
