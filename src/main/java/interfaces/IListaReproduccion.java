@@ -57,5 +57,7 @@ public interface IListaReproduccion {
 	void setVideo(String nomV);
 
 	void setLista(String nomL);
+
+	void eliminarCategoria();
 	
 }

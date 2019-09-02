@@ -237,7 +237,12 @@ public class Canal {
 		for(ListaReproduccion lr:this.listas) {
 			if(nomList.contentEquals(lr.getNombre())) {
 				if(lr instanceof Particular) {
-					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true);
+					DtListaRep dtLisRep;
+					if(lr.categoria == null) {
+						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, "");
+					}else {
+						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, lr.categoria.getNombre());						
+					}
 					return dtLisRep;
 				}else if(lr instanceof PorDefecto) {
 					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), false, false);

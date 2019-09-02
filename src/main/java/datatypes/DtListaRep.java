@@ -4,6 +4,7 @@ public class DtListaRep {
 	private String nombre;
 	private Boolean publico;
 	private Boolean esParticular;
+	private String categoria;
 	
 	//Constructores
 	public DtListaRep() {
@@ -15,6 +16,16 @@ public class DtListaRep {
 		this.nombre = nombre;
 		this.publico = publico;
 		this.esParticular = esParticular;
+	}
+	
+	
+	
+	public DtListaRep(String nombre, Boolean publico, Boolean esParticular, String categoria) {
+		super();
+		this.nombre = nombre;
+		this.publico = publico;
+		this.esParticular = esParticular;
+		this.categoria = categoria;
 	}
 
 	public String getNombre() {
@@ -28,5 +39,10 @@ public class DtListaRep {
 	public Boolean getEsParticular() {
 		return esParticular;
 	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+	
 	
 }

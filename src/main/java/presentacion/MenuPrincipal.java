@@ -76,11 +76,8 @@ public class MenuPrincipal extends JFrame {
 	private ModificarVideo modificarVideoIF;
 	private AgregarVideoLista agregarVideoListaIF;
 	private ModificarLista modificarListaIF;
-	private ModificarVideo modificarVideoIF;
-	private AgregarVideoLista agregarVideoListaIF;
 	private QuitarVideoLista quitarVideoListaIF;
 	
-	private AltaLista altaListaIF;
 	private ConsultaListaRep consultarListaIF;
 	
 	private final JLabel fondo = new JLabel("");

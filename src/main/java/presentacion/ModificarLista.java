@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import datatypes.DtListaRep;
 import datatypes.DtVideo;
 import interfaces.ICategoria;
 import interfaces.IListaReproduccion;
@@ -118,6 +119,7 @@ public class ModificarLista extends JInternalFrame {
 						((DefaultListModel) listaList.getModel()).addElement(l);
 					}
 				}
+				iL.setuList(usuarioLista);
 			}
 		});
 		
@@ -134,6 +136,15 @@ public class ModificarLista extends JInternalFrame {
 				listaUsr.setEnabled(false);
 				btnSelectList.setEnabled(false);
 				publica.setEnabled(true);
+				DtListaRep infoL = iL.obtenerListaDeUsuario(nomLista);
+				if(infoL.getCategoria().isEmpty()) {
+					categoria.setSelectedIndex(0);
+				}else {
+					categoria.setSelectedItem(infoL.getCategoria());
+				}
+				publica.setSelected(infoL.getPublico());
+				esPublica =  infoL.getPublico();
+				iL.setLista(nomLista);
 			}
 		});
 	
@@ -149,10 +160,14 @@ public class ModificarLista extends JInternalFrame {
 		getContentPane().add(lblListasParticulares);
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				iL.modificarCategoria(categoria.getSelectedItem().toString());
+				System.out.println(categoria.getSelectedItem());
+				if(categoria.getSelectedIndex() == 0) {
+					iL.eliminarCategoria();
+				}else {
+					iL.modificarCategoria(categoria.getSelectedItem().toString());					
+				}
 				iL.modificarInfoLista(nomLista, esPublica);
 				lblMsgOK.setVisible(true);
-			
 			}
 		});
 		
@@ -179,7 +194,7 @@ public class ModificarLista extends JInternalFrame {
 		((DefaultListModel) listaUsr.getModel()).clear();
 		listaUsr.setEnabled(true);
 		btnSelectList.setEnabled(false);
-		categoria.setSelectedIndex(-1);
+		categoria.setSelectedIndex(0);
 		lblMsgOK.setVisible(false);
 		publica.setEnabled(false);
 	}
