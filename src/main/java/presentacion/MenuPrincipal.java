@@ -181,7 +181,7 @@ public class MenuPrincipal extends JFrame {
 		listarUsuarioIF = new ListarUsuario(iU);
 		listarUsuarioIF.setLocation(0, 0);
 		
-		consultaUsuarioIF = new ConsultaUsuario(iU, iV, iL, consultaVideoIF);
+		consultaUsuarioIF = new ConsultaUsuario(iU, iV, iL, consultaVideoIF, consultarListaIF);
 		consultaUsuarioIF.setLocation(0, 0);
 		
 		seguirUsuarioIF = new SeguirUsuario(iU);
