@@ -72,6 +72,7 @@ public class MenuPrincipal extends JFrame {
 	private ValorarVideo valorarVideoIF;
 	private ModificarVideo modificarVideoIF;
 	private AgregarVideoLista agregarVideoListaIF;
+	private QuitarVideoLista quitarVideoListaIF;
 	
 	private AltaLista altaListaIF;
 	private ConsultaListaRep consultarListaIF;
@@ -173,6 +174,9 @@ public class MenuPrincipal extends JFrame {
 		agregarVideoListaIF = new AgregarVideoLista(iV, iU, iL);
 		agregarVideoListaIF.setLocation(0, 0);
 
+		
+		quitarVideoListaIF = new QuitarVideoLista(iV, iU, iL);
+		quitarVideoListaIF.setLocation(0, 0);
 		
 		//Usuario
 		altaUsuarioIF = new AltaUsuario(iU);
@@ -328,7 +332,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		
-		
+		//Agregar Video de Lista de Reproduccion//////////
 		mnListaDeReproduccion.add(mntmConsultarLista);
 		mntmAgregarVideoA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -337,11 +341,17 @@ public class MenuPrincipal extends JFrame {
 				agregarVideoListaIF.setVisible(true);
 			}
 		});
-		
-		
 		mnListaDeReproduccion.add(mntmAgregarVideoA);
+		///////////////////////////////////////////////////
 		
-		
+		//Quitar Video de Lista de Reproduccion////////////
+		mntmQuitarVideoDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
+				quitarVideoListaIF.inicializar();
+				quitarVideoListaIF.setVisible(true);
+			}
+		});
 		mnListaDeReproduccion.add(mntmQuitarVideoDe);
 		
 		
@@ -404,6 +414,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(altaListaIF);
 		contentPane.add(consultarListaIF);
 		contentPane.add(agregarVideoListaIF);
+		contentPane.add(quitarVideoListaIF);
 		
 //		logo.setBounds(140, 300, 616, 225);
 //		contentPane.add(logo);
