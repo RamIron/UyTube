@@ -263,7 +263,7 @@ public class AltaUsuario extends JInternalFrame {
 				publico = ! publico;
 			}
 		});
-		chckbxCanalPublico.setBounds(488, 270, 156, 23);
+		chckbxCanalPublico.setBounds(488, 270, 177, 23);
 		getContentPane().add(chckbxCanalPublico);
 		
 		

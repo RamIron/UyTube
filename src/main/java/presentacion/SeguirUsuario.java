@@ -112,17 +112,17 @@ public class SeguirUsuario extends JInternalFrame {
 		btnConfirmar.setBounds(387, 309, 168, 25);
 		getContentPane().add(btnConfirmar);
 		lblMsgExito.setForeground(new Color(127, 255, 0));
-		lblMsgExito.setBounds(387, 345, 178, 14);
+		lblMsgExito.setBounds(405, 344, 178, 14);
 		
 		getContentPane().add(lblMsgExito);
 		
 		
 		lblMsgError1.setForeground(Color.RED);
-		lblMsgError1.setBounds(184, 345, 168, 14);
+		lblMsgError1.setBounds(173, 345, 235, 14);
 		getContentPane().add(lblMsgError1);
 		
 		lblMsgError2.setForeground(Color.RED);
-		lblMsgError2.setBounds(387, 345, 168, 14);
+		lblMsgError2.setBounds(377, 345, 202, 14);
 		getContentPane().add(lblMsgError2);
 		
 	}

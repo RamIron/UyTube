@@ -71,6 +71,11 @@ public class MenuPrincipal extends JFrame {
 	private ConsultaVideo consultaVideoIF;
 	private ComentarVideo comentarVideoIF; 
 	private ValorarVideo valorarVideoIF;
+	
+	private AltaLista altaListaIF;
+	private ModificarVideo modificarVideoIF;
+	private AgregarVideoLista agregarVideoListaIF;
+	private ModificarLista modificarListaIF;
 	private ModificarVideo modificarVideoIF;
 	private AgregarVideoLista agregarVideoListaIF;
 	private QuitarVideoLista quitarVideoListaIF;
@@ -117,8 +122,10 @@ public class MenuPrincipal extends JFrame {
 		modificarVideoIF.setVisible(false);
 		seguirUsuarioIF.setVisible(false);
 		dejarSeguirUsuarioIF.setVisible(false);
+		modificarListaIF.setVisible(false);
 		consultarListaIF.setVisible(false);
 		modificarUsuarioIF.setVisible(false);
+
 	}
 	
 	/**
@@ -179,6 +186,9 @@ public class MenuPrincipal extends JFrame {
 		
 		quitarVideoListaIF = new QuitarVideoLista(iV, iU, iL);
 		quitarVideoListaIF.setLocation(0, 0);
+		
+		modificarListaIF = new ModificarLista(iU, iL, iC);
+		modificarListaIF.setLocation(0, 0);
 		
 		//Usuario
 		altaUsuarioIF = new AltaUsuario(iU);
@@ -330,10 +340,16 @@ public class MenuPrincipal extends JFrame {
 				altaListaIF.setVisible(true);
 			}
 		});
-		
+				
 		
 		mnListaDeReproduccion.add(mntmAgregarLista);
-		
+		mntmModificarLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
+				modificarListaIF.inicializar(iU, iC, iL);
+				modificarListaIF.setVisible(true);
+			}
+		});
 		
 		mnListaDeReproduccion.add(mntmModificarLista);
 		mntmConsultarLista.addActionListener(new ActionListener() {
@@ -344,6 +360,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		
+
 		//Agregar Video de Lista de Reproduccion//////////
 		mnListaDeReproduccion.add(mntmConsultarLista);
 		mntmAgregarVideoA.addActionListener(new ActionListener() {
@@ -398,9 +415,6 @@ public class MenuPrincipal extends JFrame {
 		
 		mnCategoria.add(mntmConsultarCategoria);
 		
-		
-		
-		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -427,7 +441,9 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(altaListaIF);
 		contentPane.add(consultarListaIF);
 		contentPane.add(agregarVideoListaIF);
+		contentPane.add(modificarListaIF);
 		contentPane.add(quitarVideoListaIF);
+
 		
 //		logo.setBounds(140, 300, 616, 225);
 //		contentPane.add(logo);

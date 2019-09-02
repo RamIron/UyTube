@@ -116,7 +116,7 @@ public class ConsultaCategoria extends JInternalFrame{
 		lblMsgErrorCat.setEnabled(true);
 		
 		lblMsgErrorCat.setForeground(Color.RED);
-		lblMsgErrorCat.setBounds(262, 483, 158, 14);
+		lblMsgErrorCat.setBounds(125, 484, 239, 14);
 		lblMsgErrorCat.setVisible(false);
 		getContentPane().add(lblMsgErrorCat);
 		this.setVisible(false);

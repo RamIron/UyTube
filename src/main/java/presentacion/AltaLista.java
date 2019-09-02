@@ -99,7 +99,7 @@ public class AltaLista extends JInternalFrame {
 		listaUsr.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(282, 50, 70, 15);
+		lblNombre.setBounds(282, 50, 89, 15);
 		getContentPane().add(lblNombre);
 		
 		nomLis = new JTextField();
@@ -181,7 +181,7 @@ public class AltaLista extends JInternalFrame {
 		});
 		
 		chckbxListaPublica.setEnabled(false);
-		chckbxListaPublica.setBounds(449, 103, 97, 23);
+		chckbxListaPublica.setBounds(449, 103, 142, 23);
 		getContentPane().add(chckbxListaPublica);
 		
 		
@@ -195,7 +195,7 @@ public class AltaLista extends JInternalFrame {
 			}
 		});
 		
-		btnParticular.setBounds(36, 103, 89, 23);
+		btnParticular.setBounds(12, 103, 109, 23);
 		getContentPane().add(btnParticular);
 		btnPorDefecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -205,7 +205,7 @@ public class AltaLista extends JInternalFrame {
 			}
 		});
 		
-		btnPorDefecto.setBounds(145, 103, 89, 23);
+		btnPorDefecto.setBounds(143, 103, 117, 23);
 		getContentPane().add(btnPorDefecto);
 
 	}

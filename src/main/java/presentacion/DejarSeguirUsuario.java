@@ -78,7 +78,7 @@ public class DejarSeguirUsuario extends JInternalFrame {
 		getContentPane().add(btnSelecSeguidor);
 		
 		JLabel lblseguidor = new JLabel("Usuarios");
-		lblseguidor.setBounds(237, 92, 58, 14);
+		lblseguidor.setBounds(236, 92, 100, 14);
 		getContentPane().add(lblseguidor);
 		
 		JScrollPane scrollSeguidos = new JScrollPane();
@@ -112,17 +112,17 @@ public class DejarSeguirUsuario extends JInternalFrame {
 		btnConfirmar.setBounds(387, 309, 168, 25);
 		getContentPane().add(btnConfirmar);
 		lblMsgExito.setForeground(new Color(127, 255, 0));
-		lblMsgExito.setBounds(387, 345, 178, 14);
+		lblMsgExito.setBounds(387, 346, 226, 14);
 		
 		getContentPane().add(lblMsgExito);
 		
 		
 		lblMsgError1.setForeground(Color.RED);
-		lblMsgError1.setBounds(184, 345, 168, 14);
+		lblMsgError1.setBounds(170, 346, 260, 14);
 		getContentPane().add(lblMsgError1);
 		
 		lblMsgError2.setForeground(Color.RED);
-		lblMsgError2.setBounds(387, 345, 168, 14);
+		lblMsgError2.setBounds(376, 346, 215, 14);
 		getContentPane().add(lblMsgError2);
 		
 	}

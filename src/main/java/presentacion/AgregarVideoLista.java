@@ -104,7 +104,7 @@ public class AgregarVideoLista extends JInternalFrame {
 		getContentPane().add(btnSelecUsrV);
 		
 		JLabel lblUsuarios = new JLabel("Usuarios");
-		lblUsuarios.setBounds(76, 12, 58, 14);
+		lblUsuarios.setBounds(76, 12, 87, 14);
 		getContentPane().add(lblUsuarios);
 		
 		JScrollPane scrollListaVid = new JScrollPane();
@@ -118,7 +118,7 @@ public class AgregarVideoLista extends JInternalFrame {
 		
 		
 		JLabel lblVideos = new JLabel("Videos");
-		lblVideos.setBounds(263, 12, 46, 14);
+		lblVideos.setBounds(263, 12, 74, 14);
 		getContentPane().add(lblVideos);
 		btnSelecVid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
