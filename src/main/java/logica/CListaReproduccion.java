@@ -188,5 +188,28 @@ public class CListaReproduccion implements IListaReproduccion {
 	public ArrayList<DtValoracion> obtenerValoracionVideo(String nomVid) {
 		return null;
 	}
+
+	@Override
+	public void setuVid(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.uVid =mU.obtenerUsuario(nick);
+	}
+
+	@Override
+	public void setuList(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.uList = mU.obtenerUsuario(nick);
+	}
+
+	@Override
+	public void setVideo(String nomV) {
+		this.video = this.uVid.getCanal().obtenerVideo(nomV);
+	}
+
+	@Override
+	public void setLista(String nomL) {
+		this.lista = this.uList.getCanal().obtenerLista(nomL);
+	}
+	
 	
 }
