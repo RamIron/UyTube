@@ -42,18 +42,14 @@ public class ConsultaListaRep extends JInternalFrame {
 	private JButton btnSelecLis = new JButton("Seleccionar");
 	private JCheckBox publico = new JCheckBox("");
 	private JCheckBox chkboxPorDefecto = new JCheckBox("");
-	private IVideo iV;
 	private IUsuario iU;
-	private ICategoria iC;
 	private IListaReproduccion iL;
 	private JTable tablaVid;
 	private Object[] columnas = {"Video", "Propietario"};
 	private Object[][] datosTabla = {};
 
-	public ConsultaListaRep(IUsuario iU, IVideo iV, ICategoria iC, IListaReproduccion iL) {
-		this.iV = iV;
+	public ConsultaListaRep(IUsuario iU, IListaReproduccion iL, ConsultaVideo cV) {
 		this.iU = iU;
-		this.iC = iC;
 		this.iL = iL;
 		setTitle("Consultar video");
 		setBounds(100, 100, 800, 542);
@@ -134,7 +130,7 @@ public class ConsultaListaRep extends JInternalFrame {
 				if(!videos.isEmpty()) {
 					TableModel modelo = (DefaultTableModel) tablaVid.getModel();
 					for(DtVideoUsuario v: videos) {
-						((DefaultTableModel) modelo).addRow(new Object[]{v.getNombreE(), v.getNombreE()});
+						((DefaultTableModel) modelo).addRow(new Object[]{v.getNombreE(), v.getNickname()});
 					}
 				}
 			}
@@ -187,6 +183,24 @@ public class ConsultaListaRep extends JInternalFrame {
 		chkboxPorDefecto.setBounds(555, 133, 27, 23);
 		getContentPane().add(chkboxPorDefecto);
 		
+		JButton btnSelecVid = new JButton("Seleccionar");
+		btnSelecVid.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+//				TableModel modelo = (DefaultTableModel) tablaVid.getModel();
+//				Object[] selec = ((DefaultTableModel) modelo).get
+				int i = tablaVid.getSelectedRow();
+				String vid = tablaVid.getValueAt(i, 0).toString();
+				String usr = tablaVid.getValueAt(i, 1).toString();
+				cV.inicializar();
+				cV.cargarVideo(usr, vid);
+				ConsultaListaRep.this.setVisible(false);
+				cV.setVisible(true);
+				
+			}
+		});
+		btnSelecVid.setBounds(366, 312, 89, 23);
+		getContentPane().add(btnSelecVid);
+		
 		
 	}
 	public void cargarElementos() {
@@ -207,7 +221,12 @@ public class ConsultaListaRep extends JInternalFrame {
 		((DefaultListModel) listaUsr.getModel()).clear();
 		listaLis.setEnabled(false);
 		((DefaultListModel) listaLis.getModel()).clear();
-		//TODO falta vaciar videos
+		TableModel modelo = (DefaultTableModel) tablaVid.getModel();
+		while(modelo.getRowCount() > 0)
+		{
+		    ((DefaultTableModel)modelo).removeRow(0);
+		}
+		
 	}
 	
 	public void limpiarForm() {
@@ -226,6 +245,21 @@ public class ConsultaListaRep extends JInternalFrame {
 	}
 	
 	public void cargarLista(String nick, String lis) {
-		//TODO
+		listaUsr.setEnabled(false);
+		btnSeleccionarUsuario.setEnabled(false);
+		listaLis.setEnabled(false);
+		btnSelecLis.setEnabled(false);
+		iL.setuList(nick);
+		DtListaRep infoL = iL.obtenerListaDeUsuario(lis);
+		nomVid.setText(infoL.getNombre());
+		publico.setSelected(infoL.getPublico());
+		chkboxPorDefecto.setSelected(!infoL.getEsParticular());
+		List<DtVideoUsuario> videos = iL.listarVideosdeLista(lis);
+		if(!videos.isEmpty()) {
+			TableModel modelo = (DefaultTableModel) tablaVid.getModel();
+			for(DtVideoUsuario v: videos) {
+				((DefaultTableModel) modelo).addRow(new Object[]{v.getNombreE(), v.getNombreE()});
+			}
+		}
 	}
 }

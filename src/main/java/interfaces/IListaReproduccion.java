@@ -49,5 +49,13 @@ public interface IListaReproduccion {
 	public DtListaRep obtenerListaDeUsuario(String nomList);
 	
 	public List<DtValoracion> obtenerValoracionVideo(String nomVid);
+
+	void setuVid(String nick);
+
+	void setuList(String nick);
+
+	void setVideo(String nomV);
+
+	void setLista(String nomL);
 	
 }

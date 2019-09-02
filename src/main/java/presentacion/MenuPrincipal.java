@@ -155,7 +155,7 @@ public class MenuPrincipal extends JFrame {
 		altaListaIF = new AltaLista(iU, iC, iL);
 		altaVideoIF.setLocation(0, 0);
 		
-		consultarListaIF = new ConsultaListaRep(iU, iV, iC, iL);
+		consultarListaIF = new ConsultaListaRep(iU, iL, consultaVideoIF);
 		consultarListaIF.setLocation(0, 0);
 		
 		//Usuario
