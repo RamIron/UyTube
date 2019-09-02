@@ -2,6 +2,7 @@ package presentacion;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -74,7 +75,9 @@ public class MenuPrincipal extends JFrame {
 	private AgregarVideoLista agregarVideoListaIF;
 	
 	private final JLabel fondo = new JLabel("");
-	private final JLabel logo = new JLabel("");
+
+	private final JLabel logo = new JLabel();
+
 	/**
 	 * @wbp.nonvisual location=87,-31
 	 */
@@ -181,7 +184,7 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 1024, 620);
 		
 		
 		setJMenuBar(menuBar);
@@ -386,13 +389,22 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(altaListaIF);
 		contentPane.add(agregarVideoListaIF);
 		
-		logo.setBounds(140, 300, 616, 225);
-		contentPane.add(logo);
-		logo.setIcon(new ImageIcon("src/main/resources/img/logo.png"));
-		fondo.setIcon(new ImageIcon("src/main/resources/img/fondo.jpg"));
-		fondo.setBounds(0, 0, 800, 550);
+//		logo.setBounds(140, 300, 616, 225);
+//		contentPane.add(logo);
+//		logo.setIcon(new ImageIcon("src/main/resources/img/logo.png"));
+//		fondo.setIcon(new ImageIcon("src/main/resources/img/fondo.jpg"));
+//		fondo.setBounds(0, 0, 800, 550);
+
+		ImageIcon imgLogo = new ImageIcon("src/main/resources/img/logo.png");
+		logo.setBounds(250, 80, 493, 180);
+		logo.setIcon(new ImageIcon(imgLogo.getImage().getScaledInstance(493, 180, Image.SCALE_SMOOTH)));
 		
+		fondo.setIcon(new ImageIcon("src/main/resources/img/fondo.jpg"));
+		fondo.setBounds(0, 0, 1024, 576);
+
+		contentPane.add(logo);
 		contentPane.add(fondo);
+
 		
 		LimpiarFrame();
 	}

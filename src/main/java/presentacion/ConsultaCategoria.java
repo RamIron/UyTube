@@ -1,5 +1,6 @@
 package presentacion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JInternalFrame;
@@ -35,10 +36,13 @@ public class ConsultaCategoria extends JInternalFrame{
 		getContentPane().setLayout(null);
 		
 		listCategoria = new JList();
-		
 		listCategoria.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listCategoria.setBounds(105, 11, 278, 422);
 		getContentPane().add(listCategoria);
+		
+		listElementos = new JList();
+		listElementos.setBounds(410, 10, 278, 422);
+		getContentPane().add(listElementos);
 		
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
@@ -50,65 +54,64 @@ public class ConsultaCategoria extends JInternalFrame{
 		
 		btnSalir.setBounds(115, 447, 117, 25);
 		getContentPane().add(btnSalir);
-		
 		JButton btnSeleccionar = new JButton("Seleccionar");
 		
 		
-		btnSeleccionar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				reiniciarMsg();
-				int i = listCategoria.getSelectedIndex();
-				if(i < 0) {
-					//lblMsgErrorUsr.setVisible(true);
-				}else {
-					System.out.println("Entra aca");
-					String cat = listCategoria.getModel().getElementAt(i).toString();
-					//((DefaultListModel) listElementos.getModel()).clear();
-					List<DtElementoUsuario> elementos = iC.listarElemCategoria(cat);
-					if(!elementos.isEmpty()) {
-						for(DtElementoUsuario e: elementos) {
-//							String elemUsr = e.getNombreE() + " " + e.getNickname();
-							((DefaultListModel) listElementos.getModel()).addElement(e.getNickname());
-						}
-					}
-				
-					listElementos.setEnabled(true);					
-				}
-			}
-		});
-		
 //		btnSeleccionar.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent arg0) {
-//				iC.limpiarControlador();
-//				listElementos.setEnabled(true);
-//				int c = listCategoria.getSelectedIndex();
-//				if(c < 0) {
-//					lblMsgErrorCat.setVisible(true);
+//				reiniciarMsg();
+//				int i = listCategoria.getSelectedIndex();
+//				if(i < 0) {
+//					//lblMsgErrorUsr.setVisible(true);
 //				}else {
-//					nomCat = listCategoria.getModel().getElementAt(c).toString();
-//					List<DtElementoUsuario> elementos = iC.listarElemCategoria(nomCat);
+//					System.out.println("Entra aca");
+//					String cat = listCategoria.getModel().getElementAt(i).toString();
+//					//((DefaultListModel) listElementos.getModel()).clear();
+//					List<DtElementoUsuario> elementos = iC.listarElemCategoria(cat);
 //					if(!elementos.isEmpty()) {
-//						int i = 0;
-//						DefaultListModel<String> listaElem = new DefaultListModel<String>();
-//						for(DtElementoUsuario e : elementos) {
-//							System.out.println(e.getNombreE() + " " + e.getNickname());
-//							String elemUsr = e.getNombreE() + " " + e.getNickname();
-//							//((DefaultListModel) listElementos.getModel()).addElement(elemUsr);
-//							listaElem.add(i++, elemUsr);
+//						for(DtElementoUsuario e: elementos) {
+////							String elemUsr = e.getNombreE() + " " + e.getNickname();
+//							((DefaultListModel) listElementos.getModel()).addElement(e.getNickname());
 //						}
-//						listElementos.setModel(listaElem);
 //					}
-//				}
 //				
+//					listElementos.setEnabled(true);					
+//				}
 //			}
-//			
 //		});
+		
+		btnSeleccionar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				iC.limpiarControlador();
+				listElementos.setEnabled(true);
+				listElementos.removeAll();
+				int c = listCategoria.getSelectedIndex();
+				if(c < 0) {
+					lblMsgErrorCat.setVisible(true);
+				}else {
+					nomCat = listCategoria.getModel().getElementAt(c).toString();
+					List<DtElementoUsuario> elementos = iC.listarElemCategoria(nomCat);
+					
+					if(!elementos.isEmpty()) {						
+						ArrayList<String> elems = new ArrayList<String>();
+						for(DtElementoUsuario e : elementos) {
+							elems.add(e.getNombreE() + " - " + e.getNickname());
+						}
+						DefaultListModel listModel = new DefaultListModel();
+						for (int i = 0; i < elems.size(); i++)
+						{
+						    listModel.addElement(elems.get(i));
+						}
+						listElementos.setModel(listModel);
+					}
+				}
+				
+			}
+			
+		});
 		btnSeleccionar.setBounds(262, 447, 117, 25);
 		getContentPane().add(btnSeleccionar);
 		
-		JList listElementos = new JList();
-		listElementos.setBounds(410, 10, 278, 422);
-		getContentPane().add(listElementos);
 		lblMsgErrorCat.setEnabled(true);
 		
 		lblMsgErrorCat.setForeground(Color.RED);
