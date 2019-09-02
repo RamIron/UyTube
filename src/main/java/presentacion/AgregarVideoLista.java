@@ -127,9 +127,8 @@ public class AgregarVideoLista extends JInternalFrame {
 				int v = listaVid.getSelectedIndex();
 				nomVid = listaVid.getModel().getElementAt(v).toString();
 				seleccionoVideo = true;
-				listaUsrV.setEnabled(true);
+				listaUsrV.setEnabled(false);
 				btnSelecUsrL.setEnabled(true);			
-				//TODO
 			}
 		});
 		
@@ -139,7 +138,7 @@ public class AgregarVideoLista extends JInternalFrame {
 		getContentPane().add(btnSelecVid);
 		
 		JLabel label = new JLabel("Usuarios");
-		label.setBounds(76, 266, 58, 14);
+		label.setBounds(75, 266, 88, 14);
 		getContentPane().add(label);
 		
 		JScrollPane scrollListaUsrL = new JScrollPane();
@@ -157,7 +156,7 @@ public class AgregarVideoLista extends JInternalFrame {
 		scrollListaLis.setViewportView(listList);
 	
 		JLabel lblListasDeReproduccion = new JLabel("Listas de Reproduccion");
-		lblListasDeReproduccion.setBounds(231, 265, 127, 14);
+		lblListasDeReproduccion.setBounds(203, 265, 183, 14);
 		getContentPane().add(lblListasDeReproduccion);
 		btnSelecUsrL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -182,12 +181,12 @@ public class AgregarVideoLista extends JInternalFrame {
 		btnSelecLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				seleccionoLista = true;
+				btnSelecUsrL.setEnabled(false);
 				btnAgregar.setEnabled(true);
 				int i = listList.getSelectedIndex();
 				nomLista = listList.getModel().getElementAt(i).toString();
-				
-				
-			
+				listUsrL.setEnabled(false);
+				btnSelecLista.setEnabled(false);
 			}
 		});
 		btnSelecLista.setBounds(201, 477, 168, 23);
@@ -195,18 +194,6 @@ public class AgregarVideoLista extends JInternalFrame {
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(seleccionoVideo == true && seleccionoLista == true) {
-//					int u = listaUsrV.getSelectedIndex();
-//					String usuarioVideo = listaUsrV.getModel().getElementAt(u).toString();
-//					
-//					int v = listaVid.getSelectedIndex();
-//					String nomVid = listaVid.getModel().getElementAt(v).toString();
-//					
-//					int l = listList.getSelectedIndex();
-//					String nomList = listList.getModel().getElementAt(l).toString();
-//					
-//					int u2 = listUsrL.getSelectedIndex();
-//					String usuarioLista = listUsrL.getModel().getElementAt(u2).toString();
-					
 					System.out.println(usuarioLista + nomVid + nomLista);
 					if(!iL.existeListaParticular(usuarioLista, nomLista)) {
 						iL.agregarVideoListaPorDefecto(usuarioVideo, nomVid, nomLista);
@@ -217,8 +204,19 @@ public class AgregarVideoLista extends JInternalFrame {
 				} else {
 					lblFaltanSeleccionarDatos.setVisible(true);
 				}
-			
-			
+				usuarioVideo = "";
+				nomVid = "";
+				usuarioLista = "";
+				nomLista = "";
+				((DefaultListModel) listList.getModel()).clear();
+				((DefaultListModel) listaVid.getModel()).clear();
+				btnSelecUsrV.setEnabled(true);
+				btnSelecUsrL.setEnabled(true);
+				btnSelecLista.setEnabled(false);
+				btnSelecVid.setEnabled(false);
+				btnAgregar.setEnabled(false);
+				listaUsrV.setEnabled(true);
+				listUsrL.setEnabled(true);
 			}
 		});
 		
@@ -231,7 +229,6 @@ public class AgregarVideoLista extends JInternalFrame {
 		lblSeHaAgregado.setForeground(new Color(124, 252, 0));
 		lblSeHaAgregado.setBounds(606, 412, 155, 15);
 		getContentPane().add(lblSeHaAgregado);
-		
 	}
 	
 	public void cargarElementos() {
@@ -245,41 +242,20 @@ public class AgregarVideoLista extends JInternalFrame {
 		listUsrL.setModel(listaU);
 	}
 		
-//	public void cargarElementosLista() {
-//		List<String> usuarios = iU.listarUsuarios();
-//		DefaultListModel<String> listaU = new DefaultListModel<String>();
-//		int i = 0;
-//		for(String u: usuarios) {
-//			listaU.add(i++, u);
-//		}
-//		listUsrL.setModel(listaU);
-//	}
-	
-	public void cargarComentarios(String nomVid) {
-		List<DtComentario> listaCom = iV.obtenerComentariosVideo(nomVid);
-		for(DtComentario c: listaCom) {
-			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
-			cargarRespuestas(nodo, c.getRespuestas());
-			raiz.add(nodo);
-		}
-	}
-	
-	public void cargarRespuestas(DefaultMutableTreeNode padre, List<DtComentario> com) {
-		for(DtComentario c: com) {
-			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
-				cargarRespuestas(nodo, c.getRespuestas());	
-			padre.add(nodo);
-		}
-
-	}
 	
 	public void limpiarLista() {
-		((DefaultListModel) listaUsrV.getModel()).clear();
+		((DefaultListModel) listaVid.getModel()).clear();
+		((DefaultListModel) listList.getModel()).clear();
 	}
 	
 	public void LimpiarForm() {
 		lblSeHaAgregado.setVisible(false);
 		lblFaltanSeleccionarDatos.setVisible(false);
+		usuarioVideo = "";
+		nomVid = "";
+		usuarioLista = "";
+		nomLista = "";
+		btnAgregar.setEnabled(false);
 	}
 	
 	public void inicializar() {
