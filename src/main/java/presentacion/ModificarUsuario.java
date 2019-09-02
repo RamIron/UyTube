@@ -259,7 +259,7 @@ public class ModificarUsuario extends JInternalFrame {
 				}
 				
 				//LISTAS DE REPRODUCCION
-				List<String> listasRep = iL.listarListasDeUsuario(usr);
+				List<String> listasRep = iL.listarListasParticulares(usr);
 				if(!listasRep.isEmpty()) {
 					for(String lP: listasRep) {
 						((DefaultListModel) listaLisRep.getModel()).addElement(lP);
@@ -333,7 +333,7 @@ public class ModificarUsuario extends JInternalFrame {
 					int i = listaUsr.getSelectedIndex();
 					String usr = listaUsr.getModel().getElementAt(i).toString();
 					i = listaVid.getSelectedIndex();
-					String vid = listaVid.getModel().getElementAt(i).toString();  //TODO
+					String vid = listaVid.getModel().getElementAt(i).toString();  
 					mvIF.inicializar();
 					mvIF.cargarVideo(usr, vid);
 					ModificarUsuario.this.setVisible(false);
