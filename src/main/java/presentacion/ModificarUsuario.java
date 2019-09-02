@@ -1,7 +1,7 @@
 package presentacion;
 
-import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,29 +17,29 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-
-import interfaces.IListaReproduccion;
-import interfaces.IUsuario;
-import interfaces.IVideo;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.JPanel;
-import java.awt.Font;
-import javax.swing.event.ListSelectionListener;
-
-import datatypes.*;
-
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
-public class ConsultaUsuario extends JInternalFrame {
+import datatypes.DtCanal;
+import datatypes.DtUsuario;
+import interfaces.IListaReproduccion;
+import interfaces.IUsuario;
+import interfaces.IVideo;
+import java.awt.Color;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+
+public class ModificarUsuario extends JInternalFrame {
 
 	private JList listaUsr;
 	private JTextField nick;
@@ -54,45 +54,50 @@ public class ConsultaUsuario extends JInternalFrame {
 	private JComboBox <Integer>fMes = new JComboBox<Integer>();
 	private JComboBox<Integer> fAnio = new JComboBox<Integer>();
 	private JTextPane desCanal = new JTextPane();
+	private JCheckBox chckbxCanalPublico = new JCheckBox("");
 	private final JLabel lblImagen = new JLabel("");
 	private JButton btnSelecFoto = new JButton("Seleccionar");
 	private final JScrollPane scrollDescCanal = new JScrollPane();
-	private JList listaSeguidores = new JList();
-	private JList listaSeguidos = new JList();
 	private JLabel img = new JLabel("");
 	private JList listaVid = new JList();
 	private JList listaLisRep = new JList();
-	private JCheckBox checkBoxPublico = new JCheckBox("");
+	private JButton btnSeleccionarUsuario = new JButton("Seleccionar");
+	private DefaultListModel<String> listaV = new DefaultListModel<String>();
+	private DefaultListModel<String> listaL = new DefaultListModel<String>();
+	private JButton btnSelecVideo = new JButton("Seleccionar");
+	private JButton btnSelecLista = new JButton("Seleccionar");
+	private JButton btnConfirmar = new JButton("Modificar");
+	private JButton btnModImg = new JButton("Modificar");
+	private JButton btnBorrarImg = new JButton("Borrar");
+	private String imgPath = "";
+	private JLabel lblMsgError = new JLabel("Falta completar algun campo");
+	private JLabel lblMsgExito = new JLabel("El usuario fue modificado correctamente");
+	private JLabel lblMsgAdvert = new JLabel("<html>Advertencia: si selecciona un video o lista se perdera cualquier modificacion en el usuario. <br/>Presione nuevamente 'Seleccionar' si quiere continuar de todas formas. </html>");
+	private boolean insiste = false;
 	
+	private ModificarVideo mvIF;
+	//private ModificarLista mlIF; //TODO
 	
-	private ConsultaVideo cvIF;
-	private ConsultaListaRep clIF;
-
-	/**
-	 * Create the frame.
-	 */
-	public ConsultaUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ConsultaVideo cvIF, ConsultaListaRep clIF) {
+	public ModificarUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ModificarVideo mvIF /*,  ConsultaListaRep clIF  //TODO  */) {
 		
-//		limpiarLista();
-//		resetearFormulario();
 		
-		this.cvIF = cvIF;
-		this.clIF = clIF;
+		this.mvIF = mvIF;
+		//this.clIF = clIF; //TODO
 		
 		setRootPaneCheckingEnabled(false);
-		setTitle("Consultar usuario");
+		setTitle("Modificar usuario");
 		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);
-		ConsultaUsuario.this.setVisible(false);
+		ModificarUsuario.this.setVisible(false);
 		
 		JButton btnSalir = new JButton("Salir");
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				limpiarLista();
-				ConsultaUsuario.this.setVisible(false);
+				ModificarUsuario.this.setVisible(false);
 			}
 		});
-		btnSalir.setBounds(201, 209, 168, 25);
+		btnSalir.setBounds(586, 473, 168, 25);
 		getContentPane().add(btnSalir);
 		
 
@@ -172,19 +177,28 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(fAnio);
 		
 		JLabel lblNombreDelCanal = new JLabel("Nombre");
-		lblNombreDelCanal.setBounds(391, 373, 148, 15);
+		lblNombreDelCanal.setBounds(391, 241, 148, 15);
 		getContentPane().add(lblNombreDelCanal);
 		
 		nomCanal = new JTextField();
 		nomCanal.setEnabled(false);
-		nomCanal.setBounds(547, 373, 207, 19);
+		nomCanal.setBounds(547, 241, 207, 19);
 		getContentPane().add(nomCanal);
 		nomCanal.setColumns(10);
 		
 		JLabel lblDescripcionDelCanal = new JLabel("Descripcion");
-		lblDescripcionDelCanal.setBounds(391, 424, 200, 15);
+		lblDescripcionDelCanal.setBounds(391, 292, 200, 15);
 		getContentPane().add(lblDescripcionDelCanal);
-		scrollDescCanal.setBounds(391, 441, 363, 57);
+		chckbxCanalPublico.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				publico = !publico;
+			}
+		});
+		chckbxCanalPublico.setEnabled(false);
+		
+		chckbxCanalPublico.setBounds(725, 268, 29, 23);
+		getContentPane().add(chckbxCanalPublico);
+		scrollDescCanal.setBounds(391, 309, 363, 57);
 		
 		getContentPane().add(scrollDescCanal);
 		desCanal.setEnabled(false);
@@ -192,7 +206,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		
 		JLabel lblInfoCanal = new JLabel("Informacion del Canal");
 		lblInfoCanal.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblInfoCanal.setBounds(391, 337, 202, 27);
+		lblInfoCanal.setBounds(391, 205, 202, 27);
 		getContentPane().add(lblInfoCanal);
 		
 		JLabel lblInfoUsuario = new JLabel("Informacion del Usuario");
@@ -201,10 +215,10 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(lblInfoUsuario);
 		
 		JLabel lblPublico = new JLabel("Publico");
-		lblPublico.setBounds(391, 399, 70, 15);
+		lblPublico.setBounds(391, 267, 70, 15);
 		getContentPane().add(lblPublico);
 		
-		JButton btnSeleccionarUsuario = new JButton("Seleccionar");
+		
 		btnSeleccionarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				iU.limpiarControlador();
@@ -227,30 +241,14 @@ public class ConsultaUsuario extends JInternalFrame {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}					
-
+				imgPath = infoU.getImagen();
 				
 				//INFO CANAL
 				nomCanal.setText(infoC.getNombre());
 				desCanal.setText(infoC.getDescripcion());
-				System.out.println(infoC.getPublico());
-				checkBoxPublico.setSelected(true);
-				//chckbxCanalPublico.setSelected((boolean)infoC.getPublico());
-				
-				//SEGUIDORES
-				List<String> seguidores = iU.listarSeguidores();
-				if(!seguidores.isEmpty()) {
-					for(String u: seguidores) {
-						((DefaultListModel) listaSeguidores.getModel()).addElement(u);
-					}					
-				}
-				
-				//SEGUIDOS
-				List<String> seguidos = iU.listarSeguidos();
-				if(!seguidos.isEmpty()) {
-					for(String u: seguidos) {
-						((DefaultListModel) listaSeguidos.getModel()).addElement(u);
-					}					
-				}
+				chckbxCanalPublico.setSelected(infoC.getPublico());
+				publico = infoC.getPublico();
+			
 				
 				//VIDEOS
 				List<String> videos = iV.listarVideosDeUsuario(usr);
@@ -261,45 +259,26 @@ public class ConsultaUsuario extends JInternalFrame {
 				}
 				
 				//LISTAS DE REPRODUCCION
-				List<String> listasRep = iL.listarListasDeUsuario(usr);
+				List<String> listasRep = iL.listarListasParticulares(usr);
 				if(!listasRep.isEmpty()) {
 					for(String lP: listasRep) {
 						((DefaultListModel) listaLisRep.getModel()).addElement(lP);
 					}
 				}
+				habilitarForm(true);
 			}
 		});
 		btnSeleccionarUsuario.setBounds(23, 209, 168, 25);
 		getContentPane().add(btnSeleccionarUsuario);
 		
-		JScrollPane scrollSeguidores = new JScrollPane();
-		scrollSeguidores.setBounds(586, 217, 168, 108);
-		getContentPane().add(scrollSeguidores);
-		
 		DefaultListModel<String> listaS1 = new DefaultListModel<String>();
-		listaSeguidores.setModel(listaS1);
-		scrollSeguidores.setViewportView(listaSeguidores);
-		
-		JScrollPane scrollSeguidos = new JScrollPane();
-		scrollSeguidos.setBounds(391, 217, 168, 108);
-		getContentPane().add(scrollSeguidos);
 		
 		DefaultListModel<String> listaS2 = new DefaultListModel<String>();
-		listaSeguidos.setModel(listaS2);
-		scrollSeguidos.setViewportView(listaSeguidos);
-		
-		JLabel lblSeguidos = new JLabel("Seguidos");
-		lblSeguidos.setBounds(443, 190, 70, 15);
-		getContentPane().add(lblSeguidos);
-		
-		JLabel lblSeguidores = new JLabel("Seguidores");
-		lblSeguidores.setBounds(629, 190, 98, 15);
-		getContentPane().add(lblSeguidores);
 		
 		
 		try {
 		mostrarImg("src/main/resources/img/default.png");
-		img.setBounds(230, 51, 120, 120);
+		img.setBounds(230, 17, 120, 120);
 		} catch (IOException e1) {
 			
 			e1.printStackTrace();
@@ -313,7 +292,6 @@ public class ConsultaUsuario extends JInternalFrame {
 		scrollVid.setBounds(23, 276, 138, 187);
 		getContentPane().add(scrollVid);
 		
-		DefaultListModel<String> listaV = new DefaultListModel<String>();
 		listaVid.setModel(listaV);
 		scrollVid.setViewportView(listaVid);
 		
@@ -321,7 +299,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		scrollLisRep.setBounds(188, 277, 138, 187);
 		getContentPane().add(scrollLisRep);
 		
-		DefaultListModel<String> listaL = new DefaultListModel<String>();
+		
 		listaLisRep.setModel(listaL);
 		scrollLisRep.setViewportView(listaLisRep);
 		
@@ -345,44 +323,122 @@ public class ConsultaUsuario extends JInternalFrame {
 		});
 		scrollListaUsr.setViewportView(listaUsr);
 		
-		JButton btnSelecVideo = new JButton("Seleccionar");
+		btnSelecVideo.setEnabled(false);
 		btnSelecVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int i = listaUsr.getSelectedIndex();
-				String usr = listaUsr.getModel().getElementAt(i).toString();
-				i = listaVid.getSelectedIndex();
-				String vid = listaVid.getModel().getElementAt(i).toString();
-				cvIF.inicializar();
-				cvIF.cargarVideo(usr, vid);
-				ConsultaUsuario.this.setVisible(false);
-				cvIF.setVisible(true);
+				if(!insiste) {
+					lblMsgAdvert.setVisible(true);
+					insiste = true;
+				}else {
+					int i = listaUsr.getSelectedIndex();
+					String usr = listaUsr.getModel().getElementAt(i).toString();
+					i = listaVid.getSelectedIndex();
+					String vid = listaVid.getModel().getElementAt(i).toString();  
+					mvIF.inicializar();
+					mvIF.cargarVideo(usr, vid);
+					ModificarUsuario.this.setVisible(false);
+					mvIF.setVisible(true);					
+				}
 				
 			}
 		});
 		btnSelecVideo.setBounds(23, 475, 138, 23);
 		getContentPane().add(btnSelecVideo);
 		
-		JButton btnSelecLista = new JButton("Seleccionar");
+		btnSelecLista.setEnabled(false);
 		btnSelecLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int i = listaUsr.getSelectedIndex();
-				String usr = listaUsr.getModel().getElementAt(i).toString();
-				i = listaLisRep.getSelectedIndex();
-				String lis = listaLisRep.getModel().getElementAt(i).toString();
-				clIF.inicializar();
-				clIF.cargarLista(usr, lis);
-				ConsultaUsuario.this.setVisible(false);
-				clIF.setVisible(true);
+				if(!insiste) {
+					lblMsgAdvert.setVisible(true);
+					insiste = true;
+				}else {
+//					int i = listaUsr.getSelectedIndex();
+//					String usr = listaUsr.getModel().getElementAt(i).toString();
+//					i = listaLisRep.getSelectedIndex();
+//					String lis = listaLisRep.getModel().getElementAt(i).toString();  //TODO
+//					clIF.inicializar();
+//					clIF.cargarLista(usr, lis);
+//					ModificarUsuario.this.setVisible(false);
+//					clIF.setVisible(true);					
+				}
 			}
 		});
 		btnSelecLista.setBounds(188, 475, 138, 23);
 		getContentPane().add(btnSelecLista);
-		checkBoxPublico.setEnabled(false);
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrarMsg();
+				if(nick.getText().isEmpty() || nombre.getText().isEmpty() || apellido.getText().isEmpty() ||
+						email.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null) 
+						|| nomCanal.getText().isEmpty()	|| desCanal.getText().isEmpty()) {
+						lblMsgError.setVisible(true);
+					}else {
+						Calendar fNac = Calendar.getInstance();
+				        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
+				        iU.modificarInfoUsuario(nombre.getText(), apellido.getText(), fNac, imgPath);
+				        iU.modificarInfoCanal(nomCanal.getText(), desCanal.getText(), publico);
+				        inicializar(iU);
+				        lblMsgExito.setVisible(true);
+					}
+			}
+		});
+		
+		btnConfirmar.setEnabled(false);
+		btnConfirmar.setBounds(408, 473, 168, 25);
+		getContentPane().add(btnConfirmar);
+		btnModImg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser abrir = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
+				FileNameExtensionFilter filter = new FileNameExtensionFilter( "jpeg, jpg, png o bmp", "jpeg", "png", "jpg", "bmp");
+				abrir.setFileFilter(filter);
+				int r = abrir.showOpenDialog(null); 
+				if (r == JFileChooser.APPROVE_OPTION) { 
+					img.setText(abrir.getSelectedFile().getAbsolutePath()); 
+					
+					try {
+						imgPath = abrir.getSelectedFile().getAbsolutePath();
+						mostrarImg(imgPath);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		
+		btnModImg.setBounds(230, 147, 120, 23);
+		getContentPane().add(btnModImg);
+		btnBorrarImg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				imgPath = "src/main/resources/img/default.png";
+				try {
+					mostrarImg(imgPath);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+		});
 		
 		
-		checkBoxPublico.setBounds(730, 399, 97, 23);
-		getContentPane().add(checkBoxPublico);
+		btnBorrarImg.setBounds(230, 176, 120, 23);
+		getContentPane().add(btnBorrarImg);
+		
+		listaUsr.setModel(new DefaultListModel<>());
+		
+		lblMsgError.setForeground(Color.RED);
+		lblMsgError.setBounds(489, 435, 176, 14);
+		getContentPane().add(lblMsgError);
+		
+		lblMsgExito.setForeground(new Color(124, 252, 0));
+		lblMsgExito.setBounds(472, 435, 232, 14);
+		getContentPane().add(lblMsgExito);
+		
 
+		lblMsgAdvert.setForeground(new Color(0, 0, 255));
+		lblMsgAdvert.setBounds(391, 383, 363, 66);
+		getContentPane().add(lblMsgAdvert);
 	}
 	
 	public void cargarElementos(IUsuario iU) {
@@ -413,16 +469,53 @@ public class ConsultaUsuario extends JInternalFrame {
 		agregarFoto = false;
 		agregarNomCanal = false;
 		publico = false;
-		checkBoxPublico.setSelected(false);
+		imgPath = "";
+		chckbxCanalPublico.setSelected(false);
 		nomCanal.setEnabled(false);
 		lblImagen.setIcon(null);
-		((DefaultListModel) listaSeguidores.getModel()).clear();
-		((DefaultListModel) listaSeguidos.getModel()).clear();
 		((DefaultListModel) listaVid.getModel()).clear();
 		((DefaultListModel) listaLisRep.getModel()).clear();
+		insiste = false;
+		try {
+			mostrarImg("src/main/resources/img/default.png");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}	
 	}
 	
+	public void inicializar(IUsuario iU) {
+		borrarMsg();
+		habilitarForm(false);
+		limpiarLista();
+		resetearFormulario();
+		cargarElementos(iU);
+	}
 	
+	private void habilitarForm(boolean flag) {
+		listaUsr.setEnabled(!flag);
+		nombre.setEnabled(flag);
+		apellido.setEnabled(flag);
+		nomCanal.setEnabled(flag);
+		fDia.setEnabled(flag);
+		fMes.setEnabled(flag);
+		fAnio.setEnabled(flag);
+		desCanal.setEnabled(flag);
+		chckbxCanalPublico.setEnabled(flag);
+		listaVid.setEnabled(flag);
+		listaLisRep.setEnabled(flag);
+		btnSeleccionarUsuario.setEnabled(!flag);
+		btnSelecVideo.setEnabled(flag);
+		btnSelecLista.setEnabled(flag);
+		btnConfirmar.setEnabled(flag);
+		btnModImg.setEnabled(flag);
+		btnBorrarImg.setEnabled(flag);
+	}
+	
+	private void borrarMsg() {
+		lblMsgError.setVisible(false);
+		lblMsgExito.setVisible(false);
+		lblMsgAdvert.setVisible(false);
+	}
 	
 	public void mostrarImg(final String filename) throws Exception
 	  {
