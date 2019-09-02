@@ -391,7 +391,11 @@ public class ConsultaVideo extends JInternalFrame {
 		fDia.setSelectedIndex(infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH));
 		fMes.setSelectedIndex(infoV.getfPublicacion().get(Calendar.MONTH));
 		fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
-		categoria.setSelectedItem(infoV.getCategoria());
+		if(infoV.getCategoria() == null) {
+			categoria.setSelectedIndex(0);
+		}else {
+			categoria.setSelectedItem(infoV.getCategoria());			
+		}
 		publico.setSelected(infoV.getPublico());
 		cargarComentarios(vid);
 	}

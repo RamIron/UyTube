@@ -167,6 +167,7 @@ public class CUsuario implements IUsuario {
 			this.usr.setfNac(fNacU);
 			this.usr.setImagen(imagen);
 			mU.modificaDatosUsuario(this.usr);
+			this.can = usr.getCanal();
 		} catch (Exception e){
 			throw e;
 		}

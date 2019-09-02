@@ -48,7 +48,8 @@ public class ConsultaCategoria extends JInternalFrame{
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConsultaCategoria.this.setVisible(false);
-				limpiarLista();
+				limpiarListaCategorias();
+				limpiarListaElementos();
 			}
 		});
 		
@@ -144,13 +145,19 @@ public class ConsultaCategoria extends JInternalFrame{
 //		listElementos.setModel(listaElem);
 //	}
 	
-	public void limpiarLista() {
+	public void limpiarListaCategorias() {
 		DefaultListModel<String> listaCat = new DefaultListModel<String>();
 		listCategoria.setModel(listaCat);
 	}
+	
+	public void limpiarListaElementos() {
+		DefaultListModel<String> listaEle = new DefaultListModel<String>();
+		listElementos.setModel(listaEle);
+	}
 
 	public void inicializar(ICategoria iC) {
-		limpiarLista();
+		limpiarListaCategorias();
+		limpiarListaElementos();
 		cargarCategorias(iC);
 	}
 	

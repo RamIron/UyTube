@@ -63,6 +63,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 	private JLabel lblMsgErrorUsr = new JLabel("Debe seleccionar un usuario");
 	private JLabel lblMsgErrorNum = new JLabel("Deben ser numeros");
 	private final JLabel lblMsgErrorVid = new JLabel("Debe seleccionar un video");
+	private String vid = "";
 	
 	private IVideo iV;
 	private IUsuario iU;
@@ -172,7 +173,8 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 					}
 					publico.setSelected(infoV.getPublico());
 					esPublico = infoV.getPublico();
-					
+					i = listaVid.getSelectedIndex();
+					vid = listaVid.getModel().getElementAt(i).toString();
 				}
 				
 			}
@@ -271,10 +273,6 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				reiniciarMsg();
-				int i = listaVid.getSelectedIndex();
-				String vid = listaVid.getModel().getElementAt(i).toString();
-				i = listaUsr.getSelectedIndex();
-				String usr = listaUsr.getModel().getElementAt(i).toString();
 				if(nomVid.getText().isEmpty() || duracion.getText().isEmpty() || url.getText().isEmpty() ||
 					descripcion.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null)) {
 					lblMsgError.setVisible(true);
@@ -419,6 +417,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 	}
 	
 	public void cargarVideo(String nick, String vid) {
+		this.vid = vid;
 		iV.setUsr(nick);
 		listaUsr.setEnabled(false);
 		btnSeleccionarUsuario.setEnabled(false);
@@ -432,7 +431,11 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		fDia.setSelectedIndex(infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH));
 		fMes.setSelectedIndex(infoV.getfPublicacion().get(Calendar.MONTH));
 		fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
-		categoria.setSelectedItem(infoV.getCategoria());
+		if(infoV.getCategoria() == null) {
+			categoria.setSelectedIndex(0);
+		}else {
+			categoria.setSelectedItem(infoV.getCategoria());			
+		}
 		publico.setSelected(infoV.getPublico());
 		cargarComentarios(vid);
 	}
