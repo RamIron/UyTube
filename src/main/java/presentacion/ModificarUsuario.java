@@ -76,13 +76,13 @@ public class ModificarUsuario extends JInternalFrame {
 	private boolean insiste = false;
 	
 	private ModificarVideo mvIF;
-	//private ModificarLista mlIF; //TODO
+	private ModificarLista mlIF; 
 	
-	public ModificarUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ModificarVideo mvIF /*,  ConsultaListaRep clIF  //TODO  */) {
+	public ModificarUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ModificarVideo mvIF ,  ModificarLista mlIF) {
 		
 		
 		this.mvIF = mvIF;
-		//this.clIF = clIF; //TODO
+		this.mlIF = mlIF; 
 		
 		setRootPaneCheckingEnabled(false);
 		setTitle("Modificar usuario");
@@ -352,14 +352,14 @@ public class ModificarUsuario extends JInternalFrame {
 					lblMsgAdvert.setVisible(true);
 					insiste = true;
 				}else {
-//					int i = listaUsr.getSelectedIndex();
-//					String usr = listaUsr.getModel().getElementAt(i).toString();
-//					i = listaLisRep.getSelectedIndex();
-//					String lis = listaLisRep.getModel().getElementAt(i).toString();  //TODO
-//					clIF.inicializar();
-//					clIF.cargarLista(usr, lis);
-//					ModificarUsuario.this.setVisible(false);
-//					clIF.setVisible(true);					
+					int i = listaUsr.getSelectedIndex();
+					String usr = listaUsr.getModel().getElementAt(i).toString();
+					i = listaLisRep.getSelectedIndex();
+					String lis = listaLisRep.getModel().getElementAt(i).toString();  //TODO
+					mlIF.inicializar();
+					mlIF.cargarLista(usr, lis);
+					ModificarUsuario.this.setVisible(false);
+					mlIF.setVisible(true);					
 				}
 			}
 		});

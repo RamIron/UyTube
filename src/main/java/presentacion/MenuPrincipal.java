@@ -203,7 +203,7 @@ public class MenuPrincipal extends JFrame {
 		dejarSeguirUsuarioIF = new DejarSeguirUsuario(iU);
 		dejarSeguirUsuarioIF.setLocation(0, 0);
 		
-		modificarUsuarioIF = new ModificarUsuario(iU, iV, iL, modificarVideoIF);
+		modificarUsuarioIF = new ModificarUsuario(iU, iV, iL, modificarVideoIF, modificarListaIF);
 		modificarUsuarioIF.setLocation(0, 0);
 		
 		
@@ -343,7 +343,7 @@ public class MenuPrincipal extends JFrame {
 		mntmModificarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LimpiarFrame();
-				modificarListaIF.inicializar(iU, iC, iL);
+				modificarListaIF.inicializar();
 				modificarListaIF.setVisible(true);
 			}
 		});

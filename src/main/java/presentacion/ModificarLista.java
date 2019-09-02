@@ -16,9 +16,12 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import datatypes.DtListaRep;
 import datatypes.DtVideo;
+import datatypes.DtVideoUsuario;
 import interfaces.ICategoria;
 import interfaces.IListaReproduccion;
 import interfaces.IUsuario;
@@ -44,8 +47,9 @@ public class ModificarLista extends JInternalFrame {
 	private Boolean seleccionoLista = false;
 	JButton btnConfirmar = new JButton("Confirmar");
 	private final JLabel lblMsgOK = new JLabel("Se han modificado los datos");
+	private Boolean esVacia = false;
 	
-	
+
 	
 	public ModificarLista(IUsuario iU, IListaReproduccion iL, ICategoria iC) {
 		getContentPane().setEnabled(false);
@@ -59,7 +63,7 @@ public class ModificarLista extends JInternalFrame {
 		
 		btnSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				inicializar(iU, iC, iL);	
+				inicializar();	
 				((DefaultListModel) listaList.getModel()).clear();
 				listaList.setEnabled(false);
 				publica.setEnabled(false);
@@ -120,6 +124,8 @@ public class ModificarLista extends JInternalFrame {
 					}
 				}
 				iL.setuList(usuarioLista);
+				btnSelectUsr.setEnabled(false);
+				listaUsr.setEnabled(false);
 			}
 		});
 		
@@ -138,9 +144,11 @@ public class ModificarLista extends JInternalFrame {
 				publica.setEnabled(true);
 				DtListaRep infoL = iL.obtenerListaDeUsuario(nomLista);
 				if(infoL.getCategoria().isEmpty()) {
+					esVacia = true;
 					categoria.setSelectedIndex(0);
 				}else {
 					categoria.setSelectedItem(infoL.getCategoria());
+					esVacia = false;
 				}
 				publica.setSelected(infoL.getPublico());
 				esPublica =  infoL.getPublico();
@@ -162,11 +170,14 @@ public class ModificarLista extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(categoria.getSelectedItem());
 				if(categoria.getSelectedIndex() == 0) {
-					iL.eliminarCategoria();
+					if(!esVacia) {
+						iL.eliminarCategoria();						
+					}
 				}else {
 					iL.modificarCategoria(categoria.getSelectedItem().toString());					
 				}
 				iL.modificarInfoLista(nomLista, esPublica);
+				inicializar();
 				lblMsgOK.setVisible(true);
 			}
 		});
@@ -218,7 +229,29 @@ public class ModificarLista extends JInternalFrame {
 		listaUsr.setModel(listaU);
 	}
 	
-	public void inicializar(IUsuario iU, ICategoria iC, IListaReproduccion iL) {
+	public void cargarLista(String nick, String lis) {
+		listaUsr.setEnabled(false);
+		iL.setuList(nick);
+		iL.setLista(lis);
+		DtListaRep infoL = iL.obtenerListaDeUsuario(lis);
+		seleccionoLista = true;
+		btnSelectUsr.setEnabled(false);
+		btnConfirmar.setEnabled(true);
+		listaUsr.setEnabled(false);
+		btnSelectList.setEnabled(false);
+		publica.setEnabled(true);
+		if(infoL.getCategoria().isEmpty()) {
+			esVacia = true;
+			categoria.setSelectedIndex(0);
+		}else {
+			categoria.setSelectedItem(infoL.getCategoria());
+			esVacia = false;
+		}
+		publica.setSelected(infoL.getPublico());
+		esPublica =  infoL.getPublico();
+	}
+	
+	public void inicializar() {
 		cargarCategorias();
 		limpiarLista();
 		limpiarForm();
