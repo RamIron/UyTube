@@ -2,6 +2,7 @@ package presentacion;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,6 +24,7 @@ import java.awt.Toolkit;
 import javax.swing.JLabel;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JTabbedPane;
 
 public class MenuPrincipal extends JFrame {
 
@@ -56,6 +58,7 @@ public class MenuPrincipal extends JFrame {
 	//JInternalFrames
 	private AltaCategoria altaCategoriaIF;
 	private ListarCategoria listarCategoriaIF;
+	private ConsultaCategoria consultaCategoriaIF;
 	
 	private AltaUsuario altaUsuarioIF;
 	private ListarUsuario listarUsuarioIF;
@@ -68,12 +71,19 @@ public class MenuPrincipal extends JFrame {
 	private ComentarVideo comentarVideoIF; 
 	private ValorarVideo valorarVideoIF;
 	private ModificarVideo modificarVideoIF;
+	private AgregarVideoLista agregarVideoListaIF;
 	
 	private AltaLista altaListaIF;
 	private ConsultaListaRep consultarListaIF;
 	
 	private final JLabel fondo = new JLabel("");
-	private final JLabel logo = new JLabel("");
+
+	private final JLabel logo = new JLabel();
+
+	/**
+	 * @wbp.nonvisual location=87,-31
+	 */
+	private final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 	
 	/**
 	 * Launch the application.
@@ -115,7 +125,6 @@ public class MenuPrincipal extends JFrame {
 	 * 
 	 */
 	public MenuPrincipal() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Martin\\Desktop\\UyTube\\src\\main\\resources\\img\\logo.png"));
 		setTitle("UyTube");
 		CFactory fC = CFactory.getInstancia();
 		ICategoria iC = fC.getICategoria();
@@ -134,6 +143,8 @@ public class MenuPrincipal extends JFrame {
 		altaCategoriaIF.setBounds(0, 0, 800, 542);
 		listarCategoriaIF = new ListarCategoria(iC);
 		listarCategoriaIF.setBounds(0, 0, 800, 542);
+		consultaCategoriaIF = new ConsultaCategoria(iC);
+		consultaCategoriaIF.setBounds(0, 0, 800, 542);
 		
 		//Video
 		altaVideoIF = new AltaVideo(iU, iC, iV);
@@ -155,8 +166,13 @@ public class MenuPrincipal extends JFrame {
 		altaListaIF = new AltaLista(iU, iC, iL);
 		altaVideoIF.setLocation(0, 0);
 		
+
 		consultarListaIF = new ConsultaListaRep(iU, iL, consultaVideoIF);
 		consultarListaIF.setLocation(0, 0);
+
+		agregarVideoListaIF = new AgregarVideoLista(iV, iU, iL);
+		agregarVideoListaIF.setLocation(0, 0);
+
 		
 		//Usuario
 		altaUsuarioIF = new AltaUsuario(iU);
@@ -176,7 +192,7 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 1024, 620);
 		
 		
 		setJMenuBar(menuBar);
@@ -314,6 +330,13 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		mnListaDeReproduccion.add(mntmConsultarLista);
+		mntmAgregarVideoA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
+				agregarVideoListaIF.inicializar();
+				agregarVideoListaIF.setVisible(true);
+			}
+		});
 		
 		
 		mnListaDeReproduccion.add(mntmAgregarVideoA);
@@ -343,6 +366,13 @@ public class MenuPrincipal extends JFrame {
 		
 		mnCategoria.add(mntmListarTodas);
 		
+		mntmConsultarCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
+				consultaCategoriaIF.setVisible(true);
+				consultaCategoriaIF.inicializar(iC);
+			}
+		});
 		
 		mnCategoria.add(mntmConsultarCategoria);
 		
@@ -357,6 +387,7 @@ public class MenuPrincipal extends JFrame {
 		
 		contentPane.add(altaCategoriaIF);
 		contentPane.add(listarCategoriaIF);
+		contentPane.add(consultaCategoriaIF);
 		
 		contentPane.add(altaUsuarioIF);
 		contentPane.add(listarUsuarioIF);
@@ -372,14 +403,24 @@ public class MenuPrincipal extends JFrame {
 		
 		contentPane.add(altaListaIF);
 		contentPane.add(consultarListaIF);
+		contentPane.add(agregarVideoListaIF);
 		
-		logo.setBounds(140, 300, 616, 225);
-		contentPane.add(logo);
-		logo.setIcon(new ImageIcon("src/main/resources/img/logo.png"));
+//		logo.setBounds(140, 300, 616, 225);
+//		contentPane.add(logo);
+//		logo.setIcon(new ImageIcon("src/main/resources/img/logo.png"));
+//		fondo.setIcon(new ImageIcon("src/main/resources/img/fondo.jpg"));
+//		fondo.setBounds(0, 0, 800, 550);
+
+		ImageIcon imgLogo = new ImageIcon("src/main/resources/img/logo.png");
+		logo.setBounds(250, 80, 493, 180);
+		logo.setIcon(new ImageIcon(imgLogo.getImage().getScaledInstance(493, 180, Image.SCALE_SMOOTH)));
+		
 		fondo.setIcon(new ImageIcon("src/main/resources/img/fondo.jpg"));
-		fondo.setBounds(0, 0, 800, 550);
-		
+		fondo.setBounds(0, 0, 1024, 576);
+
+		contentPane.add(logo);
 		contentPane.add(fondo);
+
 		
 		LimpiarFrame();
 	}

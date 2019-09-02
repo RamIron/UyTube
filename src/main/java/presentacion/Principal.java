@@ -536,7 +536,7 @@ public class Principal {
 		String nickVideo = entrada.nextLine();
 		
 		if(controladorU.existeNickname(nickVideo)) {
-			if(controladorU.esCanalPublico(nickVideo)) {
+//			if(controladorU.esCanalPublico(nickVideo)) {
 				List<String> videosU = controladorV.listarVideosPublicosDeUsuario(nickVideo);
 				if(!videosU.isEmpty()) {
 					for(String v:videosU) {
@@ -590,9 +590,9 @@ public class Principal {
 				}else {
 					System.out.println("El usuario no tiene videos");
 				}
-			}else {
-				System.out.println("El canal no es publico");
-			}
+//			}else {
+//				System.out.println("El canal no es publico");
+//			}
 		}else {
 			System.out.println("No existe un usuario con nickname: " + nickVideo);
 		}
