@@ -56,6 +56,7 @@ public class MenuPrincipal extends JFrame {
 	//JInternalFrames
 	private AltaCategoria altaCategoriaIF;
 	private ListarCategoria listarCategoriaIF;
+	private ConsultaCategoria consultaCategoriaIF;
 	
 	private AltaUsuario altaUsuarioIF;
 	private ListarUsuario listarUsuarioIF;
@@ -101,6 +102,7 @@ public class MenuPrincipal extends JFrame {
 		altaListaIF.setVisible(false);
 		modificarVideoIF.setVisible(false);
 		seguirUsuarioIF.setVisible(false);
+		consultaCategoriaIF.setVisible(false);
 	}
 	
 	/**
@@ -110,7 +112,6 @@ public class MenuPrincipal extends JFrame {
 	 * 
 	 */
 	public MenuPrincipal() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Martin\\Desktop\\UyTube\\src\\main\\resources\\img\\logo.png"));
 		setTitle("UyTube");
 		CFactory fC = CFactory.getInstancia();
 		ICategoria iC = fC.getICategoria();
@@ -129,6 +130,8 @@ public class MenuPrincipal extends JFrame {
 		altaCategoriaIF.setBounds(0, 0, 800, 542);
 		listarCategoriaIF = new ListarCategoria(iC);
 		listarCategoriaIF.setBounds(0, 0, 800, 542);
+		consultaCategoriaIF = new ConsultaCategoria(iC);
+		consultaCategoriaIF.setBounds(0, 0, 800, 542);
 		
 		//Video
 		altaVideoIF = new AltaVideo(iU, iC, iV);
@@ -318,6 +321,13 @@ public class MenuPrincipal extends JFrame {
 		
 		mnCategoria.add(mntmListarTodas);
 		
+		mntmConsultarCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LimpiarFrame();
+				consultaCategoriaIF.setVisible(true);
+				consultaCategoriaIF.inicializar(iC);
+			}
+		});
 		
 		mnCategoria.add(mntmConsultarCategoria);
 		
@@ -332,6 +342,7 @@ public class MenuPrincipal extends JFrame {
 		
 		contentPane.add(altaCategoriaIF);
 		contentPane.add(listarCategoriaIF);
+		contentPane.add(consultaCategoriaIF);
 		
 		contentPane.add(altaUsuarioIF);
 		contentPane.add(listarUsuarioIF);
