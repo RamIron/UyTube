@@ -176,7 +176,7 @@ public class ModificarLista extends JInternalFrame {
 				}else {
 					iL.modificarCategoria(categoria.getSelectedItem().toString());					
 				}
-				iL.modificarInfoLista(nomLista, esPublica);
+				iL.modificarInfoLista(nomLista, publica.isSelected());
 				inicializar();
 				lblMsgOK.setVisible(true);
 			}

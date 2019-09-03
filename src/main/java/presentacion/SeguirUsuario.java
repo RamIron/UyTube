@@ -102,6 +102,7 @@ public class SeguirUsuario extends JInternalFrame {
 					String seguido = listaSeguidores.getModel().getElementAt(i).toString();
 					iU.seguirUsuario(seguidor, seguido);
 					iU.limpiarControlador();
+					inicializar(iU);
 					lblMsgExito.setVisible(true);
 				}
 			}

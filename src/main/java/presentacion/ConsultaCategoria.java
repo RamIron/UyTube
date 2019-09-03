@@ -57,29 +57,7 @@ public class ConsultaCategoria extends JInternalFrame{
 		getContentPane().add(btnSalir);
 		JButton btnSeleccionar = new JButton("Seleccionar");
 		
-		
-//		btnSeleccionar.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				reiniciarMsg();
-//				int i = listCategoria.getSelectedIndex();
-//				if(i < 0) {
-//					//lblMsgErrorUsr.setVisible(true);
-//				}else {
-//					System.out.println("Entra aca");
-//					String cat = listCategoria.getModel().getElementAt(i).toString();
-//					//((DefaultListModel) listElementos.getModel()).clear();
-//					List<DtElementoUsuario> elementos = iC.listarElemCategoria(cat);
-//					if(!elementos.isEmpty()) {
-//						for(DtElementoUsuario e: elementos) {
-////							String elemUsr = e.getNombreE() + " " + e.getNickname();
-//							((DefaultListModel) listElementos.getModel()).addElement(e.getNickname());
-//						}
-//					}
-//				
-//					listElementos.setEnabled(true);					
-//				}
-//			}
-//		});
+	
 		
 		btnSeleccionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -96,7 +74,7 @@ public class ConsultaCategoria extends JInternalFrame{
 					if(!elementos.isEmpty()) {						
 						ArrayList<String> elems = new ArrayList<String>();
 						for(DtElementoUsuario e : elementos) {
-							elems.add(e.getNombreE() + " - " + e.getNickname());
+							elems.add(e.getTipo().toString() + ">" + e.getNombreE() + " - " + e.getNickname());
 						}
 						DefaultListModel listModel = new DefaultListModel();
 						for (int i = 0; i < elems.size(); i++)
@@ -133,17 +111,6 @@ public class ConsultaCategoria extends JInternalFrame{
 		listCategoria.setModel(listaCat);
 	}
 	
-//	public void cargarElementos(ICategoria iC) {
-//		List<DtElementoUsuario> elementos = iC.listarElemCategoria(nomCat);
-//		DefaultListModel<String> listaElem = new DefaultListModel<String>();
-//		int i = 0;
-//		for(DtElementoUsuario e:elementos) {
-//			String elemUsr = e.getNombreE() + " " + e.getNickname();
-//			System.out.println(e.getNombreE() + " " + e.getNickname());
-//			listaElem.add(i++, elemUsr);
-//		}
-//		listElementos.setModel(listaElem);
-//	}
 	
 	public void limpiarListaCategorias() {
 		DefaultListModel<String> listaCat = new DefaultListModel<String>();

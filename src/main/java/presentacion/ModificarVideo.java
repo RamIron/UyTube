@@ -282,7 +282,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 				}else{
 					Calendar fPub = Calendar.getInstance();
 			        fPub.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
-					iV.modificarInfoVideo(nomVid.getText(), descripcion.getText(), fPub, Integer.parseInt(duracion.getText()), url.getText(), esPublico);
+					iV.modificarInfoVideo(nomVid.getText(), descripcion.getText(), fPub, Integer.parseInt(duracion.getText()), url.getText(), publico.isSelected());
 					if(categoria.getSelectedIndex() != 0) {
 						iV.agregarCategoria(categoria.getSelectedItem().toString());
 					}
