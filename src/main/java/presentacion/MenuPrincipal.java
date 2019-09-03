@@ -208,7 +208,7 @@ public class MenuPrincipal extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1024, 620);
+		setBounds(100, 100, 800, 600);
 		
 		
 		setJMenuBar(menuBar);
@@ -449,11 +449,11 @@ public class MenuPrincipal extends JFrame {
 //		fondo.setBounds(0, 0, 800, 550);
 
 		ImageIcon imgLogo = new ImageIcon("src/main/resources/img/logo.png");
-		logo.setBounds(250, 80, 493, 180);
+		logo.setBounds(153, 80, 493, 180);
 		logo.setIcon(new ImageIcon(imgLogo.getImage().getScaledInstance(493, 180, Image.SCALE_SMOOTH)));
 		
 		fondo.setIcon(new ImageIcon("src/main/resources/img/fondo.jpg"));
-		fondo.setBounds(0, 0, 1024, 576);
+		fondo.setBounds(-112, 0, 1024, 576);
 
 		contentPane.add(logo);
 		contentPane.add(fondo);

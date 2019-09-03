@@ -170,7 +170,9 @@ public class Usuario {
 //	}
 	
 	public void agregarSeguidor(Usuario u) {
-		this.seguidores.add(u);
+		if(!this.seguidores.contains(u)) {
+			this.seguidores.add(u);			
+		}
 	}
 	
 	/*public void agregarValoracion(Valoracion val) {
@@ -290,8 +292,10 @@ public class Usuario {
 	}
 	
 	public void seguirUsuario(Usuario u2) {
-		u2.getSeguidores().add(this);
-		this.seguidos.add(u2);
+		//u2.getSeguidores().add(this);
+		if(this.seguidos.contains(u2)) {
+			this.seguidos.add(u2);			
+		}
 	}
 	
 //	public void valorarVideo(String nomVid, Usuario uVal, Boolean val) {

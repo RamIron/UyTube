@@ -189,11 +189,6 @@ public class ModificarUsuario extends JInternalFrame {
 		JLabel lblDescripcionDelCanal = new JLabel("Descripcion");
 		lblDescripcionDelCanal.setBounds(391, 292, 200, 15);
 		getContentPane().add(lblDescripcionDelCanal);
-		chckbxCanalPublico.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				publico = !publico;
-			}
-		});
 		chckbxCanalPublico.setEnabled(false);
 		
 		chckbxCanalPublico.setBounds(725, 268, 29, 23);
@@ -376,7 +371,7 @@ public class ModificarUsuario extends JInternalFrame {
 						Calendar fNac = Calendar.getInstance();
 				        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
 				        iU.modificarInfoUsuario(nombre.getText(), apellido.getText(), fNac, imgPath);
-				        iU.modificarInfoCanal(nomCanal.getText(), desCanal.getText(), publico);
+				        iU.modificarInfoCanal(nomCanal.getText(), desCanal.getText(), chckbxCanalPublico.isSelected());
 				        inicializar(iU);
 				        lblMsgExito.setVisible(true);
 					}

@@ -233,8 +233,7 @@ public class ConsultaUsuario extends JInternalFrame {
 				nomCanal.setText(infoC.getNombre());
 				desCanal.setText(infoC.getDescripcion());
 				System.out.println(infoC.getPublico());
-				checkBoxPublico.setSelected(true);
-				//chckbxCanalPublico.setSelected((boolean)infoC.getPublico());
+				checkBoxPublico.setSelected((boolean)infoC.getPublico());
 				
 				//SEGUIDORES
 				List<String> seguidores = iU.listarSeguidores();
