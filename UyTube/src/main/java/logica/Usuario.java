@@ -11,7 +11,8 @@ import datatypes.DtListaRep;
 import datatypes.DtVideo;
 
 @NamedQueries( {
-	@NamedQuery(name = "existeMail", query = "select u.correoE from Usuario u where u.correoE = :correoE")
+	@NamedQuery(name = "existeMail", query = "select u.correoE from Usuario u where u.correoE = :correoE"),
+		@NamedQuery(name = "usuarioMail", query = "select u.nickname from Usuario u where u.correoE = :correoE")
 } )
 @Entity
 @Table(name="USUARIOS")

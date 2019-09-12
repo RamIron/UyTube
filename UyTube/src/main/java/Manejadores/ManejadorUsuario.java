@@ -55,7 +55,7 @@ public class ManejadorUsuario {
 	public List<Usuario> obtenerUsuarios(){
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
-		TypedQuery<Usuario> consulta = em.createQuery("FROM Usuario", Usuario.class);
+		TypedQuery<Usuario> consulta = em.createQuery("select DISTINCT nickname FROM Usuario", Usuario.class);
 	    List<Usuario> usuarios = consulta.getResultList();
 	    return usuarios;
 	}
@@ -66,6 +66,16 @@ public class ManejadorUsuario {
 		TypedQuery<String> consulta = em.createQuery("SELECT u.nickname FROM Usuario u", String.class);
 	    List<String> usuarios = consulta.getResultList();
 	    return usuarios;
+	}
+
+	public Usuario obtenerUsuarioMail(String email){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		TypedQuery<String> consulta = em.createNamedQuery("usuarioMail", String.class);
+		consulta.setParameter("correoE", email);
+		String nickname = consulta.getSingleResult();
+		Usuario usuario = obtenerUsuario(nickname);
+		return usuario;
 	}
 	
 	public void modificaDatosUsuario(Usuario usuario) {
