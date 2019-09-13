@@ -23,6 +23,9 @@ public class Canal {
 	
 	@OneToOne
 	private Usuario usuario;
+
+    @OneToOne
+    private Categoria categoria;
 	
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List <Video> videos = new ArrayList<Video>();
@@ -68,7 +71,15 @@ public class Canal {
 		this.usuario = usuario;
 	}
 
-	public Boolean getPublico() {
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Boolean getPublico() {
 		return publico;
 
 	}

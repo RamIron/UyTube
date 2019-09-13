@@ -3,6 +3,8 @@ package logica;
 import datatypes.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -14,8 +16,8 @@ public abstract class Elemento {
 	
 	private String nombre;
 	
-	@ManyToOne
-	protected Categoria categoria;
+	@ManyToMany(cascade= {CascadeType.PERSIST,CascadeType.MERGE})
+	protected List<Categoria> categorias = new ArrayList<Categoria>();
 	
 	@ManyToOne
 	private Canal canal;
@@ -52,14 +54,17 @@ public abstract class Elemento {
 		this.canal = canal;
 	}
 	
-	public Categoria getCategoria() {
-		return categoria;
+	public List<Categoria> getCategoria() {
+		return categorias;
 	}
 
 	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
+		this.categorias.add(categoria);
 	}
-	
+
+	public void quitarCategoria(Categoria c){
+		this.categorias.remove(c);
+	}
 	
 	public abstract DtElementoUsuario obtenerElemCategoria();
 	
