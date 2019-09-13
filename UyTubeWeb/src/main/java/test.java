@@ -15,7 +15,6 @@ public class test extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession s = request.getSession();
         if (s.getAttribute("usuario") == null){
-            s.setAttribute("usuario", new DtUsuario());
             System.out.println("No Estoy logeado");
         }else {
             System.out.println("Estoy logeado");

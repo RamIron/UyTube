@@ -217,13 +217,19 @@ public class CUsuario implements IUsuario {
 
 	@Override
 	public DtUsuarioWeb obtenerUsuarioWebNick(String nickname){
-		//TODO
-		return null;
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario u = mU.obtenerUsuario(nickname);
+		List<String> lis = u.getCanal().listarListasDeUsuario();
+		DtUsuarioWeb res = new DtUsuarioWeb(u.getNickname(), u.getImagen(),lis);
+		return res;
 	}
 
 	@Override
 	public DtUsuarioWeb obtenerUsuarioWebEmail(String email){
-		//TODO
-		return null;
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario u = mU.obtenerUsuarioMail(email);
+		List<String> lis = u.getCanal().listarListasDeUsuario();
+		DtUsuarioWeb res = new DtUsuarioWeb(u.getNickname(), u.getImagen(),lis);
+		return res;
 	}
 }

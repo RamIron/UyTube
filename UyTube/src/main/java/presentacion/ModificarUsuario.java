@@ -271,16 +271,16 @@ public class ModificarUsuario extends JInternalFrame {
 		DefaultListModel<String> listaS2 = new DefaultListModel<String>();
 		
 		
-		try {
-		mostrarImg("src/main/resources/img/default.png");
-		img.setBounds(230, 17, 120, 120);
-		} catch (IOException e1) {
-			
-			e1.printStackTrace();
-		} catch (Exception e1) {
-			
-			e1.printStackTrace();
-		}
+//		try {
+//		mostrarImg("src/main/resources/img/default.png");
+//		img.setBounds(230, 17, 120, 120);
+//		} catch (IOException e1) {
+//
+//			e1.printStackTrace();
+//		} catch (Exception e1) {
+//
+//			e1.printStackTrace();
+//		}
 		getContentPane().add(img);
 		
 		JScrollPane scrollVid = new JScrollPane();
@@ -471,11 +471,11 @@ public class ModificarUsuario extends JInternalFrame {
 		((DefaultListModel) listaVid.getModel()).clear();
 		((DefaultListModel) listaLisRep.getModel()).clear();
 		insiste = false;
-		try {
-			mostrarImg("src/main/resources/img/default.png");
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}	
+//		try {
+//			mostrarImg("src/main/resources/img/default.png");
+//		} catch (Exception e1) {
+//			e1.printStackTrace();
+//		}
 	}
 	
 	public void inicializar(IUsuario iU) {
