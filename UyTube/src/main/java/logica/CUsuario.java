@@ -14,6 +14,7 @@ import Manejadores.ManejadorPorDefecto;
 import Manejadores.ManejadorUsuario;
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
+import datatypes.DtUsuarioWeb;
 import interfaces.IUsuario;
 
 public class CUsuario implements IUsuario {
@@ -125,25 +126,7 @@ public class CUsuario implements IUsuario {
 		this.usr.setImagen(img);
 		mU.modificaDatosUsuario(this.usr);
 	}
-	
-//	@Override 
-//	public void modificarInfoCanal(String nomC, String descC, boolean publico) {
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		try {
-//			em.getTransaction().begin();
-//			em.persist(this.can);
-//			this.can.setNombre(nomC);
-//			this.can.setDescripcion(descC);
-//			this.can.setPublico(publico);
-//			em.getTransaction().commit();
-//		}catch (Exception e){
-//			if(e instanceof RollbackException)
-//				if(em.getTransaction().isActive())
-//					em.getTransaction().rollback();
-//			throw new IllegalArgumentException("Hubo un error inesperado");
-//		}	
-//	}
+
 	
 	@Override 
 	public void modificarInfoCanal(String nomC, String descC, boolean publico) {
@@ -216,4 +199,31 @@ public class CUsuario implements IUsuario {
 		}
 	}
 
+	@Override
+
+	//Retorna: 0-> si no coincide los datos
+	//		   1-> si coincide con nickname
+	//		   2-> si coincide con email
+	public Integer iniciarSesion(String nick, String pass){
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		if(existeNickname(nick) && mU.obtenerUsuario(nick).getContrasena().equals(pass)) {
+			return 1;
+		}else if(existeEmail(nick) && mU.obtenerUsuarioMail(nick).getContrasena().equals(pass)){
+			return 2;
+		}else{
+			return 0;
+		}
+	}
+
+	@Override
+	public DtUsuarioWeb obtenerUsuarioWebNick(String nickname){
+		//TODO
+		return null;
+	}
+
+	@Override
+	public DtUsuarioWeb obtenerUsuarioWebEmail(String email){
+		//TODO
+		return null;
+	}
 }

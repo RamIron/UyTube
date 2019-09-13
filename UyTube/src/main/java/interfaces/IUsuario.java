@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
+import datatypes.DtUsuarioWeb;
 
 public interface IUsuario {
 	
@@ -40,5 +41,10 @@ public interface IUsuario {
 	public DtUsuario obtenerInfoUsuario(String nick);
 	
 	public void seguirUsuario(String seguidor, String seguido);
-	
+
+	public Integer iniciarSesion(String nick, String pass);
+
+    DtUsuarioWeb obtenerUsuarioWebNick(String nickname);
+
+	DtUsuarioWeb obtenerUsuarioWebEmail(String email);
 }
