@@ -7,5 +7,14 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/UyTube</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="Conexion/Hibernate" uuid="5acc9c05-e422-4ef8-a505-9ddb0da74384">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+/home/mateo/IdeaProjects/UyTube/UyTube/src/main/resources/META-INF/persistence.xml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+    </data-source>
   </component>
 </project>

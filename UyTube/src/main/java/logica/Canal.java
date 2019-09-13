@@ -2,19 +2,19 @@ package logica;
 
 import java.util.*;
 import javax.persistence.*;
-
 import datatypes.*;
 
 
 @Entity
 public class Canal {
 
-	private String nombre;
-	
 	@Id
 	@GeneratedValue
 	private int id;
-	
+
+	@Column(name = "NOMBRE")
+	private String nombre;
+
 	@Column(name="DESCRIPCION")
 	private String descripcion;
 	
@@ -252,7 +252,7 @@ public class Canal {
 					if(lr.categoria == null) {
 						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, "");
 					}else {
-						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, lr.categoria.getNombre());						
+						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, lr.categoria.getNombre());
 					}
 					return dtLisRep;
 				}else if(lr instanceof PorDefecto) {
