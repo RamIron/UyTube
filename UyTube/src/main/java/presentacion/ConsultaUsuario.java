@@ -296,16 +296,16 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(lblSeguidores);
 		
 		
-		try {
-		mostrarImg("src/main/resources/img/default.png");
-		img.setBounds(230, 51, 120, 120);
-		} catch (IOException e1) {
-			
-			e1.printStackTrace();
-		} catch (Exception e1) {
-			
-			e1.printStackTrace();
-		}
+//		try {
+//		mostrarImg("src/main/resources/img/default.png");
+//		img.setBounds(230, 51, 120, 120);
+//		} catch (IOException e1) {
+//
+//			e1.printStackTrace();
+//		} catch (Exception e1) {
+//
+//			e1.printStackTrace();
+//		}
 		getContentPane().add(img);
 		
 		JScrollPane scrollVid = new JScrollPane();
