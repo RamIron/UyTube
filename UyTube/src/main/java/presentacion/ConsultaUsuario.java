@@ -64,6 +64,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	private JList listaLisRep = new JList();
 	private JCheckBox checkBoxPublico = new JCheckBox("");
 	
+	
 	private ConsultaVideo cvIF;
 	private ConsultaListaRep clIF;
 

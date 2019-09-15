@@ -16,6 +16,10 @@ import java.io.IOException;
 @WebServlet(name = "IniciarSesion", value = "/IniciarSesion")
 public class IniciarSesion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UFactory uF = UFactory.getInstancia();
         IUsuario iU = uF.getIUsuario();
         HttpSession s = request.getSession();
@@ -41,13 +45,8 @@ public class IniciarSesion extends HttpServlet {
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("www.google.com");
             rd.forward(request, response);
-            //TODO
             System.out.println("Estoy logeado");
-
         }
-    }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 }

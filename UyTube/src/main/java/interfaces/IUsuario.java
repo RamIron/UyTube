@@ -31,10 +31,8 @@ public interface IUsuario {
 	public List<String> listarUsuarios();
 	
 	public void modificarImagen(String img);
-
-    void modificarContrasena(String pass);
-
-    public void modificarInfoCanal(String nomC, String descC, boolean publico);
+	
+	public void modificarInfoCanal(String nomC, String descC, boolean publico);
 	
 	public void modificarInfoUsuario(String nomU, String apeU, Calendar fNacU, String imagen);
 	
