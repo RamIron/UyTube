@@ -11,7 +11,7 @@ public class Categoria {
 		//ATRIBUTOS
 		@Id
 		private String nombre;
-		
+
 		@OneToMany(mappedBy="categoria",cascade=CascadeType.MERGE)
 		private List<Elemento> elementos = new ArrayList <Elemento>();
 		
@@ -58,8 +58,8 @@ public class Categoria {
 		}
 		
 		public void quitarElemento(Elemento e) {
-            //e.quitarCategoria(this);
 			e.setCategoria(null);
+            //e.quitarCategoria(this);
 			elementos.remove(e);
 		}
 }

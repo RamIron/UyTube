@@ -10,7 +10,7 @@
       <user-name>postgres</user-name>
       <schema-mapping />
     </data-source>
-    <data-source name="Conexion/Hibernate" uuid="5acc9c05-e422-4ef8-a505-9ddb0da74384">
+    <data-source name="Conexion/Hibernate" uuid="f0c47fef-8748-457c-a80f-4dc9fc0112b3">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" exact-version="0" />
       <schema-mapping />
     </data-source>

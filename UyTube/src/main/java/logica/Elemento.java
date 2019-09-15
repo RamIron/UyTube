@@ -19,6 +19,7 @@ public abstract class Elemento {
 	@ManyToOne
 	protected Categoria categoria;
 
+
 	@ManyToOne
 	private Canal canal;
 	
@@ -53,14 +54,16 @@ public abstract class Elemento {
 	public void setCanal(Canal canal) {
 		this.canal = canal;
 	}
-	
+
 	public Categoria getCategoria() {
 		return categoria;
 	}
 
+
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
 
 //	public void quitarCategoria(Categoria c){
 //		this.categorias.remove(c);
