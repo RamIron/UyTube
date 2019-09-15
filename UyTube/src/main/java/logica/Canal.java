@@ -2,19 +2,19 @@ package logica;
 
 import java.util.*;
 import javax.persistence.*;
+
 import datatypes.*;
 
 
 @Entity
 public class Canal {
 
+	private String nombre;
+	
 	@Id
 	@GeneratedValue
 	private int id;
-
-	@Column(name = "NOMBRE")
-	private String nombre;
-
+	
 	@Column(name="DESCRIPCION")
 	private String descripcion;
 	
@@ -245,22 +245,22 @@ public class Canal {
 //	}
 	
 	public DtListaRep obtenerListaDeUsuario(String nomList) {
-		for(ListaReproduccion lr:this.listas) {
-			if(nomList.contentEquals(lr.getNombre())) {
-				if(lr instanceof Particular) {
-					DtListaRep dtLisRep;
-					if(lr.categoria == null) {
-						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, "");
-					}else {
-						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, lr.categoria.getNombre());
-					}
-					return dtLisRep;
-				}else if(lr instanceof PorDefecto) {
-					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), false, false);
-					return dtLisRep;
-				}
-			}
-		}
+//		for(ListaReproduccion lr:this.listas) {
+//			if(nomList.contentEquals(lr.getNombre())) {
+//				if(lr instanceof Particular) {
+//					DtListaRep dtLisRep;
+//					if(lr.categoria == null) {
+//						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, "");
+//					}else {
+//						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, lr.categoria.getNombre());
+//					}
+//					return dtLisRep;
+//				}else if(lr instanceof PorDefecto) {
+//					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), false, false);
+//					return dtLisRep;
+//				}
+//			}
+//		}
 		return null;
 	}
 	
@@ -269,17 +269,17 @@ public class Canal {
 //	}
 	
 	public DtVideo obtenerInfoVideo(String nomVid) {
-		for(Video v:this.videos) {
-			if(v.getNombre().contentEquals(nomVid)) {
-				DtVideo dtVid;
-				if(v.getCategoria() == null){
-					dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), null);
-				}else {
-					dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), v.getCategoria().getNombre());					
-				}
-				return dtVid;
-			}
-		}
+//		for(Video v:this.videos) {
+//			if(v.getNombre().contentEquals(nomVid)) {
+//				DtVideo dtVid;
+//				if(v.getCategoria() == null){
+//					dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), null);
+//				}else {
+//					dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), v.getCategoria().getNombre());
+//				}
+//				return dtVid;
+//			}
+//		}
 		return null;
 	}
 	

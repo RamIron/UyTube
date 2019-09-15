@@ -127,6 +127,13 @@ public class CUsuario implements IUsuario {
 		mU.modificaDatosUsuario(this.usr);
 	}
 
+	@Override
+	public void modificarContrasena(String pass) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usr.setContrasena(pass);
+		mU.modificaDatosUsuario(this.usr);
+	}
+
 	
 	@Override 
 	public void modificarInfoCanal(String nomC, String descC, boolean publico) {
