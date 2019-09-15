@@ -258,6 +258,15 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Contenido aqui TODO-->
+          <%
+            String message = (String) request.getAttribute("message");
+            System.out.println(message);
+            if(message != null){
+          %>
+          <div class="alert alert-success" role="alert">
+            <%=message%>
+          </div>
+          <%}%>
           <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
       </div>
