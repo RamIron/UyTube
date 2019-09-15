@@ -99,7 +99,7 @@
                         <div class="text-muted text-center mt-2 mb-3">
                             <h1>Registrarse</h1>
                         </div>
-                        <form role="form" action="continuarRegistro.jsp" method="post">
+                        <form name="registro" role="form" action="continuarRegistro.jsp" method="post">
 
                             <div class="form-group mb-3">
                                 <div class="input-group input-group-alternative">
@@ -138,7 +138,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                     </div>
-                                    <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento DD/MM/AAAA" type="text" >
+                                    <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" type="text" >
                                 </div>
                             </div>
                             <div class="form-group">
@@ -176,7 +176,7 @@
 <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
 <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!--   Optional JS   -->
-<script src="/assets/js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="../assets/js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!--   Argon JS   -->
 <script src="../assets/js/argon-dashboard.min.js?v=1.1.0"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
@@ -189,8 +189,23 @@
 </script>
 
 <script type="text/javascript">
-    function continuar(){
-        document.forms[0].submit();
+    function continuar() {
+        var nick = document.forms["registro"]["nickname"].value;
+        var email = document.forms["registro"]["email"].value;
+        var nombre = document.forms["registro"]["nombre"].value;
+        var apellido = document.forms["registro"]["apellido"].value;
+        var fNac = document.forms["registro"]["fNac"].value;
+        var pass = document.forms["registro"]["pass"].value;
+        var pass2 = document.forms["registro"]["pass2"].value;
+        if(nick == "" || email == "" || nombre == "" || apellido == "" || fNac == "" || pass == "" || pass2 == "" ){
+            alert("Falta completar campos");
+
+        } else if (pass != pass2) {
+            alert("las contraseñas no coinciden");
+        }else {
+            document.forms[0].submit();
+        }
+
     }
 </script>
 </body>
