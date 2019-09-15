@@ -15,10 +15,10 @@ public abstract class Elemento {
 	protected int id; 
 	
 	private String nombre;
-	
-	@ManyToMany(cascade= {CascadeType.PERSIST,CascadeType.MERGE})
-	protected List<Categoria> categorias = new ArrayList<Categoria>();
-	
+
+	@ManyToOne
+	protected Categoria categoria;
+
 	@ManyToOne
 	private Canal canal;
 	
@@ -54,17 +54,17 @@ public abstract class Elemento {
 		this.canal = canal;
 	}
 	
-	public List<Categoria> getCategoria() {
-		return categorias;
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
 	public void setCategoria(Categoria categoria) {
-		this.categorias.add(categoria);
+		this.categoria = categoria;
 	}
 
-	public void quitarCategoria(Categoria c){
-		this.categorias.remove(c);
-	}
+//	public void quitarCategoria(Categoria c){
+//		this.categorias.remove(c);
+//	}
 	
 	public abstract DtElementoUsuario obtenerElemCategoria();
 	
