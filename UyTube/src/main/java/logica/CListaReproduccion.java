@@ -153,11 +153,11 @@ public class CListaReproduccion implements IListaReproduccion {
 		if(mC.existeCategoria(nomC)) {
 			//Debo obtener la categoria de la lista, para esa categoria sacar la lista
 			Particular part = (Particular) this.lista;
-			Categoria catPart = part.getCategoria();
-			if(!(catPart == null)) {
-				catPart.quitarElemento(part);
-				mC.modificarCategoria(catPart);				
-			}
+//			Categoria catPart = part.getCategoria();
+//			if(!(catPart == null)) {
+//				catPart.quitarElemento(part);
+//				mC.modificarCategoria(catPart);
+//			}
 			Categoria cat = mC.obtenerCategoria(nomC);
 			cat.agregarElemento(this.lista);
 			mC.modificarCategoria(cat);
@@ -217,9 +217,9 @@ public class CListaReproduccion implements IListaReproduccion {
 	public void eliminarCategoria() {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 		Particular part = (Particular) this.lista;
-		Categoria catPart = part.getCategoria();
-		catPart.quitarElemento(part);
-		mC.modificarCategoria(catPart);
+//		Categoria catPart = part.getCategoria();
+//		catPart.quitarElemento(part);
+//		mC.modificarCategoria(catPart);
 	}
 	
 	

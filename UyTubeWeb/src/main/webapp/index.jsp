@@ -1,3 +1,9 @@
+<%@ page import="interfaces.CFactory" %>
+<%@ page import="interfaces.ICategoria" %>
+<%@ page import="java.util.List" %>
+<%@ page import="datatypes.DtUsuarioWeb" %>
+<%@ page import="interfaces.LRFactory" %>
+<%@ page import="interfaces.IListaReproduccion" %>
 <!--
 
 =========================================================
@@ -46,55 +52,31 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="./index.html">
+      <a class="navbar-brand pt-0" href="./index.jsp">
         <img src="./assets/img/brand/logo.png" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
         <li class="nav-item dropdown">
-          <a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="ni ni-bell-55"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right" aria-labelledby="navbar-default_dropdown_1">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg
-">
+                <img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg">
               </span>
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
             <div class=" dropdown-header noti-title">
-              <h6 class="text-overflow m-0">Bienvenido!</h6>
+              <h6 class="text-overflow m-0">Bienvenido</h6>
             </div>
-            <a href="./examples/profile.html" class="dropdown-item">
+            <a href="./examples/miPerfil.jsp" class="dropdown-item">
               <i class="ni ni-single-02"></i>
-              <span>My profile</span>
-            </a>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-settings-gear-65"></i>
-              <span>Settings</span>
-            </a>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-calendar-grid-58"></i>
-              <span>Activity</span>
-            </a>
-            <a href="./examples/profile.html" class="dropdown-item">
-              <i class="ni ni-support-16"></i>
-              <span>Support</span>
+              <span>Mi perfil</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#!" class="dropdown-item">
+            <a href="./CerrarSesion" class="dropdown-item">
               <i class="ni ni-user-run"></i>
-              <span>Logout</span>
+              <span>Cerrar sesion</span>
             </a>
           </div>
         </li>
@@ -105,7 +87,7 @@
         <div class="navbar-collapse-header d-md-none">
           <div class="row">
             <div class="col-6 collapse-brand">
-              <a href="./index.html">
+              <a href="./index.jsp">
                 <img src="./assets/img/brand/logo.png">
               </a>
             </div>
@@ -118,9 +100,9 @@
           </div>
         </div>
         <!-- Form -->
-        <form class="mt-4 mb-3 d-md-none">
-          <div class="input-group input-group-rounded input-group-merge">
-            <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
+        <form class="mt-4 mb-3 d-md-none" action="./Busqueda" method="get">
+          <div class="input-group input-group-rounded input-group-merge" >
+            <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Buscar..." aria-label="Search" name="q">
             <div class="input-group-prepend">
               <div class="input-group-text">
                 <span class="fa fa-search"></span>
@@ -131,7 +113,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="./examples/icons.html">
+            <a class="nav-link " href="./module/verUsuarios.jsp">
               <i class="ni ni-single-02 text-blue"></i> Ver usuarios
             </a>
           </li>
@@ -144,13 +126,13 @@
         <ul class="navbar-nav">
           <% if (s.getAttribute("usuario") != null){ %>
           <li class="nav-item">
-            <a class="nav-link " href="./examples/icons.html">
+            <a class="nav-link " href="./module/nuevoVideo.jsp">
               <i class="ni ni-fat-add text-blue"></i> Subir video
             </a>
           </li>
           <% } %>
           <li class="nav-item">
-            <a class="nav-link " href="./examples/icons.html">
+            <a class="nav-link " href="./module/verVideos.jsp">
               <i class="ni ni-button-play text-blue"></i> Ver videos
             </a>
           </li>
@@ -163,25 +145,22 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="./examples/icons.html">
+            <a class="nav-link " href="./module/nuevaLista.jsp">
               <i class="ni ni-fat-add text-blue"></i> Crear lista
             </a>
           </li>
+          <%
+            LRFactory f = LRFactory.getInstancia();
+            IListaReproduccion iL = f.getIListaReproduccion();
+            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+            List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+            for(String l: lis){ %>
           <li class="nav-item">
-            <a class="nav-link " href="./examples/icons.html">
-              <i class="ni ni-bullet-list-67 text-blue"></i> Lista 1
-            </a>
+              <a class="nav-link" href="./ConsultaLista?id=<%=l%>">
+                  <i class="ni ni-books text-blue"></i> <%=l%>
+              </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="./examples/icons.html">
-              <i class="ni ni-bullet-list-67 text-blue"></i> Favoritos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="./examples/icons.html">
-              <i class="ni ni-bullet-list-67 text-blue"></i> Ver mas tarde
-            </a>
-          </li>
+          <% } %>
         </ul>
         <% } %>
         <!-- Divider -->
@@ -190,16 +169,16 @@
         <h6 class="navbar-heading text-muted">Categorias</h6>
         <!-- Navigation -->
         <ul class="navbar-nav">
+          <% CFactory fC = CFactory.getInstancia();
+            ICategoria iC = fC.getICategoria();
+            List<String> lC = iC.listarCategorias();
+            for(String cat: lC){ %>
           <li class="nav-item">
-            <a class="nav-link" href="./examples/login.html">
-              <i class="ni ni-books text-blue"></i> Musica
+            <a class="nav-link" href="./ConsultaCategoria?id=<%=cat%>">
+              <i class="ni ni-books text-blue"></i> <%=cat%>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./examples/register.html">
-              <i class="ni ni-books text-blue"></i> Videojuegos
-            </a>
-          </li>
+          <% } %>
         </ul>
       </div>
     </div>
@@ -210,13 +189,13 @@
       <div class="container-fluid">
         
         <!-- Form - Buscador -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"  action="./Busqueda" method="get">
           <div class="form-group mb-0">
             <div class="input-group input-group-alternative">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fas fa-search"></i></span>
               </div>
-              <input class="form-control" placeholder="Buscar" type="text">
+              <input class="form-control" placeholder="Buscar" type="text" name="q">
             </div>
           </div>
         </form>
@@ -224,28 +203,33 @@
         <% if (s.getAttribute("usuario") == null){ %>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="./examples/register.html">
+            <a class="nav-link nav-link-icon" href="./module/registro.jsp">
               <i class="ni ni-circle-08"></i>
-              <span class="nav-link-inner--text">Register</span>
+              <span class="nav-link-inner--text">Registrarse</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="./examples/login.html">
+            <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
               <i class="ni ni-key-25"></i>
-              <span class="nav-link-inner--text">Login</span>
+              <span class="nav-link-inner--text">Iniciar sesion</span>
             </a>
           </li>
         </ul>
-        <% }else { %>
+        <% }else {
+            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="./assets/img/theme/team-4-800x800.jpg">
+                  <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
+                  <img alt="Image placeholder" src="./img/default.png">
+                  <% } else { %>
+                  <img alt="Image placeholder" src="<%=usr.getFoto()%>">
+                  <% } %>
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">@nickname</span>
+                  <span class="mb-0 text-sm  font-weight-bold">@<%=usr.getNickname() %></span>
                 </div>
               </div>
             </a>
@@ -253,12 +237,12 @@
               <div class=" dropdown-header noti-title">
                 <h6 class="text-overflow m-0">Bienvenido</h6>
               </div>
-              <a href="./examples/profile.html" class="dropdown-item">
+              <a href="./module/miPerfil.jsp" class="dropdown-item">
                 <i class="ni ni-single-02"></i>
                 <span>Mi perfil</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item">
+              <a href="./CerrarSesion" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Cerrar sesion</span>
               </a>
@@ -274,7 +258,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Contenido aqui TODO-->
-          
+          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
       </div>
     </div>
