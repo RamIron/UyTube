@@ -37,22 +37,30 @@ public class AltaUsuario extends HttpServlet {
 
         Calendar fNac2 = Calendar.getInstance(); //TODO
 //        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
-        iU.agregarUsuario(nickname, nomU, apellido, fNac2, email);
-        if(!foto.equals("")) {
-            iU.modificarImagen(foto);
-        }else {
-            iU.modificarImagen("src/main/resources/img/default.png");
+
+        if(iU.existeNickname(nickname)){
+            //todo existe nickname
+        } else if (iU.existeEmail(email)){
+            //todo existe mail
+        }else{
+            iU.agregarUsuario(nickname, nomU, apellido, fNac2, email);
+            if(!foto.equals("")) {
+                iU.modificarImagen(foto);
+            }else {
+                iU.modificarImagen("src/main/resources/img/default.png");
+            }
+            iU.modificarContrasena(pass);
+            iU.agregarCanal();
+            if(!nomC.equals("")) {
+                iU.modificarInfoCanal(nomC, desc, publico);
+            }else {
+                iU.modificarInfoCanal(nickname, desc, publico);
+            }
+            if(!categoria.equals("")){
+                //TODO le agrego categoria
+            }
         }
-        iU.modificarContrasena(pass);
-        iU.agregarCanal();
-        if(!nomC.equals("")) {
-            iU.modificarInfoCanal(nomC, desc, publico);
-        }else {
-            iU.modificarInfoCanal(nickname, desc, publico);
-        }
-        if(!categoria.equals("")){
-            //TODO le agrego categoria
-        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

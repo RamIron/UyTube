@@ -126,14 +126,14 @@
         <ul class="navbar-nav">
           <% if (s.getAttribute("usuario") != null){ %>
           <li class="nav-item">
-            <a class="nav-link " href="../module/nuevoVideo.jsp">
+            <a class="nav-link" href="../module/nuevoVideo.jsp">
               <i class="ni ni-fat-add text-blue"></i> Subir video
             </a>
           </li>
           <% } %>
           <li class="nav-item">
-            <a class="nav-link " href="../module/verVideos.jsp">
-              <i class="ni ni-button-play text-blue"></i> Ver videos
+            <a class="nav-link  active" href="../module/verVideos.jsp">
+              <i class="ni ni-button-play text-blue"></i> <strong> Ver videos </strong>
             </a>
           </li>
         </ul>
