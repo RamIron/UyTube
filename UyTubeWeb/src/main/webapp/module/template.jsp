@@ -34,14 +34,14 @@
     UyTube
   </title>
   <!-- Favicon -->
-  <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
+  <link href="<%= request.getContextPath() %>/assets/img/brand/favicon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
-  <link href="../assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-  <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="<%= request.getContextPath() %>/assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+  <link href="<%= request.getContextPath() %>/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link href="../assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
+  <link href="<%= request.getContextPath() %>/assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
 </head>
 
 <body class="">
@@ -52,8 +52,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="../index.jsp">
-        <img src="../assets/img/brand/logo.png" class="navbar-brand-img" alt="...">
+      <a class="navbar-brand pt-0" href="<%= request.getContextPath() %>/index.jsp">
+        <img src="<%= request.getContextPath() %>/assets/img/brand/logo.png" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -61,7 +61,7 @@
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
               <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="../assets/img/theme/team-1-800x800.jpg">
+                <img alt="Image placeholder" src="<%= request.getContextPath() %>/assets/img/theme/team-1-800x800.jpg">
               </span>
             </div>
           </a>
@@ -69,12 +69,12 @@
             <div class=" dropdown-header noti-title">
               <h6 class="text-overflow m-0">Bienvenido</h6>
             </div>
-            <a href="../module/miPerfil.jsp" class="dropdown-item">
+            <a href="<%= request.getContextPath() %>/module/miPerfil.jsp" class="dropdown-item">
               <i class="ni ni-single-02"></i>
               <span>Mi perfil</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="../CerrarSesion" class="dropdown-item">
+            <a href="<%= request.getContextPath() %>/CerrarSesion" class="dropdown-item">
               <i class="ni ni-user-run"></i>
               <span>Cerrar sesion</span>
             </a>
@@ -87,8 +87,8 @@
         <div class="navbar-collapse-header d-md-none">
           <div class="row">
             <div class="col-6 collapse-brand">
-              <a href="../index.jsp">
-                <img src="../assets/img/brand/logo.png">
+              <a href="<%= request.getContextPath() %>/index.jsp">
+                <img src="<%= request.getContextPath() %>/assets/img/brand/logo.png">
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -100,7 +100,7 @@
           </div>
         </div>
         <!-- Form -->
-        <form class="mt-4 mb-3 d-md-none" action="../Busqueda" method="get">
+        <form class="mt-4 mb-3 d-md-none" action="<%= request.getContextPath() %>/Busqueda" method="get">
           <div class="input-group input-group-rounded input-group-merge" >
             <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Buscar..." aria-label="Search" name="q">
             <div class="input-group-prepend">
@@ -113,7 +113,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="../module/verUsuarios.jsp">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/verUsuarios.jsp">
               <i class="ni ni-single-02 text-blue"></i> Ver usuarios
             </a>
           </li>
@@ -126,13 +126,13 @@
         <ul class="navbar-nav">
           <% if (s.getAttribute("usuario") != null){ %>
           <li class="nav-item">
-            <a class="nav-link" href="../module/nuevoVideo.jsp">
+            <a class="nav-link" href="<%= request.getContextPath() %>/module/nuevoVideo.jsp">
               <i class="ni ni-fat-add text-blue"></i> Subir video
             </a>
           </li>
           <% } %>
           <li class="nav-item">
-            <a class="nav-link  active" href="../module/verVideos.jsp">
+            <a class="nav-link  active" href="<%= request.getContextPath() %>/module/verVideos.jsp">
               <i class="ni ni-button-play text-blue"></i> <strong> Ver videos </strong>
             </a>
           </li>
@@ -145,7 +145,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="../module/nuevaLista.jsp">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/nuevaLista.jsp">
               <i class="ni ni-fat-add text-blue"></i> Crear lista
             </a>
           </li>
@@ -156,7 +156,7 @@
             List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
             for(String l: lis){ %>
           <li class="nav-item">
-              <a class="nav-link" href="../ConsultaLista?id=<%=l%>">
+              <a class="nav-link" href="<%= request.getContextPath() %>/ConsultaLista?id=<%=l%>">
                   <i class="ni ni-books text-blue"></i> <%=l%>
               </a>
           </li>
@@ -174,7 +174,7 @@
             List<String> lC = iC.listarCategorias();
             for(String cat: lC){ %>
           <li class="nav-item">
-            <a class="nav-link" href="../ConsultaCategoria?id=<%=cat%>">
+            <a class="nav-link" href="<%= request.getContextPath() %>/ConsultaCategoria?id=<%=cat%>">
               <i class="ni ni-books text-blue"></i> <%=cat%>
             </a>
           </li>
@@ -189,7 +189,7 @@
       <div class="container-fluid">
         
         <!-- Form - Buscador -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"  action="../Busqueda" method="get">
+        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"  action="<%= request.getContextPath() %>/Busqueda" method="get">
           <div class="form-group mb-0">
             <div class="input-group input-group-alternative">
               <div class="input-group-prepend">
@@ -203,13 +203,13 @@
         <% if (s.getAttribute("usuario") == null){ %>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="../module/registro.jsp">
+            <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/registro.jsp">
               <i class="ni ni-circle-08"></i>
               <span class="nav-link-inner--text">Registrarse</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="../module/iniciarSesion.jsp">
+            <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/iniciarSesion.jsp">
               <i class="ni ni-key-25"></i>
               <span class="nav-link-inner--text">Iniciar sesion</span>
             </a>
@@ -223,7 +223,7 @@
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
                   <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
-                  <img alt="Image placeholder" src="../img/default.png">
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
                   <% } else { %>
                   <img alt="Image placeholder" src=".<%=usr.getFoto()%>">
                   <% } %>
@@ -237,12 +237,12 @@
               <div class=" dropdown-header noti-title">
                 <h6 class="text-overflow m-0">Bienvenido</h6>
               </div>
-              <a href="../module/miPerfil.jsp" class="dropdown-item">
+              <a href="<%= request.getContextPath() %>/module/miPerfil.jsp" class="dropdown-item">
                 <i class="ni ni-single-02"></i>
                 <span>Mi perfil</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="../CerrarSesion" class="dropdown-item">
+              <a href="<%= request.getContextPath() %>/CerrarSesion" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Cerrar sesion</span>
               </a>
@@ -257,34 +257,6 @@
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
         <div class="header-body">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm">
-                <div class="alert alert-primary" role="alert" >
-                  A simple primary alert—check it out!
-                </div>
-              </div>
-              <div class="col-sm">
-                <ul class="list-group">
-                  <li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Morbi leo risus</li>
-                  <li class="list-group-item">Porta ac consectetur ac</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-              </div>
-              <div class="col-sm">
-                <ul class="list-group">
-                  <li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Morbi leo risus</li>
-                  <li class="list-group-item">Porta ac consectetur ac</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-            </div>
-          </div>
-
-
           <!-- Contenido aqui TODO-->
           <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
@@ -293,13 +265,13 @@
     
   </div>
   <!--   Core   -->
-  <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
+  <script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <!--   Optional JS   -->
-  <script src="../assets/js/plugins/chart.js/dist/Chart.min.js"></script>
-  <script src="../assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+  <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
+  <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
   <!--   Argon JS   -->
-  <script src="../assets/js/argon-dashboard.min.js?v=1.1.0"></script>
+  <script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
     window.TrackJS &&
