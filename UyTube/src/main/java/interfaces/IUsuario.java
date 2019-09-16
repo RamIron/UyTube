@@ -11,8 +11,11 @@ import datatypes.DtUsuarioWeb;
 public interface IUsuario {
 	
 	public void agregarCanal();
-	
-	public void agregarUsuario(String nick, String nom, String ape, Calendar fechaN, String email);
+
+    //si la categoria esta vacia en canal se le agrega, si ya tiene una categoria se pisa
+    void modificarCatCanal(String nick, String nomCat);
+
+    public void agregarUsuario(String nick, String nom, String ape, Calendar fechaN, String email);
 	
 	public void dejarDeSeguirUsuario(String seguidor, String seguido);
 	

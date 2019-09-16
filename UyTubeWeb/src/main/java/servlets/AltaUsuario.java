@@ -3,6 +3,7 @@ package servlets;
 import interfaces.IUsuario;
 import interfaces.UFactory;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,6 +41,11 @@ public class AltaUsuario extends HttpServlet {
 
         if(iU.existeNickname(nickname)){
             //todo existe nickname
+            RequestDispatcher rd;
+            rd = request.getRequestDispatcher("/module/registro.jsp");
+            String message = "Ya existe un Usuario con el nickname <strong>" + nickname + "</strong>";
+            request.setAttribute("message", message);
+            rd.forward(request, response);
         } else if (iU.existeEmail(email)){
             //todo existe mail
         }else{
@@ -56,9 +62,16 @@ public class AltaUsuario extends HttpServlet {
             }else {
                 iU.modificarInfoCanal(nickname, desc, publico);
             }
+            System.out.println("categoria: " + categoria);
             if(!categoria.equals("")){
                 //TODO le agrego categoria
+                iU.modificarCatCanal(nickname, categoria);
             }
+            RequestDispatcher rd;
+            rd = request.getRequestDispatcher("/index.jsp");
+            String message = "Se ha creado el Usuario <strong>" + nickname + "</strong>";
+            request.setAttribute("message", message);
+            rd.forward(request, response);
         }
 
     }
