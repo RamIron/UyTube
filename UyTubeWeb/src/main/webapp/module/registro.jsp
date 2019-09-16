@@ -1,4 +1,6 @@
-<%--
+<%@ page import="interfaces.CFactory" %>
+<%@ page import="interfaces.ICategoria" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Martin
   Date: 13/09/2019
@@ -31,14 +33,14 @@
         UyTube - Registrarse
     </title>
     <!-- Favicon -->
-    <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
+    <link href="<%= request.getContextPath() %>/assets/img/brand/favicon.png" rel="icon" type="image/png">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <!-- Icons -->
-    <link href="../assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-    <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="<%= request.getContextPath() %>/assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+    <link href="<%= request.getContextPath() %>/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <!-- CSS Files -->
-    <link href="../assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
+    <link href="<%= request.getContextPath() %>/assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
 </head>
 
 <body class="bg-default">
@@ -46,8 +48,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
         <div class="container px-4">
-            <a class="navbar-brand" href="../index.jsp">
-                <img src="../assets/img/brand/logo.png" />
+            <a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp">
+                <img src="<%= request.getContextPath() %>/assets/img/brand/logo.png" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -57,8 +59,8 @@
                 <div class="navbar-collapse-header d-md-none">
                     <div class="row">
                         <div class="col-6 collapse-brand">
-                            <a href="../index.jsp">
-                                <img src="../assets/img/brand/blue.png">
+                            <a href="<%= request.getContextPath() %>/index.jsp">
+                                <img src="<%= request.getContextPath() %>/assets/img/brand/blue.png">
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
@@ -72,7 +74,7 @@
                 <!-- Navbar items -->
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link nav-link-icon" href="../module/iniciarSesion.jsp">
+                        <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/iniciarSesion.jsp">
                             <i class="ni ni-key-25"></i>
                             <span class="nav-link-inner--text">Iniciar sesion</span>
                         </a>
@@ -93,70 +95,145 @@
     <!-- Page content -->
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
-                <div class="card bg-secondary shadow border-0">
+            <div class="col-xl-10 order-xl-1">
+                <div class="card bg-secondary shadow ">
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-muted text-center mt-2 mb-3">
                             <h1>Registrarse</h1>
+                            <small>Datos del Usuario</small>
                         </div>
-                        <form role="form" action="continuarRegistro.jsp" method="post">
+                        <form name="registro" role="form" action="<%= request.getContextPath() %>/AltaUsuario" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-3">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                                            </div>
+                                            <input name="nickname" class="form-control" placeholder="Nickname" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                            </div>
+                                            <input name="email" class="form-control" placeholder="ejemplo@email.com" type="email">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
+                                            </div>
+                                            <input name="nomU" class="form-control" placeholder="Nombre" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
+                                            </div>
+                                            <input name="apellido" class="form-control" placeholder="Apellido" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                            </div>
+                                            <input name="pass" class="form-control" placeholder="Contrasena" type="password">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                            </div>
+                                            <input name="pass2" class="form-control" placeholder="Repetir contrasena" type="password">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                            </div>
+                                            <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" type="text" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="foto">
+                                            <label class="custom-file-label" for="inputGroupFile01">Foto de perfil (opcional)</label>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="form-group mb-3">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                            </div>
+
+                            <div class="text-muted text-center mt-2 mb-3">
+                                <hr/>
+                                <small>Datos del Canal</small>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
+                                            </div>
+                                            <input class="form-control" placeholder="Nombre (opcional)" type="text" name="nomC">
+                                        </div>
                                     </div>
-                                    <input name="nickname" class="form-control" placeholder="Nickname" type="text">
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <select class="custom-select" id="inputGroupSelect01" name="categoria">
+                                            <option value="" selected> --Sin Categoria-- </option>
+                                            <% CFactory fC = CFactory.getInstancia();
+                                                ICategoria iC = fC.getICategoria();
+                                                List<String> lC = iC.listarCategorias();
+                                                for(String cat: lC){ %>
+                                            <option value="<%=cat%>"><%=cat%></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                                    </div>
-                                    <input name="email" class="form-control" placeholder="ejemplo@email.com" type="email">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripcion..." name="descripcion"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                                    </div>
-                                    <input name="nombre" class="form-control" placeholder="Nombre" type="text">
+                            <div class="text-muted text-center mt-2 mb-3">
+                                <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                    <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico">
+                                    <label class="custom-control-label" for="customCheck5">Canal publico</label>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                                    </div>
-                                    <input name="apellido" class="form-control" placeholder="Apellido" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                    </div>
-                                    <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento DD/MM/AAAA" type="text" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                    </div>
-                                    <input name="pass" class="form-control" placeholder="Contrasena" type="password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                    </div>
-                                    <input name="pass2" class="form-control" placeholder="Repetir contrasena" type="password">
-                                </div>
-                            </div>
+
+
                             <div class="text-center">
                                 <button type="button" class="btn btn-primary my-4" onclick="continuar()">Continuar registro</button>
                             </div>
@@ -164,6 +241,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <footer class="py-5">
@@ -173,12 +251,12 @@
     </footer>
 </div>
 <!--   Core   -->
-<script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
-<script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!--   Optional JS   -->
-<script src="/assets/js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!--   Argon JS   -->
-<script src="../assets/js/argon-dashboard.min.js?v=1.1.0"></script>
+<script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script>
     window.TrackJS &&
@@ -189,8 +267,24 @@
 </script>
 
 <script type="text/javascript">
-    function continuar(){
-        document.forms[0].submit();
+    function continuar() {
+        var nick = document.forms["registro"]["nickname"].value;
+        var email = document.forms["registro"]["email"].value;
+        var nomU = document.forms["registro"]["nomU"].value;
+        var apellido = document.forms["registro"]["apellido"].value;
+        var fNac = document.forms["registro"]["fNac"].value;
+        var pass = document.forms["registro"]["pass"].value;
+        var pass2 = document.forms["registro"]["pass2"].value;
+        var descripcion = document.forms["registro"]["descripcion"].value;
+        if(nick == "" || email == "" || nomU == "" || apellido == "" || fNac == "" || pass == "" || pass2 == "" || descripcion == "" ){
+            alert("Falta completar campos");
+
+        } else if (pass != pass2) {
+            alert("las contraseñas no coinciden");
+        }else {
+            document.forms[0].submit();
+        }
+
     }
 </script>
 </body>
