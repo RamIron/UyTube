@@ -342,7 +342,7 @@ public class Canal {
 		}
 		return existe;
 	}
-	
+
 //	public Video obtenerVideo(String nomVid) {
 //		Video v= this.videos.get(nomVid);
 //		return v;
