@@ -102,6 +102,15 @@
                             <h1>Registrarse</h1>
                             <small>Datos del Usuario</small>
                         </div>
+                        <%
+                          String message = (String) request.getAttribute("message");
+                          System.out.println(message);
+                          if(message != null){
+                        %>
+                        <div class="alert alert-danger" role="alert">
+                          <%=message%>
+                        </div>
+                        <%}%>
                         <form name="registro" role="form" action="<%= request.getContextPath() %>/AltaUsuario" method="post">
                             <div class="row">
                                 <div class="col">
@@ -110,7 +119,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                                             </div>
-                                            <input name="nickname" class="form-control" placeholder="Nickname" type="text">
+                                            <input name="nickname" class="form-control" placeholder="Nickname" type="text" value="<%= (request.getParameter("nickname") != null) ? request.getParameter("nickname") : "" %>">
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +129,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                             </div>
-                                            <input name="email" class="form-control" placeholder="ejemplo@email.com" type="email">
+                                            <input name="email" class="form-control" placeholder="ejemplo@email.com" type="email" value="<%= (request.getParameter("email") != null) ? request.getParameter("email") : "" %>">
                                         </div>
                                     </div>
                                 </div>
@@ -132,7 +141,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
                                             </div>
-                                            <input name="nomU" class="form-control" placeholder="Nombre" type="text">
+                                            <input name="nomU" class="form-control" placeholder="Nombre" type="text" value="<%= (request.getParameter("nomU") != null) ? request.getParameter("nomU") : "" %>">
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +151,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
                                             </div>
-                                            <input name="apellido" class="form-control" placeholder="Apellido" type="text">
+                                            <input name="apellido" class="form-control" placeholder="Apellido" type="text" value="<%= (request.getParameter("apellido") != null) ? request.getParameter("apellido") : "" %>">
                                         </div>
                                     </div>
                                 </div>
@@ -176,14 +185,14 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                             </div>
-                                            <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" type="text" >
+                                            <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" type="text" value="<%= (request.getParameter("fNac") != null) ? request.getParameter("fNac") : "" %>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <div class="input-group input-group-alternative">
-                                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="foto">
+                                            <input name="foto" type="file" class="custom-file-input" id="inputGroupFile01" name="foto" value="<%= (request.getParameter("foto") != null) ? request.getParameter("foto") : "" %>">
                                             <label class="custom-file-label" for="inputGroupFile01">Foto de perfil (opcional)</label>
                                         </div>
                                     </div>
@@ -202,20 +211,28 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
                                             </div>
-                                            <input class="form-control" placeholder="Nombre (opcional)" type="text" name="nomC">
+                                            <input class="form-control" placeholder="Nombre (opcional)" type="text" name="nomC" value="<%= (request.getParameter("nomC") != null) ? request.getParameter("nomC") : "" %>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <select class="custom-select" id="inputGroupSelect01" name="categoria">
+                                            <%if(request.getParameter("categoria") == null ){%>
                                             <option value="" selected> --Sin Categoria-- </option>
-                                            <% CFactory fC = CFactory.getInstancia();
-                                                ICategoria iC = fC.getICategoria();
-                                                List<String> lC = iC.listarCategorias();
-                                                for(String cat: lC){ %>
-                                            <option value="<%=cat%>"><%=cat%></option>
-                                            <% } %>
+                                            <%}else{%>
+                                            <option value=""> --Sin Categoria-- </option>
+                                            <%}
+                                            CFactory fC = CFactory.getInstancia();
+                                            ICategoria iC = fC.getICategoria();
+                                            List<String> lC = iC.listarCategorias();
+                                            for(String cat: lC){
+                                                if(request.getParameter("categoria").equals(cat)){%>
+                                                    <option value="<%=cat%>" selected><%=cat%></option>
+                                                <%}else{%>
+                                                    <option value="<%=cat%>"><%=cat%></option>
+                                                <%}
+                                            }%>
                                         </select>
                                     </div>
                                 </div>
@@ -223,12 +240,12 @@
 
                             <div class="form-group">
                                 <div class="input-group input-group-alternative">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripcion..." name="descripcion"></textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripcion..." name="descripcion" value="<%= (request.getParameter("descripcion") != null) ? request.getParameter("decripcion") : "" %>"></textarea>
                                 </div>
                             </div>
                             <div class="text-muted text-center mt-2 mb-3">
                                 <div class="custom-control custom-control-alternative custom-checkbox mb-3">
-                                    <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico">
+                                    <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico"><!-- //TODO -->
                                     <label class="custom-control-label" for="customCheck5">Canal publico</label>
                                 </div>
                             </div>
@@ -238,6 +255,7 @@
                                 <button type="button" class="btn btn-primary my-4" onclick="continuar()">Continuar registro</button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>

@@ -42,6 +42,7 @@ public class CUsuario implements IUsuario {
 	}
 
 	//si la categoria esta vacia en canal se le agrega, si ya tiene una categoria se pisa
+	@Override
 	public void modificarCatCanal(String nick, String nomCat) {
 		try{
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
