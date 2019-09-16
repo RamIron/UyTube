@@ -2,9 +2,9 @@ package servlets;
 
 import datatypes.DtUsuarioWeb;
 import interfaces.IUsuario;
-import interfaces.LRFactory;
-import interfaces.IListaReproduccion;
+import interfaces.IVideo;
 import interfaces.UFactory;
+import interfaces.VFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,46 +14,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Calendar;
 
-@WebServlet(name = "CrearLista", value = "/CrearLista")
-public class CrearLista extends HttpServlet {
+@WebServlet(name = "CrearVideo", value= "/CrearVideo")
+public class CrearVideo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UFactory uF = UFactory.getInstancia();
         IUsuario iU = uF.getIUsuario();
-        LRFactory fLr = LRFactory.getInstancia();
-        IListaReproduccion iLR = fLr.getIListaReproduccion();
+        VFactory vF = VFactory.getInstancia();
+        IVideo iV = vF.getIVideo();
 
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
 
-        String nomLista = request.getParameter("nomList");
-        Boolean esPublica;//TODO ver como se maneja esto
-        if(request.getParameter("esPublica") == null){
-            esPublica = false;
-        }else{
-            esPublica = true;
-        }
+        String nomVideo = request.getParameter("nomVid");
+        int duracion = Integer.parseInt(request.getParameter("dur"));
+        String url = request.getParameter("url");
+        String descripcion = request.getParameter("desc");
+        Calendar fechaPublicacion = Calendar.getInstance(); //TODO
 
-        if(iLR.existeListaParticular(usr.getNickname(), nomLista)){
+
+        if(iV.existeVideo(usr.getNickname(), nomVideo)){
             RequestDispatcher rd;
-            rd = request.getRequestDispatcher("/module/nuevaLista.jsp");
-            String message = "EXISTE LA LISTAAAAAAAAAAAAA";
+            rd = request.getRequestDispatcher("/module/nuevoVideo.jsp");
+            String message = "EXISTE EL VIDEO";
             request.setAttribute("message", message);
             rd.forward(request, response);
-        } else {
-            iLR.agregarListaParticular(nomLista, esPublica);
+        }else{
+            iV.agregarVideo(usr.getNickname(), nomVideo, descripcion, fechaPublicacion, duracion, url);
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/index.jsp");
-            String message = "Se ha creado la Lista de Reproduccion <strong>" + nomLista + "</strong>";
+            String message = "Se ha creado el video <strong>" + nomVideo + "</strong>";
             request.setAttribute("message", message);
             rd.forward(request, response);
         }
-
     }
-
-
-
-
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
