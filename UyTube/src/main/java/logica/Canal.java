@@ -333,14 +333,13 @@ public class Canal {
 	public boolean existeVideo(String nomVid) {
 		boolean existe = false;
 		int i=0;
-		while(!existe && i<this.videos.size()-1) {
-			if(this.videos.get(i).getNombre().contentEquals(nomVid)) {
+		while(!existe && i<this.videos.size()) {
+			if(nomVid.contentEquals(this.videos.get(i).getNombre())) {
 				existe = true;
 			}else {
 				i++;
 			}
 		}
-			
 		return existe;
 	}
 	
