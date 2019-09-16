@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
+
+import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorPorDefecto;
 import Manejadores.ManejadorUsuario;
 import datatypes.DtCanal;
@@ -38,8 +40,20 @@ public class CUsuario implements IUsuario {
 			throw e;
 		}	
 	}
-	
-	
+
+	//si la categoria esta vacia en canal se le agrega, si ya tiene una categoria se pisa
+	public void modificarCatCanal(String nick, String nomCat) {
+		try{
+			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+			ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+			Usuario user = mU.obtenerUsuario(nick);
+			Categoria cat = mC.obtenerCategoria(nomCat);
+			user.getCanal().setCategoria(cat);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
 	@Override 
 	public void agregarUsuario(String nick, String nom, String ape, Calendar fechaN, String email) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
