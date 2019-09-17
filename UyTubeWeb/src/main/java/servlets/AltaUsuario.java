@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 @WebServlet(name = "AltaUsuario", value = "/AltaUsuario")
 public class AltaUsuario extends HttpServlet {
@@ -36,8 +39,22 @@ public class AltaUsuario extends HttpServlet {
         UFactory fU = UFactory.getInstancia();
         IUsuario iU = fU.getIUsuario();
 
-        Calendar fNac2 = Calendar.getInstance(); //TODO
+//        Calendar fNac2 = Calendar.getInstance(); //TODO
 //        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
+
+
+        //CODIGO PARA EXTRAER LA FECHA
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = null;
+        Calendar cal = Calendar.getInstance();
+        try {
+            date = sdf.parse(fNac);
+            cal.setTime(date);
+        } catch (ParseException e) {
+            System.out.println("Excepcion: error con la fecha");
+        }
+        //FIN DE CODIGO PARA EXTRAER LA FECHA
+
 
         if(iU.existeNickname(nickname)){
             // existe nickname
@@ -54,7 +71,7 @@ public class AltaUsuario extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         }else{
-            iU.agregarUsuario(nickname, nomU, apellido, fNac2, email);
+            iU.agregarUsuario(nickname, nomU, apellido, cal, email);
             if(!foto.equals("")) {
                 iU.modificarImagen(foto);
             }else {
@@ -67,9 +84,7 @@ public class AltaUsuario extends HttpServlet {
             }else {
                 iU.modificarInfoCanal(nickname, desc, publico);
             }
-            System.out.println("categoria: " + categoria);
             if(!categoria.equals("")){
-                //TODO le agrego categoria
                 iU.modificarCatCanal(nickname, categoria);
             }
             RequestDispatcher rd;

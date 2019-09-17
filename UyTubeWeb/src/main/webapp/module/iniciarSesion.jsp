@@ -31,14 +31,14 @@
         UyTube - Iniciar sesion
     </title>
     <!-- Favicon -->
-    <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
+    <link href="<%= request.getContextPath() %>/assets/img/brand/favicon.png" rel="icon" type="image/png">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <!-- Icons -->
-    <link href="../assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-    <link href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="<%= request.getContextPath() %>/assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+    <link href="<%= request.getContextPath() %>/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <!-- CSS Files -->
-    <link href="../assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
+    <link href="<%= request.getContextPath() %>/assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
 </head>
 
 <body class="bg-default">
@@ -46,8 +46,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
         <div class="container px-4">
-            <a class="navbar-brand" href="../index.jsp">
-                <img src="../assets/img/brand/logo.png" />
+            <a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp">
+                <img src="<%= request.getContextPath() %>/assets/img/brand/logo.png" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -57,8 +57,8 @@
                 <div class="navbar-collapse-header d-md-none">
                     <div class="row">
                         <div class="col-6 collapse-brand">
-                            <a href="../index.jsp">
-                                <img src="../assets/img/brand/blue.png">
+                            <a href="<%= request.getContextPath() %>/index.jsp">
+                                <img src="<%= request.getContextPath() %>/img/logo.png">
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
@@ -72,7 +72,7 @@
                 <!-- Navbar items -->
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link nav-link-icon" href="../module/registro.jsp">
+                        <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/registro.jsp">
                             <i class="ni ni-circle-08"></i>
                             <span class="nav-link-inner--text">Registrarse</span>
                         </a>
@@ -96,17 +96,26 @@
             <div class="col-lg-5 col-md-7">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-body px-lg-5 py-lg-5">
-                        <form role="form" action="../IniciarSesion" method="post">
+                        <form role="form" action="<%= request.getContextPath() %>/IniciarSesion" method="post" name="login">
                             <div class="form-group mb-3">
                                 <div class="text-muted text-center mt-2 mb-3">
                                     <h1>Iniciar sesion</h1>
                                 </div>
+                                <%
+                                    String message = (String) request.getAttribute("message");
+                                    if(message != null){
+                                %>
+                                <div class="alert alert-danger" role="alert">
+                                    <%=message%>
+                                </div>
+                                <%}%>
+                                <% String nickname = (request.getParameter("nick") != null) ? request.getParameter("nick") : ""; %>
                                 <div class="input-group input-group-alternative">
 
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                     </div>
-                                    <input class="form-control" placeholder="Nickname o email" type="email" name="nick">
+                                    <input class="form-control" placeholder="Nickname o email" type="email" name="nick" value="<%=nickname%>">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -133,11 +142,11 @@
     </footer>
 </div>
 <!--   Core   -->
-<script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
-<script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <!--   Optional JS   -->
 <!--   Argon JS   -->
-<script src="../assets/js/argon-dashboard.min.js?v=1.1.0"></script>
+<script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script>
     window.TrackJS &&
@@ -148,8 +157,15 @@
 </script>
 
 <script type="text/javascript">
-    function continuar(){
-        document.forms[0].submit();
+    function continuar() {
+        var nick = document.forms["login"]["nick"].value;
+        var pass = document.forms["login"]["pass"].value;
+        if(nick == "" || pass == ""){
+            alert("Falta completar campos");
+        }else {
+            document.forms[0].submit();
+        }
+
     }
 </script>
 
