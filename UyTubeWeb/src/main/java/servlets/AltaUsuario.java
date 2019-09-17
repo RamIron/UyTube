@@ -40,14 +40,19 @@ public class AltaUsuario extends HttpServlet {
 //        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
 
         if(iU.existeNickname(nickname)){
-            //todo existe nickname
+            // existe nickname
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/module/registro.jsp");
             String message = "Ya existe un Usuario con el nickname <strong>" + nickname + "</strong>";
             request.setAttribute("message", message);
             rd.forward(request, response);
         } else if (iU.existeEmail(email)){
-            //todo existe mail
+            // existe mail
+            RequestDispatcher rd;
+            rd = request.getRequestDispatcher("/module/registro.jsp");
+            String message = "Ya existe un Usuario con el email <strong>" + email + "</strong>";
+            request.setAttribute("message", message);
+            rd.forward(request, response);
         }else{
             iU.agregarUsuario(nickname, nomU, apellido, fNac2, email);
             if(!foto.equals("")) {
