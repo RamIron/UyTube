@@ -60,7 +60,7 @@
           <div class="row">
             <div class="col-6 collapse-brand">
               <a href="<%= request.getContextPath() %>/index.jsp">
-                <img src="<%= request.getContextPath() %>/assets/img/brand/blue.png">
+                <img src="<%= request.getContextPath() %>/assets/img/brand/logo.png">
               </a>
             </div>
             <div class="col-6 collapse-close">

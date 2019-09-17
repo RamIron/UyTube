@@ -22,32 +22,31 @@ public class IniciarSesion extends HttpServlet {
         String nick = request.getParameter("nick");
         String pass = request.getParameter("pass");
         Integer valido = iU.iniciarSesion(nick, pass);
-        System.out.println("valido: " +  valido);
         if(valido.equals(1)){
             DtUsuarioWeb usr = iU.obtenerUsuarioWebNick(nick);
             s.setAttribute("usuario", usr);
-            System.out.println("No Estoy logeado");
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         }else if (valido.equals(2)){
             DtUsuarioWeb usr = iU.obtenerUsuarioWebEmail(nick);
             s.setAttribute("usuario", usr);
-            System.out.println("No Estoy logeado");
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         }else {
             RequestDispatcher rd;
-            rd = request.getRequestDispatcher("www.google.com");
+            rd = request.getRequestDispatcher("/module/iniciarSesion.jsp");
+            String message = "Los datos ingresados no son correctos";
+            request.setAttribute("message", message);
             rd.forward(request, response);
-            //TODO
-            System.out.println("Estoy logeado");
 
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().append("Served at: ").append(request.getContextPath());
+        RequestDispatcher rd;
+        rd = request.getRequestDispatcher("/module/iniciarSesion.jsp");
+        rd.forward(request, response);
     }
 }
