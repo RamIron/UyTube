@@ -50,6 +50,7 @@ public class CUsuario implements IUsuario {
 			Usuario user = mU.obtenerUsuario(nick);
 			Categoria cat = mC.obtenerCategoria(nomCat);
 			user.getCanal().setCategoria(cat);
+			mU.modificaDatosUsuario(user);
 		} catch (Exception e) {
 			throw e;
 		}
