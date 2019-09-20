@@ -4484,12 +4484,6 @@ input[type="button"].btn-block {
   border-color: #e9ecef #e9ecef #dee2e6;
 }
 
-.nav-tabs .nav-link.disabled {
-  color: #8898aa;
-  background-color: transparent;
-  border-color: transparent;
-}
-
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: #525f7f;
@@ -4511,6 +4505,12 @@ input[type="button"].btn-block {
 .nav-pills .show>.nav-link {
   color: #fff;
   background-color: #5e72e4;
+}
+
+.nav-tabs .nav-link.disabled {
+  color: #8898aa;
+  background-color: transparent;
+  border-color: transparent;
 }
 
 .nav-fill .nav-item {
@@ -16674,11 +16674,13 @@ textarea[resize="horizontal"] {
 
 .nav-pills .nav-link {
   padding: 0.75rem 1rem;
-  color: #5e72e4;
+  /*con esto pongo el color de la letra de la ventana inactiva*/
+  color: #f9f8f7;
   font-weight: 500;
-  font-size: 0.875rem;
+  font-size: 1.000rem;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-  background-color: #fff;
+  /*con esto cambio el color de fondo de la tab inactiva*/
+  background-color: #5e72e4;
   transition: all 0.15s ease;
 }
 
@@ -16688,8 +16690,10 @@ textarea[resize="horizontal"] {
 
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
-  color: #fff;
-  background-color: #5e72e4;
+  /*con esto pongo el color de la letra de la ventana activa*/
+  color: #5e72e4;
+  /*con esto pongo el color de fondo de la ventana activa*/
+  background-color: #FFFFFF;
 }
 
 @media (max-width: 575.98px) {

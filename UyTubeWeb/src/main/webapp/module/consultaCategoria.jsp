@@ -4,6 +4,7 @@
 <%@ page import="datatypes.DtUsuarioWeb" %>
 <%@ page import="interfaces.LRFactory" %>
 <%@ page import="interfaces.IListaReproduccion" %>
+<%@ page import="datatypes.DtElementoUsuario" %>
 <!--
 
 =========================================================
@@ -126,13 +127,13 @@
             <ul class="navbar-nav">
                 <% if (s.getAttribute("usuario") != null){ %>
                 <li class="nav-item">
-                    <a class="nav-link " href="<%= request.getContextPath() %>/module/nuevoVideo.jsp">
+                    <a class="nav-link" href="<%= request.getContextPath() %>/module/nuevoVideo.jsp">
                         <i class="ni ni-fat-add text-blue"></i> Subir video
                     </a>
                 </li>
                 <% } %>
                 <li class="nav-item">
-                    <a class="nav-link " href="<%= request.getContextPath() %>/module/verVideos.jsp">
+                    <a class="nav-link" href="<%= request.getContextPath() %>/module/verVideos.jsp">
                         <i class="ni ni-button-play text-blue"></i> Ver videos
                     </a>
                 </li>
@@ -145,8 +146,8 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="<%= request.getContextPath() %>/module/nuevaLista.jsp">
-                        <i class="ni ni-fat-add text-blue"></i> <strong> Crear lista </strong>
+                    <a class="nav-link " href="<%= request.getContextPath() %>/module/nuevaLista.jsp">
+                        <i class="ni ni-fat-add text-blue"></i> Crear lista
                     </a>
                 </li>
                 <%
@@ -172,10 +173,12 @@
                 <% CFactory fC = CFactory.getInstancia();
                     ICategoria iC = fC.getICategoria();
                     List<String> lC = iC.listarCategorias();
+                    String categoria = request.getParameter("id");
+                    System.out.println(categoria);
                     for(String cat: lC){ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
-                        <i class="ni ni-books text-blue"></i> <%=cat%>
+                    <a class="nav-link <%= (cat.equals(categoria) ? "active" : "") %> href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
+                        <i class="ni ni-books text-blue"></i> <%= (cat.equals(categoria) ? "<strong> "+ cat + "</strong>" : cat) %>
                     </a>
                 </li>
                 <% } %>
@@ -261,41 +264,48 @@
 
 
 
-                <div class="row justify-content-center">
-                    <div class="col-lg-5 col-md-7">
-                        <div class="card bg-secondary shadow border-0">
-                            <div class="card-body px-lg-5 py-lg-5">
-                                <form name="nuevaLista" action="<%= request.getContextPath() %>/CrearLista" method="post">
-                                    <div class="text-muted text-center mt-2 mb-3">
-                                        <h1>Crear Lista de Reproduccion</h1>
-                                    </div>
-                                    <div class="container">
-                                        <%
-                                            String message = (String) request.getAttribute("message");
-                                            if(message != null){
-                                                %>
-                                                <div class="alert alert-danger" role="alert">
-                                                    <strong>Error</strong> Nombre de Lista repetido
+
+
+                <div class="nav-wrapper">
+                    <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fab fa-youtube"></i>     Videos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-list-ul"></i>     Listas de Reproduccion</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                <p class="description">SOY LOS VIDEOS</p>
+                            </div>
+                            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                                        <div style="width: 18rem;">
+                                            <div class="card card-stats mb-4 mb-lg-0">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="h2 font-weight-bold mb-0">Nombre de LISTA</span>
+                                                            <h5 class="card-title text-uppercase text-muted mb-0">"nombreL"</h5>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <span class="h2 font-weight-bold mb-0">Nombre de Usuario</span>
+                                                            <h5 class="card-title text-uppercase text-muted mb-0">"nickname"</h5>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            <%}%>
-                                            <div class="form-group">
-                                                <input type="text" name="nomList" class="form-control" placeholder="Nombre de Lista">
                                             </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="esPublica" value="" id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                                Lista publica
-                                            </label>
                                         </div>
-                                        <div class="text-center">
-                                            <button type="button" class="btn btn-primary my-4" onclick="continuar()">Crear Lista</button>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
 
 
                 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -319,11 +329,6 @@
         token: "ee6fab19c5a04ac1a32a645abde4613a",
         application: "argon-dashboard-free"
     });
-</script>
-<script type="text/javascript">
-    function continuar(){
-        document.forms["nuevaLista"].submit();
-    }
 </script>
 </body>
 
