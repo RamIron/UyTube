@@ -162,6 +162,7 @@ public class CVideo implements IVideo {
 	public void setVid(String vid) {
 		this.vid = usr.getCanal().obtenerVideo(vid);
 	}
+
 	
 	
 }
