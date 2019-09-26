@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import datatypes.DtComentario;
+import datatypes.DtElementoUsuario;
 import datatypes.DtValoracion;
 import datatypes.DtVideo;
 
@@ -19,8 +20,10 @@ public interface IVideo {
 	 public List<String> listarVideosDeUsuario(String nick);
 	 
 	 public List<String> listarVideosPublicosDeUsuario(String nick);
-	 
-	 public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico);
+
+    List<DtElementoUsuario> listarVideosPublicos();
+
+    public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico);
 	 
 	 public List<DtComentario> obtenerComentariosVideo(String nomVid);
 	 

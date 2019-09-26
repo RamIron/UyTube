@@ -11,9 +11,7 @@ import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorComentario;
 import Manejadores.ManejadorUsuario;
 //import Manejadores.ManejadorVideo;
-import datatypes.DtComentario;
-import datatypes.DtValoracion;
-import datatypes.DtVideo;
+import datatypes.*;
 import interfaces.IVideo;
 
 public class CVideo implements IVideo {
@@ -67,7 +65,22 @@ public class CVideo implements IVideo {
 		this.usr = mU.obtenerUsuario(nick);
 		return this.usr.getCanal().obtenerNombreVideosPublicos();
 	}
-	
+
+	@Override
+	public List<DtElementoUsuario> listarVideosPublicos() {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		List<String> usuarios = mU.listarUsuarios();
+		List<DtElementoUsuario> res  = new ArrayList<DtElementoUsuario>();
+		for(String nick: usuarios){
+			List<String> videos = listarVideosPublicosDeUsuario(nick);
+			for (String vid : videos){
+				DtElementoUsuario v = new DtElementoUsuario(nick, vid, tipoElemento.VIDEO);
+				res.add(v);
+			}
+		}
+		return res;
+	}
+
 	@Override 
 	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {
 		//ManejadorVideo mV = ManejadorVideo.getInstancia();

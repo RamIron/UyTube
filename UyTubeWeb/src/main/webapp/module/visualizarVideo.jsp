@@ -1,8 +1,9 @@
+<%@ page import="interfaces.CFactory" %>
+<%@ page import="interfaces.ICategoria" %>
 <%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="interfaces.*" %>
-<%@ page import="datatypes.DtElementoUsuario" %>
-<%@ page import="datatypes.tipoElemento" %>
+<%@ page import="interfaces.LRFactory" %>
+<%@ page import="interfaces.IListaReproduccion" %>
 <!--
 
 =========================================================
@@ -112,7 +113,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link  " href="<%= request.getContextPath() %>/module/verUsuarios.jsp">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/verUsuarios.jsp">
               <i class="ni ni-single-02 text-blue"></i> Ver usuarios
             </a>
           </li>
@@ -131,8 +132,8 @@
           </li>
           <% } %>
           <li class="nav-item">
-            <a class="nav-link active" href="<%= request.getContextPath() %>/module/verVideos.jsp">
-              <i class="ni ni-button-play text-blue"></i> <strong>Ver videos</strong>
+            <a class="nav-link  active" href="<%= request.getContextPath() %>/module/verVideos.jsp">
+              <i class="ni ni-button-play text-blue"></i> <strong> Ver videos </strong>
             </a>
           </li>
         </ul>
@@ -173,7 +174,7 @@
             List<String> lC = iC.listarCategorias();
             for(String cat: lC){ %>
           <li class="nav-item">
-            <a class="nav-link" href="<%= request.getContextPath() %>/ConsultaCategoria?id=<%=cat%>">
+            <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
               <i class="ni ni-books text-blue"></i> <%=cat%>
             </a>
           </li>
@@ -186,7 +187,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
-
+        
         <!-- Form - Buscador -->
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"  action="<%= request.getContextPath() %>/Busqueda" method="get">
           <div class="form-group mb-0">
@@ -255,44 +256,13 @@
     <!-- Header -->
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
-          <div class="header-body">
-              <!-- Contenido aqui -->
-              <%
-                  VFactory uF = VFactory.getInstancia();
-                  IVideo iV = uF.getIVideo();
-                  List<DtElementoUsuario> listEU = iV.listarVideosPublicos();
-              %>
-
-            <div class="container-fluid">
-              <div class="row row- justify-content-right">
-                <%
-                  for(DtElementoUsuario eu: listEU){
-                %>
-                <div class="col-sm-4">
-                  <div class="card bg-secondary shadow ">
-                    <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getNickname()%>&v=<%=eu.getNombreE()%>">
-                      <div class="card-body px-lg-5 py-lg-5">
-                        <div class="card">
-                          <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img-top" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
-                          <div class="card-body ">
-                            <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
-                            <p>@<%=eu.getNickname()%></p>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                  <br/>
-                </div>
-                <% } %>
-              </div>
-            </div>
-          </div>
+        <div class="header-body">
+          <!-- Contenido aqui TODO-->
           <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
       </div>
     </div>
-
+    
   </div>
   <!--   Core   -->
   <script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
