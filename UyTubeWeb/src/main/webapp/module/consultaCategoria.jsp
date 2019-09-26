@@ -1,10 +1,8 @@
-<%@ page import="interfaces.CFactory" %>
-<%@ page import="interfaces.ICategoria" %>
 <%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="interfaces.LRFactory" %>
-<%@ page import="interfaces.IListaReproduccion" %>
 <%@ page import="datatypes.DtElementoUsuario" %>
+<%@ page import="interfaces.*" %>
+<%@ page import="datatypes.tipoElemento" %>
 <!--
 
 =========================================================
@@ -263,16 +261,13 @@
                 <!-- Contenido aqui TODO-->
 
 
-
-
-
                 <div class="nav-wrapper">
                     <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fab fa-youtube"></i>     Videos</a>
+                            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fab fa-youtube"></i>    Videos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-list-ul"></i>     Listas de Reproduccion</a>
+                            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-list-ul"></i>    Listas de Reproduccion</a>
                         </li>
                     </ul>
                 </div>
@@ -280,29 +275,75 @@
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                                <p class="description">SOY LOS VIDEOS</p>
+<%--                                empieza contenido de la tab de videos--%>
+                                <%
+                                    List<DtElementoUsuario> listEU = iC.listarElemCategoria(categoria);
+                                %>
+
+                                <div class="container-fluid">
+                                    <div class="row row- justify-content-right">
+                                        <%
+                                            for(DtElementoUsuario eu: listEU){
+                                                if (eu.getTipo().equals(tipoElemento.VIDEO)){
+                                        %>
+                                        <div class="col-sm-4">
+                                            <div class="card bg-secondary shadow ">
+                                                <div class="card-body px-lg-5 py-lg-5">
+                                                 <div class="card align-items-center">
+                                                     <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img-top" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
+                                                     <div class="card-body">
+                                                         <h5 class="card-title mb-0 text-lg">Nombre de Video: </h5>
+                                                            <p><%=eu.getNombreE()%></p>
+                                                         <h5 class="card-title mb-0 text-lg">Propietario del Video: </h5>
+                                                            <p><%=eu.getNickname()%></p>
+                                                     </div>
+                                                 </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <% } %>
+                                        <% } %>
+                                    </div>
+                                </div>
+<%--                                termina contenido de la tab de videos--%>
                             </div>
                             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                                        <div style="width: 18rem;">
-                                            <div class="card card-stats mb-4 mb-lg-0">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <span class="h2 font-weight-bold mb-0">Nombre de LISTA</span>
-                                                            <h5 class="card-title text-uppercase text-muted mb-0">"nombreL"</h5>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <span class="h2 font-weight-bold mb-0">Nombre de Usuario</span>
-                                                            <h5 class="card-title text-uppercase text-muted mb-0">"nickname"</h5>
+<%--                                empieza contenido de la tab de listas--%>
+
+                                <p class="description">SOY LAS LISTAS</p>
+
+                                <div class="container-fluid">
+                                    <div class="row row- justify-content-right">
+                                        <%
+                                            for(DtElementoUsuario eu: listEU){
+                                                if (eu.getTipo().equals(tipoElemento.LISTA)){
+                                        %>
+                                        <div class="col-sm-4">
+                                            <div class="card bg-secondary shadow ">
+                                                <div class="card-body px-lg-5 py-lg-5">
+                                                    <div class="card align-items-center">
+                                                        <img src="..." class="card-img-top" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title mb-0 text-lg">Nombre de la Lista: </h5>
+                                                            <p><%=eu.getNombreE()%></p>
+                                                            <h5 class="card-title mb-0 text-lg">Propietario de la Lista: </h5>
+                                                            <p><%=eu.getNickname()%></p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                            <% } %>
+                                        <% } %>
+                                    </div>
+                                </div>
+
+<%--                                termina contenido de la tab de listas--%>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
 
 

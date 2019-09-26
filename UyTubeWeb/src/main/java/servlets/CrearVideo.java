@@ -31,6 +31,7 @@ public class CrearVideo extends HttpServlet {
         int duracion = Integer.parseInt(request.getParameter("dur"));
         String url = request.getParameter("url");
         String descripcion = request.getParameter("desc");
+        String catVideo = request.getParameter("categoria");
         Calendar fechaPublicacion = Calendar.getInstance(); //TODO
 
 
@@ -42,6 +43,7 @@ public class CrearVideo extends HttpServlet {
             rd.forward(request, response);
         }else{
             iV.agregarVideo(usr.getNickname(), nomVideo, descripcion, fechaPublicacion, duracion, url);
+            iV.agregarCategoria(catVideo);
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/index.jsp");
             String message = "Se ha creado el video <strong>" + nomVideo + "</strong>";

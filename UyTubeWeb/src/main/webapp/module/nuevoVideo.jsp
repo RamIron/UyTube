@@ -126,14 +126,14 @@
             <ul class="navbar-nav">
                 <% if (s.getAttribute("usuario") != null){ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/module/nuevoVideo.jsp">
-                        <i class="ni ni-fat-add text-blue"></i> Subir video
+                    <a class="nav-link active" href="<%= request.getContextPath() %>/module/nuevoVideo.jsp">
+                        <i class="ni ni-fat-add text-blue"></i> <strong> Subir video </strong>
                     </a>
                 </li>
                 <% } %>
                 <li class="nav-item">
-                    <a class="nav-link  active" href="<%= request.getContextPath() %>/module/verVideos.jsp">
-                        <i class="ni ni-button-play text-blue"></i> <strong> Ver videos </strong>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/module/verVideos.jsp">
+                        <i class="ni ni-button-play text-blue"></i> Ver videos
                     </a>
                 </li>
             </ul>
