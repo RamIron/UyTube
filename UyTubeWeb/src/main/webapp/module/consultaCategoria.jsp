@@ -278,60 +278,34 @@
                             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
 <%--            empieza contenido de la tab de videos--%>
                                 <%
-                                    VFactory fV = VFactory.getInstancia();
-                                    IVideo iV = fV.getIVideo();
                                     List<DtElementoUsuario> listEU = iC.listarElemCategoria(categoria);
                                 %>
 
                                 <div class="container-fluid">
-                                    <div class="row row- justify-content-right">
+                                    <div class="col col- justify-content-left">
                                         <%
                                             for(DtElementoUsuario eu: listEU){
                                                 if (eu.getTipo().equals(tipoElemento.VIDEO)){
-                                                    DtVideo infoVid = iV.obtenerInfoVideo(eu.getNombreE());
                                         %>
-<%--                                        <div class="card mb-3" style="max-width: 540px;">--%>
-<%--                                            <div class="row no-gutters">--%>
-<%--                                                <div class="col-md-4">--%>
-<%--                                                    <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">--%>
-<%--                                                </div>--%>
-<%--                                                <div class="col-md-8">--%>
-<%--                                                    <div class="card-body">--%>
-<%--                                                        <h5 class="card-title"><%=infoVid.getNombre()%></h5>--%>
-<%--                                                        <p class="card-text"><%=infoVid.getDescripcion()%></p>--%>
-<%--                                                        <p class="card-text"><small class="text-muted"><%=eu.getNickname()%></small></p>--%>
-<%--                                                        <p class="card-text"><small class="text-muted"><%=infoVid.getfPublicacion()%></small></p>--%>
-<%--                                                    </div>--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                        <% } %>--%>
-<%--                                    <% } %>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--          termina contenido de la tab de videos--%>
-
-                                        <div class="col-sm-4">
-                                            <div class="card bg-secondary shadow ">
-                                                <div class="card-body px-lg-5 py-lg-5">
-                                                 <div class="card align-items-center">
-                                                     <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img-top" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
-                                                     <div class="card-body">
-                                                         <h5 class="card-title mb-0 text-lg">Nombre de Video: </h5>
-                                                            <p><%=eu.getNombreE()%></p>
-                                                         <h5 class="card-title mb-0 text-lg">Propietario del Video: </h5>
-                                                            <p><%=eu.getNickname()%></p>
-                                                     </div>
-                                                 </div>
+                                        <div class="card mb-3" style="max-width: 630px;">
+                                            <div class="row no-gutters">
+                                                <div class="col-md-4">
+                                                    <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
+                                                        <br>
+                                                        <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=eu.getNickname()%></strong></small></p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                             <% } %>
-                                        <% } %>
-                                    </div>
+                                    <% } %>
                                 </div>
-<%--                                termina contenido de la tab de videos--%>
+                            </div>
+<%--      termina contenido de la tab de videos--%>
                             </div>
                             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
 <%--                                empieza contenido de la tab de listas--%>
