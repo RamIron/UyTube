@@ -15,10 +15,10 @@ public class Canal {
 	@GeneratedValue
 	private int id;
 	
-	@Column(name="DESCRIPCION")
+
 	private String descripcion;
 	
-	@Column(name="PUBLICO")
+
 	private boolean publico;
 	
 	@OneToOne
@@ -269,17 +269,17 @@ public class Canal {
 //	}
 	
 	public DtVideo obtenerInfoVideo(String nomVid) {
-//		for(Video v:this.videos) {
-//			if(v.getNombre().contentEquals(nomVid)) {
-//				DtVideo dtVid;
-//				if(v.getCategoria() == null){
-//					dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), null);
-//				}else {
-//					dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), v.getCategoria().getNombre());
-//				}
-//				return dtVid;
-//			}
-//		}
+		for(Video v:this.videos) {
+			if(v.getNombre().equals(nomVid)) {
+				DtVideo dtVid;
+				if(v.getCategoria() == null){
+					dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), null);
+				}else {
+					dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), v.getCategoria().getNombre());
+				}
+				return dtVid;
+			}
+		}
 		return null;
 	}
 	

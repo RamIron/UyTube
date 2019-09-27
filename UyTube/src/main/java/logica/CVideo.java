@@ -101,12 +101,12 @@ public class CVideo implements IVideo {
 		return this.vid.obtenerComentariosVideo();
 	}
 	
-	@Override 
+	@Override
 	public DtVideo obtenerInfoVideo(String nomVid) {
 		this.vid = this.usr.getCanal().obtenerVideo(nomVid);
 		return this.usr.getCanal().obtenerInfoVideo(nomVid);
 	}
-	
+
 	@Override 
 	public List<DtValoracion> obtenerValoracionVideo() {
 		return this.vid.listarValoraciones();
@@ -163,6 +163,30 @@ public class CVideo implements IVideo {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.obtenerUsuario(nick);
 		return u.getCanal().existeVideo(nomV);
+	}
+
+	@Override
+	public Integer cantidadGusta(){
+		Integer i = 0;
+		List<DtValoracion> listaVal = obtenerValoracionVideo();
+		for(DtValoracion v: listaVal){
+			if(v.getGusta()){
+				i++;
+			}
+		}
+		return i;
+	}
+
+	@Override
+	public Integer cantidadNoGusta(){
+		Integer i = 0;
+		List<DtValoracion> listaVal = obtenerValoracionVideo();
+		for(DtValoracion v: listaVal){
+			if(!v.getGusta()){
+				i++;
+			}
+		}
+		return i;
 	}
 
 	@Override

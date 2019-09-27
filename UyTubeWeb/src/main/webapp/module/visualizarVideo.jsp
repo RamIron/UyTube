@@ -1,9 +1,10 @@
-<%@ page import="interfaces.CFactory" %>
-<%@ page import="interfaces.ICategoria" %>
 <%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="interfaces.LRFactory" %>
-<%@ page import="interfaces.IListaReproduccion" %>
+<%@ page import="interfaces.*" %>
+<%@ page import="logica.CVideo" %>
+<%@ page import="datatypes.DtVideo" %>
+<%@ page import="java.sql.SQLOutput" %>
+<%@ page import="java.util.Calendar" %>
 <!--
 
 =========================================================
@@ -258,6 +259,20 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Contenido aqui TODO-->
+          <%
+            if(request.getParameter("u") != null && request.getParameter("v") != null){
+                String nick = request.getParameter("u");
+              System.out.println("nick " + nick);
+                String nomVid = request.getParameter("v");
+              System.out.println("vid " + nomVid);
+                VFactory vF = VFactory.getInstancia();
+
+                IVideo cV = vF.getIVideo();
+                cV.setUsr(nick);
+                DtVideo infoV = cV.obtenerInfoVideo(nomVid);
+                System.out.println("InfoV " + infoV);
+
+          %>
           <div class="container-fluid">
             <div class="row row- justify-content-right">
               <div class="col-sm-9">
@@ -267,16 +282,29 @@
                       <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
                     </div>
                     <br/>
-                    <h1>Titulo del video <a href="#" class="badge badge-pill badge-primary">Categoria</a></h1>
+                    <h1>
+                      <%=infoV.getNombre()%>
+                      <% if(infoV.getCategoria() != null){ %>
+                      <a href="#" class="badge badge-pill badge-primary"><%=infoV.getCategoria()%></a>
+                      <%}%>
+                    </h1>
                     <div class="row row- justify-content-right">
                       <div class="col-sm-6">
-                        <h3>@nickname | 10/08/2019</h3>
+                        <h3>@<%=nick%> | <%=infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.YEAR)%> | <%=infoV.getDuracion()%> seg.</h3>
                       </div>
                       <div class="col-sm-6">
                         <div class="float-sm-right d-sm-inline-flex ">
                           <div>
+                            <% if (infoV.getPublico()){%>
+                            <i class="fas fa-globe"></i><small> Publico</small>
+                            <%} else {%>
+                            <i class="fas fa-user-lock"></i><small> Privado</small>
+                            <%}%>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </div>
+                          <div>
                             <p class="float-sm-right">
-                              <i class="fas fa-thumbs-up"></i> 10 | 20 <i class="fas fa-thumbs-down"></i>
+                              <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=si"><i class="fas fa-thumbs-up"></i> <%=cV.cantidadGusta()%></a> | <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=no"><%=cV.cantidadNoGusta()%> <i class="fas fa-thumbs-down"></i></a>
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </p>
                           </div>
@@ -294,15 +322,18 @@
                                   List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
                                   for(String l: lis){
                                 %>
-                                <a class="dropdown-item" href="<%= request.getContextPath() %>/AgregarALista?lu="><%=l%></a>
+                                <a class="dropdown-item" href="<%= request.getContextPath() %>/AgregarALista?l=<%=l%>&vu=<%=nick%>&vn=<%=infoV.getNombre()%>"><%=l%></a>
                                 <%}%>
                               </div>
-                              <% } %>
                             </div>
                           </div>
+                        <% } %>
                         </div>
                       </div>
                     </div>
+                    <hr/>
+                    <h3>Descripcion</h3>
+                    <small><%=infoV.getDescripcion()%></small>
                   </div>
                 </div>
                 <br/>
@@ -311,6 +342,7 @@
                     <h2>Comentarios</h2>
                   </div>
                 </div>
+                <br/>
               </div>
               <div class="col-sm-3">
                 <div class="card bg-secondary shadow ">
@@ -321,7 +353,7 @@
               </div>
             </div>
           </div>
-
+          <%}%>
 
         </div>
       </div>

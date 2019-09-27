@@ -28,8 +28,8 @@ public interface IVideo {
 	 public List<DtComentario> obtenerComentariosVideo(String nomVid);
 	 
 	 public DtVideo obtenerInfoVideo(String nomVid);
-	 
-	 public List<DtValoracion> obtenerValoracionVideo();
+
+	public List<DtValoracion> obtenerValoracionVideo();
 	 
 	 public void responderComentario(int idCom, String nick, Calendar fcom, String texto);
 	 
@@ -39,7 +39,11 @@ public interface IVideo {
 	 
 	 public Boolean existeVideo(String nick, String nomV);
 
-	 public void setUsr(String usr);
+	Integer cantidadGusta();
+
+	Integer cantidadNoGusta();
+
+	public void setUsr(String usr);
 
 	 public void setVid(String vid);
 	
