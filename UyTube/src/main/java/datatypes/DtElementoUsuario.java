@@ -30,6 +30,6 @@ public class DtElementoUsuario {
 		return tipo;
 	}
 	
-	
+
 	
 }
