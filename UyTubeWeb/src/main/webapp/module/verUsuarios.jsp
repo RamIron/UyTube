@@ -222,7 +222,7 @@
                   <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
                   <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
                   <% } else { %>
-                  <img alt="Image placeholder" src=".<%=usr.getFoto()%>">
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
                   <% } %>
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
@@ -258,24 +258,29 @@
           <%
             UFactory uF = UFactory.getInstancia();
             IUsuario iU = uF.getIUsuario();
-            List<String> listU = iU.listarUsuarios();
+            //List<String> listU = iU.listarUsuarios();
+            List<DtUsuarioWeb> listU = iU.listarUsuariosWeb();
           %>
 
           <div class="container-fluid">
             <div class="row row- justify-content-right">
               <%
-                for(String u: listU){
+                for(DtUsuarioWeb u: listU){
               %>
               <div class="col-sm-4">
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
-                    <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u%>" >
+                    <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>" >
                       <div class="media align-items-center">
                         <span class="avatar avatar-lg rounded-circle">
+                          <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
                           <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                          <% } else { %>
+                          <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
+                          <% } %>
                         </span>
                         <div class="media-body">
-                          <span class="mb-0 text-lg  font-weight-bold">@<%=u%></span>
+                          <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
                         </div>
                       </div>
                     </a>

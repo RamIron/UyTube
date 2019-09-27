@@ -28,7 +28,7 @@ public class AltaUsuario extends HttpServlet {
         String nomC = request.getParameter("nomC");
         String foto = request.getParameter("foto");
         String desc = request.getParameter("descripcion");
-        Boolean publico;//TODO ver como se maneja esto
+        Boolean publico;
         if(request.getParameter("publico") == null){
             publico = false;
         }else{
@@ -39,8 +39,6 @@ public class AltaUsuario extends HttpServlet {
         UFactory fU = UFactory.getInstancia();
         IUsuario iU = fU.getIUsuario();
 
-//        Calendar fNac2 = Calendar.getInstance(); //TODO
-//        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
 
 
         //CODIGO PARA EXTRAER LA FECHA
@@ -73,7 +71,7 @@ public class AltaUsuario extends HttpServlet {
         }else{
             iU.agregarUsuario(nickname, nomU, apellido, cal, email);
             if(!foto.equals("")) {
-                iU.modificarImagen(foto);
+                iU.modificarImagen("img/usr/" + foto);
             }else {
                 iU.modificarImagen("src/main/resources/img/default.png");
             }

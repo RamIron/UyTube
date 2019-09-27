@@ -225,7 +225,7 @@
                   <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
                   <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
                   <% } else { %>
-                  <img alt="Image placeholder" src=".<%=usr.getFoto()%>">
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
                   <% } %>
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
@@ -258,7 +258,71 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Contenido aqui TODO-->
-          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          <div class="container-fluid">
+            <div class="row row- justify-content-right">
+              <div class="col-sm-9">
+                <div class="card bg-secondary shadow ">
+                  <div class="card-body px-lg-5 py-lg-5">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    </div>
+                    <br/>
+                    <h1>Titulo del video <a href="#" class="badge badge-pill badge-primary">Categoria</a></h1>
+                    <div class="row row- justify-content-right">
+                      <div class="col-sm-6">
+                        <h3>@nickname | 10/08/2019</h3>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="float-sm-right d-sm-inline-flex ">
+                          <div>
+                            <p class="float-sm-right">
+                              <i class="fas fa-thumbs-up"></i> 10 | 20 <i class="fas fa-thumbs-down"></i>
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </p>
+                          </div>
+                          <% if (s.getAttribute("usuario") != null){ %>
+                          <div>
+                            <div class="dropdown">
+                              <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Agregar a lista
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <%
+                                  LRFactory f = LRFactory.getInstancia();
+                                  IListaReproduccion iL = f.getIListaReproduccion();
+                                  DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+                                  List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+                                  for(String l: lis){
+                                %>
+                                <a class="dropdown-item" href="<%= request.getContextPath() %>/AgregarALista?lu="><%=l%></a>
+                                <%}%>
+                              </div>
+                              <% } %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br/>
+                <div class="card bg-secondary shadow ">
+                  <div class="card-body px-lg-5 py-lg-5">
+                    <h2>Comentarios</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="card bg-secondary shadow ">
+                  <div class="card-body px-lg-5 py-lg-5">
+                    <h2>Recomendados</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </div>
     </div>
