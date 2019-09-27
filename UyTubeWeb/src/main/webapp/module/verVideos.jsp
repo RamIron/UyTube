@@ -1,6 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
 <%@ page import="interfaces.*" %>
+<%@ page import="datatypes.DtElementoUsuario" %>
+<%@ page import="datatypes.tipoElemento" %>
 <!--
 
 =========================================================
@@ -222,7 +224,7 @@
                   <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
                   <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
                   <% } else { %>
-                  <img alt="Image placeholder" src=".<%=usr.getFoto()%>">
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
                   <% } %>
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
@@ -254,38 +256,37 @@
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
           <div class="header-body">
-              <!-- Contenido aqui TODO-->
+              <!-- Contenido aqui -->
               <%
-                  UFactory uF = UFactory.getInstancia();
-                  IUsuario iU = uF.getIUsuario();
-                  List<String> listU = iU.listarUsuarios();
+                  VFactory uF = VFactory.getInstancia();
+                  IVideo iV = uF.getIVideo();
+                  List<DtElementoUsuario> listEU = iV.listarVideosPublicos();
               %>
 
-              <div class="container-fluid">
-                  <div class="row row- justify-content-right">
-                      <%
-                          for(String u: listU){
-                      %>
-                      <div class="col-sm-6">
-                          <div class="card bg-secondary shadow ">
-                              <div class="card-body px-lg-5 py-lg-5">
-                                  <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u%>" >
-                                      <div class="media align-items-center">
-                                            <span class="navbar-brand-img" >
-                                                <img  alt="Image placeholder" src="<%= request.getContextPath() %>/img/video-sample.jpg">
-                                            </span>
-                                          <div class="media-body">
-                                              <span class="mb-0 text-lg  font-weight-bold">@<%=u%></span>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
+            <div class="container-fluid">
+              <div class="row row- justify-content-right">
+                <%
+                  for(DtElementoUsuario eu: listEU){
+                %>
+                <div class="col-sm-4">
+                  <div class="card bg-secondary shadow ">
+                    <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getNickname()%>&v=<%=eu.getNombreE()%>">
+                      <div class="card-body px-lg-5 py-lg-5">
+                        <div class="card">
+                          <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img-top" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
+                          <div class="card-body ">
+                            <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
+                            <p>@<%=eu.getNickname()%></p>
                           </div>
-                          <br/>
+                        </div>
                       </div>
-                      <% } %>
+                    </a>
                   </div>
+                  <br/>
+                </div>
+                <% } %>
               </div>
+            </div>
           </div>
           <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>

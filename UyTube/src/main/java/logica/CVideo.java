@@ -11,9 +11,7 @@ import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorComentario;
 import Manejadores.ManejadorUsuario;
 //import Manejadores.ManejadorVideo;
-import datatypes.DtComentario;
-import datatypes.DtValoracion;
-import datatypes.DtVideo;
+import datatypes.*;
 import interfaces.IVideo;
 
 public class CVideo implements IVideo {
@@ -67,7 +65,22 @@ public class CVideo implements IVideo {
 		this.usr = mU.obtenerUsuario(nick);
 		return this.usr.getCanal().obtenerNombreVideosPublicos();
 	}
-	
+
+	@Override
+	public List<DtElementoUsuario> listarVideosPublicos() {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		List<String> usuarios = mU.listarUsuarios();
+		List<DtElementoUsuario> res  = new ArrayList<DtElementoUsuario>();
+		for(String nick: usuarios){
+			List<String> videos = listarVideosPublicosDeUsuario(nick);
+			for (String vid : videos){
+				DtElementoUsuario v = new DtElementoUsuario(nick, vid, tipoElemento.VIDEO);
+				res.add(v);
+			}
+		}
+		return res;
+	}
+
 	@Override 
 	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {
 		//ManejadorVideo mV = ManejadorVideo.getInstancia();
@@ -88,12 +101,12 @@ public class CVideo implements IVideo {
 		return this.vid.obtenerComentariosVideo();
 	}
 	
-	@Override 
+	@Override
 	public DtVideo obtenerInfoVideo(String nomVid) {
 		this.vid = this.usr.getCanal().obtenerVideo(nomVid);
 		return this.usr.getCanal().obtenerInfoVideo(nomVid);
 	}
-	
+
 	@Override 
 	public List<DtValoracion> obtenerValoracionVideo() {
 		return this.vid.listarValoraciones();
@@ -150,6 +163,30 @@ public class CVideo implements IVideo {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.obtenerUsuario(nick);
 		return u.getCanal().existeVideo(nomV);
+	}
+
+	@Override
+	public Integer cantidadGusta(){
+		Integer i = 0;
+		List<DtValoracion> listaVal = obtenerValoracionVideo();
+		for(DtValoracion v: listaVal){
+			if(v.getGusta()){
+				i++;
+			}
+		}
+		return i;
+	}
+
+	@Override
+	public Integer cantidadNoGusta(){
+		Integer i = 0;
+		List<DtValoracion> listaVal = obtenerValoracionVideo();
+		for(DtValoracion v: listaVal){
+			if(!v.getGusta()){
+				i++;
+			}
+		}
+		return i;
 	}
 
 	@Override

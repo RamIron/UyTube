@@ -225,7 +225,7 @@
                   <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
                   <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
                   <% } else { %>
-                  <img alt="Image placeholder" src=".<%=usr.getFoto()%>">
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
                   <% } %>
                 </span>
                             <div class="media-body ml-2 d-none d-lg-block">

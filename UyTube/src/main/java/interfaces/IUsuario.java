@@ -52,4 +52,6 @@ public interface IUsuario {
     DtUsuarioWeb obtenerUsuarioWebNick(String nickname);
 
 	DtUsuarioWeb obtenerUsuarioWebEmail(String email);
+
+    List<DtUsuarioWeb> listarUsuariosWeb();
 }

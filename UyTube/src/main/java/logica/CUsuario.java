@@ -255,4 +255,16 @@ public class CUsuario implements IUsuario {
 		DtUsuarioWeb res = new DtUsuarioWeb(u.getNickname(), u.getImagen(),lis);
 		return res;
 	}
+
+	@Override
+	public List<DtUsuarioWeb> listarUsuariosWeb() {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		List<String> usuarios = mU.listarUsuarios();
+		List<DtUsuarioWeb> res = new ArrayList<DtUsuarioWeb>();
+		for (String nick: usuarios){
+			DtUsuarioWeb usr = obtenerUsuarioWebNick(nick);
+			res.add(usr);
+		}
+		return res;
+	}
 }
