@@ -3,6 +3,7 @@
 <%@ page import="datatypes.DtElementoUsuario" %>
 <%@ page import="interfaces.*" %>
 <%@ page import="datatypes.tipoElemento" %>
+<%@ page import="datatypes.DtVideo" %>
 <!--
 
 =========================================================
@@ -275,8 +276,10 @@
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-<%--                                empieza contenido de la tab de videos--%>
+<%--            empieza contenido de la tab de videos--%>
                                 <%
+                                    VFactory fV = VFactory.getInstancia();
+                                    IVideo iV = fV.getIVideo();
                                     List<DtElementoUsuario> listEU = iC.listarElemCategoria(categoria);
                                 %>
 
@@ -285,7 +288,30 @@
                                         <%
                                             for(DtElementoUsuario eu: listEU){
                                                 if (eu.getTipo().equals(tipoElemento.VIDEO)){
+                                                    DtVideo infoVid = iV.obtenerInfoVideo(eu.getNombreE());
                                         %>
+<%--                                        <div class="card mb-3" style="max-width: 540px;">--%>
+<%--                                            <div class="row no-gutters">--%>
+<%--                                                <div class="col-md-4">--%>
+<%--                                                    <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">--%>
+<%--                                                </div>--%>
+<%--                                                <div class="col-md-8">--%>
+<%--                                                    <div class="card-body">--%>
+<%--                                                        <h5 class="card-title"><%=infoVid.getNombre()%></h5>--%>
+<%--                                                        <p class="card-text"><%=infoVid.getDescripcion()%></p>--%>
+<%--                                                        <p class="card-text"><small class="text-muted"><%=eu.getNickname()%></small></p>--%>
+<%--                                                        <p class="card-text"><small class="text-muted"><%=infoVid.getfPublicacion()%></small></p>--%>
+<%--                                                    </div>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                        <% } %>--%>
+<%--                                    <% } %>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--          termina contenido de la tab de videos--%>
+
                                         <div class="col-sm-4">
                                             <div class="card bg-secondary shadow ">
                                                 <div class="card-body px-lg-5 py-lg-5">
@@ -343,13 +369,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
             </div>
         </div>
     </div>
