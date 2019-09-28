@@ -170,7 +170,7 @@ public class Usuario {
 
 	
 	public DtCanal obtenerInfoCanal() {
-		DtCanal dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.getPublico());
+		DtCanal dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.getPublico(), canal.getCategoria().getNombre());
 		return dtCan;
 	}
 
