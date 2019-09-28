@@ -5,6 +5,7 @@
 <%@ page import="datatypes.DtVideo" %>
 <%@ page import="java.sql.SQLOutput" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="datatypes.DtComentario" %>
 <!--
 
 =========================================================
@@ -23,7 +24,58 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<% HttpSession s = request.getSession(); %>
+
+<%!
+
+  public String imprimirComentarios(List< DtComentario > comentarios){
+    String res = "";
+    if(comentarios.isEmpty()){
+      res += "<small>No existen comentarios.</small>";
+    }else {
+      for (DtComentario c :comentarios){
+        Integer dia = c.getFecha().get(Calendar.DAY_OF_MONTH);
+        Integer mes = c.getFecha().get(Calendar.MONTH);
+        Integer ano = c.getFecha().get(Calendar.YEAR);
+        res += "<div class=\"bloque-comentario\">\n" +
+                "                      <div>\n" +
+                "                        <h5>@" + c.getNickname() + " · " + dia + "/" + mes + "/" + ano + " <button type=\"button\" class=\"btn btn-link\" id=\"btn-" + c.getId() +"\">Responder</button></h5>\n" +
+                "                        <small>" + c.getTexto() + "</small>\n" +
+                "                      </div>\n" +
+                "                      <div id=\"resp-" + c.getId() +"\" class=\"d-none\">\n" +
+                "                          <form action=\"/ResponderComentario\" method=\"post\">\n" +
+                "                       <div class=\"input-group input-group-alternative\"> \n" +
+                "                       <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" placeholder=\"Responder...\" name=\"respuesta\"></textarea>\n" +
+                "                       </div>\n" + " <br>\n" +
+                "                       <input type=\"hidden\" name=\"id\" value=\"" + c.getId() +"\">\n" +
+                "                      <div class=\"float-right\">\n" +
+                "                        <button type=\"submit\" class=\"btn btn-primary btn-sm\">Responder</button>\n" +
+                "                      </div>\n" +
+                "                       <br>\n" +
+                "                       </form>\n" +
+                "                       </div>"+
+                "<script>\n" +
+                "                          document.getElementById('btn-" + c.getId() +"').onclick = function(){\n" +
+                "                            var $elem = $(\"#resp-" + c.getId() +"\");\n" +
+                "                            $elem.removeClass('d-none');\n" +
+                "                          }\n" +
+                "                        </script>" +
+                "                      <br>\n";
+        if (!c.getRespuestas().isEmpty()){
+          res += "                      <div class=\"container-fluid\">\n" +
+                  imprimirComentarios(c.getRespuestas()) +
+                  "                      </div>";
+
+        }
+        res += "                        <hr>\n" +
+                "                      </div>";
+      }
+    }
+    return res;
+  }
+
+%>
+
+<%HttpSession s = request.getSession();%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -341,42 +393,11 @@
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
                     <h2>Comentarios</h2>
-                    <div class="bloque-comentario">
-                      <div>
-                        <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
-                        <small>soy el comentario</small>
-                      </div>
-                      <br>
-                      <div class="container-fluid">
-                        <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
-                        <small>soy el comentario</small>
-                        <hr>
-                        <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
-                        <small>soy el comentario</small>
-                        <hr>
-                        <div class="container-fluid">
-                          <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
-                          <small>soy el comentario</small>
-                          <hr>
-                          <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
-                          <small>soy el comentario</small>
-                          <hr>
-                        </div>
-                        <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
-                        <small>soy el comentario</small>
-                        <hr>
-                      </div>
-                      <hr>
-                      <div>
-                        <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
-                        <small>soy el comentario</small>
-                      </div>
-                      <hr>
-                    </div>
+                    <%=imprimirComentarios(cV.obtenerComentariosVideo(nomVid))%>
                     <% if (s.getAttribute("usuario") != null){ %>
                     <form name="comentar" action="<%= request.getContextPath() %>/ComentarVideo" method="post">
                       <div class="input-group input-group-alternative">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Comentar..." name="comenatrio"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="Comentar..." name="comenatrio"></textarea>
                       </div>
                       <br>
                         <div class="float-right">
