@@ -337,12 +337,58 @@
                   </div>
                 </div>
                 <br/>
+                <% if(infoV.getPublico()){ %>
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
                     <h2>Comentarios</h2>
+                    <div class="bloque-comentario">
+                      <div>
+                        <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
+                        <small>soy el comentario</small>
+                      </div>
+                      <br>
+                      <div class="container-fluid">
+                        <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
+                        <small>soy el comentario</small>
+                        <hr>
+                        <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
+                        <small>soy el comentario</small>
+                        <hr>
+                        <div class="container-fluid">
+                          <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
+                          <small>soy el comentario</small>
+                          <hr>
+                          <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
+                          <small>soy el comentario</small>
+                          <hr>
+                        </div>
+                        <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
+                        <small>soy el comentario</small>
+                        <hr>
+                      </div>
+                      <hr>
+                      <div>
+                        <h5>@nickname · 12/12/2019 <button type="button" class="btn btn-link">Responder</button></h5>
+                        <small>soy el comentario</small>
+                      </div>
+                      <hr>
+                    </div>
+                    <% if (s.getAttribute("usuario") != null){ %>
+                    <form name="comentar" action="<%= request.getContextPath() %>/ComentarVideo" method="post">
+                      <div class="input-group input-group-alternative">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Comentar..." name="comenatrio"></textarea>
+                      </div>
+                      <br>
+                        <div class="float-right">
+                          <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
+                        </div>
+                      <br>
+                    </form>
+                    <%}%>
                   </div>
                 </div>
                 <br/>
+                <%}%>
               </div>
               <div class="col-sm-3">
                 <div class="card bg-secondary shadow ">
