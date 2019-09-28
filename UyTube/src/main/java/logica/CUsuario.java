@@ -109,7 +109,11 @@ public class CUsuario implements IUsuario {
 	@Override 
 	public boolean existeNickname(String nick) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		return mU.existeUsuario(nick);
+		if(mU.existeUsuario(nick)) {
+			this.usr = mU.obtenerUsuario(nick);
+			return true;
+		}else
+			return false;
 	}
 	
 	@Override
