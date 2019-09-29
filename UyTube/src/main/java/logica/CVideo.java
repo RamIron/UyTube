@@ -81,6 +81,22 @@ public class CVideo implements IVideo {
 		return res;
 	}
 
+	@Override
+	public List<DtElementoWeb> listarVideosPublicosWeb() {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		List<String> usuarios = mU.listarUsuarios();
+		List<DtElementoWeb> res  = new ArrayList<DtElementoWeb>();
+		for(String nick: usuarios){
+			List<String> videos = listarVideosPublicosDeUsuario(nick);
+			for (String nomVid : videos){
+				DtVideo vid = obtenerInfoVideo(nomVid);
+				DtElementoWeb v = new DtElementoWeb(nick, nomVid, tipoElemento.VIDEO, vid.getUrl());
+				res.add(v);
+			}
+		}
+		return res;
+	}
+
 	@Override 
 	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {
 		//ManejadorVideo mV = ManejadorVideo.getInstancia();

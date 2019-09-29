@@ -42,6 +42,7 @@
     <link href="<%= request.getContextPath() %>/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <!-- CSS Files -->
     <link href="<%= request.getContextPath() %>/assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
+
 </head>
 
 <body class="">
@@ -260,7 +261,7 @@
                 <!-- Contenido aqui TODO-->
 
                 <div class="row justify-content-center">
-                    <div class="col-lg-5 col-md-7">
+                    <div class="col-xl-10 order-xl-1">
                         <div class="card bg-secondary shadow border-0">
                             <div class="card-body px-lg-5 py-lg-5">
                                 <form name="nuevoVideo" action="<%= request.getContextPath() %>/CrearVideo" method="post">
@@ -292,7 +293,7 @@
 
                                         <%--URL--%>
                                         <div class="form-group">
-                                            <input type="text" name="url" class="form-control" placeholder="URL">
+                                            <input type="text" name="url" class="form-control" placeholder="URL (YouTube)">
                                         </div>
                                         <%--Fin URL--%>
 
@@ -352,6 +353,8 @@
 <!--   Optional JS   -->
 <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
 <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+<!--   Optional JS   -->
+<script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!--   Argon JS   -->
 <script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
@@ -365,7 +368,35 @@
 
 <script type="text/javascript">
     function continuar(){
-        document.forms["nuevoVideo"].submit();
+        var nomVid = document.forms["nuevoVideo"]["nomVid"].value;
+        var dur = document.forms["nuevoVideo"]["dur"].value;
+        var url = document.forms["nuevoVideo"]["url"].value;
+        var desc = document.forms["nuevoVideo"]["desc"].value;
+        var fPub = document.forms["nuevoVideo"]["fPub"].value;
+        if (nomVid == "" || dur == "" || url == "" || desc == "" || fPub == "" ){
+            alert("Falta completar campos");
+        } else{
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            if (match&&match[7].length==11){
+                var b=match[7];
+                document.forms["nuevoVideo"]["url"].value = b;
+                document.forms["nuevoVideo"].submit();
+            }else{
+                alert("Url incorrecta, debe ser de youtube");
+            }
+        }
+    }
+
+    function youtube_parser(url){
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        if (match&&match[7].length==11){
+            var b=match[7];
+            alert(b);
+        }else{
+            alert("Url incorrecta");
+        }
     }
 </script>
 

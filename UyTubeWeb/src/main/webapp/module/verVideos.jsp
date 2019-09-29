@@ -3,6 +3,7 @@
 <%@ page import="interfaces.*" %>
 <%@ page import="datatypes.DtElementoUsuario" %>
 <%@ page import="datatypes.tipoElemento" %>
+<%@ page import="datatypes.DtElementoWeb" %>
 <!--
 
 =========================================================
@@ -260,20 +261,20 @@
               <%
                   VFactory uF = VFactory.getInstancia();
                   IVideo iV = uF.getIVideo();
-                  List<DtElementoUsuario> listEU = iV.listarVideosPublicos();
+                  List<DtElementoWeb> listEU = iV.listarVideosPublicosWeb();
               %>
 
             <div class="container-fluid">
               <div class="row row- justify-content-right">
                 <%
-                  for(DtElementoUsuario eu: listEU){
+                  for(DtElementoWeb eu: listEU){
                 %>
                 <div class="col-sm-4">
                   <div class="card bg-secondary shadow ">
                     <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getNickname()%>&v=<%=eu.getNombreE()%>">
                       <div class="card-body px-lg-5 py-lg-5">
                         <div class="card">
-                          <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img-top" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
+                          <img src="http://img.youtube.com/vi/<%=eu.getUrl()%>/0.jpg" class="card-img-top" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
                           <div class="card-body ">
                             <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
                             <p>@<%=eu.getNickname()%></p>

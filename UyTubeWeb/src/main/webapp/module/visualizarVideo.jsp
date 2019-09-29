@@ -339,7 +339,7 @@
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
                     <div class="embed-responsive embed-responsive-16by9">
-                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%=infoV.getUrl()%>" allowfullscreen></iframe>
                     </div>
                     <br/>
                     <h1>
