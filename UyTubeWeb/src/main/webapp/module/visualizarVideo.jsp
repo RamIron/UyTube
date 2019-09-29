@@ -28,7 +28,7 @@
 
 <%!
 
-  public String imprimirComentarios(List< DtComentario > comentarios, HttpServletRequest request){
+  public String imprimirComentarios(List< DtComentario > comentarios, HttpServletRequest request, String path){
     String res = "";
     if(comentarios.isEmpty()){
       res += "<small>No existen comentarios.</small>";
@@ -40,31 +40,36 @@
         Integer ano = c.getFecha().get(Calendar.YEAR);
         res += "<div class=\"bloque-comentario\">\n" +
                 "                      <div>\n" +
-                "                        <h5>@" + c.getNickname() + " · " + dia + "/" + mes + "/" + ano + " <button type=\"button\" class=\"btn btn-link\" id=\"btn-" + c.getId() +"\">Responder</button></h5>\n" +
-                "                        <small>" + c.getTexto() + "</small>\n" +
-                "                      </div>\n" +
-                "                      <div id=\"resp-" + c.getId() +"\" class=\"d-none\">\n" +
-                "                          <form action=\"" + request.getContextPath() + "/ResponderComentario\" method=\"post\">\n" +
-                "                       <div class=\"input-group input-group-alternative\"> \n" +
-                "                       <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" placeholder=\"Responder...\" name=\"respuesta\"></textarea>\n" +
-                "                       </div>\n" + " <br>\n" +
-                "                       <input type=\"hidden\" name=\"id\" value=\"" + c.getId() +"\">\n" +
-                "                      <div class=\"float-right\">\n" +
-                "                        <button type=\"submit\" class=\"btn btn-primary btn-sm\">Responder</button>\n" +
-                "                      </div>\n" +
-                "                       <br>\n" +
-                "                       </form>\n" +
-                "                       </div>"+
-                "<script>\n" +
-                "                          document.getElementById('btn-" + c.getId() +"').onclick = function(){\n" +
-                "                            var $elem = $(\"#resp-" + c.getId() +"\");\n" +
-                "                            $elem.removeClass('d-none');\n" +
-                "                          }\n" +
-                "                        </script>" +
-                "                      <br>\n";
+                "                        <h5>@" + c.getNickname() + " · " + dia + "/" + mes + "/" + ano;
+        if(request.getSession().getAttribute("usuario") != null) {
+          res += " <button type=\"button\" class=\"btn btn-link\" id=\"btn-" + c.getId() + "\">Responder</button>";
+        }
+        res +=    "</h5>\n " +
+                  "<small>" + c.getTexto() + "</small>\n" +
+                  "                      </div>\n" +
+                  "                      <div id=\"resp-" + c.getId() +"\" class=\"d-none\">\n" +
+                  "                          <form action=\"" + request.getContextPath() + "/ResponderComentario\" method=\"post\">\n" +
+                  "                       <div class=\"input-group input-group-alternative\"> \n" +
+                  "                       <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" placeholder=\"Responder...\" name=\"respuesta\"></textarea>\n" +
+                  "                       </div>\n" + " <br>\n" +
+                  "                       <input type=\"hidden\" name=\"id\" value=\"" + c.getId() +"\">\n" +
+                  "                       <input type=\"hidden\" name=\"path\" value=\"" + path + "\">\n" +
+                  "                      <div class=\"float-right\">\n" +
+                  "                        <button type=\"submit\" class=\"btn btn-primary btn-sm\">Responder</button>\n" +
+                  "                      </div>\n" +
+                  "                       <br>\n" +
+                  "                       </form>\n" +
+                  "                       </div>"+
+                  "<script>\n" +
+                  "                          document.getElementById('btn-" + c.getId() +"').onclick = function(){\n" +
+                  "                            var $elem = $(\"#resp-" + c.getId() +"\");\n" +
+                  "                            $elem.removeClass('d-none');\n" +
+                  "                          }\n" +
+                  "                        </script>" +
+                  "                      <br>\n";
         if (!c.getRespuestas().isEmpty()){
           res += "                      <div class=\"container-fluid\">\n" +
-                  imprimirComentarios(c.getRespuestas(), request) +
+                  imprimirComentarios(c.getRespuestas(), request, path) +
                   "                      </div>";
 
         }
@@ -77,7 +82,10 @@
 
 %>
 
-<%HttpSession s = request.getSession();%>
+<%
+  HttpSession s = request.getSession();
+  DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -207,7 +215,6 @@
           <%
             LRFactory f = LRFactory.getInstancia();
             IListaReproduccion iL = f.getIListaReproduccion();
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
             List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
             for(String l: lis){ %>
           <li class="nav-item">
@@ -270,8 +277,7 @@
             </a>
           </li>
         </ul>
-        <% }else {
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else {%>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -338,7 +344,10 @@
                     <br/>
                     <h1>
                       <%=infoV.getNombre()%>
-                      <% if(infoV.getCategoria() != null){ %>
+                      <%
+                        List<DtValoracion> listaVal = cV.obtenerValoracionVideo();
+                        if(infoV.getCategoria() != null){
+                      %>
                       <a href="#" class="badge badge-pill badge-primary"><%=infoV.getCategoria()%></a>
                       <%}%>
                     </h1>
@@ -358,7 +367,17 @@
                           </div>
                           <div>
                             <p class="float-sm-right">
-                              <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=si"><i class="fas fa-thumbs-up"></i> <%=cV.cantidadGusta()%></a> | <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=no"><%=cV.cantidadNoGusta()%> <i class="fas fa-thumbs-down"></i></a>
+                              <%
+                                Boolean si = false;
+                                Boolean no = false;
+                                for (DtValoracion v: listaVal){
+                                  if(v.getNickname().equals(usr.getNickname())){
+                                    si = v.getGusta();
+                                    no = !v.getGusta();
+                                  }
+                                }
+                              %>
+                              <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=si"><i class="fa<%= si ? "s" : "r" %> fa-thumbs-up"></i> <%=cV.cantidadGusta()%></a> | <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=no"><%=cV.cantidadNoGusta()%> <i class="fa<%= no ? "s" : "r" %> fa-thumbs-down"></i></a>
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </p>
                           </div>
@@ -393,7 +412,6 @@
                                         <strong>Me gusta</strong><br>
 
                                         <%
-                                        List<DtValoracion> listaVal = cV.obtenerValoracionVideo();
                                         int i = 0;
                                         for(DtValoracion v: listaVal) {
                                           if(!listaVal.isEmpty()) {
@@ -436,7 +454,6 @@
                                 <%
                                   LRFactory f = LRFactory.getInstancia();
                                   IListaReproduccion iL = f.getIListaReproduccion();
-                                  DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
                                   List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
                                   for(String l: lis){
                                 %>
@@ -455,16 +472,20 @@
                   </div>
                 </div>
                 <br/>
-                <% if(infoV.getPublico()){ %>
+                <% if(infoV.getPublico()){
+                    String path = "/module/visualizarVideo.jsp?u=" + nick +"&v=" + infoV.getNombre();
+                %>
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
                     <h2>Comentarios</h2>
-                    <%=imprimirComentarios(cV.obtenerComentariosVideo(nomVid), request)%>
+                    <%=imprimirComentarios(cV.obtenerComentariosVideo(nomVid), request, path)%>
                     <% if (s.getAttribute("usuario") != null){ %>
                     <form name="comentar" action="<%= request.getContextPath() %>/ComentarVideo" method="post">
                       <div class="input-group input-group-alternative">
-                        <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="Comentar..." name="comenatrio"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" placeholder="Comentar..." name="comentario"></textarea>
                       </div>
+                      <input type="hidden" name="uVid" value="<%=nick%>">
+                      <input type="hidden" name="nVid" value="<%=infoV.getNombre()%>">
                       <br>
                         <div class="float-right">
                           <button type="submit" class="btn btn-primary btn-sm">Comentar</button>
