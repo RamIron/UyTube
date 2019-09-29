@@ -1,9 +1,10 @@
+<%@ page import="interfaces.CFactory" %>
+<%@ page import="interfaces.ICategoria" %>
 <%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="datatypes.DtElementoUsuario" %>
-<%@ page import="interfaces.*" %>
-<%@ page import="datatypes.tipoElemento" %>
-<%@ page import="datatypes.DtVideo" %>
+<%@ page import="interfaces.LRFactory" %>
+<%@ page import="interfaces.IListaReproduccion" %>
+<%@ page import="datatypes.DtVideoUsuario" %>
 <!--
 
 =========================================================
@@ -154,12 +155,15 @@
                     IListaReproduccion iL = f.getIListaReproduccion();
                     DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
                     List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
-                    for(String l: lis){ %>
+                    String lista = request.getParameter("id");
+                    for(String l: lis){%>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/ConsultaLista?id=<%=l%>">
-                        <i class="ni ni-books text-blue"></i> <%=l%>
+                    <a class="nav-link" <%= (l.equals(lista) ? "active" : "") %> href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
+                        <i class="ni ni-books text-blue"></i> <%= (l.equals(lista) ? "<strong>" + l + "</strong>" : l) %>
                     </a>
                 </li>
+<%--    pa pijiar noma <%iL.setuList(usr.getNickname());--%>
+<%--                iL.setLista(list);%>--%>
                 <% } %>
             </ul>
             <% } %>
@@ -172,12 +176,10 @@
                 <% CFactory fC = CFactory.getInstancia();
                     ICategoria iC = fC.getICategoria();
                     List<String> lC = iC.listarCategorias();
-                    String categoria = request.getParameter("id");
-                    System.out.println(categoria);
                     for(String cat: lC){ %>
                 <li class="nav-item">
-                    <a class="nav-link <%= (cat.equals(categoria) ? "active" : "") %> href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
-                        <i class="ni ni-books text-blue"></i> <%= (cat.equals(categoria) ? "<strong> "+ cat + "</strong>" : cat) %>
+                    <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
+                        <i class="ni ni-books text-blue"></i> <%=cat%>
                     </a>
                 </li>
                 <% } %>
@@ -261,14 +263,11 @@
             <div class="header-body">
                 <!-- Contenido aqui TODO-->
 
-
+<%--                CONSULTAR LISTA--%>
                 <div class="nav-wrapper">
                     <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fab fa-youtube"></i>    Videos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-list-ul"></i>    Listas de Reproduccion</a>
+                            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-list-ul"></i>    Videos</a>
                         </li>
                     </ul>
                 </div>
@@ -276,87 +275,94 @@
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-<%--            empieza contenido de la tab de videos--%>
+                                <%--            empieza contenido de la tab de videos--%>
                                 <%
-                                    List<DtElementoUsuario> listVidsU = iC.listarElemCategoria(categoria);
+                                    LRFactory fLR = LRFactory.getInstancia();
+                                    IListaReproduccion iLR = fLR.getIListaReproduccion();
+//                                    List<DtVideoUsuario> videosLista = iLR.listarVideosdeLista();
                                 %>
 
                                 <div class="container-fluid">
                                     <div class="col col- justify-content-left">
-                                        <%if(listVidsU.isEmpty()){%>
-                                        <div class="alert alert-warning col col- justify-content-left" role="alert">
-                                            <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
-                                            <span class="alert-inner--text">No existen videos con la categoria <strong><%=categoria%></strong></span>
-                                        </div>
-                                        <%}%>
                                         <%
-                                            for(DtElementoUsuario eu: listVidsU){
-                                                if (eu.getTipo().equals(tipoElemento.VIDEO)){
+//                                            for(DtVideoUsuario vl: videosLista){
+
                                         %>
                                         <div class="card mb-3" style="max-width: 630px;">
                                             <div class="row no-gutters">
                                                 <div class="col-md-4">
-                                                    <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
+<%--                                                    <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">--%>
                                                 </div>
                                                 <div class="col-md-5">
                                                     <div class="card-body">
-                                                        <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
+<%--                                                        <h5 class="card-title mb-0 text-lg"><%=vl.getNombreE()%></h5>--%>
                                                         <br>
-                                                        <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=eu.getNickname()%></strong></small></p>
+<%--                                                        <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=vl.getNickname()%></strong></small></p>--%>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <% } %>
-                                    <% } %>
-                                </div>
-                            </div>
-<%--      termina contenido de la tab de videos--%>
-                            </div>
-                            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-<%--                                empieza contenido de la tab de listas--%>
-                                <%
-                                    List<DtElementoUsuario> listListsU = iC.listarElemCategoria(categoria);
-                                %>
-                                <div class="container-fluid">
-                                    <div class="row row- justify-content-right">
-
-                                        <%if(listListsU.isEmpty()){%>
-                                        <div class="alert alert-warning col col- justify-content-left" role="alert">
-                                            <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
-                                            <span class="alert-inner--text">No existen listas con la categoria <strong><%=categoria%></strong></span>
-                                        </div>
-                                        <%}%>
-                                        <%
-                                            for(DtElementoUsuario eu: listListsU){
-                                                if (eu.getTipo().equals(tipoElemento.LISTA)){
-                                        %>
-                                        <div class="col-sm-4">
-                                            <div class="card bg-secondary shadow ">
-                                                <div class="card-body px-lg-5 py-lg-5">
-                                                    <div class="card align-items-center">
-                                                        <div class="card-body">
-                                                            <div class="card-body">
-                                                                <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
-                                                                <br>
-                                                                <p class="card-text"><small class="text-muted">Created by: <strong><%=eu.getNickname()%></strong></small></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                            <% } %>
-                                        <% } %>
-
+<%--                                        <% } %>--%>
                                     </div>
                                 </div>
-
-<%--                                termina contenido de la tab de listas--%>
+                                <%--      termina contenido de la tab de videos--%>
                             </div>
                         </div>
                     </div>
                 </div>
+
+<%--                MODIFICAR LISTA--%>
+
+<%--                <div class="row justify-content-center">--%>
+<%--                    <div class="col-lg-5 col-md-7">--%>
+<%--                        <div class="card bg-secondary shadow border-0">--%>
+<%--                            <div class="card-body px-lg-5 py-lg-5">--%>
+<%--                                <form name="modificarlista" action="<%= request.getContextPath() %>/ModificarLista" method="post">--%>
+<%--                                    <div class="text-muted text-center mt-2 mb-3">--%>
+<%--                                        <h1>Modificar Lista de Reproduccion</h1>--%>
+<%--                                    </div>--%>
+<%--                                        <div class="form-check">--%>
+<%--                                            <input class="form-check-input" type="checkbox" name="esPublica" value="" id="defaultCheck1">--%>
+<%--                                            <label class="form-check-label" for="defaultCheck1">--%>
+<%--                                                Lista publica--%>
+<%--                                            </label>--%>
+<%--                                        </div>--%>
+<%--                                        <div class="text-center">--%>
+<%--                                            <button type="button" class="btn btn-primary my-4" onclick="continuar()">Confirmar cambios</button>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </form>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+
+
+                <form class="dropdown-menu p-4">
+                    <div class="form-group">
+                        <label for="exampleDropdownFormEmail2">Email address</label>
+                        <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleDropdownFormPassword2">Password</label>
+                        <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="dropdownCheck2">
+                            <label class="form-check-label" for="dropdownCheck2">
+                                Remember me
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                </form>
+
+
+
+
+
+
             </div>
         </div>
         <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
