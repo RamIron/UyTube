@@ -6,6 +6,7 @@
 <%@ page import="java.sql.SQLOutput" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="datatypes.DtComentario" %>
+<%@ page import="datatypes.DtValoracion" %>
 <!--
 
 =========================================================
@@ -390,10 +391,18 @@
                                     <div class="row">
                                       <div class="col-sm-6">
                                         <strong>Me gusta</strong><br>
-                                        <small>@nickname</small><br>
-                                        <small>@nickname</small><br>
-                                        <small>@nickname</small><br>
-                                        <small>@nickname</small><br>
+
+                                        <%
+                                        List<DtValoracion> listaVal = cV.obtenerValoracionVideo();
+                                        int i = 0;
+                                        for(DtValoracion v: listaVal) {
+                                          if(!listaVal.isEmpty()) {
+                                            if(v.getGusta()) { %>
+                                        <small>@<%=v.getNickname()%></small><br>
+                                            <%}
+                                          }
+                                        }
+                                        %>
                                         <div class="d-sm-none">
                                           <hr>
                                         </div>
@@ -401,9 +410,15 @@
 
                                       <div class="col-sm-6">
                                         <strong>No me gusta</strong><br>
-                                        <small>@nickname</small><br>
-                                        <small>@nickname</small><br>
-                                        <small>@nickname</small><br>
+                                        <%
+                                          for(DtValoracion v: listaVal) {
+                                            if(!listaVal.isEmpty()) {
+                                              if(!v.getGusta()) { %>
+                                        <small>@<%=v.getNickname()%></small><br>
+                                        <%}
+                                        }
+                                        }
+                                        %>
                                       </div>
                                     </div>
                                   </div>
