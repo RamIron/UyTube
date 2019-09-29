@@ -55,9 +55,9 @@ public class ManejadorUsuario {
 	public List<Usuario> obtenerUsuarios(){
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
-		TypedQuery<Usuario> consulta = em.createQuery("select DISTINCT nickname FROM Usuario", Usuario.class);
-	    List<Usuario> usuarios = consulta.getResultList();
-	    return usuarios;
+		TypedQuery<Usuario> consulta = em.createQuery("FROM Usuario", Usuario.class);
+		List<Usuario> usuarios = consulta.getResultList();
+		return usuarios;
 	}
 	
 	public List<String> listarUsuarios(){

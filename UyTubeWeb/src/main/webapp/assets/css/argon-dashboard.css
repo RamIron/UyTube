@@ -3290,14 +3290,6 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0 rgba(33, 37, 41, 0.5);
 }
 
-.bloque-comentario {
-  color: #172b4d !important;
-  background-color: transparent !important;
-  background-image: none !important;
-  border-color: #172b4d !important;
-}
-
-
 .btn-outline-default {
   color: #172b4d;
   background-color: transparent;
@@ -14814,12 +14806,6 @@ a.text-lighter:focus {
 .avatar+.avatar-content {
   display: inline-block;
   margin-left: .75rem;
-}
-
-.avatar-ramiro-lg {
-  width: 190px;
-  height: 190px;
-  font-size: 0.875rem;
 }
 
 .avatar-lg {
