@@ -262,8 +262,6 @@
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
         <div class="container-fluid">
             <div class="header-body">
-
-
                     <div class="row justify-content-center">
                         <div class="col-xl-10 order-xl-1">
                             <div class="card bg-secondary shadow ">
@@ -288,15 +286,17 @@
                                     %>
                                     <form name="consultaPerfil" role="form" action="<%= request.getContextPath() %>/ModificarDatosUsuario" method="post">
                                         <%--Foto de perfil--%>
-                                        <div class="media align-items-center">
-                                                <span class="avatar avatar-lg rounded-circle">
-                                                    <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
-                                                        <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                                    <% } else { %>
-                                                        <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
-                                                    <% } %>
-                                                </span>
-                                        </div>
+                                                <div style="text-align: center;">
+                                                    <a href="#!" class="avatar avatar-ramiro-lg rounded-circle">
+<%--                                                        <a href="#!" class="align-content-lg-center">--%>
+                                                        <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
+                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png" id="imgClickAndChange" onclick="cambiarImagen()">
+                                                        <% } else { %>
+                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>" id="imgClickAndChange" onclick="cambiarImagen()">
+                                                        <% } %>
+                                                    </a>
+                                                </div>
+                                            
                                         <%--Fin Foto de perfil--%>
                                         <div class="row">
                                             <%--Nickname--%>
@@ -499,6 +499,13 @@
         }else {
             document.forms["consultaPerfil"].submit();
         }
+    }
+</script>
+
+<script type="text/javascript">
+    function cambiarImagen() {
+
+        //document.forms["consultaPerfil"].submit();
     }
 </script>
 
