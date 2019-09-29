@@ -14808,6 +14808,12 @@ a.text-lighter:focus {
   margin-left: .75rem;
 }
 
+.avatar-ramiro-lg {
+  width: 190px;
+  height: 190px;
+  font-size: 0.875rem;
+}
+
 .avatar-lg {
   width: 58px;
   height: 58px;
