@@ -27,12 +27,13 @@
 
 <%!
 
-  public String imprimirComentarios(List< DtComentario > comentarios){
+  public String imprimirComentarios(List< DtComentario > comentarios, HttpServletRequest request){
     String res = "";
     if(comentarios.isEmpty()){
       res += "<small>No existen comentarios.</small>";
     }else {
       for (DtComentario c :comentarios){
+
         Integer dia = c.getFecha().get(Calendar.DAY_OF_MONTH);
         Integer mes = c.getFecha().get(Calendar.MONTH);
         Integer ano = c.getFecha().get(Calendar.YEAR);
@@ -42,7 +43,7 @@
                 "                        <small>" + c.getTexto() + "</small>\n" +
                 "                      </div>\n" +
                 "                      <div id=\"resp-" + c.getId() +"\" class=\"d-none\">\n" +
-                "                          <form action=\"/ResponderComentario\" method=\"post\">\n" +
+                "                          <form action=\"" + request.getContextPath() + "/ResponderComentario\" method=\"post\">\n" +
                 "                       <div class=\"input-group input-group-alternative\"> \n" +
                 "                       <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" placeholder=\"Responder...\" name=\"respuesta\"></textarea>\n" +
                 "                       </div>\n" + " <br>\n" +
@@ -62,7 +63,7 @@
                 "                      <br>\n";
         if (!c.getRespuestas().isEmpty()){
           res += "                      <div class=\"container-fluid\">\n" +
-                  imprimirComentarios(c.getRespuestas()) +
+                  imprimirComentarios(c.getRespuestas(), request) +
                   "                      </div>";
 
         }
@@ -360,7 +361,57 @@
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </p>
                           </div>
-                          <% if (s.getAttribute("usuario") != null){ %>
+
+                          <%
+                            if (s.getAttribute("usuario") != null){
+                              System.out.println("-" + s.getAttribute("usuario") + "-");
+                              System.out.println("-" + nick + "-");
+                              if( ((DtUsuarioWeb) s.getAttribute("usuario")).getNickname().equals(nick)){
+                                //TODO
+                          %>
+
+                          <div>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn  btn-sm btn-primary " data-toggle="modal" data-target="#valoraciones">
+                              Ver valoraciones
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="valoraciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                    <div class="row">
+                                      <div class="col-sm-6">
+                                        <strong>Me gusta</strong><br>
+                                        <small>@nickname</small><br>
+                                        <small>@nickname</small><br>
+                                        <small>@nickname</small><br>
+                                        <small>@nickname</small><br>
+                                        <div class="d-sm-none">
+                                          <hr>
+                                        </div>
+                                      </div>
+
+                                      <div class="col-sm-6">
+                                        <strong>No me gusta</strong><br>
+                                        <small>@nickname</small><br>
+                                        <small>@nickname</small><br>
+                                        <small>@nickname</small><br>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <%}%>
                           <div>
                             <div class="dropdown">
                               <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -393,7 +444,7 @@
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
                     <h2>Comentarios</h2>
-                    <%=imprimirComentarios(cV.obtenerComentariosVideo(nomVid))%>
+                    <%=imprimirComentarios(cV.obtenerComentariosVideo(nomVid), request)%>
                     <% if (s.getAttribute("usuario") != null){ %>
                     <form name="comentar" action="<%= request.getContextPath() %>/ComentarVideo" method="post">
                       <div class="input-group input-group-alternative">
@@ -415,6 +466,7 @@
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
                     <h2>Recomendados</h2>
+
                   </div>
                 </div>
               </div>
