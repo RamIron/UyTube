@@ -262,134 +262,114 @@
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
         <div class="container-fluid">
             <div class="header-body">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-10 order-xl-1">
-                            <div class="card bg-secondary shadow ">
-                                <div class="card-body px-lg-5 py-lg-5">
-                                    <div class="text-muted text-center mt-2 mb-3">
-                                        <h1>Datos del Usuario</h1>
+                <div class="row justify-content-center">
+                    <div class="col-xl-10 order-xl-1">
+                        <div class="card bg-secondary shadow ">
+                            <div class="card-body px-lg-5 py-lg-5">
+                                <div class="text-muted text-center mt-2 mb-3">
+                                    <h1>Datos del Usuario</h1>
+                                </div>
+                                <%
+                                    String message = (String) request.getAttribute("message");
+                                    if(message != null){
+                                %>
+                                <div class="alert alert-danger" role="alert">
+                                    <%=message%>
+                                </div>
+                                <%}%>
+                                <%
+                                    String nickUsr =  request.getParameter("nick");
+                                    //DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+                                    UFactory fU = UFactory.getInstancia();
+                                    IUsuario iUsr = fU.getIUsuario();
+                                    DtUsuario usuario = iUsr.obtenerInfoUsuario(nickUsr);
+                                    DtCanal canal = iUsr.obtenerInfoCanal();
+
+                                %>
+                                <form name="consultaPerfil" role="form" action="<%= request.getContextPath() %>/ModificarDatosUsuario" method="post">
+                                    <%--Foto de perfil--%>
+                                    <div style="text-align: center;">
+                                        <a href="" class="avatar avatar-ramiro-lg rounded-circle">
+                                            <%--<a href="#!" class="align-content-lg-center">--%>
+                                            <% if (usuario.getImagen().equals("src/main/resources/img/default.png")) {%>
+                                                <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                                            <% } else { %>
+                                                <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usuario.getImagen()%>">
+                                            <% } %>
+                                        </a>
                                     </div>
-                                    <%
-                                        String message = (String) request.getAttribute("message");
-                                        if(message != null){
-                                    %>
-                                    <div class="alert alert-danger" role="alert">
-                                        <%=message%>
+                                    <%--Fin Foto de perfil--%>
+
+                                    <div class="row">
+                                        <%--Nickname--%>
+                                        <div class="col">
+                                            <label for="nickID" > Nick  </label>
+                                            <div class="form-group mb-3">
+                                                <div class="input-group input-group-alternative">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                                                    </div>
+                                                    <input name="nickname" id="nickID" class="form-control" placeholder="nickname" type="text" readonly="true" value="<%=usuario.getNickname()%>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%--Fin Nickname--%>
                                     </div>
-                                    <%}%>
-                                    <%
-                                        DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                                        UFactory fU = UFactory.getInstancia();
-                                        IUsuario iUsr = fU.getIUsuario();
-                                        DtUsuario usuario = iUsr.obtenerInfoUsuario(usr.getNickname());
-                                        DtCanal canal = iUsr.obtenerInfoCanal();
-                                    %>
-                                    <form name="consultaPerfil" role="form" action="<%= request.getContextPath() %>/ModificarDatosUsuario" method="post">
-                                        <%--Foto de perfil--%>
-                                        <div style="text-align: center;">
-                                            <a href="#!" class="avatar avatar-ramiro-lg rounded-circle">
-                                                <%--                                                        <a href="#!" class="align-content-lg-center">--%>
-                                                <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
-                                                    <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                                <% } else { %>
-                                                    <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
-                                                <% } %>
-                                            </a>
-                                            <div class="row justify-content-center align-items-center minh-100">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <div class="input-group input-group-alternative">
-                                                            <input type="file" class="custom-file-input" id="fotoID" name="foto" disabled value="<%=usuario.getImagen()%>">
-                                                            <label class="custom-file-label" for="fotoID">"<%= request.getContextPath() %>/<%=usr.getFoto()%>"</label>
-                                                        </div>
+
+                                    <div class="row">
+                                        <%--Nombre--%>
+                                        <div class="col">
+                                            <label for="nombreID" > Nombre  </label>
+                                            <div class="form-group">
+                                                <div class="input-group input-group-alternative">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
                                                     </div>
+                                                    <input name="nomU" class="form-control" placeholder="Nombre" id="nombreID" type="text" value="<%=usuario.getNombre()%>" disabled>
                                                 </div>
                                             </div>
                                         </div>
-                                        <%--Fin Foto de perfil--%>
+                                        <%--Fin Nombre--%>
 
-                                        <div class="row">
-                                            <%--Nickname--%>
-                                            <div class="col">
-                                                <label for="nickID" > Nick  </label>
-                                                <div class="form-group mb-3">
-                                                    <div class="input-group input-group-alternative">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
-                                                        </div>
-                                                        <input name="nickname" id="nickID" class="form-control" placeholder="nickname" type="text" readonly="true" value="<%=usuario.getNickname()%>">
+                                        <%--Apellido--%>
+                                        <div class="col">
+                                            <label for="apellidoID" > Apellido </label>
+                                            <div class="form-group">
+                                                <div class="input-group input-group-alternative">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
                                                     </div>
+                                                    <input name="apellido" class="form-control" placeholder="Apellido" id="apellidoID" type="text" value="<%=usuario.getApellido()%>" disabled>
                                                 </div>
                                             </div>
-                                            <%--Fin Nickname--%>
-
-                                            <%--Email--%>
-                                            <div class="col">
-                                                <label for="mailID" > Email  </label>
-                                                <div class="form-group">
-                                                    <div class="input-group input-group-alternative">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                                                        </div>
-                                                        <input name="email" id="mailID" class="form-control" placeholder="ejemplo@email.com" type="email" value="<%=usuario.getCorreoE()%>" disabled>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <%--Fin Email--%>
                                         </div>
+                                        <%--Fin Apellido--%>
+                                    </div>
 
-                                        <div class="row">
-                                            <%--Nombre--%>
-                                            <div class="col">
-                                                <label for="nombreID" > Nombre  </label>
-                                                <div class="form-group">
-                                                    <div class="input-group input-group-alternative">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                                                        </div>
-                                                        <input name="nomU" class="form-control" placeholder="Nombre" id="nombreID" type="text" value="<%=usuario.getNombre()%>" disabled>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <%--Fin Nombre--%>
-
-                                            <%--Apellido--%>
-                                            <div class="col">
-                                                <label for="apellidoID" > Apellido </label>
-                                                <div class="form-group">
-                                                    <div class="input-group input-group-alternative">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                                                        </div>
-                                                        <input name="apellido" class="form-control" placeholder="Apellido" id="apellidoID" type="text" value="<%=usuario.getApellido()%>" disabled>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <%--Fin Apellido--%>
-                                        </div>
-
-                                        <%--Fecha nacimiento--%>
-                                        <div class="row">
-                                            <div class="col">
-                                                <label for="fnacID" > Fehca de Nacimiento </label>
-                                                <div class="form-group">
-                                                    <div class="input-group input-group-alternative">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                                            <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                    <%--Fecha nacimiento--%>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="fnacID" > Fehca de Nacimiento </label>
+                                            <div class="form-group">
+                                                <div class="input-group input-group-alternative">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                                        <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                                                             String fechaS = sdf.format(usuario.getfNac().getTime());%>
-                                                        </div>
-                                                        <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" id="fNacID" type="text" value="<%=fechaS%>" disabled>
                                                     </div>
+                                                    <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" id="fNacID" type="text" value="<%=fechaS%>" disabled>
                                                 </div>
                                             </div>
                                         </div>
-                                        <%--Fin Fecha nacimiento--%>
+                                    </div>
+                                    <%--Fin Fecha nacimiento--%>
 
+                                    <%if(canal.getPublico()){%>
                                         <div class="text-muted text-center mt-2 mb-3">
                                             <hr/>
                                             <h1>Datos del Canal</h1>
                                         </div>
+
                                         <div class="row">
                                             <%--Nombre Canal--%>
                                             <div class="col">
@@ -399,7 +379,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
                                                         </div>
-                                                        <input name="nomCan" class="form-control" placeholder="Nombre (opcional)" id="nomCanalID" type="text" value="<%=canal.getNombre()%>" disabled>
+                                                        <input name="nomCan" class="form-control" placeholder="Nombre (opcional)" id="nomCanalID" type="text" value=" <%=canal.getNombre()%>" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -412,7 +392,7 @@
                                                     <select class="custom-select" id="selCategoriaID" name="categoria" disabled>
                                                         <option value="" <%= (canal.getCategoria().equals("") )? "selected": "" %>> --Sin Categoria-- </option>
                                                         <%for(String cat: lC){ %>
-                                                        <option value="<%=cat%>" <%= (canal.getCategoria().equals(cat)) ? "selected" : ""%>><%=cat%></option>
+                                                            <option value="<%=cat%>" <%= (canal.getCategoria().equals(cat)) ? "selected" : ""%>><%=cat%></option>
                                                         <% } %>
                                                     </select>
                                                 </div>
@@ -429,31 +409,17 @@
                                         </div>
                                         <%--Fin Descripcion Canal--%>
 
-                                        <%--Publico Canal--%>
+                                    <% }else{ %>
                                         <div class="text-muted text-center mt-2 mb-3">
-                                            <div class="custom-control custom-control-alternative custom-checkbox mb-3">
-                                                <input class="custom-control-input" id="checkPublico" type="checkbox" name="publico" <%= canal.getPublico() ? "checked" : "" %> disabled>
-                                                <label class="custom-control-label" for="checkPublico">Canal publico</label>
-                                            </div>
+                                            <hr/>
+                                            <h2>El canal de este usuario es privado</h2>
                                         </div>
-                                        <%--Fin Publico Canal--%>
-
-                                        <%--Boton Habilitar Datos--%>
-                                        <div class="text-center">
-                                            <button type="button" class="btn btn-primary my-4" id="btnHabilitarID" onclick="habilitarCambios()">Modificar Datos</button>
-                                        </div>
-                                        <%--Fin Boton Habilitar Datos--%>
-
-                                        <%--Boton Modificar Datos--%>
-                                        <div class="text-center">
-                                            <button type="button" class="btn btn-primary my-4" id="btnCambiarID" disabled style="display:none;" onclick="cambiar()">Aceptar Cambios</button>
-                                        </div>
-                                        <%--Fin Boton Modificar Datos--%>
-                                    </form>
-                                </div>
+                                    <%}%>
+                                </form>
                             </div>
                         </div>
                     </div>
+                </div>
                 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
             </div>
         </div>
