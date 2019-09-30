@@ -20,20 +20,20 @@ public class ModificarDatosUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nickname = request.getParameter("nickname");
         String nomU = request.getParameter("nomU");
-        System.out.println("Nombre: " + nomU);
         String apellido = request.getParameter("apellido");
-        System.out.println("Apellido: " + apellido);
         String fNac = request.getParameter("fNac");
         String nomC = request.getParameter("nomCan");
-        //String foto = request.getParameter("foto");
+        String foto = request.getParameter("foto");
         String desc = request.getParameter("descripcion");
-        Boolean publico;//TODO ver como se maneja esto
+        String categoria = request.getParameter("categoria");
+
+        Boolean publico;
         if(request.getParameter("publico") == null){
             publico = false;
         }else{
             publico = true;
         }
-        String categoria = request.getParameter("categoria");
+
 
         UFactory fU = UFactory.getInstancia();
         IUsuario iU = fU.getIUsuario();
@@ -54,7 +54,13 @@ public class ModificarDatosUsuario extends HttpServlet {
         System.out.println("Nickname: " + nickname);
 
        if(iU.existeNickname(nickname)) {
-            iU.modificarInfoUsuario(nomU, apellido, cal, null);
+           String fotoURL;
+           if(!foto.equals("")) {
+               fotoURL = "img/usr/" + foto;
+           }else {
+               fotoURL = "src/main/resources/img/default.png";
+           }
+            iU.modificarInfoUsuario(nomU, apellido, cal, fotoURL);
             iU.modificarInfoCanal(nomC, desc, publico);
             iU.modificarCatCanal(nickname, categoria);
         }

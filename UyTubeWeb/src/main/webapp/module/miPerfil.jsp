@@ -226,13 +226,13 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
-                <span class="avatar avatar-sm rounded-circle">
-                  <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
-                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                  <% } else { %>
-                  <img alt="Image placeholder" src=".<%=usr.getFoto()%>">
-                  <% } %>
-                </span>
+                            <span class="avatar avatar-sm rounded-circle">
+                                <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
+                                    <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                                <% } else { %>
+                                    <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
+                                <% } %>
+                            </span>
                             <div class="media-body ml-2 d-none d-lg-block">
                                 <span class="mb-0 text-sm  font-weight-bold">@<%=usr.getNickname() %></span>
                             </div>
@@ -280,24 +280,34 @@
                                     <%
                                         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
                                         UFactory fU = UFactory.getInstancia();
-                                        IUsuario iU = fU.getIUsuario();
-                                        DtUsuario usuario = iU.obtenerInfoUsuario(usr.getNickname());
-                                        DtCanal canal = iU.obtenerInfoCanal();
+                                        IUsuario iUsr = fU.getIUsuario();
+                                        DtUsuario usuario = iUsr.obtenerInfoUsuario(usr.getNickname());
+                                        DtCanal canal = iUsr.obtenerInfoCanal();
                                     %>
                                     <form name="consultaPerfil" role="form" action="<%= request.getContextPath() %>/ModificarDatosUsuario" method="post">
                                         <%--Foto de perfil--%>
-                                                <div style="text-align: center;">
-                                                    <a href="#!" class="avatar avatar-ramiro-lg rounded-circle">
-<%--                                                        <a href="#!" class="align-content-lg-center">--%>
-                                                        <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
-                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png" id="imgClickAndChange" onclick="cambiarImagen()">
-                                                        <% } else { %>
-                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>" id="imgClickAndChange" onclick="cambiarImagen()">
-                                                        <% } %>
-                                                    </a>
+                                        <div style="text-align: center;">
+                                            <a href="#!" class="avatar avatar-ramiro-lg rounded-circle">
+                                                <%--                                                        <a href="#!" class="align-content-lg-center">--%>
+                                                <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
+                                                    <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png" id="imgClickAndChange" onclick="cambiarImagen()">
+                                                <% } else { %>
+                                                    <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>" id="imgClickAndChange" onclick="cambiarImagen()">
+                                                <% } %>
+                                            </a>
+                                            <div class="row justify-content-center align-items-center minh-100">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <div class="input-group input-group-alternative">
+                                                            <input type="file" class="custom-file-input" id="fotoID" name="foto" disabled value="<%=usuario.getImagen()%>">
+                                                            <label class="custom-file-label" for="fotoID">"<%= request.getContextPath() %>/<%=usr.getFoto()%>"</label>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            
+                                            </div>
+                                        </div>
                                         <%--Fin Foto de perfil--%>
+
                                         <div class="row">
                                             <%--Nickname--%>
                                             <div class="col">
@@ -473,6 +483,7 @@
 
 <script type="text/javascript">
     function habilitarCambios() {
+        document.getElementById('fotoID').disabled=false;
         document.getElementById('nombreID').disabled=false;
         document.getElementById('apellidoID').disabled=false;
         document.getElementById('fNacID').disabled=false;
