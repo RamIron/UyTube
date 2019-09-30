@@ -19,8 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-@WebServlet(name = "CrearVideo", value= "/CrearVideo")
-public class CrearVideo extends HttpServlet {
+@WebServlet(name = "ModificarVideo" , value = "/ModificarVideo")
+public class ModificarVideo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UFactory uF = UFactory.getInstancia();
         IUsuario iU = uF.getIUsuario();
@@ -30,6 +30,7 @@ public class CrearVideo extends HttpServlet {
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
 
+        String nomOriginal = request.getParameter("nomOriginal");
         String nomVideo = request.getParameter("nomVid");
         int duracion = Integer.parseInt(request.getParameter("dur"));
         String url = request.getParameter("url");
@@ -48,21 +49,23 @@ public class CrearVideo extends HttpServlet {
         }
         //FIN DE CODIGO PARA EXTRAER LA FECHA
 
-        if(iV.existeVideo(usr.getNickname(), nomVideo)){
-            RequestDispatcher rd;
-            rd = request.getRequestDispatcher("/module/nuevoVideo.jsp");
-            String message = "EXISTE EL VIDEO";
-            request.setAttribute("message", message);
-            rd.forward(request, response);
+        Boolean publico;
+        if(request.getParameter("publico") == null){
+            publico = false;
         }else{
-            iV.agregarVideo(usr.getNickname(), nomVideo, descripcion, cal, duracion, url);
-            iV.agregarCategoria(catVideo);
-            RequestDispatcher rd;
-            rd = request.getRequestDispatcher("/index.jsp");
-            String message = "Se ha creado el video <strong>" + nomVideo + "</strong>";
-            request.setAttribute("message", message);
-            rd.forward(request, response);
+            publico = true;
         }
+        iV.setUsr(usr.getNickname());
+        iV.setVid(nomOriginal);
+        iV.modificarInfoVideo(nomVideo, descripcion, cal, duracion, url, publico);
+        if(!catVideo.isEmpty()) {
+            iV.agregarCategoria(catVideo);
+        }
+        RequestDispatcher rd;
+        rd = request.getRequestDispatcher("/index.jsp");
+        String message = "Se ha modificado el video <strong>" + nomVideo + "</strong>";
+        request.setAttribute("message", message);
+        rd.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
