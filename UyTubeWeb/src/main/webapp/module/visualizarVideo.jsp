@@ -386,65 +386,8 @@
                             if (s.getAttribute("usuario") != null){
                               System.out.println("-" + s.getAttribute("usuario") + "-");
                               System.out.println("-" + nick + "-");
-                              if( ((DtUsuarioWeb) s.getAttribute("usuario")).getNickname().equals(nick)){
-                                //TODO
+
                           %>
-
-                          <div>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn  btn-sm btn-primary " data-toggle="modal" data-target="#valoraciones">
-                              Ver valoraciones
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="valoraciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body">
-
-                                    <div class="row">
-                                      <div class="col-sm-6">
-                                        <strong>Me gusta</strong><br>
-
-                                        <%
-                                        int i = 0;
-                                        for(DtValoracion v: listaVal) {
-                                          if(!listaVal.isEmpty()) {
-                                            if(v.getGusta()) { %>
-                                        <small>@<%=v.getNickname()%></small><br>
-                                            <%}
-                                          }
-                                        }
-                                        %>
-                                        <div class="d-sm-none">
-                                          <hr>
-                                        </div>
-                                      </div>
-
-                                      <div class="col-sm-6">
-                                        <strong>No me gusta</strong><br>
-                                        <%
-                                          for(DtValoracion v: listaVal) {
-                                            if(!listaVal.isEmpty()) {
-                                              if(!v.getGusta()) { %>
-                                        <small>@<%=v.getNickname()%></small><br>
-                                        <%}
-                                        }
-                                        }
-                                        %>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <%}%>
                           <div>
                             <div class="dropdown">
                               <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -467,6 +410,155 @@
                       </div>
                     </div>
                     <hr/>
+                    <%
+                      if (s.getAttribute("usuario") != null){
+                        if( ((DtUsuarioWeb) s.getAttribute("usuario")).getNickname().equals(nick)){
+                    %>
+                    <div>
+                      <h3>Opciones de Propietario</h3>
+                      <div  class="float-sm-right d-sm-inline-flex ">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn  btn-sm btn-primary " data-toggle="modal" data-target="#valoraciones">
+                          Ver valoraciones
+                        </button>
+                        <button type="button" class="btn  btn-sm btn-primary " data-toggle="modal" data-target="#editar">
+                          Editar
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="valoraciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+
+                                <div class="row">
+                                  <div class="col-sm-6">
+                                    <strong>Me gusta</strong><br>
+
+                                    <%
+                                      int i = 0;
+                                      for(DtValoracion v: listaVal) {
+                                        if(!listaVal.isEmpty()) {
+                                          if(v.getGusta()) { %>
+                                    <small>@<%=v.getNickname()%></small><br>
+                                    <%}
+                                    }
+                                    }
+                                    %>
+                                    <div class="d-sm-none">
+                                      <hr>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-sm-6">
+                                    <strong>No me gusta</strong><br>
+                                    <%
+                                      for(DtValoracion v: listaVal) {
+                                        if(!listaVal.isEmpty()) {
+                                          if(!v.getGusta()) { %>
+                                    <small>@<%=v.getNickname()%></small><br>
+                                    <%}
+                                    }
+                                    }
+                                    %>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Editar Video</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form name="nuevoVideo" action="<%= request.getContextPath() %>/ModificarVideo" method="post">
+                                  <%--Nombre de Video--%>
+                                  <div class="form-group">
+                                    <small>Nombre</small>
+                                    <input type="text" name="nomVid" class="form-control" placeholder="Nombre de Video" value="<%=infoV.getNombre()%>">
+                                  </div>
+                                  <%--Fin Nombre de Video--%>
+
+                                  <%--Duracion--%>
+                                  <div class="form-group">
+                                    <small>Duracion</small>
+                                    <input type="text" name="dur" class="form-control" placeholder="Duración (en segundos)" value="<%=infoV.getDuracion()%>">
+                                  </div>
+                                  <%--Fin Duracion--%>
+
+                                  <%--URL--%>
+                                  <div class="form-group">
+                                    <small>URL</small>
+                                    <input type="text" name="url" class="form-control" placeholder="URL (YouTube)" value="https://www.youtube.com/watch?v=<%=infoV.getUrl()%>">
+                                  </div>
+                                  <%--Fin URL--%>
+
+                                  <%--Descripcion--%>
+                                  <div class="form-group">
+                                    <small>Descripcion</small>
+                                    <div class="input-group input-group-alternative">
+                                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripción..." name="desc"><%=infoV.getDescripcion()%></textarea>
+                                    </div>
+                                  </div>
+                                  <%--Fin Descripcion--%>
+
+                                  <%--Fecha de Publicacion--%>
+                                  <div class="form-group">
+                                    <small>Fecha de Pulicacion</small>
+                                    <div class="input-group input-group-alternative">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                      </div>
+                                      <input name="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" value="<%=infoV.getfPublicacion().get(Calendar.MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.YEAR)%>"> <!-- //TODO -->
+                                    </div>
+                                  </div>
+                                  <%--Fin Fecha de Publicacion--%>
+
+                                  <%--Categoria de video--%>
+                                  <div class="form-group">
+                                    <small>Categoria</small>
+
+                                    <select class="custom-select" id="inputGroupSelect01" name="categoria">
+                                      <option value="" <%= (infoV.getCategoria() == null) ? "selected" : ""%>> --Sin Categoría-- </option>
+                                      <%
+                                        String categoria = "";
+                                        if(infoV.getCategoria() != null){
+                                          categoria = infoV.getCategoria();
+                                        }
+                                        List<String> lC2 = iC.listarCategorias();
+                                        for(String cat2: lC2){ %>
+                                      <option value="<%=cat2%>" <%= (categoria.equals(cat2)) ? "selected" : ""%>><%=cat2%></option>
+                                      <% } %>
+                                    </select>
+                                  </div>
+                                  <%--Fin Categoria de video--%>
+
+                                  <%--Boton crear video--%>
+                                  <div class="text-center">
+                                    <button type="button" class="btn btn-primary my-4" onclick="continuar()">Guardar</button>
+                                  </div>
+                                  <%--Fin Boton crear video--%>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <%}}%>
                     <h3>Descripcion</h3>
                     <small><%=infoV.getDescripcion()%></small>
                   </div>
@@ -521,6 +613,8 @@
   <!--   Optional JS   -->
   <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
   <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+  <!--   Optional JS   -->
+  <script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
   <!--   Argon JS   -->
   <script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
