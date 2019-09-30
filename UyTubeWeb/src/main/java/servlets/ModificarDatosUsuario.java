@@ -1,5 +1,6 @@
 package servlets;
 
+import datatypes.DtUsuarioWeb;
 import interfaces.IUsuario;
 import interfaces.UFactory;
 
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +20,7 @@ import java.util.Date;
 @WebServlet(name = "ModificarDatosUsuario", value = "/ModificarDatosUsuario")
 public class ModificarDatosUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession s = request.getSession();
         String nickname = request.getParameter("nickname");
         String nomU = request.getParameter("nomU");
         String apellido = request.getParameter("apellido");
@@ -65,6 +68,8 @@ public class ModificarDatosUsuario extends HttpServlet {
             iU.modificarCatCanal(nickname, categoria);
         }
 
+        DtUsuarioWeb usr = iU.obtenerUsuarioWebNick(nickname);
+        s.setAttribute("usuario", usr);
         RequestDispatcher rd;
         rd = request.getRequestDispatcher("/index.jsp");
         String message = "DATOS DE USUARIO MODIFICADOS";
