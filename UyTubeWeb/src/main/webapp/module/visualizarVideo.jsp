@@ -371,7 +371,7 @@
                                 Boolean si = false;
                                 Boolean no = false;
                                 for (DtValoracion v: listaVal){
-                                  if(v.getNickname().equals(usr.getNickname())){
+                                  if(usr != null && v.getNickname().equals(usr.getNickname())){
                                     si = v.getGusta();
                                     no = !v.getGusta();
                                   }
@@ -481,7 +481,7 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                <form name="nuevoVideo" action="<%= request.getContextPath() %>/ModificarVideo" method="post">
+                                <form name="modificarVideo" action="<%= request.getContextPath() %>/ModificarVideo" method="post">
                                   <%--Nombre de Video--%>
                                   <div class="form-group">
                                     <small>Nombre</small>
@@ -542,6 +542,15 @@
                                     </select>
                                   </div>
                                   <%--Fin Categoria de video--%>
+
+                                  <div class="text-muted text-center mt-2 mb-3">
+                                    <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                      <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico" <%= infoV.getPublico() ? "checked" : "" %>>
+                                      <label class="custom-control-label" for="customCheck5">Canal publico</label>
+                                    </div>
+                                  </div>
+
+                                  <input type="hidden" name="nomOriginal" value="<%=infoV.getNombre()%>">
 
                                   <%--Boton crear video--%>
                                   <div class="text-center">
@@ -624,6 +633,39 @@
         token: "ee6fab19c5a04ac1a32a645abde4613a",
         application: "argon-dashboard-free"
       });
+  </script>
+  <script type="text/javascript">
+    function continuar(){
+      var nomVid = document.forms["modificarVideo"]["nomVid"].value;
+      var dur = document.forms["modificarVideo"]["dur"].value;
+      var url = document.forms["modificarVideo"]["url"].value;
+      var desc = document.forms["modificarVideo"]["desc"].value;
+      var fPub = document.forms["modificarVideo"]["fPub"].value;
+      if (nomVid == "" || dur == "" || url == "" || desc == "" || fPub == "" ){
+        alert("Falta completar campos");
+      } else{
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        if (match&&match[7].length==11){
+          var b=match[7];
+          document.forms["modificarVideo"]["url"].value = b;
+          document.forms["modificarVideo"].submit();
+        }else{
+          alert("Url incorrecta, debe ser de youtube");
+        }
+      }
+    }
+
+    function youtube_parser(url){
+      var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+      var match = url.match(regExp);
+      if (match&&match[7].length==11){
+        var b=match[7];
+        alert(b);
+      }else{
+        alert("Url incorrecta");
+      }
+    }
   </script>
 </body>
 
