@@ -284,9 +284,13 @@
                                     IUsuario iUsr = fU.getIUsuario();
                                     DtUsuario usuario = iUsr.obtenerInfoUsuario(nickUsr);
                                     DtCanal canal = iUsr.obtenerInfoCanal();
+                                    List<String> seguidos = iUsr.listarSeguidos();
+                                    List<String> seguidores = iUsr.listarSeguidos();
+
+                                    DtUsuarioWeb usrSession = (DtUsuarioWeb) s.getAttribute("usuario");
 
                                 %>
-                                <form name="consultaPerfil" role="form" action="<%= request.getContextPath() %>/ModificarDatosUsuario" method="post">
+                                <form name="consultaUsuario" role="form" action="<%= request.getContextPath() %>/SeguirUsuario" method="post">
                                     <%--Foto de perfil--%>
                                     <div style="text-align: center;">
                                         <a href="" class="avatar avatar-ramiro-lg rounded-circle">
@@ -300,9 +304,26 @@
                                     </div>
                                     <%--Fin Foto de perfil--%>
 
+                                    <%--Boton seguir usuario--%>
                                     <div class="row">
+                                        <% if(!seguidores.contains(usrSession.getNickname())){ %>
+                                            <button class="btn btn-icon btn-3 btn-primary" type="button" onclick="seguirUsuario()">
+                                                <span class="btn-inner--icon"><i class="ni ni-curved-next"></i></span>
+                                                <span class="btn-inner--text">Seguir</span>
+                                            </button>
+                                        <% }else{ %>
+                                            <button class="btn btn-icon btn-3 btn-secondary" type="button" onclick="dejarSeguirUsuario()">
+                                                <span class="btn-inner--icon"><i class="ni ni-check-bold"></i></span>
+                                                <span class="btn-inner--text">Siguiendo</span>
+                                            </button>
+                                        <% } %>
+                                    </div>
+
+                                    <%--Fin Boton seguir usuario--%>
+
+                                    <div class="row justify-content-center">
                                         <%--Nickname--%>
-                                        <div class="col">
+                                        <div class="col-4">
                                             <label for="nickID" > Nick  </label>
                                             <div class="form-group mb-3">
                                                 <div class="input-group input-group-alternative">
@@ -448,41 +469,8 @@
 </script>
 
 <script type="text/javascript">
-    function habilitarCambios() {
-        document.getElementById('fotoID').disabled=false;
-        document.getElementById('nombreID').disabled=false;
-        document.getElementById('apellidoID').disabled=false;
-        document.getElementById('fNacID').disabled=false;
-        document.getElementById('nomCanalID').disabled=false;
-        document.getElementById('selCategoriaID').disabled=false;
-        document.getElementById('descripCanID').disabled=false;
-        document.getElementById('checkPublico').disabled=false;
-        document.getElementById('btnHabilitarID').disabled=true;
-        document.getElementById('btnHabilitarID').style.display = 'none';
-        document.getElementById('btnCambiarID').disabled=false;
-        document.getElementById('btnCambiarID').style.display = 'inline';
-    }
-</script>
-
-<script type="text/javascript">
-    function cambiar() {
-        var nomU = document.forms["consultaPerfil"]["nomU"].value;
-        var apellido = document.forms["consultaPerfil"]["apellido"].value;
-        var fNac = document.forms["consultaPerfil"]["fNac"].value;
-        var nomCan = document.forms["consultaPerfil"]["nomCan"].value;
-        var descripcion = document.forms["consultaPerfil"]["descripcion"].value;
-        if(nomU == "" || apellido == "" || fNac == "" || nomCan =="" || descripcion == "" ){
-            alert("Falta completar campos");
-        }else {
-            document.forms["consultaPerfil"].submit();
-        }
-    }
-</script>
-
-<script type="text/javascript">
-    function cambiarImagen() {
-
-        //document.forms["consultaPerfil"].submit();
+    function seguirUsuario() {
+        document.forms["consultaUsuario"].submit();
     }
 </script>
 
