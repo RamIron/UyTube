@@ -259,6 +259,7 @@
             UFactory uF = UFactory.getInstancia();
             IUsuario iU = uF.getIUsuario();
             //List<String> listU = iU.listarUsuarios();
+            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
             List<DtUsuarioWeb> listU = iU.listarUsuariosWeb();
           %>
 
@@ -270,13 +271,17 @@
               <div class="col-sm-4">
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
-                    <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>" >
+                    <%if(u.getNickname().contentEquals(usr.getNickname())){ %>
+                      <a class="" href="<%= request.getContextPath() %>/module/miPerfil.jsp" >
+                    <% }else{ %>
+                      <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                    <% } %>
                       <div class="media align-items-center">
                         <span class="avatar avatar-lg rounded-circle">
                           <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
-                          <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
                           <% } else { %>
-                          <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
+                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
                           <% } %>
                         </span>
                         <div class="media-body">
@@ -313,6 +318,6 @@
         application: "argon-dashboard-free"
       });
   </script>
-</body>
 
+</body>
 </html>
