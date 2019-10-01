@@ -1,10 +1,9 @@
-<%@ page import="interfaces.CFactory" %>
-<%@ page import="interfaces.ICategoria" %>
 <%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="interfaces.LRFactory" %>
-<%@ page import="interfaces.IListaReproduccion" %>
 <%@ page import="datatypes.DtVideoUsuario" %>
+<%@ page import="interfaces.*" %>
+<%@ page import="datatypes.DtVideo" %>
+<%@ page import="java.util.ArrayList" %>
 <!--
 
 =========================================================
@@ -162,8 +161,6 @@
                         <i class="ni ni-books text-blue"></i> <%= (l.equals(lista) ? "<strong>" + l + "</strong>" : l) %>
                     </a>
                 </li>
-<%--    pa pijiar noma <%iL.setuList(usr.getNickname());--%>
-<%--                iL.setLista(list);%>--%>
                 <% } %>
             </ul>
             <% } %>
@@ -279,13 +276,26 @@
                                 <%
                                     LRFactory fLR = LRFactory.getInstancia();
                                     IListaReproduccion iLR = fLR.getIListaReproduccion();
-//                                    List<DtVideoUsuario> videosLista = iLR.listarVideosdeLista();
+                                    VFactory fV = VFactory.getInstancia();
+                                    IVideo iV = fV.getIVideo();
+
+                                    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+                                    List<String> lis = iLR.listarListasDeUsuario(usr.getNickname());
+                                    String lista = request.getParameter("id");
+                                    List<DtVideoUsuario> videoLista = iLR.listarVideosdeLista(lista);
                                 %>
 
                                 <div class="container-fluid">
                                     <div class="col col- justify-content-left">
                                         <%
-//                                            for(DtVideoUsuario vl: videosLista){
+                                            List<DtVideo> infoVideo = new ArrayList<DtVideo>();
+                                            for(DtVideoUsuario vl: videoLista) {
+                                                DtVideo infoVid = iV.obtenerInfoVideo(vl.getNombreE());
+                                                infoVideo.add(infoVid);
+                                            }
+                                        %>
+                                        <%
+                                            for(DtVideo iv : infoVideo){
 
                                         %>
                                         <div class="card mb-3" style="max-width: 630px;">
@@ -295,14 +305,14 @@
                                                 </div>
                                                 <div class="col-md-5">
                                                     <div class="card-body">
-<%--                                                        <h5 class="card-title mb-0 text-lg"><%=vl.getNombreE()%></h5>--%>
+                                                        <h5 class="card-title mb-0 text-lg"><%=iv.getNombre()%></h5>
                                                         <br>
-<%--                                                        <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=vl.getNickname()%></strong></small></p>--%>
+                                                        <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=iv.getDescripcion()%></strong></small></p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-<%--                                        <% } %>--%>
+                                        <% } %>
                                     </div>
                                 </div>
                                 <%--      termina contenido de la tab de videos--%>
