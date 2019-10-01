@@ -13,4 +13,4 @@ Integrantes:
 -Ramiro Alves
 
 
--Tomás Gómez (Rest in pieces)
+-Tomás Gómez (Press F to pay respect)
