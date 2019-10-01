@@ -13,4 +13,4 @@ Integrantes:
 -Ramiro Alves
 
 
--Tomás Gómez
+-Tomás Gómez (Rest in pieces)
