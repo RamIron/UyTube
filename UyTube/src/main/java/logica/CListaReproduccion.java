@@ -62,6 +62,18 @@ public class CListaReproduccion implements IListaReproduccion {
 		this.lista = this.uList.getCanal().agregarListaParticular(nomL, publico);
 		mU.modificaDatosUsuario(uList);
 	}
+
+	@Override
+	public void agregarListaParticularCategoria(String nomL, boolean publico, String nomC) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		this.uList = mU.obtenerUsuario(this.uList.getNickname());
+		Categoria cat = mC.obtenerCategoria(nomC);
+		this.lista = this.uList.getCanal().agregarListaParticularConCategoria(nomL, publico, cat);
+		cat.agregarElemento(this.lista);
+		mC.modificarCategoria(cat);
+		mU.modificaDatosUsuario(uList);
+	}
 	
 	@Override 
 	public void agregarVideoListaParticular(String nickVideo, String nomVid, String nomList) {
@@ -145,25 +157,30 @@ public class CListaReproduccion implements IListaReproduccion {
 	public List<DtVideoUsuario> listarVideosdeLista(String nomList) {
 		return this.uList.getCanal().listarVideosdeLista(nomList);
 	}
-	
-	@Override 
+
+	@Override
 	public void modificarCategoria(String nomC) {
 		System.out.println("sa");
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		if(mC.existeCategoria(nomC)) {
 			//Debo obtener la categoria de la lista, para esa categoria sacar la lista
 			Particular part = (Particular) this.lista;
-//			Categoria catPart = part.getCategoria();
-//			if(!(catPart == null)) {
-//				catPart.quitarElemento(part);
-//				mC.modificarCategoria(catPart);
-//			}
+
+			Categoria catPart = part.getCategoria();
+			if(!(catPart == null)) {
+				catPart.quitarElemento(part);
+				mC.modificarCategoria(catPart);
+			}
 			Categoria cat = mC.obtenerCategoria(nomC);
 			cat.agregarElemento(this.lista);
 			mC.modificarCategoria(cat);
+			mU.modificaDatosUsuario(uList);
+			System.out.println("categoria--> " + part.getCategoria().getNombre());
 		}
 	}
-	
+
+
 	@Override 
 	public void modificarInfoLista(String nomL, boolean publico) {
 		this.lista = this.uList.getCanal().obtenerLista(nomL);

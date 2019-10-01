@@ -27,27 +27,37 @@ public class CrearLista extends HttpServlet {
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
 
         String nomLista = request.getParameter("nomList");
-        Boolean esPublica;//TODO ver como se maneja esto
+        String categoria = request.getParameter("categoria");
+        Boolean esPublica;
         if(request.getParameter("esPublica") == null){
             esPublica = false;
         }else{
             esPublica = true;
         }
+        if (nomLista != null && usr != null){
+            if(iLR.existeListaParticular(usr.getNickname(), nomLista)){
+                RequestDispatcher rd;
+                rd = request.getRequestDispatcher("/module/nuevaLista.jsp");
+                String message = "EXISTE LA LISTAAAAAAAAAAAAA";
+                request.setAttribute("message", message);
+                rd.forward(request, response);
+            } else {
 
-        if(iLR.existeListaParticular(usr.getNickname(), nomLista)){
-            RequestDispatcher rd;
-            rd = request.getRequestDispatcher("/module/nuevaLista.jsp");
-            String message = "EXISTE LA LISTAAAAAAAAAAAAA";
-            request.setAttribute("message", message);
-            rd.forward(request, response);
+                if(categoria.equals("")) {
+                    iLR.agregarListaParticular(nomLista, esPublica);
+                } else {
+                    iLR.agregarListaParticularCategoria(nomLista, esPublica, categoria);
+                }
+                RequestDispatcher rd;
+                rd = request.getRequestDispatcher("/index.jsp");
+                String message = "Se ha creado la Lista de Reproduccion <strong>" + nomLista + "</strong>";
+                request.setAttribute("message", message);
+                rd.forward(request, response);
+            }
         } else {
-            iLR.agregarListaParticular(nomLista, esPublica);
-            RequestDispatcher rd;
-            rd = request.getRequestDispatcher("/index.jsp");
-            String message = "Se ha creado la Lista de Reproduccion <strong>" + nomLista + "</strong>";
-            request.setAttribute("message", message);
-            rd.forward(request, response);
+            response.getWriter().append("Parametros invalidos");
         }
+
 
     }
 
