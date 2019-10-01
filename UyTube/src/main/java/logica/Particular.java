@@ -3,6 +3,7 @@ package logica;
 import javax.persistence.*;
 
 import datatypes.DtElementoUsuario;
+import datatypes.DtElementoWeb;
 import datatypes.tipoElemento;
 
 @Entity
@@ -62,6 +63,12 @@ public class Particular extends ListaReproduccion{
 		DtElementoUsuario particular = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA);
 		return particular;
 	}
+
+	//Esta funcion se llama asi porque la necesito para traer los videos de una categoria, no deberia ser usada para traer las listas de una categoria
+//	public DtElementoWeb obtenerVideosCategoria() {
+//		DtElementoWeb particular = new DtElementoWeb(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA, null);
+//		return particular;
+//	}
 //	
 //	
 //

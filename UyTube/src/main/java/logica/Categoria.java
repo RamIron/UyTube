@@ -2,6 +2,8 @@ package logica;
 
 import java.util.*;
 import datatypes.DtElementoUsuario;
+import datatypes.DtElementoWeb;
+import datatypes.tipoElemento;
 
 import javax.persistence.*;
 
@@ -44,6 +46,23 @@ public class Categoria {
 			for(Elemento e: elementos) {
 				elem = e.obtenerElemCategoria();
 				res.add(elem);
+			}
+			return res;
+		}
+
+		public List<DtElementoWeb> obtenerVideosWeb(){
+			List<DtElementoWeb> res = new LinkedList<DtElementoWeb>();
+			DtElementoWeb infoVid;
+			//System.out.println("ENTRO AL IF ARRIBA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			for(Elemento e: elementos) {
+				if(e instanceof Video) {
+//					elem = e.obtenerVideosCategoria();
+//					res.add(elem);
+					//System.out.println("ENTRO AL IF!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					Video video = (Video) e;
+					infoVid = new DtElementoWeb(video.getCanal().getUsuario().getNickname(), video.getNombre(), tipoElemento.VIDEO, video.getUrl());
+					res.add(infoVid);
+				}
 			}
 			return res;
 		}

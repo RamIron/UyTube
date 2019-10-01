@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 
 import Manejadores.ManejadorCategoria;
 import datatypes.DtElementoUsuario;
+import datatypes.DtElementoWeb;
+import datatypes.tipoElemento;
 import interfaces.ICategoria;
 
 public class CCategoria implements ICategoria {
@@ -37,6 +39,17 @@ public class CCategoria implements ICategoria {
 			this.cat = mc.obtenerCategoria(nomC);
 			List<DtElementoUsuario> elementos = this.cat.obtenerElemCategoria();
 			return elementos;	
+		} else {
+			throw new IllegalArgumentException("No se encontro una categoria con ese nombre");
+		}
+	}
+
+	public List<DtElementoWeb> listarVideosCategoria(String nomC) {
+		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
+		if(mc.existeCategoria(nomC)) { //si existe la categoria
+			this.cat = mc.obtenerCategoria(nomC);
+			List<DtElementoWeb> elementos = this.cat.obtenerVideosWeb();
+			return elementos;
 		} else {
 			throw new IllegalArgumentException("No se encontro una categoria con ese nombre");
 		}

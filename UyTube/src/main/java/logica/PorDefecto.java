@@ -26,6 +26,12 @@ public class PorDefecto extends ListaReproduccion{
 		return defecto;
 	}
 
+	//Esta funcion se llama asi porque la necesito para traer los videos de una categoria, no deberia ser usada para traer las listas de una categoria
+//	public DtElementoWeb obtenerVideosCategoria() {
+//		DtElementoWeb defecto = new DtElementoWeb(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA, null);
+//		return defecto;
+//	}
+
 	@Override
 	public boolean isPublico() {
 		return false;
