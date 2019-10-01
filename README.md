@@ -1,8 +1,7 @@
 # Programacion de Aplicaciones
 
-**Laboratorio 1**
 
-Integrantes:
+**Integrantes:**
 
 -Martin Navarrete
 
