@@ -261,10 +261,10 @@
 
 
 
-                <div class="row justify-content-center">
-                    <div class="col-lg-5 col-md-7">
-                        <div class="card bg-secondary shadow border-0">
-                            <div class="card-body px-lg-5 py-lg-5">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-10 order-xl-1">
+                            <div class="card bg-secondary shadow ">
+                                <div class="card-body px-lg-5 py-lg-5">
                                 <form name="nuevaLista" action="<%= request.getContextPath() %>/CrearLista" method="post">
                                     <div class="text-muted text-center mt-2 mb-3">
                                         <h1>Crear Lista de Reproduccion</h1>
@@ -281,12 +281,23 @@
                                             <div class="form-group">
                                                 <input type="text" name="nomList" class="form-control" placeholder="Nombre de Lista">
                                             </div>
+                                        <div class="form-group">
+                                            <select class="custom-select" id="inputGroupSelect01" name="categoria" >
+                                                <option value="" checked> --Sin Categoria-- </option>
+                                                <%
+                                                    for(String cat: lC){ %>
+                                                <option value="<%=cat%>" ><%=cat%></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="esPublica" value="" id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 Lista publica
                                             </label>
                                         </div>
+
                                         <div class="text-center">
                                             <button type="button" class="btn btn-primary my-4" onclick="continuar()">Crear Lista</button>
                                         </div>

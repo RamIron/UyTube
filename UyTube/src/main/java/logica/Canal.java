@@ -133,6 +133,13 @@ public class Canal {
 		this.listas.add(lisPar);
 		return lisPar;
 	}
+
+	public Particular agregarListaParticularConCategoria(String nomL, boolean publico, Categoria cat) {
+		Particular lisPar = new Particular(nomL, this, publico, cat);
+		this.listas.add(lisPar);
+
+		return lisPar;
+	}
 	
 	public void agregarListaDefecto(String nomL) {
 		PorDefecto def = new PorDefecto(nomL, this);
@@ -245,22 +252,22 @@ public class Canal {
 //	}
 	
 	public DtListaRep obtenerListaDeUsuario(String nomList) {
-//		for(ListaReproduccion lr:this.listas) {
-//			if(nomList.contentEquals(lr.getNombre())) {
-//				if(lr instanceof Particular) {
-//					DtListaRep dtLisRep;
-//					if(lr.categoria == null) {
-//						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, "");
-//					}else {
-//						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, lr.categoria.getNombre());
-//					}
-//					return dtLisRep;
-//				}else if(lr instanceof PorDefecto) {
-//					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), false, false);
-//					return dtLisRep;
-//				}
-//			}
-//		}
+		for(ListaReproduccion lr:this.listas) {
+			if(nomList.contentEquals(lr.getNombre())) {
+				if(lr instanceof Particular) {
+					DtListaRep dtLisRep;
+					if(lr.categoria == null) {
+						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, "");
+					}else {
+						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, lr.categoria.getNombre());
+					}
+					return dtLisRep;
+				}else if(lr instanceof PorDefecto) {
+					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), false, false);
+					return dtLisRep;
+				}
+			}
+		}
 		return null;
 	}
 	

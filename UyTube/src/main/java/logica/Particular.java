@@ -29,12 +29,12 @@ public class Particular extends ListaReproduccion{
 		super(nombre, canal);
 		this.publico = publico;
 	}
-//	
-//	public Particular(String nombre, Canal canal, boolean publico, Categoria cat) {
-//		super(nombre, canal);
-//		this.publico = publico;
-//		this.categoria = cat;
-//	}
+
+	public Particular(String nombre, Canal canal, boolean publico, Categoria cat) {
+		super(nombre, canal);
+		this.publico = publico;
+		this.categoria = cat;
+	}
 
 	//Getters & Setters
 	
