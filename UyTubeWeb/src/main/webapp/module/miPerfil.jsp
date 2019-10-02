@@ -288,7 +288,6 @@
                                         <%--Foto de perfil--%>
                                         <div style="text-align: center;">
                                             <a href="#!" class="avatar avatar-ramiro-lg rounded-circle">
-                                                <%--                                                        <a href="#!" class="align-content-lg-center">--%>
                                                 <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
                                                     <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
                                                 <% } else { %>
