@@ -546,7 +546,7 @@
                                   <div class="text-muted text-center mt-2 mb-3">
                                     <div class="custom-control custom-control-alternative custom-checkbox mb-3">
                                       <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico" <%= infoV.getPublico() ? "checked" : "" %>>
-                                      <label class="custom-control-label" for="customCheck5">Canal publico</label>
+                                      <label class="custom-control-label" for="customCheck5">Video publico</label>
                                     </div>
                                   </div>
 
