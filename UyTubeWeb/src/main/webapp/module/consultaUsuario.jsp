@@ -382,135 +382,135 @@
 
                                         <% }else{ %>
                                         <div class="text-muted text-center mt-2 mb-3">
-                                            <hr/>
                                             <h2>El canal de este usuario es privado</h2>
                                         </div>
                                         <%}%>
                                     </div>
                                 </div>
 
-                                <hr>
 
-                                <div class="nav-wrapper">
-                                    <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link mb-sm-4 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i> <%=seguidores.size()%> Seguidores <%--<span class="badge badge-white"><%=seguidores.size()%></span>--%></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i> <%=seguidos.size()%> Seguidos </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fab fa-youtube mr-2"></i>Videos</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false"><i class="fas fa-list-ul mr-2"></i>Listas</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="card shadow">
-                                    <div class="card-body">
-                                        <div class="tab-content" id="myTabContent">
+                                <%if(canal.getPublico()){%>
+                                    <hr>
+                                    <div class="nav-wrapper">
+                                        <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link mb-sm-4 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i> <%=seguidores.size()%> Seguidores <%--<span class="badge badge-white"><%=seguidores.size()%></span>--%></a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i> <%=seguidos.size()%> Seguidos </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fab fa-youtube mr-2"></i>Videos</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false"><i class="fas fa-list-ul mr-2"></i>Listas</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card shadow">
+                                        <div class="card-body">
+                                            <div class="tab-content" id="myTabContent">
 
-                                            <%--Comienzo muestra seguidores--%>
-                                            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                                                <div class="row row- justify-content-right">
-                                                    <% for(DtUsuarioWeb u:listSeguidores) { %>
-                                                    <div class="col-sm-4">
-                                                        <div class="card bg-secondary shadow ">
-                                                            <div class="card-body px-lg-5 py-lg-5">
-                                                                <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
-                                                                    <div class="media align-items-center">
-                                                                        <span class="avatar avatar-lg rounded-circle">
-                                                                          <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                                                          <% } else { %>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
-                                                                          <% } %>
-                                                                        </span>
-                                                                        <div class="media-body">
-                                                                            <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
+                                                <%--Comienzo muestra seguidores--%>
+                                                <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                                    <div class="row row- justify-content-right">
+                                                        <% for(DtUsuarioWeb u:listSeguidores) { %>
+                                                        <div class="col-sm-4">
+                                                            <div class="card bg-secondary shadow ">
+                                                                <div class="card-body px-lg-5 py-lg-5">
+                                                                    <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                        <div class="media align-items-center">
+                                                                            <span class="avatar avatar-lg rounded-circle">
+                                                                              <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
+                                                                                <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                                                                              <% } else { %>
+                                                                                <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
+                                                                              <% } %>
+                                                                            </span>
+                                                                            <div class="media-body">
+                                                                                <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </a>
+                                                                    </a>
+                                                                </div>
                                                             </div>
+                                                            <br/>
                                                         </div>
-                                                        <br/>
+                                                        <% } %>
                                                     </div>
-                                                    <% } %>
                                                 </div>
-                                            </div>
-                                            <%--Fin muestra seguidores--%>
+                                                <%--Fin muestra seguidores--%>
 
-                                            <%--Comienzo muestra seguidos--%>
-                                            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                                                <div class="row row- justify-content-right">
-                                                    <% for(DtUsuarioWeb u:listSeguidos) { %>
-                                                    <div class="col-sm-4">
-                                                        <div class="card bg-secondary shadow ">
-                                                            <div class="card-body px-lg-5 py-lg-5">
-                                                                <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
-                                                                    <div class="media align-items-center">
-                                                                        <span class="avatar avatar-lg rounded-circle">
-                                                                          <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                                                          <% } else { %>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
-                                                                          <% } %>
-                                                                        </span>
-                                                                        <div class="media-body">
-                                                                            <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
+                                                <%--Comienzo muestra seguidos--%>
+                                                <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                                                    <div class="row row- justify-content-right">
+                                                        <% for(DtUsuarioWeb u:listSeguidos) { %>
+                                                        <div class="col-sm-4">
+                                                            <div class="card bg-secondary shadow ">
+                                                                <div class="card-body px-lg-5 py-lg-5">
+                                                                    <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                        <div class="media align-items-center">
+                                                                            <span class="avatar avatar-lg rounded-circle">
+                                                                              <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
+                                                                                <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                                                                              <% } else { %>
+                                                                                <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
+                                                                              <% } %>
+                                                                            </span>
+                                                                            <div class="media-body">
+                                                                                <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </a>
+                                                                    </a>
+                                                                </div>
                                                             </div>
+                                                            <br/>
                                                         </div>
-                                                        <br/>
+                                                        <% } %>
                                                     </div>
-                                                    <% } %>
                                                 </div>
-                                            </div>
-                                            <%--Fin muestra seguidos--%>
+                                                <%--Fin muestra seguidos--%>
 
-                                            <%--Comienzo muestra videos--%>
-                                            <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-                                                <div class="row row- justify-content-right">
-                                                    <% for(DtUsuarioWeb u:listSeguidos) { %>
-                                                    <div class="col-sm-4">
-                                                        <div class="card bg-secondary shadow ">
-                                                            <div class="card-body px-lg-5 py-lg-5">
-                                                                <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
-                                                                    <div class="media align-items-center">
-                                                                        <span class="avatar avatar-lg rounded-circle">
-                                                                          <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                                                          <% } else { %>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
-                                                                          <% } %>
-                                                                        </span>
-                                                                        <div class="media-body">
-                                                                            <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
+                                                <%--Comienzo muestra videos--%>
+                                                <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                                    <div class="row row- justify-content-right">
+                                                        <% for(DtUsuarioWeb u:listSeguidos) { %>
+                                                        <div class="col-sm-4">
+                                                            <div class="card bg-secondary shadow ">
+                                                                <div class="card-body px-lg-5 py-lg-5">
+                                                                    <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                        <div class="media align-items-center">
+                                                                            <span class="avatar avatar-lg rounded-circle">
+                                                                              <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
+                                                                                <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                                                                              <% } else { %>
+                                                                                <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
+                                                                              <% } %>
+                                                                            </span>
+                                                                            <div class="media-body">
+                                                                                <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </a>
+                                                                    </a>
+                                                                </div>
                                                             </div>
+                                                            <br/>
                                                         </div>
-                                                        <br/>
+                                                        <% } %>
                                                     </div>
-                                                    <% } %>
                                                 </div>
-                                            </div>
-                                            <%--Fin muestra videos--%>
+                                                <%--Fin muestra videos--%>
 
-                                            <%--Comienzo muestra listas--%>
-                                            <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
-                                                <p class="description">Aca van las listas.</p>
-                                            </div>
-                                            <%--Fin muestra listas--%>
+                                                <%--Comienzo muestra listas--%>
+                                                <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
+                                                    <p class="description">Aca van las listas.</p>
+                                                </div>
+                                                <%--Fin muestra listas--%>
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-
+                                <%}%>
 
 
 
