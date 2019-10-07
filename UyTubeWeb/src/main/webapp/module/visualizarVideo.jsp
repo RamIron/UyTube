@@ -353,7 +353,7 @@
                     </h1>
                     <div class="row row- justify-content-right">
                       <div class="col-sm-6">
-                        <h3>@<%=nick%> | <%=infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.YEAR)%> | <%=infoV.getDuracion()%> seg.</h3>
+                        <h3><a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=nick%>">@<%=nick%></a> | <%=infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.YEAR)%> | <%=infoV.getDuracion()%> seg.</h3>
                       </div>
                       <div class="col-sm-6">
                         <div class="float-sm-right d-sm-inline-flex ">
