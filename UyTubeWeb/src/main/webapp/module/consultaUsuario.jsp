@@ -325,37 +325,42 @@
                                             <% } %>
                                         </div>
                                         <%--Fin Boton seguir usuario--%>
+                                    </div>
 
+                                    <div class="col-8">
+                                        <div class="text-muted text-center mt-2 mb-3">
+                                            <h1>Datos del Usuario</h1>
+                                        </div>
+                                        <div class="row text-center px-lg-5 mb-lg-2">
                                             <%--Nombre--%>
-                                            <div class="row justify-content-center px-lg-5 mb-lg-2">
+                                            <div class="col">
                                                 <h5>Nombre: <br><span class="mb-xl-2 font-weight-bold text-xl"><%=usuario.getNombre() %></span></h5>
                                             </div>
                                             <%--Fin Nombre--%>
 
                                             <%--Apellido--%>
-                                            <div class="row justify-content-center px-lg-5 mb-lg-2">
+                                            <div class="col">
                                                 <h5>Apellido:<br> <span class="mb-xl-2 font-weight-bold text-xl"><%=usuario.getApellido() %></span></h5>
                                             </div>
                                             <%--Fin Apellido--%>
+                                        </div>
 
-                                            <%--Fecha Nacimiento--%>
-                                            <div class="row justify-content-center px-lg-5 mb-lg-2">
-                                                <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                        <%--Fecha Nacimiento--%>
+                                        <div class="row justify-content-center px-lg-5 mb-lg-2">
+                                            <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                                                 String fechaS = sdf.format(usuario.getfNac().getTime());%>
-                                                <h5>Fecha de Nacimiento: <br><span class="mb-xl-2 font-weight-bold text-x1"><%=fechaS %></span></h5>
-                                            </div>
-                                            <%--Fin Fecha nacimiento--%>
-                                    </div>
+                                            <h5>Fecha de Nacimiento: <br><span class="mb-xl-2 font-weight-bold text-x1"><%=fechaS %></span></h5>
+                                        </div>
+                                        <%--Fin Fecha nacimiento--%>
 
+                                        <hr>
 
-
-                                    <div class="col-8">
                                         <%if(canal.getPublico()){%>
                                         <div class="text-muted text-center mt-2 mb-3">
                                             <h1>Datos del Canal</h1>
                                         </div>
 
-                                        <div class="row justify-content-center px-lg-5 mb-lg-2">
+                                        <div class="row text-center px-lg-5 mb-lg-2">
                                             <%--Nombre Canal--%>
                                             <div class="col">
                                                 <h5> Nombre:<br><span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getNombre() %></span></h5>
@@ -363,14 +368,16 @@
                                             <%--Fin Nombre Canal--%>
 
                                             <%--Categoria Canal--%>
-                                            <div class="col justify-content-center">
+                                            <div class="col">
                                                 <h5> Categoría:<br><span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getCategoria() %></span></h5>
                                             </div>
                                             <%--Fin Categoria Canal--%>
                                         </div>
 
                                         <%--Descripcion Canal--%>
-                                        <h5> Descripcion: <br><span class="mb-xl-2 font-weight-bold text-x2"><%=canal.getDescripcion() %></span></h5>
+                                        <div class="row justify-content-center px-lg-5 mb-lg-2">
+                                            <h5> Descripcion: <br><span class="mb-xl-2 font-weight-bold text-x1"><%=canal.getDescripcion() %></span></h5>
+                                        </div>
                                         <%--Fin Descripcion Canal--%>
 
                                         <% }else{ %>
@@ -382,7 +389,7 @@
                                     </div>
                                 </div>
 
-                                <hr></hr>
+                                <hr>
 
                                 <div class="nav-wrapper">
                                     <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
