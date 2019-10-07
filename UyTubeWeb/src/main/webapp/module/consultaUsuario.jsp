@@ -286,39 +286,29 @@
                                     List<String> seguidos = iUsr.listarSeguidos();
                                     List<String> seguidores = iUsr.listarSeguidores();
                                     DtUsuarioWeb usrSession = (DtUsuarioWeb) s.getAttribute("usuario");
+                                    List<DtUsuarioWeb> listSeguidores = iUsr.listarNickFotoWeb(seguidores);
+
+                                    
                                 %>
 
+
+
                                 <%--Foto de perfil--%>
-                                <div style="text-align: center;">
-                                    <a href="" class="avatar avatar-ramiro-lg rounded-circle">
+                                <div class="row justify-content-center">
+                                    <span href="" class="avatar avatar-ramiro-lg rounded-circle">
                                         <% if (usuario.getImagen().equals("src/main/resources/img/default.png")) {%>
                                             <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
                                         <% } else { %>
                                             <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usuario.getImagen()%>">
                                         <% } %>
-                                    </a>
+                                    </span>
                                 </div>
                                 <%--Fin Foto de perfil--%>
 
-                                <%--Boton seguir usuario--%>
-                                <div class="row justify-content-center">
-                                    <% if(!seguidores.contains(usrSession.getNickname())){ %>
-                                        <a class="btn btn-icon btn-3 btn-primary btn-sm" href="<%= request.getContextPath() %>/SeguirUsuario?u=<%=usuario.getNickname()%>">
-                                            <span class="btn-inner--icon"><i class="ni ni-curved-next"></i></span>
-                                            <span class="btn-inner--text">Seguir</span>
-                                        </a>
-                                    <% }else{ %>
-                                        <a class="btn btn-icon btn-3 btn-secondary btn-sm" href="<%= request.getContextPath() %>/DejarSeguirUsuario?u=<%=usuario.getNickname()%>">
-                                            <span class="btn-inner--icon"><i class="ni ni-check-bold"></i></span>
-                                            <span class="btn-inner--text">Siguiendo</span>
-                                        </a>
-                                    <% } %>
-                                </div>
 
-                                <%--Fin Boton seguir usuario--%>
 
-                                <div class="row justify-content-center">
-                                    <%--Nickname--%>
+                                <%--<div class="row justify-content-center">
+                                    &lt;%&ndash;Nickname&ndash;%&gt;
                                     <div class="col-4">
                                         <label for="nickID" > Nick  </label>
                                         <div class="form-group mb-3">
@@ -330,8 +320,28 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <%--Fin Nickname--%>
+                                    &lt;%&ndash;Fin Nickname&ndash;%&gt;
+                                </div>--%>
+
+                                <div class="row justify-content-center">
+                                        <span class="mb-xl-2 font-weight-bold text-xl">@<%=usuario.getNickname() %></span>
                                 </div>
+
+                                <%--Boton seguir usuario--%>
+                                <div class="row justify-content-center mb-xl-3">
+                                    <% if(!seguidores.contains(usrSession.getNickname())){ %>
+                                    <a class="btn btn-icon btn-3 btn-primary btn-sm" href="<%= request.getContextPath() %>/SeguirUsuario?u=<%=usuario.getNickname()%>">
+                                        <span class="btn-inner--icon"><i class="ni ni-curved-next"></i></span>
+                                        <span class="btn-inner--text">Seguir</span>
+                                    </a>
+                                    <% }else{ %>
+                                    <a class="btn btn-icon btn-3 btn-secondary btn-sm" href="<%= request.getContextPath() %>/DejarSeguirUsuario?u=<%=usuario.getNickname()%>">
+                                        <span class="btn-inner--icon"><i class="ni ni-check-bold"></i></span>
+                                        <span class="btn-inner--text">Siguiendo</span>
+                                    </a>
+                                    <% } %>
+                                </div>
+                                <%--Fin Boton seguir usuario--%>
 
                                 <div class="row">
                                     <%--Nombre--%>
@@ -454,8 +464,29 @@
                                     <div class="card-body">
                                         <div class="tab-content" id="myTabContent">
                                             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                                                <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
-                                                <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse.</p>
+                                                <% for(DtUsuarioWeb u:listSeguidores) { %>
+                                                <div class="col-sm-4">
+                                                    <div class="card bg-secondary shadow ">
+                                                        <div class="card-body px-lg-5 py-lg-5">
+                                                            <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                <div class="media align-items-center">
+                                                                    <span class="avatar avatar-lg rounded-circle">
+                                                                      <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
+                                                                        <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                                                                      <% } else { %>
+                                                                        <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
+                                                                      <% } %>
+                                                                    </span>
+                                                                    <div class="media-body">
+                                                                        <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                </div>
+                                                <% } %>
                                             </div>
                                             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                                                 <p class="description">Aca van los seguidos.</p>

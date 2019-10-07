@@ -1,10 +1,6 @@
 package logica;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -270,5 +266,19 @@ public class CUsuario implements IUsuario {
 			res.add(usr);
 		}
 		return res;
+	}
+
+	public List<DtUsuarioWeb> listarNickFotoWeb(List <String> seguidores){
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		List<Usuario> usrs = new LinkedList<Usuario>();
+		List<DtUsuarioWeb> dtUsrs = new ArrayList<DtUsuarioWeb>();
+		for(String s: seguidores) {
+			usrs.add(mU.obtenerUsuario(s));
+		}
+
+		for(Usuario u:usrs){
+			dtUsrs.add(new DtUsuarioWeb(u.getNickname(), u.getImagen()));
+		}
+		return dtUsrs;
 	}
 }
