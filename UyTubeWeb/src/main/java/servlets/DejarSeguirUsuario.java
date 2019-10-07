@@ -29,7 +29,7 @@ public class DejarSeguirUsuario extends HttpServlet {
             IUsuario iU = f.getIUsuario();
             iU.dejarDeSeguirUsuario(seguidor, seguido);
             RequestDispatcher rd;
-            String path = "/module/consultaUsuario.jsp?u=" + seguido;
+            String path = "/module/consultaUsuario.jsp?nick=" + seguido;
             rd = request.getRequestDispatcher(path);
             String message = "Se dejo seguir al usuario " + seguido;
             request.setAttribute("message", message);
