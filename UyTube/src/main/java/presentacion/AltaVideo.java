@@ -1,4 +1,3 @@
-//TODO agregar verificacion de duracion que sea numero, usar http://commons.apache.org/proper/commons-lang/javadocs/api-release/org/apache/commons/lang3/StringUtils.html#isNumeric-java.lang.CharSequence-
 
 
 package presentacion;

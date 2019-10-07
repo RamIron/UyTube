@@ -440,6 +440,7 @@ public class ModificarUsuario extends JInternalFrame {
 		
 		getContentPane().add(lblCategoria);
 		categoria.setBounds(552, 268, 207, 20);
+		categoria.setEnabled(false);
 		
 		getContentPane().add(categoria);
 	}
@@ -512,6 +513,7 @@ public class ModificarUsuario extends JInternalFrame {
 		btnConfirmar.setEnabled(flag);
 		btnModImg.setEnabled(flag);
 		btnBorrarImg.setEnabled(flag);
+		categoria.setEnabled(flag);
 	}
 	
 	private void borrarMsg() {
