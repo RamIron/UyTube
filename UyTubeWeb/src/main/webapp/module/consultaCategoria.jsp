@@ -153,7 +153,7 @@
                     List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
                     for(String l: lis){ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/ConsultaLista?id=<%=l%>">
+                    <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
                         <i class="ni ni-books text-blue"></i> <%=l%>
                     </a>
                 </li>
@@ -170,7 +170,6 @@
                     ICategoria iC = fC.getICategoria();
                     List<String> lC = iC.listarCategorias();
                     String categoria = request.getParameter("id");
-                    System.out.println(categoria);
                     for(String cat: lC){ %>
                 <li class="nav-item">
                     <a class="nav-link <%= (cat.equals(categoria) ? "active" : "") %> href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -291,6 +290,7 @@
                                             for(DtElementoWeb vc: videosCat){
                                         %>
                                         <div class="card mb-3" style="max-width: 630px;">
+                                            <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=vc.getNickname()%>&v=<%=vc.getNombreE()%>">
                                             <div class="row no-gutters">
                                                 <div class="col-md-4">
                                                     <img src="http://img.youtube.com/vi/<%=vc.getUrl()%>/0.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=vc.getNombreE()%>">
@@ -304,6 +304,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            </a>
                                         </div>
                                     <% } %>
                                 </div>
