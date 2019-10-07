@@ -3,25 +3,15 @@ package presentacion;
 import java.awt.EventQueue;
 import java.awt.Image;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 
+import interfaces.ICategoria;
 import interfaces.IUsuario;
 
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.imageio.ImageIO;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JCheckBox;
-import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
@@ -32,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
-import javax.swing.JPasswordField;
+import java.util.List;
 
 public class AltaUsuario extends JInternalFrame {
 	private JTextField nick;
@@ -59,14 +49,14 @@ public class AltaUsuario extends JInternalFrame {
 	private JButton btnSelecFoto = new JButton("Seleccionar");
 	private final JLabel lblContrasea = new JLabel("Contrase\u00F1a");
 	private JPasswordField password;
+	private JComboBox categoria = new JComboBox();
 
 	/**
 	 * Create the frame.
 	 */
-	public AltaUsuario(IUsuario iU) {
+	public AltaUsuario(IUsuario iU, ICategoria iC) {
 		
-//		resetearFormulario();
-//		borrarMsg();
+
 		
 		setTitle("Agregar usuario");
 		setBounds(100, 100, 800, 542);
@@ -215,7 +205,7 @@ public class AltaUsuario extends JInternalFrame {
 				if(nick.getText().isEmpty() || nombre.getText().isEmpty() || apellido.getText().isEmpty() ||
 					email.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null) 
 					|| (img.getText().isEmpty() && agregarFoto) || (nomCanal.getText().isEmpty() && agregarNomCanal) 
-					|| desCanal.getText().isEmpty()) {
+					|| desCanal.getText().isEmpty() || password.getText().isEmpty()) {
 					borrarMsg();
 					lblMsgError.setVisible(true);
 				}else if(iU.existeEmail(email.getText())){
@@ -228,6 +218,7 @@ public class AltaUsuario extends JInternalFrame {
 					Calendar fNac = Calendar.getInstance();
 			        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
 			        iU.agregarUsuario(nick.getText(), nombre.getText(), apellido.getText(), fNac, email.getText());
+					iU.modificarContrasena(password.getText());
 			        if(agregarFoto) {
 			        	iU.modificarImagen(img.getText());
 			        }else {
@@ -239,10 +230,10 @@ public class AltaUsuario extends JInternalFrame {
 			        }else {
 			        	iU.modificarInfoCanal(nick.getText(), desCanal.getText(), publico);
 			        }
-			        
-			        // TODO agregar listas por defecto
-			        
-			        resetearFormulario();
+					if(categoria.getSelectedIndex() != 0){
+						iU.modificarCatCanal(nick.getText(), categoria.getSelectedItem().toString());
+					}
+			        resetearFormulario(iC);
 			        lblMsgExito.setVisible(true);
 				}
 			}
@@ -253,7 +244,7 @@ public class AltaUsuario extends JInternalFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				resetearFormulario();
+				resetearFormulario(iC);
 				AltaUsuario.this.setVisible(false);
 			}
 		});
@@ -312,16 +303,17 @@ public class AltaUsuario extends JInternalFrame {
 		lblCategoria.setBounds(432, 310, 93, 14);
 		getContentPane().add(lblCategoria);
 		
-		JComboBox categoria = new JComboBox();
+
 		categoria.setBounds(588, 305, 190, 20);
 		getContentPane().add(categoria);
-		
-		
-		
+
+
+		resetearFormulario(iC);
+		borrarMsg();
 
 	}
 	
-	public void resetearFormulario() {
+	public void resetearFormulario(ICategoria iC) {
 		nick.setText("");
 		nombre.setText("");
 		apellido.setText("");
@@ -332,6 +324,7 @@ public class AltaUsuario extends JInternalFrame {
 		fMes.setSelectedIndex(0);
 		fAnio.setSelectedIndex(0);
 		desCanal.setText("");
+		password.setText("");
 		agregarFoto = false;
 		agregarNomCanal = false;
 		publico = false;
@@ -342,8 +335,20 @@ public class AltaUsuario extends JInternalFrame {
 		btnSelecFoto.setEnabled(false);
 		nomCanal.setEnabled(false);
 		lblImagen.setIcon(null);
+		cargarCategorias(iC);
 		borrarMsg();
 	}
+
+	public void cargarCategorias(ICategoria iC) {
+		List<String> categorias = iC.listarCategorias();
+		categoria.removeAllItems();
+		categoria.addItem("<Sin categoria>");
+		for(String c: categorias) {
+			categoria.addItem(c);
+		}
+		categoria.setSelectedIndex(0);
+	}
+
 	public void borrarMsg() {
 		lblMsgError.setVisible(false);
 		lblMsgExito.setVisible(false);
