@@ -172,12 +172,12 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(fAnio);
 		
 		JLabel lblNombreDelCanal = new JLabel("Nombre");
-		lblNombreDelCanal.setBounds(391, 373, 148, 15);
+		lblNombreDelCanal.setBounds(391, 339, 148, 15);
 		getContentPane().add(lblNombreDelCanal);
 		
 		nomCanal = new JTextField();
 		nomCanal.setEnabled(false);
-		nomCanal.setBounds(547, 373, 207, 19);
+		nomCanal.setBounds(552, 339, 202, 19);
 		getContentPane().add(nomCanal);
 		nomCanal.setColumns(10);
 		
@@ -192,7 +192,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		
 		JLabel lblInfoCanal = new JLabel("Informacion del Canal");
 		lblInfoCanal.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblInfoCanal.setBounds(391, 337, 202, 27);
+		lblInfoCanal.setBounds(391, 301, 202, 27);
 		getContentPane().add(lblInfoCanal);
 		
 		JLabel lblInfoUsuario = new JLabel("Informacion del Usuario");
@@ -201,7 +201,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(lblInfoUsuario);
 		
 		JLabel lblPublico = new JLabel("Publico");
-		lblPublico.setBounds(391, 399, 70, 15);
+		lblPublico.setBounds(391, 365, 70, 15);
 		getContentPane().add(lblPublico);
 		
 		JButton btnSeleccionarUsuario = new JButton("Seleccionar");
@@ -272,7 +272,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(btnSeleccionarUsuario);
 		
 		JScrollPane scrollSeguidores = new JScrollPane();
-		scrollSeguidores.setBounds(586, 217, 168, 108);
+		scrollSeguidores.setBounds(586, 217, 168, 81);
 		getContentPane().add(scrollSeguidores);
 		
 		DefaultListModel<String> listaS1 = new DefaultListModel<String>();
@@ -280,7 +280,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		scrollSeguidores.setViewportView(listaSeguidores);
 		
 		JScrollPane scrollSeguidos = new JScrollPane();
-		scrollSeguidos.setBounds(391, 217, 168, 108);
+		scrollSeguidos.setBounds(391, 217, 168, 81);
 		getContentPane().add(scrollSeguidos);
 		
 		DefaultListModel<String> listaS2 = new DefaultListModel<String>();
@@ -379,8 +379,16 @@ public class ConsultaUsuario extends JInternalFrame {
 		checkBoxPublico.setEnabled(false);
 		
 		
-		checkBoxPublico.setBounds(730, 399, 97, 23);
+		checkBoxPublico.setBounds(730, 365, 97, 23);
 		getContentPane().add(checkBoxPublico);
+		
+		JLabel lblCategoria = new JLabel("Categoria");
+		lblCategoria.setBounds(391, 399, 122, 14);
+		getContentPane().add(lblCategoria);
+		
+		JComboBox categoria = new JComboBox();
+		categoria.setBounds(552, 393, 202, 20);
+		getContentPane().add(categoria);
 
 	}
 	

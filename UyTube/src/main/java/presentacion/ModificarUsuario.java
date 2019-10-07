@@ -77,6 +77,8 @@ public class ModificarUsuario extends JInternalFrame {
 	
 	private ModificarVideo mvIF;
 	private ModificarLista mlIF; 
+	private final JLabel lblCategoria = new JLabel("Categoria");
+	private final JComboBox categoria = new JComboBox();
 	
 	public ModificarUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ModificarVideo mvIF ,  ModificarLista mlIF) {
 		
@@ -177,12 +179,12 @@ public class ModificarUsuario extends JInternalFrame {
 		getContentPane().add(fAnio);
 		
 		JLabel lblNombreDelCanal = new JLabel("Nombre");
-		lblNombreDelCanal.setBounds(391, 241, 148, 15);
+		lblNombreDelCanal.setBounds(391, 211, 148, 15);
 		getContentPane().add(lblNombreDelCanal);
 		
 		nomCanal = new JTextField();
 		nomCanal.setEnabled(false);
-		nomCanal.setBounds(547, 241, 207, 19);
+		nomCanal.setBounds(552, 208, 207, 19);
 		getContentPane().add(nomCanal);
 		nomCanal.setColumns(10);
 		
@@ -191,7 +193,7 @@ public class ModificarUsuario extends JInternalFrame {
 		getContentPane().add(lblDescripcionDelCanal);
 		chckbxCanalPublico.setEnabled(false);
 		
-		chckbxCanalPublico.setBounds(725, 268, 29, 23);
+		chckbxCanalPublico.setBounds(725, 238, 29, 23);
 		getContentPane().add(chckbxCanalPublico);
 		scrollDescCanal.setBounds(391, 309, 363, 57);
 		
@@ -201,7 +203,7 @@ public class ModificarUsuario extends JInternalFrame {
 		
 		JLabel lblInfoCanal = new JLabel("Informacion del Canal");
 		lblInfoCanal.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblInfoCanal.setBounds(391, 205, 202, 27);
+		lblInfoCanal.setBounds(391, 177, 202, 27);
 		getContentPane().add(lblInfoCanal);
 		
 		JLabel lblInfoUsuario = new JLabel("Informacion del Usuario");
@@ -210,7 +212,7 @@ public class ModificarUsuario extends JInternalFrame {
 		getContentPane().add(lblInfoUsuario);
 		
 		JLabel lblPublico = new JLabel("Publico");
-		lblPublico.setBounds(391, 267, 70, 15);
+		lblPublico.setBounds(391, 237, 70, 15);
 		getContentPane().add(lblPublico);
 		
 		
@@ -434,6 +436,12 @@ public class ModificarUsuario extends JInternalFrame {
 		lblMsgAdvert.setForeground(new Color(0, 0, 255));
 		lblMsgAdvert.setBounds(391, 383, 363, 66);
 		getContentPane().add(lblMsgAdvert);
+		lblCategoria.setBounds(391, 267, 120, 14);
+		
+		getContentPane().add(lblCategoria);
+		categoria.setBounds(552, 268, 207, 20);
+		
+		getContentPane().add(categoria);
 	}
 	
 	public void cargarElementos(IUsuario iU) {

@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class AltaUsuario extends JInternalFrame {
 	private JTextField nick;
@@ -56,6 +57,8 @@ public class AltaUsuario extends JInternalFrame {
 	private JCheckBox chckbxInsertarImagenDe = new JCheckBox("Insertar imagen de perfil");
 	private final JLabel lblImagen = new JLabel("");
 	private JButton btnSelecFoto = new JButton("Seleccionar");
+	private final JLabel lblContrasea = new JLabel("Contrase\u00F1a");
+	private JPasswordField password;
 
 	/**
 	 * Create the frame.
@@ -185,24 +188,24 @@ public class AltaUsuario extends JInternalFrame {
 				btnSelecFoto.setEnabled(agregarFoto);
 			}
 		});
-		chckbxInsertarImagenDe.setBounds(67, 289, 284, 15);
+		chckbxInsertarImagenDe.setBounds(67, 310, 284, 15);
 		getContentPane().add(chckbxInsertarImagenDe);
 		
 		img = new JTextField();
 		img.setEnabled(false);
-		img.setBounds(23, 325, 238, 19);
+		img.setBounds(23, 346, 238, 19);
 		getContentPane().add(img);
 		img.setColumns(10);
 		
 		
 		lblMsgError.setForeground(Color.RED);
-		lblMsgError.setBounds(309, 402, 284, 15);
+		lblMsgError.setBounds(451, 419, 284, 15);
 		lblMsgError.setVisible(false);
 		getContentPane().add(lblMsgError);
 		
 		
 		lblMsgExito.setForeground(new Color(127, 255, 0));
-		lblMsgExito.setBounds(309, 402, 323, 15);
+		lblMsgExito.setBounds(451, 419, 323, 15);
 		lblMsgExito.setVisible(false);
 		getContentPane().add(lblMsgExito);
 		
@@ -244,7 +247,7 @@ public class AltaUsuario extends JInternalFrame {
 				}
 			}
 		});
-		btnAgregar.setBounds(309, 446, 117, 25);
+		btnAgregar.setBounds(451, 463, 117, 25);
 		getContentPane().add(btnAgregar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -254,7 +257,7 @@ public class AltaUsuario extends JInternalFrame {
 				AltaUsuario.this.setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(461, 446, 117, 25);
+		btnCancelar.setBounds(603, 463, 117, 25);
 		getContentPane().add(btnCancelar);
 		
 		
@@ -263,7 +266,7 @@ public class AltaUsuario extends JInternalFrame {
 				publico = ! publico;
 			}
 		});
-		chckbxCanalPublico.setBounds(488, 270, 177, 23);
+		chckbxCanalPublico.setBounds(490, 266, 177, 23);
 		getContentPane().add(chckbxCanalPublico);
 		
 		
@@ -289,14 +292,29 @@ public class AltaUsuario extends JInternalFrame {
 				
 			}
 		});
-		btnSelecFoto.setBounds(270, 325, 117, 19);
+		btnSelecFoto.setBounds(270, 346, 117, 19);
 		getContentPane().add(btnSelecFoto);
 		btnSelecFoto.setEnabled(false);
 		
 		lblImagen.setBackground(Color.WHITE);
-		lblImagen.setBounds(23, 374, 100, 70);
+		lblImagen.setBounds(270, 265, 100, 70);
 		
 		getContentPane().add(lblImagen);
+		lblContrasea.setBounds(23, 391, 148, 14);
+		
+		getContentPane().add(lblContrasea);
+		
+		password = new JPasswordField();
+		password.setBounds(184, 388, 202, 20);
+		getContentPane().add(password);
+		
+		JLabel lblCategoria = new JLabel("Categoria");
+		lblCategoria.setBounds(432, 310, 93, 14);
+		getContentPane().add(lblCategoria);
+		
+		JComboBox categoria = new JComboBox();
+		categoria.setBounds(588, 305, 190, 20);
+		getContentPane().add(categoria);
 		
 		
 		
