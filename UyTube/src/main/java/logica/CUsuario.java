@@ -37,14 +37,18 @@ public class CUsuario implements IUsuario {
 		}	
 	}
 
-	//si la categoria esta vacia en canal se le agrega, si ya tiene una categoria se pisa
+	//si la categoria esta vacia en canal se le agrega, si ya tiene una categoria se pisa.
+	//si recibe null en nomCat deja al canal sin categoria
 	@Override
 	public void modificarCatCanal(String nick, String nomCat) {
 		try{
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 			Usuario user = mU.obtenerUsuario(nick);
-			Categoria cat = mC.obtenerCategoria(nomCat);
+			Categoria cat = null;
+			if(nomCat != null){
+				cat = mC.obtenerCategoria(nomCat);
+			}
 			user.getCanal().setCategoria(cat);
 			mU.modificaDatosUsuario(user);
 		} catch (Exception e) {

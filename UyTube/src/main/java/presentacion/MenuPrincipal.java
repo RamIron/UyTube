@@ -227,7 +227,7 @@ public class MenuPrincipal extends JFrame {
 		mntmModificarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LimpiarFrame();
-				modificarUsuarioIF.inicializar(iU);
+				modificarUsuarioIF.inicializar(iU, iC);
 				modificarUsuarioIF.setVisible(true);
 			}
 		});
