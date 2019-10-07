@@ -19,10 +19,29 @@ import java.io.IOException;
 @WebServlet(name = "ModificarLista", value = "/ModificarLista")
 public class ModificarLista extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LRFactory fLr = LRFactory.getInstancia();
+        IListaReproduccion iLR = fLr.getIListaReproduccion();
+
+        //este string esta bien????
+        String nomLista = request.getParameter("id");
+        Boolean esPublica;
+
+        if(request.getParameter("esPublica") == null){
+            esPublica = false;
+        }else{
+            esPublica = true;
+        }
+
+        iLR.modificarInfoLista(nomLista, esPublica);
+
+        RequestDispatcher rd;
+        rd = request.getRequestDispatcher("/module/consultaLista.jsp");
+        String message = "Cambios realizados";
+        request.setAttribute("message", message);
+        rd.forward(request, response);
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

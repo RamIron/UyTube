@@ -4,6 +4,7 @@
 <%@ page import="interfaces.*" %>
 <%@ page import="datatypes.DtVideo" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="datatypes.DtElementoWeb" %>
 <!--
 
 =========================================================
@@ -155,7 +156,9 @@
                     DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
                     List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
                     String lista = request.getParameter("id");
-                    for(String l: lis){%>
+                    System.out.println("SOY LA LISTA FUERA DEL TODO " + lista);
+                    for(String l: lis){
+                    %>
                 <li class="nav-item">
                     <a class="nav-link" <%= (l.equals(lista) ? "active" : "") %> href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
                         <i class="ni ni-books text-blue"></i> <%= (l.equals(lista) ? "<strong>" + l + "</strong>" : l) %>
@@ -261,112 +264,115 @@
                 <!-- Contenido aqui TODO-->
 
 <%--                CONSULTAR LISTA--%>
-                <div class="nav-wrapper">
-                    <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-list-ul"></i>    Videos</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="card shadow">
                     <div class="card-body">
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                                <%--            empieza contenido de la tab de videos--%>
-                                <%
-                                    LRFactory fLR = LRFactory.getInstancia();
-                                    IListaReproduccion iLR = fLR.getIListaReproduccion();
-                                    VFactory fV = VFactory.getInstancia();
-                                    IVideo iV = fV.getIVideo();
+<%--            empieza contenido de la tab de videos--%>
+                    <%
+                        LRFactory fLR = LRFactory.getInstancia();
+                        IListaReproduccion iLR = fLR.getIListaReproduccion();
+                        DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+                        iLR.setuList(usr.getNickname());
+                        String lista = request.getParameter("id");
+                        System.out.println("SOY LA LISTA DENTRO DEL TODO " + lista);
+                        List<DtElementoWeb> videoLista = iLR.listarVideosLista(lista);
+                        List<String> categoriasList = iLR.obtenerCatListPart(lista);
+                    %>
+                    <div class="container-fluid">
+                        <div class="col col- ">
+                            <div class="row">
+                                <div class="col">
+                                    <h1><%=lista%></h1>
+                                </div>
+                                <div class="col- btn-group row-grid text-lg-right">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Modificar
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <form name="modificarlista" action="<%= request.getContextPath() %>/ModificarLista" method="post">
+                                            <div class="form-check">
+                                                <input class="form-check-input- text-center" type="checkbox" name="esPublica" value="" id="defaultCheck1">
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    Lista publica
+                                                </label>
+                                            </div>
+                                            <br>
+                                            <div class="text-center">
+                                                <button type="button" class="btn btn-primary btn-sm" onclick="confirmar()">Confirmar cambios</button>
+                                            </div>
+                                         </form>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                                    List<String> lis = iLR.listarListasDeUsuario(usr.getNickname());
-                                    String lista = request.getParameter("id");
-                                    List<DtVideoUsuario> videoLista = iLR.listarVideosdeLista(lista);
-                                %>
+                            <br><br>
+<%--                            se tiene que poder agregar categoria a lista para poder probar esto--%>
+                            <%
+                                if(!categoriasList.isEmpty()){
+                                    for(String cl: categoriasList){
+                            %>
+                                <a href="#" class="badge badge-info"><%=cl.toString()%></a>
+                                <br><br><br><br>
+                                    <%}%>
+                                <%}%>
+                            <%
+                                if(!videoLista.isEmpty()){
+                                for(DtElementoWeb vl: videoLista){
+                            %>
+                            <div class="card mb-3" style="max-width: 630px;">
 
-                                <div class="container-fluid">
-                                    <div class="col col- justify-content-left">
-                                        <%
-                                            List<DtVideo> infoVideo = new ArrayList<DtVideo>();
-                                            for(DtVideoUsuario vl: videoLista) {
-                                                DtVideo infoVid = iV.obtenerInfoVideo(vl.getNombreE());
-                                                infoVideo.add(infoVid);
-                                            }
-                                        %>
-                                        <%
-                                            for(DtVideo iv : infoVideo){
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=vl.getNickname()%>&v=<%=vl.getNombreE()%>">
+                                        <img src="http://img.youtube.com/vi/<%=vl.getUrl()%>/0.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=vl.getNombreE()%>">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-0 text-lg"><%=vl.getNombreE()%> </h5>
+                                            <br>
+                                            <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=vl.getNickname()%></strong></small></p>
+<%--                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="right" title="Quitar video" onclick="quitarVideoLista()"><i class="far fa-trash-alt"></i></button>--%>
 
-                                        %>
-                                        <div class="card mb-3" style="max-width: 630px;">
-                                            <div class="row no-gutters">
-                                                <div class="col-md-4">
-<%--                                                    <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">--%>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-0 text-lg"><%=iv.getNombre()%></h5>
-                                                        <br>
-                                                        <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=iv.getDescripcion()%></strong></small></p>
+
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel"><strong>Esta seguro que desea quitar el video de la lista <%=lista%>? </strong></h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                            <button type="button" class="btn btn-primary">Confirmar</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+
                                         </div>
-                                        <% } %>
                                     </div>
                                 </div>
-                                <%--      termina contenido de la tab de videos--%>
                             </div>
+                                <% } %>
+                            <% } %>
                         </div>
+                    </div>
+
+
+
                     </div>
                 </div>
 
-<%--                MODIFICAR LISTA--%>
-
-<%--                <div class="row justify-content-center">--%>
-<%--                    <div class="col-lg-5 col-md-7">--%>
-<%--                        <div class="card bg-secondary shadow border-0">--%>
-<%--                            <div class="card-body px-lg-5 py-lg-5">--%>
-<%--                                <form name="modificarlista" action="<%= request.getContextPath() %>/ModificarLista" method="post">--%>
-<%--                                    <div class="text-muted text-center mt-2 mb-3">--%>
-<%--                                        <h1>Modificar Lista de Reproduccion</h1>--%>
-<%--                                    </div>--%>
-<%--                                        <div class="form-check">--%>
-<%--                                            <input class="form-check-input" type="checkbox" name="esPublica" value="" id="defaultCheck1">--%>
-<%--                                            <label class="form-check-label" for="defaultCheck1">--%>
-<%--                                                Lista publica--%>
-<%--                                            </label>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="text-center">--%>
-<%--                                            <button type="button" class="btn btn-primary my-4" onclick="continuar()">Confirmar cambios</button>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </form>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
 
 
-                <form class="dropdown-menu p-4">
-                    <div class="form-group">
-                        <label for="exampleDropdownFormEmail2">Email address</label>
-                        <input type="email" class="form-control" id="exampleDropdownFormEmail2" placeholder="email@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleDropdownFormPassword2">Password</label>
-                        <input type="password" class="form-control" id="exampleDropdownFormPassword2" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                            <label class="form-check-label" for="dropdownCheck2">
-                                Remember me
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Sign in</button>
-                </form>
 
 
 
@@ -395,6 +401,13 @@
         application: "argon-dashboard-free"
     });
 </script>
+
+<script type="text/javascript">
+    function confirmar(){
+        document.forms["modificarLista"].submit();
+    }
+</script>
+
 </body>
 
 </html>

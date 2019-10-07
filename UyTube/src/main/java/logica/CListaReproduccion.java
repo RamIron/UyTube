@@ -9,17 +9,13 @@ import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 
+import datatypes.*;
 import org.hibernate.SessionFactory;
 
 import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorPorDefecto;
 //import Manejadores.ManejadorListaParticular;
 import Manejadores.ManejadorUsuario;
-import datatypes.DtComentario;
-import datatypes.DtListaRep;
-import datatypes.DtValoracion;
-import datatypes.DtVideo;
-import datatypes.DtVideoUsuario;
 import interfaces.IListaReproduccion;
 
 public class CListaReproduccion implements IListaReproduccion {
@@ -37,6 +33,18 @@ public class CListaReproduccion implements IListaReproduccion {
 			cat.agregarElemento(this.lista);
 			mC.modificarCategoria(cat);
 		}
+	}
+
+	@Override
+	public List<String> obtenerCatListPart(String nomL){
+		List<String> categoriasList = new ArrayList<String>();
+		if(this.lista instanceof Particular){
+			for(String c : categoriasList){
+				String cat = this.lista.getCategoria().getNombre();
+				categoriasList.add(cat);
+			}
+		}
+		return categoriasList;
 	}
 	
 	@Override 
@@ -144,6 +152,11 @@ public class CListaReproduccion implements IListaReproduccion {
 	@Override 
 	public List<DtVideoUsuario> listarVideosdeLista(String nomList) {
 		return this.uList.getCanal().listarVideosdeLista(nomList);
+	}
+
+	@Override
+	public List<DtElementoWeb> listarVideosLista(String nomList) {
+		return this.uList.getCanal().listarVideosLista(nomList);
 	}
 	
 	@Override 

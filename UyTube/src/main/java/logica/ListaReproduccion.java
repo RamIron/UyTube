@@ -65,6 +65,18 @@ public abstract class ListaReproduccion extends Elemento {
 		}
 		return res;
 	}
+
+	public List<DtElementoWeb> listarVideosWeb() {
+		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
+		for(Video v: videos) {
+			if(!videos.isEmpty()) {
+				DtElementoWeb vid = new DtElementoWeb(v.getCanal().getUsuario().getNickname(), v.getNombre(), tipoElemento.VIDEO, v.getUrl());
+				res.add(vid);
+			}
+		}
+		return res;
+	}
+
 //	
 //	public Map<Integer, DtComentario> obtenerComentariosVideo(String nickV, String nomVid) {
 //		return null;
