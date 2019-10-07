@@ -29,7 +29,7 @@ public class SeguirUsuario extends HttpServlet {
             IUsuario iU = f.getIUsuario();
             iU.seguirUsuario(seguidor, seguido);
             RequestDispatcher rd;
-            String path = "/module/consultaUsuario.jsp?u=" + seguido;
+            String path = "/module/consultaUsuario.jsp?nick=" + seguido;
             rd = request.getRequestDispatcher(path);
             String message = "Se siguio al usuario " + seguido;
             request.setAttribute("message", message);
