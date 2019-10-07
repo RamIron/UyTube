@@ -21,9 +21,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import interfaces.IListaReproduccion;
-import interfaces.IUsuario;
-import interfaces.IVideo;
+import interfaces.*;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -63,6 +61,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	private JList listaVid = new JList();
 	private JList listaLisRep = new JList();
 	private JCheckBox checkBoxPublico = new JCheckBox("");
+	private JComboBox categoria = new JComboBox();
 	
 	
 	private ConsultaVideo cvIF;
@@ -75,6 +74,9 @@ public class ConsultaUsuario extends JInternalFrame {
 		
 //		limpiarLista();
 //		resetearFormulario();
+
+		CFactory f = CFactory.getInstancia();
+		ICategoria iC = f.getICategoria();
 		
 		this.cvIF = cvIF;
 		this.clIF = clIF;
@@ -172,12 +174,12 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(fAnio);
 		
 		JLabel lblNombreDelCanal = new JLabel("Nombre");
-		lblNombreDelCanal.setBounds(391, 373, 148, 15);
+		lblNombreDelCanal.setBounds(391, 339, 148, 15);
 		getContentPane().add(lblNombreDelCanal);
 		
 		nomCanal = new JTextField();
 		nomCanal.setEnabled(false);
-		nomCanal.setBounds(547, 373, 207, 19);
+		nomCanal.setBounds(552, 339, 202, 19);
 		getContentPane().add(nomCanal);
 		nomCanal.setColumns(10);
 		
@@ -192,7 +194,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		
 		JLabel lblInfoCanal = new JLabel("Informacion del Canal");
 		lblInfoCanal.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblInfoCanal.setBounds(391, 337, 202, 27);
+		lblInfoCanal.setBounds(391, 301, 202, 27);
 		getContentPane().add(lblInfoCanal);
 		
 		JLabel lblInfoUsuario = new JLabel("Informacion del Usuario");
@@ -201,14 +203,14 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(lblInfoUsuario);
 		
 		JLabel lblPublico = new JLabel("Publico");
-		lblPublico.setBounds(391, 399, 70, 15);
+		lblPublico.setBounds(391, 365, 70, 15);
 		getContentPane().add(lblPublico);
 		
 		JButton btnSeleccionarUsuario = new JButton("Seleccionar");
 		btnSeleccionarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				iU.limpiarControlador();
-				resetearFormulario();
+				resetearFormulario(iC);
 				int i = listaUsr.getSelectedIndex();
 				String usr = listaUsr.getModel().getElementAt(i).toString();
 				DtUsuario infoU = iU.obtenerInfoUsuario(usr);
@@ -222,11 +224,13 @@ public class ConsultaUsuario extends JInternalFrame {
 				fDia.setSelectedIndex(infoU.getfNac().get(Calendar.DAY_OF_MONTH));
 				fMes.setSelectedIndex(infoU.getfNac().get(Calendar.MONTH));
 				fAnio.setSelectedItem(infoU.getfNac().get(Calendar.YEAR));
-				try {
-					mostrarImg(infoU.getImagen());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}					
+//				String path = "/src/main/resources/" + infoU.getImagen();
+//                System.out.println(path);
+//				try {
+//					mostrarImg(path);                           //TODO, no funciona la imagen
+//				} catch (Exception e1) {
+//					e1.printStackTrace();
+//				}
 
 				
 				//INFO CANAL
@@ -234,6 +238,10 @@ public class ConsultaUsuario extends JInternalFrame {
 				desCanal.setText(infoC.getDescripcion());
 				System.out.println(infoC.getPublico());
 				checkBoxPublico.setSelected((boolean)infoC.getPublico());
+				if(infoC.getCategoria() != null){
+				    categoria.setSelectedItem(infoC.getCategoria());
+                }
+
 				
 				//SEGUIDORES
 				List<String> seguidores = iU.listarSeguidores();
@@ -272,7 +280,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		getContentPane().add(btnSeleccionarUsuario);
 		
 		JScrollPane scrollSeguidores = new JScrollPane();
-		scrollSeguidores.setBounds(586, 217, 168, 108);
+		scrollSeguidores.setBounds(586, 217, 168, 81);
 		getContentPane().add(scrollSeguidores);
 		
 		DefaultListModel<String> listaS1 = new DefaultListModel<String>();
@@ -280,7 +288,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		scrollSeguidores.setViewportView(listaSeguidores);
 		
 		JScrollPane scrollSeguidos = new JScrollPane();
-		scrollSeguidos.setBounds(391, 217, 168, 108);
+		scrollSeguidos.setBounds(391, 217, 168, 81);
 		getContentPane().add(scrollSeguidos);
 		
 		DefaultListModel<String> listaS2 = new DefaultListModel<String>();
@@ -379,8 +387,17 @@ public class ConsultaUsuario extends JInternalFrame {
 		checkBoxPublico.setEnabled(false);
 		
 		
-		checkBoxPublico.setBounds(730, 399, 97, 23);
+		checkBoxPublico.setBounds(730, 365, 97, 23);
 		getContentPane().add(checkBoxPublico);
+		
+		JLabel lblCategoria = new JLabel("Categoria");
+		lblCategoria.setBounds(391, 399, 122, 14);
+		getContentPane().add(lblCategoria);
+		
+
+		categoria.setBounds(552, 393, 202, 20);
+		getContentPane().add(categoria);
+		categoria.setEnabled(false);
 
 	}
 	
@@ -393,12 +410,22 @@ public class ConsultaUsuario extends JInternalFrame {
 		}
 		listaUsr.setModel(listaU);
 	}
-	
+
+	public void cargarCategorias(ICategoria iC) {
+		List<String> categorias = iC.listarCategorias();
+		categoria.removeAllItems();
+		categoria.addItem("<Sin categoria>");
+		for(String c: categorias) {
+			categoria.addItem(c);
+		}
+		categoria.setSelectedIndex(0);
+	}
+
 	public void limpiarLista() {
 		((DefaultListModel) listaUsr.getModel()).clear();
 	}
 	
-	public void resetearFormulario() {
+	public void resetearFormulario(ICategoria iC) {
 		nick.setText("");
 		nombre.setText("");
 		apellido.setText("");
@@ -419,6 +446,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		((DefaultListModel) listaSeguidos.getModel()).clear();
 		((DefaultListModel) listaVid.getModel()).clear();
 		((DefaultListModel) listaLisRep.getModel()).clear();
+		cargarCategorias(iC);
 	}
 	
 	

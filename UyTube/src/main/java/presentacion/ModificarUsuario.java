@@ -32,9 +32,8 @@ import javax.swing.filechooser.FileSystemView;
 
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
-import interfaces.IListaReproduccion;
-import interfaces.IUsuario;
-import interfaces.IVideo;
+import interfaces.*;
+
 import java.awt.Color;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
@@ -77,9 +76,12 @@ public class ModificarUsuario extends JInternalFrame {
 	
 	private ModificarVideo mvIF;
 	private ModificarLista mlIF; 
+	private final JLabel lblCategoria = new JLabel("Categoria");
+	private final JComboBox categoria = new JComboBox();
 	
 	public ModificarUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ModificarVideo mvIF ,  ModificarLista mlIF) {
-		
+		CFactory f = CFactory.getInstancia();
+		ICategoria iC = f.getICategoria();
 		
 		this.mvIF = mvIF;
 		this.mlIF = mlIF; 
@@ -177,12 +179,12 @@ public class ModificarUsuario extends JInternalFrame {
 		getContentPane().add(fAnio);
 		
 		JLabel lblNombreDelCanal = new JLabel("Nombre");
-		lblNombreDelCanal.setBounds(391, 241, 148, 15);
+		lblNombreDelCanal.setBounds(391, 211, 148, 15);
 		getContentPane().add(lblNombreDelCanal);
 		
 		nomCanal = new JTextField();
 		nomCanal.setEnabled(false);
-		nomCanal.setBounds(547, 241, 207, 19);
+		nomCanal.setBounds(552, 208, 207, 19);
 		getContentPane().add(nomCanal);
 		nomCanal.setColumns(10);
 		
@@ -191,7 +193,7 @@ public class ModificarUsuario extends JInternalFrame {
 		getContentPane().add(lblDescripcionDelCanal);
 		chckbxCanalPublico.setEnabled(false);
 		
-		chckbxCanalPublico.setBounds(725, 268, 29, 23);
+		chckbxCanalPublico.setBounds(725, 238, 29, 23);
 		getContentPane().add(chckbxCanalPublico);
 		scrollDescCanal.setBounds(391, 309, 363, 57);
 		
@@ -201,7 +203,7 @@ public class ModificarUsuario extends JInternalFrame {
 		
 		JLabel lblInfoCanal = new JLabel("Informacion del Canal");
 		lblInfoCanal.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblInfoCanal.setBounds(391, 205, 202, 27);
+		lblInfoCanal.setBounds(391, 177, 202, 27);
 		getContentPane().add(lblInfoCanal);
 		
 		JLabel lblInfoUsuario = new JLabel("Informacion del Usuario");
@@ -210,14 +212,14 @@ public class ModificarUsuario extends JInternalFrame {
 		getContentPane().add(lblInfoUsuario);
 		
 		JLabel lblPublico = new JLabel("Publico");
-		lblPublico.setBounds(391, 267, 70, 15);
+		lblPublico.setBounds(391, 237, 70, 15);
 		getContentPane().add(lblPublico);
 		
 		
 		btnSeleccionarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				iU.limpiarControlador();
-				resetearFormulario();
+				resetearFormulario(iC);
 				int i = listaUsr.getSelectedIndex();
 				String usr = listaUsr.getModel().getElementAt(i).toString();
 				DtUsuario infoU = iU.obtenerInfoUsuario(usr);
@@ -231,11 +233,11 @@ public class ModificarUsuario extends JInternalFrame {
 				fDia.setSelectedIndex(infoU.getfNac().get(Calendar.DAY_OF_MONTH));
 				fMes.setSelectedIndex(infoU.getfNac().get(Calendar.MONTH));
 				fAnio.setSelectedItem(infoU.getfNac().get(Calendar.YEAR));
-				try {
-					mostrarImg(infoU.getImagen());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}					
+//				try {
+//					mostrarImg(infoU.getImagen());
+//				} catch (Exception e1) {				//TODO, no funciona la imagen
+//					e1.printStackTrace();
+//				}
 				imgPath = infoU.getImagen();
 				
 				//INFO CANAL
@@ -243,7 +245,9 @@ public class ModificarUsuario extends JInternalFrame {
 				desCanal.setText(infoC.getDescripcion());
 				chckbxCanalPublico.setSelected(infoC.getPublico());
 				publico = infoC.getPublico();
-			
+				if(infoC.getCategoria() != null){
+					categoria.setSelectedItem(infoC.getCategoria());
+				}
 				
 				//VIDEOS
 				List<String> videos = iV.listarVideosDeUsuario(usr);
@@ -350,7 +354,7 @@ public class ModificarUsuario extends JInternalFrame {
 					int i = listaUsr.getSelectedIndex();
 					String usr = listaUsr.getModel().getElementAt(i).toString();
 					i = listaLisRep.getSelectedIndex();
-					String lis = listaLisRep.getModel().getElementAt(i).toString();  //TODO
+					String lis = listaLisRep.getModel().getElementAt(i).toString();
 					mlIF.inicializar();
 					mlIF.cargarLista(usr, lis);
 					ModificarUsuario.this.setVisible(false);
@@ -372,7 +376,12 @@ public class ModificarUsuario extends JInternalFrame {
 				        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
 				        iU.modificarInfoUsuario(nombre.getText(), apellido.getText(), fNac, imgPath);
 				        iU.modificarInfoCanal(nomCanal.getText(), desCanal.getText(), chckbxCanalPublico.isSelected());
-				        inicializar(iU);
+				        String nomCat = null;
+				        if(categoria.getSelectedIndex() != 0){
+							nomCat = categoria.getSelectedItem().toString();
+						}
+						iU.modificarCatCanal(nick.getText(), nomCat);
+				        inicializar(iU, iC);
 				        lblMsgExito.setVisible(true);
 					}
 			}
@@ -434,6 +443,13 @@ public class ModificarUsuario extends JInternalFrame {
 		lblMsgAdvert.setForeground(new Color(0, 0, 255));
 		lblMsgAdvert.setBounds(391, 383, 363, 66);
 		getContentPane().add(lblMsgAdvert);
+		lblCategoria.setBounds(391, 267, 120, 14);
+		
+		getContentPane().add(lblCategoria);
+		categoria.setBounds(552, 268, 207, 20);
+		categoria.setEnabled(false);
+		
+		getContentPane().add(categoria);
 	}
 	
 	public void cargarElementos(IUsuario iU) {
@@ -449,8 +465,18 @@ public class ModificarUsuario extends JInternalFrame {
 	public void limpiarLista() {
 		((DefaultListModel) listaUsr.getModel()).clear();
 	}
-	
-	public void resetearFormulario() {
+
+	public void cargarCategorias(ICategoria iC) {
+		List<String> categorias = iC.listarCategorias();
+		categoria.removeAllItems();
+		categoria.addItem("<Sin categoria>");
+		for(String c: categorias) {
+			categoria.addItem(c);
+		}
+		categoria.setSelectedIndex(0);
+	}
+
+	public void resetearFormulario(ICategoria iC) {
 		nick.setText("");
 		nombre.setText("");
 		apellido.setText("");
@@ -476,13 +502,14 @@ public class ModificarUsuario extends JInternalFrame {
 //		} catch (Exception e1) {
 //			e1.printStackTrace();
 //		}
+		cargarCategorias(iC);
 	}
 	
-	public void inicializar(IUsuario iU) {
+	public void inicializar(IUsuario iU, ICategoria iC) {
 		borrarMsg();
 		habilitarForm(false);
 		limpiarLista();
-		resetearFormulario();
+		resetearFormulario(iC);
 		cargarElementos(iU);
 	}
 	
@@ -504,6 +531,7 @@ public class ModificarUsuario extends JInternalFrame {
 		btnConfirmar.setEnabled(flag);
 		btnModImg.setEnabled(flag);
 		btnBorrarImg.setEnabled(flag);
+		categoria.setEnabled(flag);
 	}
 	
 	private void borrarMsg() {
