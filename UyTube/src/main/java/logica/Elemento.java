@@ -70,5 +70,7 @@ public abstract class Elemento {
 //	}
 	
 	public abstract DtElementoUsuario obtenerElemCategoria();
+
+	//public abstract DtElementoWeb obtenerVideosCategoria();
 	
 }

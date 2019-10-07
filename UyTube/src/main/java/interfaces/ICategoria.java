@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import datatypes.DtElementoUsuario;
+import datatypes.DtElementoWeb;
 
 public interface ICategoria {
 
 	public void altaCategoria(String nomC);
 	
 	public List<DtElementoUsuario> listarElemCategoria(String nomC);
+
+	public List<DtElementoWeb> listarVideosCategoria(String nomC);
 	
 	public List<String> listarCategorias();
 	

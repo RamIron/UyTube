@@ -1,9 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="datatypes.DtElementoUsuario" %>
 <%@ page import="interfaces.*" %>
-<%@ page import="datatypes.tipoElemento" %>
-<%@ page import="datatypes.DtVideo" %>
+<%@ page import="datatypes.*" %>
 <!--
 
 =========================================================
@@ -156,7 +153,7 @@
                     List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
                     for(String l: lis){ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/ConsultaLista?id=<%=l%>">
+                    <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
                         <i class="ni ni-books text-blue"></i> <%=l%>
                     </a>
                 </li>
@@ -173,7 +170,6 @@
                     ICategoria iC = fC.getICategoria();
                     List<String> lC = iC.listarCategorias();
                     String categoria = request.getParameter("id");
-                    System.out.println(categoria);
                     for(String cat: lC){ %>
                 <li class="nav-item">
                     <a class="nav-link <%= (cat.equals(categoria) ? "active" : "") %> href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -278,36 +274,38 @@
                             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
 <%--            empieza contenido de la tab de videos--%>
                                 <%
-                                    List<DtElementoUsuario> listVidsU = iC.listarElemCategoria(categoria);
+                                    List<DtElementoWeb> videosCat = iC.listarVideosCategoria(categoria);
+                                    System.out.println("SOY LA LIST EN EL JSP -------------  " + videosCat.isEmpty());
                                 %>
 
                                 <div class="container-fluid">
                                     <div class="col col- justify-content-left">
-                                        <%if(listVidsU.isEmpty()){%>
+                                        <%if(videosCat.isEmpty()){%>
                                         <div class="alert alert-warning col col- justify-content-left" role="alert">
                                             <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
                                             <span class="alert-inner--text">No existen videos con la categoria <strong><%=categoria%></strong></span>
                                         </div>
                                         <%}%>
                                         <%
-                                            for(DtElementoUsuario eu: listVidsU){
-                                                if (eu.getTipo().equals(tipoElemento.VIDEO)){
+                                            for(DtElementoWeb vc: videosCat){
                                         %>
                                         <div class="card mb-3" style="max-width: 630px;">
+                                            <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=vc.getNickname()%>&v=<%=vc.getNombreE()%>">
                                             <div class="row no-gutters">
                                                 <div class="col-md-4">
-                                                    <img src="<%= request.getContextPath() %>/img/video-sample.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
+                                                    <img src="http://img.youtube.com/vi/<%=vc.getUrl()%>/0.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=vc.getNombreE()%>">
                                                 </div>
                                                 <div class="col-md-5">
                                                     <div class="card-body">
-                                                        <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
+                                                        <h5 class="card-title mb-0 text-lg"><%=vc.getNombreE()%></h5>
                                                         <br>
-                                                        <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=eu.getNickname()%></strong></small></p>
+                                                        <br>
+                                                        <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=vc.getNickname()%></strong></small></p>
                                                     </div>
                                                 </div>
                                             </div>
+                                            </a>
                                         </div>
-                                        <% } %>
                                     <% } %>
                                 </div>
                             </div>
@@ -321,6 +319,12 @@
                                 <div class="container-fluid">
                                     <div class="row row- justify-content-right">
 
+                                        <%if(!videosCat.isEmpty()){%>
+                                        <div class="alert alert-warning col col- justify-content-left" role="alert">
+                                            <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
+                                            <span class="alert-inner--text">No existen listas con la categoria <strong><%=categoria%></strong></span>
+                                        </div>
+                                        <%}%>
                                         <%if(listListsU.isEmpty()){%>
                                         <div class="alert alert-warning col col- justify-content-left" role="alert">
                                             <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>

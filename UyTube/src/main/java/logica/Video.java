@@ -2,10 +2,8 @@ package logica;
 
 import java.util.*;
 import javax.persistence.*;
-import datatypes.DtComentario;
-import datatypes.DtElementoUsuario;
-import datatypes.DtValoracion;
-import datatypes.tipoElemento;
+
+import datatypes.*;
 
 @Entity
 @DiscriminatorValue("V")
@@ -131,6 +129,11 @@ public class Video extends Elemento {
 		DtElementoUsuario video = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
 		return video;
 	}
+
+//	public DtElementoWeb obtenerVideoWeb() {
+//		DtElementoWeb video = new DtElementoWeb(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO, this.getUrl());
+//		return video;
+//	}
 	
 	
 	public void valorarVideo(boolean gusta, Usuario usrVal) {
