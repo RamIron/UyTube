@@ -11,6 +11,11 @@ public class DtUsuarioWeb {
     public DtUsuarioWeb() {
     }
 
+    public DtUsuarioWeb(String nickname, String foto) {
+        this.nickname = nickname;
+        this.foto = foto;
+    }
+
     public DtUsuarioWeb(String nickname, String foto, List<String> listaRep) {
         this.nickname = nickname;
         this.foto = foto;
