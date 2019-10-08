@@ -2,11 +2,7 @@ package interfaces;
 
 import java.util.List;
 
-import datatypes.DtComentario;
-import datatypes.DtListaRep;
-import datatypes.DtValoracion;
-import datatypes.DtVideo;
-import datatypes.DtVideoUsuario;
+import datatypes.*;
 
 public interface IListaReproduccion {
 
@@ -41,6 +37,10 @@ public interface IListaReproduccion {
 	public List<String> listarListasPorDefecto(String nick);
 	
 	public List<DtVideoUsuario> listarVideosdeLista(String nomList);
+
+	public List<DtElementoWeb> listarVideosListaWeb(String nomList);
+
+	public List<String> obtenerCatListPart(String nomL);
 	
 	public void modificarCategoria(String nomC);
 	

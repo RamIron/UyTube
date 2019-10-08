@@ -1,3 +1,4 @@
+
 package logica;
 
 import java.util.ArrayList;
@@ -9,17 +10,13 @@ import javax.persistence.Query;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 
+import datatypes.*;
 import org.hibernate.SessionFactory;
 
 import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorPorDefecto;
 //import Manejadores.ManejadorListaParticular;
 import Manejadores.ManejadorUsuario;
-import datatypes.DtComentario;
-import datatypes.DtListaRep;
-import datatypes.DtValoracion;
-import datatypes.DtVideo;
-import datatypes.DtVideoUsuario;
 import interfaces.IListaReproduccion;
 
 public class CListaReproduccion implements IListaReproduccion {
@@ -39,6 +36,19 @@ public class CListaReproduccion implements IListaReproduccion {
 			System.out.println("Soy la categoria: " + nomC + "y la lista: " + this.lista.getNombre());
 		}
 	}
+
+	@Override
+	public List<String> obtenerCatListPart(String nomL){
+		List<String> categoriasList = new ArrayList<String>();
+		if(this.lista instanceof Particular){
+			for(String c : categoriasList){
+				String cat = this.lista.getCategoria().getNombre();
+				categoriasList.add(cat);
+			}
+		}
+		return categoriasList;
+	}
+
 	
 	@Override 
 	public void agregarListaDefecto(String nomL) {	
@@ -167,6 +177,11 @@ public class CListaReproduccion implements IListaReproduccion {
 	}
 
 	@Override
+	public List<DtElementoWeb> listarVideosListaWeb(String nomList) {
+		return this.uList.getCanal().listarVideosListaWeb(nomList);
+	}
+	
+	@Override 
 	public void modificarCategoria(String nomC) {
 		System.out.println("sa");
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();

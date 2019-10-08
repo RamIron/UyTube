@@ -48,11 +48,11 @@ public class Particular extends ListaReproduccion{
 		this.publico = publico;
 	}
 	
-//	public Categoria getCatergoria() {
-//		return categoria;
-//	}
+	public Categoria getCategoria() {
+		return categoria;
+	}
 //
-//	public void setCatergoria(Categoria categoria) {
+//	public void setCategoria(Categoria categoria) {
 //		this.categoria = categoria;
 //	}
 	

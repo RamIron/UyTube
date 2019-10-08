@@ -250,6 +250,15 @@ public class Canal {
 		}
 		return null;
 	}
+
+	public List<DtElementoWeb> listarVideosListaWeb(String nomList) {
+		for(ListaReproduccion lr:this.listas) {
+			if(nomList.contentEquals(lr.getNombre())) {
+				return lr.listarVideosWeb();
+			}
+		}
+		return null;
+	}
 	
 //	public List<DtComentario> obtenerComentariosVideo(String nomVid) {}
 	
