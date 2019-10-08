@@ -280,6 +280,8 @@
                                         IUsuario iUsr = fU.getIUsuario();
                                         VFactory uF = VFactory.getInstancia();
                                         IVideo iV = uF.getIVideo();
+                                        LRFactory lrF = LRFactory.getInstancia();
+                                        IListaReproduccion iLR = lrF.getIListaReproduccion();
 
                                         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
                                         DtUsuario usuario = iUsr.obtenerInfoUsuario(usr.getNickname());
@@ -290,8 +292,8 @@
                                         List<DtUsuarioWeb> listSeguidores = iUsr.listarNickFotoWeb(seguidores);
                                         List<DtUsuarioWeb> listSeguidos = iUsr.listarNickFotoWeb(seguidos);
 
-                                        List<DtElementoWeb> listVideos = iV.listarVideosPublicosDeUsuarioWeb(usuario.getNickname());
-
+                                        List<DtElementoWeb> listVideos = iV.listarVideosDeUsuarioWeb(usuario.getNickname());
+                                        List<String> listListasRep = iLR.listarListasDeUsuario(usuario.getNickname());
                                     %>
 
                                     <div class="row">
@@ -580,7 +582,20 @@
 
                                                 <%--Comienzo muestra listas--%>
                                                 <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
-                                                    <p class="description">Aca van las listas.</p>
+                                                    <div class="row row- justify-content-right">
+                                                        <% for(String lr:listListasRep) { %>
+                                                        <div class="col-sm-3">
+                                                            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                                                                <div class="card-body px-lg-3 py-lg-3 text-lg-center">
+                                                                    <%--<a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=u.getNickname()%>">--%>
+                                                                    <span class="mb-0 text-lg font-weight-bold"><%=lr%></span>
+                                                                    <%-- </a>--%>
+                                                                </div>
+                                                            </div>
+                                                            <br/>
+                                                        </div>
+                                                        <% } %>
+                                                    </div>
                                                 </div>
                                                 <%--Fin muestra listas--%>
 

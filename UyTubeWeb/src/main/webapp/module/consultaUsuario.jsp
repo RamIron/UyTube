@@ -279,6 +279,8 @@
                                     IVideo iV = uF.getIVideo();
                                     UFactory fU = UFactory.getInstancia();
                                     IUsuario iUsr = fU.getIUsuario();
+                                    LRFactory lrF = LRFactory.getInstancia();
+                                    IListaReproduccion iLR = lrF.getIListaReproduccion();
 
                                     String nickUsr =  request.getParameter("nick");
                                     DtUsuario usuario = iUsr.obtenerInfoUsuario(nickUsr);
@@ -290,6 +292,7 @@
                                     List<DtUsuarioWeb> listSeguidos = iUsr.listarNickFotoWeb(seguidos);
 
                                     List<DtElementoWeb> listVideos = iV.listarVideosPublicosDeUsuarioWeb(usuario.getNickname());
+                                    List<String> listListasRep = iLR.listarListasParticularesPublicas(usuario.getNickname());
                                 %>
                                 <div class="row">
                                     <div class="col-4">
@@ -349,7 +352,7 @@
                                             <div class="col">
                                                 <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                                                     String fechaS = sdf.format(usuario.getfNac().getTime());%>
-                                                <h5>Fecha de Nacimiento: <br><span class="mb-xl-2 font-weight-bold text-xl"><%=fechaS %></span></h5>
+                                                <h5>Fecha de Nacimiento: <br><span class="mb-xl-2 font-weight-bold text-lg"><%=fechaS %></span></h5>
                                             </div>
                                             <%--Fin Fecha nacimiento--%>
                                         </div>
@@ -420,7 +423,7 @@
                                                     <div class="row row- justify-content-right">
                                                         <% for(DtUsuarioWeb u:listSeguidores) { %>
                                                         <div class="col-sm-3">
-                                                            <div class="card bg-secondary shadow ">
+                                                            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3">
                                                                     <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
                                                                         <div class="media align-items-center">
@@ -450,7 +453,7 @@
                                                     <div class="row row- justify-content-right">
                                                         <% for(DtUsuarioWeb u:listSeguidos) { %>
                                                         <div class="col-sm-3">
-                                                            <div class="card bg-secondary shadow ">
+                                                            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3">
                                                                     <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
                                                                         <div class="media align-items-center">
@@ -485,7 +488,7 @@
                                                             <div class="col-sm-3">
                                                                 <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getNickname()%>&v=<%=eu.getNombreE()%>">
                                                                     <div class="card-body px-lg-3 py-lg-3">
-                                                                        <div class="card">
+                                                                        <div class="card shadow-sm p-3 mb-5 bg-white rounded">
                                                                             <img src="http://img.youtube.com/vi/<%=eu.getUrl()%>/0.jpg" class="card-img-top" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
                                                                             <div class="card-body mx--2">
                                                                                 <h5 class="card-title my--3 text-xs"><%=eu.getNombreE()%></h5>
@@ -502,19 +505,26 @@
 
                                                 <%--Comienzo muestra listas--%>
                                                 <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
-                                                    <p class="description">Aca van las listas.</p>
+                                                    <div class="row row- justify-content-right">
+                                                        <% for(String lr:listListasRep) { %>
+                                                        <div class="col-sm-3">
+                                                            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                                                                <div class="card-body px-lg-3 py-lg-3 text-lg-center">
+                                                                    <%--<a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=u.getNickname()%>">--%>
+                                                                        <span class="mb-0 text-lg font-weight-bold"><%=lr%></span>
+                                                                   <%-- </a>--%>
+                                                                </div>
+                                                            </div>
+                                                            <br/>
+                                                        </div>
+                                                        <% } %>
+                                                    </div>
                                                 </div>
                                                 <%--Fin muestra listas--%>
-
                                             </div>
                                         </div>
                                     </div>
                                 <%}%>
-
-
-
-
-
                                 </div>
                             </div>
                         </div>
@@ -524,306 +534,6 @@
             </div>
         </div>
     </div>
-<%--FIN COPIA--%>
-
-<%--ORIGINAL--%>
-    <%--<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-        <div class="container-fluid">
-            <div class="header-body">
-                <div class="row justify-content-center">
-                    <div class="col-xl-10 order-xl-1">
-                        <div class="card bg-secondary shadow ">
-                            <div class="card-body px-lg-5 py-lg-5">
-                                <div class="text-muted text-center mt-2 mb-3">
-                                    <h1>Datos del Usuario</h1>
-                                </div>
-                                <%
-                                    String message = (String) request.getAttribute("message");
-                                    if(message != null){
-                                %>
-                                <div class="alert alert-danger" role="alert">
-                                    <%=message%>
-                                </div>
-                                <%}%>
-                                <%
-                                    String nickUsr =  request.getParameter("nick");
-                                    UFactory fU = UFactory.getInstancia();
-                                    IUsuario iUsr = fU.getIUsuario();
-                                    DtUsuario usuario = iUsr.obtenerInfoUsuario(nickUsr);
-                                    DtCanal canal = iUsr.obtenerInfoCanal();
-                                    List<String> seguidos = iUsr.listarSeguidos();
-                                    List<String> seguidores = iUsr.listarSeguidores();
-                                    DtUsuarioWeb usrSession = (DtUsuarioWeb) s.getAttribute("usuario");
-                                    List<DtUsuarioWeb> listSeguidores = iUsr.listarNickFotoWeb(seguidores);
-                                    List<DtUsuarioWeb> listSeguidos = iUsr.listarNickFotoWeb(seguidos);
-                                    //List> DtElementoUsuario
-                                %>
-
-                                &lt;%&ndash;Foto de perfil&ndash;%&gt;
-                                <div class="row justify-content-center">
-                                    <span href="" class="avatar avatar-ramiro-lg rounded-circle">
-                                        <% if (usuario.getImagen().equals("src/main/resources/img/default.png")) {%>
-                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                        <% } else { %>
-                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usuario.getImagen()%>">
-                                        <% } %>
-                                    </span>
-                                </div>
-                                &lt;%&ndash;Fin Foto de perfil&ndash;%&gt;
-
-                                &lt;%&ndash;Nickname&ndash;%&gt;
-                                <div class="row justify-content-center">
-                                        <span class="mb-xl-2 font-weight-bold text-xl">@<%=usuario.getNickname() %></span>
-                                </div>
-                                &lt;%&ndash;Fin Nickname&ndash;%&gt;
-
-                                &lt;%&ndash;Boton seguir usuario&ndash;%&gt;
-                                <div class="row justify-content-center mb-xl-3">
-                                    <% if(!seguidores.contains(usrSession.getNickname())){ %>
-                                    <a class="btn btn-icon btn-3 btn-primary btn-sm" href="<%= request.getContextPath() %>/SeguirUsuario?u=<%=usuario.getNickname()%>">
-                                        <span class="btn-inner--icon"><i class="ni ni-curved-next"></i></span>
-                                        <span class="btn-inner--text">Seguir</span>
-                                    </a>
-                                    <% }else{ %>
-                                    <a class="btn btn-icon btn-3 btn-secondary btn-sm" href="<%= request.getContextPath() %>/DejarSeguirUsuario?u=<%=usuario.getNickname()%>">
-                                        <span class="btn-inner--icon"><i class="ni ni-check-bold"></i></span>
-                                        <span class="btn-inner--text">Siguiendo</span>
-                                    </a>
-                                    <% } %>
-                                </div>
-                                &lt;%&ndash;Fin Boton seguir usuario&ndash;%&gt;
-
-                                <div class="row">
-                                    &lt;%&ndash;Nombre&ndash;%&gt;
-                                    <div class="col">
-                                        <label for="nombreID" > Nombre  </label>
-                                        <div class="form-group">
-                                            <div class="input-group input-group-alternative">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                                                </div>
-                                                <input name="nomU" class="form-control" placeholder="Nombre" id="nombreID" type="text" value="<%=usuario.getNombre()%>" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    &lt;%&ndash;Fin Nombre&ndash;%&gt;
-
-                                    &lt;%&ndash;Apellido&ndash;%&gt;
-                                    <div class="col">
-                                        <label for="apellidoID" > Apellido </label>
-                                        <div class="form-group">
-                                            <div class="input-group input-group-alternative">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                                                </div>
-                                                <input name="apellido" class="form-control" placeholder="Apellido" id="apellidoID" type="text" value="<%=usuario.getApellido()%>" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    &lt;%&ndash;Fin Apellido&ndash;%&gt;
-                                </div>
-
-                                &lt;%&ndash;Fecha nacimiento&ndash;%&gt;
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="fnacID" > Fehca de Nacimiento </label>
-                                        <div class="form-group">
-                                            <div class="input-group input-group-alternative">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                                    <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                                        String fechaS = sdf.format(usuario.getfNac().getTime());%>
-                                                </div>
-                                                <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" id="fNacID" type="text" value="<%=fechaS%>" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                &lt;%&ndash;Fin Fecha nacimiento&ndash;%&gt;
-
-                                <%if(canal.getPublico()){%>
-                                    <div class="text-muted text-center mt-2 mb-3">
-                                        <hr/>
-                                        <h1>Datos del Canal</h1>
-                                    </div>
-
-                                    <div class="row">
-                                        &lt;%&ndash;Nombre Canal&ndash;%&gt;
-                                        <div class="col">
-                                            <label for="nomCanalID" > Nombre de Canal </label>
-                                            <div class="form-group">
-                                                <div class="input-group input-group-alternative">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                                                    </div>
-                                                    <input name="nomCan" class="form-control" placeholder="Nombre (opcional)" id="nomCanalID" type="text" value=" <%=canal.getNombre()%>" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        &lt;%&ndash;Fin Nombre Canal&ndash;%&gt;
-
-                                        &lt;%&ndash;Categoria Canal&ndash;%&gt;
-                                        <div class="col">
-                                            <label for="selCategoriaID" > Categoría </label>
-                                            <div class="form-group">
-                                                <select class="custom-select" id="selCategoriaID" name="categoria" disabled>
-                                                    <option value="" <%= (canal.getCategoria().equals("") )? "selected": "" %>> --Sin Categoria-- </option>
-                                                    <%for(String cat: lC){ %>
-                                                        <option value="<%=cat%>" <%= (canal.getCategoria().equals(cat)) ? "selected" : ""%>><%=cat%></option>
-                                                    <% } %>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        &lt;%&ndash;Fin Categoria Canal&ndash;%&gt;
-                                    </div>
-
-                                    &lt;%&ndash;Descripcion Canal&ndash;%&gt;
-                                    <div class="form-group">
-                                        <label for="descripCanID" > Descripción de Canal </label>
-                                        <div class="input-group input-group-alternative">
-                                            <textarea class="form-control" id="descripCanID" rows="3" placeholder="Descripcion..." disabled name="descripcion"><%=canal.getDescripcion()%></textarea>
-                                        </div>
-                                    </div>
-                                    &lt;%&ndash;Fin Descripcion Canal&ndash;%&gt;
-
-                                <% }else{ %>
-                                    <div class="text-muted text-center mt-2 mb-3">
-                                        <hr/>
-                                        <h2>El canal de este usuario es privado</h2>
-                                    </div>
-                                <%}%>
-
-                                <div class="nav-wrapper">
-                                    <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link mb-sm-4 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i> <%=seguidores.size()%> Seguidores &lt;%&ndash;<span class="badge badge-white"><%=seguidores.size()%></span>&ndash;%&gt;</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i> <%=seguidos.size()%> Seguidos </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fab fa-youtube mr-2"></i>Videos</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false"><i class="fas fa-list-ul mr-2"></i>Listas</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="card shadow">
-                                    <div class="card-body">
-                                        <div class="tab-content" id="myTabContent">
-
-                                            &lt;%&ndash;Comienzo muestra seguidores&ndash;%&gt;
-                                            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                                                <div class="row row- justify-content-right">
-                                                    <% for(DtUsuarioWeb u:listSeguidores) { %>
-                                                    <div class="col-sm-4">
-                                                        <div class="card bg-secondary shadow ">
-                                                            <div class="card-body px-lg-5 py-lg-5">
-                                                                <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
-                                                                    <div class="media align-items-center">
-                                                                        <span class="avatar avatar-lg rounded-circle">
-                                                                          <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                                                          <% } else { %>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
-                                                                          <% } %>
-                                                                        </span>
-                                                                        <div class="media-body">
-                                                                            <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <br/>
-                                                    </div>
-                                                    <% } %>
-                                                </div>
-                                            </div>
-                                            &lt;%&ndash;Fin muestra seguidores&ndash;%&gt;
-
-                                            &lt;%&ndash;Comienzo muestra seguidos&ndash;%&gt;
-                                            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                                                <div class="row row- justify-content-right">
-                                                    <% for(DtUsuarioWeb u:listSeguidos) { %>
-                                                    <div class="col-sm-4">
-                                                        <div class="card bg-secondary shadow ">
-                                                            <div class="card-body px-lg-5 py-lg-5">
-                                                                <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
-                                                                    <div class="media align-items-center">
-                                                                        <span class="avatar avatar-lg rounded-circle">
-                                                                          <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                                                          <% } else { %>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
-                                                                          <% } %>
-                                                                        </span>
-                                                                        <div class="media-body">
-                                                                            <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <br/>
-                                                    </div>
-                                                    <% } %>
-                                                </div>
-                                            </div>
-                                            &lt;%&ndash;Fin muestra seguidos&ndash;%&gt;
-
-                                            &lt;%&ndash;Comienzo muestra videos&ndash;%&gt;
-                                            <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-                                                <div class="row row- justify-content-right">
-                                                    <% for(DtUsuarioWeb u:listSeguidos) { %>
-                                                    <div class="col-sm-4">
-                                                        <div class="card bg-secondary shadow ">
-                                                            <div class="card-body px-lg-5 py-lg-5">
-                                                                <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
-                                                                    <div class="media align-items-center">
-                                                                        <span class="avatar avatar-lg rounded-circle">
-                                                                          <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                                                          <% } else { %>
-                                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
-                                                                          <% } %>
-                                                                        </span>
-                                                                        <div class="media-body">
-                                                                            <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <br/>
-                                                    </div>
-                                                    <% } %>
-                                                </div>
-                                            </div>
-                                            &lt;%&ndash;Fin muestra videos&ndash;%&gt;
-
-                                            &lt;%&ndash;Comienzo muestra listas&ndash;%&gt;
-                                            <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
-                                                <p class="description">Aca van las listas.</p>
-                                            </div>
-                                            &lt;%&ndash;Fin muestra listas&ndash;%&gt;
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            </div>
-        </div>
-    </div>--%>
-
 </div>
 
 
