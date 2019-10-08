@@ -34,11 +34,11 @@ public class ResponderComentario extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         } else {
-            response.getWriter().append("Parametros invalidos");
+            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().append("Parametros invalidos, debe usarse post");
+        response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
     }
 }

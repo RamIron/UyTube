@@ -25,37 +25,41 @@ public class CrearLista extends HttpServlet {
 
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+        if (usr != null){
 
-        String nomLista = request.getParameter("nomList");
-        String categoria = request.getParameter("categoria");
-        Boolean esPublica;
-        if(request.getParameter("esPublica") == null){
-            esPublica = false;
-        }else{
-            esPublica = true;
-        }
-        if (nomLista != null && usr != null){
-            if(iLR.existeListaParticular(usr.getNickname(), nomLista)){
-                RequestDispatcher rd;
-                rd = request.getRequestDispatcher("/module/nuevaLista.jsp");
-                String message = "EXISTE LA LISTAAAAAAAAAAAAA";
-                request.setAttribute("message", message);
-                rd.forward(request, response);
-            } else {
-
-                if(categoria.equals("")) {
-                    iLR.agregarListaParticular(nomLista, esPublica);
+            String nomLista = request.getParameter("nomList");
+            String categoria = request.getParameter("categoria");
+            Boolean esPublica;
+            if(request.getParameter("esPublica") == null){
+                esPublica = false;
+            }else{
+                esPublica = true;
+            }
+            if (nomLista != null && usr != null){
+                if(iLR.existeListaParticular(usr.getNickname(), nomLista)){
+                    RequestDispatcher rd;
+                    rd = request.getRequestDispatcher("/module/nuevaLista.jsp");
+                    String message = "EXISTE LA LISTAAAAAAAAAAAAA";
+                    request.setAttribute("message", message);
+                    rd.forward(request, response);
                 } else {
-                    iLR.agregarListaParticularCategoria(nomLista, esPublica, categoria);
+
+                    if(categoria.equals("")) {
+                        iLR.agregarListaParticular(nomLista, esPublica);
+                    } else {
+                        iLR.agregarListaParticularCategoria(nomLista, esPublica, categoria);
+                    }
+                    RequestDispatcher rd;
+                    rd = request.getRequestDispatcher("/index.jsp");
+                    String message = "Se ha creado la Lista de Reproduccion <strong>" + nomLista + "</strong>";
+                    request.setAttribute("message", message);
+                    rd.forward(request, response);
                 }
-                RequestDispatcher rd;
-                rd = request.getRequestDispatcher("/index.jsp");
-                String message = "Se ha creado la Lista de Reproduccion <strong>" + nomLista + "</strong>";
-                request.setAttribute("message", message);
-                rd.forward(request, response);
+            } else {
+                response.getWriter().append("Parametros invalidos");
             }
         } else {
-            response.getWriter().append("Parametros invalidos");
+            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
         }
 
 
@@ -66,6 +70,6 @@ public class CrearLista extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
     }
 }
