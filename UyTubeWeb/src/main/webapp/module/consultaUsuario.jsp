@@ -315,6 +315,7 @@
                                         <%--Fin Nickname--%>
 
                                         <%--Boton seguir usuario--%>
+                                        <%if (usrSession != null){%>
                                         <div class="row justify-content-center mb-xl-3">
                                             <% if(!seguidores.contains(usrSession.getNickname())){ %>
                                             <a class="btn btn-icon btn-3 btn-primary btn-sm" href="<%= request.getContextPath() %>/SeguirUsuario?u=<%=usuario.getNickname()%>">
@@ -328,6 +329,7 @@
                                             </a>
                                             <% } %>
                                         </div>
+                                        <%}%>
                                         <%--Fin Boton seguir usuario--%>
                                     </div>
 
