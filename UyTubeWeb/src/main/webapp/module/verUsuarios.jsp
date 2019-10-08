@@ -258,7 +258,6 @@
           <%
             UFactory uF = UFactory.getInstancia();
             IUsuario iU = uF.getIUsuario();
-            //List<String> listU = iU.listarUsuarios();
             DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
             List<DtUsuarioWeb> listU = iU.listarUsuariosWeb();
           %>
@@ -271,7 +270,7 @@
               <div class="col-sm-4">
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
-                    <%if(u.getNickname().contentEquals(usr.getNickname())){ %>
+                    <%if(usr != null && u.getNickname().contentEquals(usr.getNickname())){ %>
                       <a class="" href="<%= request.getContextPath() %>/module/miPerfil.jsp" >
                     <% }else{ %>
                       <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
