@@ -35,6 +35,8 @@ public interface IListaReproduccion {
 	public List<String> listarListasDeUsuario(String nick);
 	
 	public List<String> listarListasParticulares(String nick);
+
+	public List<String> listarListasParticularesPublicas(String nick);
 	
 	public List<String> listarListasPorDefecto(String nick);
 	

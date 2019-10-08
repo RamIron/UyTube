@@ -146,6 +146,13 @@ public class CListaReproduccion implements IListaReproduccion {
 		return this.uList.getCanal().listarListasParticulares();
 	}
 
+	@Override
+	public List<String> listarListasParticularesPublicas(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.uList = mU.obtenerUsuario(nick);
+		return this.uList.getCanal().listarListasParticularesPublicas();
+	}
+
 	@Override 
 	public List<String> listarListasPorDefecto(String nick) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();

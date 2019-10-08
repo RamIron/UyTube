@@ -231,6 +231,16 @@ public class Canal {
 		}
 		return listasPartU;
 	}
+
+	public List<String> listarListasParticularesPublicas() {
+		List<String> listasPartU = new ArrayList<String>();
+		for(ListaReproduccion lr:this.listas) {
+			if(lr instanceof Particular && lr.isPublico()) {
+				listasPartU.add(lr.getNombre());
+			}
+		}
+		return listasPartU;
+	}
 	
 	public List<DtVideoUsuario> listarVideosdeLista(String nomList) {
 		for(ListaReproduccion lr:this.listas) {
