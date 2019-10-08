@@ -274,7 +274,7 @@
                         }
                         if(usuario == null){
                             response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
-                        }
+                        } else {
                         iLR.setuList(usuario);
                         List<DtElementoWeb> videoLista = iLR.listarVideosListaWeb(lista);
                         DtListaRep infoLista = iLR.obtenerListaDeUsuario(lista);
@@ -289,6 +289,7 @@
                                     <span class="badge badge-pill badge-info"><%=(infoLista.getPublico().equals(true) ? "Publica" : "Privada")%></span>
                                     <span class="badge badge-pill badge-primary"><%=(infoLista.getCategoria().isEmpty() ? "Sin categoria" : "Aca va la categoria")%></span>
                                 </div>
+                                <%if(usr != null && usuario.equals(usr.getNickname())){%>
                                 <div class="col- btn-group row-grid text-lg-right">
                                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Modificar
@@ -314,6 +315,7 @@
                                          </form>
                                     </div>
                                 </div>
+                                <%}%>
                             </div>
 
                             <br><br>
@@ -336,9 +338,9 @@
                                             <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=vl.getNickname()%></strong></small></p>
 <%--                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="right" title="Quitar video" onclick="quitarVideoLista()"><i class="far fa-trash-alt"></i></button>--%>
 
-
+                                            <%if(usr != null && usuario.equals(usr.getNickname())){%>
                                             <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
                                                 <i class="far fa-trash-alt"></i>
                                             </button>
                                             <!-- Modal -->
@@ -353,12 +355,15 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                            <button type="button" class="btn btn-primary">Confirmar</button>
+                                                            <a class="btn btn-primary" href="<%= request.getContextPath() %>/QuitarVideodeLista?uv=<%=vl.getNickname()%>&v=<%=vl.getNombreE()%>&l=<%=lista%>">Confirmar</a>
+                                                            <%
+                                                                String message = (String) request.getAttribute("message");
+                                                            %>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <%}%>
 
                                         </div>
                                     </div>
@@ -368,7 +373,7 @@
                             <% } %>
                         </div>
                     </div>
-
+                    <%}%>
 
 
                     </div>
