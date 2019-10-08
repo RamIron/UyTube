@@ -16,7 +16,7 @@ import java.io.IOException;
 @WebServlet(name = "DejarSeguirUsuario", value = "/DejarSeguirUsuario")
 public class DejarSeguirUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,7 +35,7 @@ public class DejarSeguirUsuario extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         } else {
-            response.getWriter().append("Parametros invalidos");
+            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
         }
     }
 }

@@ -16,7 +16,7 @@ import java.io.IOException;
 @WebServlet(name = "ValorarVideo", value = "/ValorarVideo")
 public class ValorarVideo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().append("Served at: ").append(request.getContextPath());
+        response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,7 +26,6 @@ public class ValorarVideo extends HttpServlet {
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
         if(usr != null && uVid != null && nVid != null && gustaS != null && (gustaS.equals("si") || gustaS.equals("no"))){
-            //todo
             VFactory f = VFactory.getInstancia();
             IVideo iV = f.getIVideo();
             iV.setUsr(uVid);
@@ -44,7 +43,7 @@ public class ValorarVideo extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         } else {
-            response.getWriter().append("Parametros invalidos");
+            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
         }
     }
 }

@@ -36,7 +36,7 @@ public class ComentarVideo extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         } else {
-            response.getWriter().append("Parametros invalidos");
+            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
         }
     }
 
