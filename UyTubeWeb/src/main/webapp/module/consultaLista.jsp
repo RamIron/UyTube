@@ -297,16 +297,9 @@
                                             </div>
                                             <%
                                                 String message = (String) request.getAttribute("message");
-                                                if(message != null){
+//                                                if(message != null){
                                             %>
-                                                <div class="alert alert-danger" role="alert">
-                                                    <strong>Error</strong> No se pudo realizar el cambio
-                                                </div>
-                                            <%}else{%>
-                                                <div class="alert alert-success" role="alert">
-                                                    <strong>Exito</strong> Se realizo el cambio correctamente
-                                                </div>
-                                            <%}%>
+
                                             <br>
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm" onclick="confirmar()">Confirmar cambios</button>
@@ -407,7 +400,8 @@
 
 <script type="text/javascript">
     function confirmar(){
-        document.forms["modificarLista"].submit();
+        console.log("ENTRE A LA FUNCION");
+        document.forms["modificarlista"].submit();
     }
 </script>
 

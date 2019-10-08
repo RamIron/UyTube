@@ -25,23 +25,30 @@ public class ModificarLista extends HttpServlet {
         //este string esta bien????
         String nomLista = request.getParameter("nomL");
         Boolean esPublica;
+        HttpSession s = request.getSession();
+        DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+        if(usr != null) {
+            if (request.getParameter("esPublica") == null) {
+                esPublica = false;
+            } else {
+                esPublica = true;
+            }
 
-        if(request.getParameter("esPublica") == null){
-            esPublica = false;
-        }else{
-            esPublica = true;
+            iLR.setuList(usr.getNickname());
+            iLR.setLista(nomLista);
+            iLR.modificarInfoLista(nomLista, esPublica);
+
+            System.out.println("Soy la lista en el servlet: " + nomLista);
+            System.out.println("Soy el checkbox en el servlet: " + esPublica);
+
+            RequestDispatcher rd;
+            rd = request.getRequestDispatcher("/module/consultaLista.jsp?id=" + nomLista);
+            String message = "Cambios realizados";
+            request.setAttribute("message", message);
+            rd.forward(request, response);
+        } else {
+//            aca se redirecciona a la pagina de no deberias estar aqui
         }
-
-        iLR.modificarInfoLista(nomLista, esPublica);
-
-        System.out.println("Soy la lista en el servlet: " + nomLista);
-        System.out.println("Soy el checkbox en el servlet: " + esPublica);
-
-        RequestDispatcher rd;
-        rd = request.getRequestDispatcher("/module/consultaLista.jsp");
-        String message = "Cambios realizados";
-        request.setAttribute("message", message);
-        rd.forward(request, response);
 
 
     }

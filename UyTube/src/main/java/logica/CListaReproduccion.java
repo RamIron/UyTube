@@ -181,9 +181,11 @@ public class CListaReproduccion implements IListaReproduccion {
 	
 	@Override 
 	public void modificarInfoLista(String nomL, boolean publico) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.lista = this.uList.getCanal().obtenerLista(nomL);
 		Particular part = (Particular) this.lista;
 		part.setPublico(publico);
+		mU.modificaDatosUsuario(this.uList);
 	}
 	
 	@Override 
