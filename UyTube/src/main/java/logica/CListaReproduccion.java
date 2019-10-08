@@ -36,6 +36,7 @@ public class CListaReproduccion implements IListaReproduccion {
 			Categoria cat = mC.obtenerCategoria(nomC);
 			cat.agregarElemento(this.lista);
 			mC.modificarCategoria(cat);
+			System.out.println("Soy la categoria: " + nomC + "y la lista: " + this.lista.getNombre());
 		}
 	}
 	
@@ -157,6 +158,7 @@ public class CListaReproduccion implements IListaReproduccion {
 	public void modificarCategoria(String nomC) {
 		System.out.println("sa");
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		if(mC.existeCategoria(nomC)) {
 			//Debo obtener la categoria de la lista, para esa categoria sacar la lista
 			Particular part = (Particular) this.lista;
@@ -173,9 +175,11 @@ public class CListaReproduccion implements IListaReproduccion {
 	
 	@Override 
 	public void modificarInfoLista(String nomL, boolean publico) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.lista = this.uList.getCanal().obtenerLista(nomL);
 		Particular part = (Particular) this.lista;
 		part.setPublico(publico);
+		mU.modificaDatosUsuario(this.uList);
 	}
 	
 	@Override 

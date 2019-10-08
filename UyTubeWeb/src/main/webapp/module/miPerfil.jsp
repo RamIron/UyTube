@@ -297,7 +297,7 @@
                                     %>
 
                                     <div class="row">
-                                        <div class="col-4">
+                                        <div class="col-sm-4">
                                             <div class="text-muted text-center mt-2 mb-3">
                                                 <h1>Datos del Usuario</h1>
                                             </div>
@@ -347,7 +347,7 @@
                                             <%--Fin Fecha nacimiento--%>
                                         </div>
 
-                                        <div class="col-8">
+                                        <div class="col-sm-8">
                                             <div class="text-muted text-center mt-2 mb-3">
                                                 <h1>Datos del Canal</h1>
                                             </div>
