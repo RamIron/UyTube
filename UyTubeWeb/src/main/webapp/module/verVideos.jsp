@@ -156,7 +156,7 @@
             List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
             for(String l: lis){ %>
           <li class="nav-item">
-              <a class="nav-link" href="<%= request.getContextPath() %>/ConsultaLista?id=<%=l%>">
+              <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
                   <i class="ni ni-books text-blue"></i> <%=l%>
               </a>
           </li>
@@ -174,7 +174,7 @@
             List<String> lC = iC.listarCategorias();
             for(String cat: lC){ %>
           <li class="nav-item">
-            <a class="nav-link" href="<%= request.getContextPath() %>/ConsultaCategoria?id=<%=cat%>">
+            <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
               <i class="ni ni-books text-blue"></i> <%=cat%>
             </a>
           </li>
@@ -265,25 +265,27 @@
               %>
 
             <div class="container-fluid">
-              <div class="row row- justify-content-right">
+              <div class="col col- justify-content-left">
                 <%
                   for(DtElementoWeb eu: listEU){
                 %>
-                <div class="col-sm-4">
-                  <div class="card bg-secondary shadow ">
-                    <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getNickname()%>&v=<%=eu.getNombreE()%>">
-                      <div class="card-body px-lg-5 py-lg-5">
-                        <div class="card">
-                          <img src="http://img.youtube.com/vi/<%=eu.getUrl()%>/0.jpg" class="card-img-top" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
-                          <div class="card-body ">
-                            <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
-                            <p>@<%=eu.getNickname()%></p>
-                          </div>
+
+                <div class="card mb-3" style="max-width: 630px;">
+                  <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getNickname()%>&v=<%=eu.getNombreE()%>">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        <img src="http://img.youtube.com/vi/<%=eu.getUrl()%>/0.jpg" class="card-img" alt="...">
+                      </div>
+                      <div class="col-md-5">
+                        <div class="card-body">
+                          <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
+                          <br>
+                          <br>
+                          <p class="card-text"><small class="text-muted">Por <strong><%=eu.getNickname()%></strong></small></p>
                         </div>
                       </div>
-                    </a>
-                  </div>
-                  <br/>
+                    </div>
+                  </a>
                 </div>
                 <% } %>
               </div>

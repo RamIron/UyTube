@@ -156,7 +156,7 @@
             List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
             for(String l: lis){ %>
           <li class="nav-item">
-<%--              <a class="nav-link" href="./ConsultaLista?id=<%=l%>">--%>
+<%--              <a class="nav-link" href="./consultaLista.jsp?id=<%=l%>">--%>
                   <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
                   <i class="ni ni-books text-blue"></i> <%=l%>
               </a>

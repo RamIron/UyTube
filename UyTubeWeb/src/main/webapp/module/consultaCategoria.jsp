@@ -172,7 +172,7 @@
                     String categoria = request.getParameter("id");
                     for(String cat: lC){ %>
                 <li class="nav-item">
-                    <a class="nav-link <%= (cat.equals(categoria) ? "active" : "") %> href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
+                    <a class="nav-link" <%= (cat.equals(categoria) ? "active" : "") %> href="<%=request.getContextPath()%>/module/consultaCategoria.jsp?id=<%=cat%>">
                         <i class="ni ni-books text-blue"></i> <%= (cat.equals(categoria) ? "<strong> "+ cat + "</strong>" : cat) %>
                     </a>
                 </li>
@@ -300,7 +300,7 @@
                                                         <h5 class="card-title mb-0 text-lg"><%=vc.getNombreE()%></h5>
                                                         <br>
                                                         <br>
-                                                        <p class="card-text"><small class="text-muted">Uploaded by: <strong><%=vc.getNickname()%></strong></small></p>
+                                                        <p class="card-text"><small class="text-muted">Por <strong><%=vc.getNickname()%></strong></small></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -312,19 +312,12 @@
 <%--      termina contenido de la tab de videos--%>
                             </div>
                             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-<%--                                empieza contenido de la tab de listas--%>
+<%--      empieza contenido de la tab de listas--%>
                                 <%
                                     List<DtElementoUsuario> listListsU = iC.listarElemCategoria(categoria);
                                 %>
                                 <div class="container-fluid">
-                                    <div class="row row- justify-content-right">
-
-                                        <%if(!videosCat.isEmpty()){%>
-                                        <div class="alert alert-warning col col- justify-content-left" role="alert">
-                                            <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
-                                            <span class="alert-inner--text">No existen listas con la categoria <strong><%=categoria%></strong></span>
-                                        </div>
-                                        <%}%>
+                                    <div class="col col- justify-content-left">
                                         <%if(listListsU.isEmpty()){%>
                                         <div class="alert alert-warning col col- justify-content-left" role="alert">
                                             <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
@@ -335,20 +328,22 @@
                                             for(DtElementoUsuario eu: listListsU){
                                                 if (eu.getTipo().equals(tipoElemento.LISTA)){
                                         %>
-                                        <div class="col-sm-4">
-                                            <div class="card bg-secondary shadow ">
-                                                <div class="card-body px-lg-5 py-lg-5">
-                                                    <div class="card align-items-center">
+                                        <div class="card mb-3" style="max-width: 630px;">
+                                            <a href="<%= request.getContextPath() %>/module/consultaLista.jsp?u=<%=eu.getNickname()%>&id=<%=eu.getNombreE()%>">
+                                                <div class="row no-gutters">
+                                                    <div class="col-md-4">
+                                                        <img src="http://img.youtube.com/vi/a/0.jpg" class="card-img" alt="...">
+                                                    </div>
+                                                    <div class="col-md-5">
                                                         <div class="card-body">
-                                                            <div class="card-body">
-                                                                <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
-                                                                <br>
-                                                                <p class="card-text"><small class="text-muted">Created by: <strong><%=eu.getNickname()%></strong></small></p>
-                                                            </div>
+                                                            <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
+                                                            <br>
+                                                            <br>
+                                                            <p class="card-text"><small class="text-muted">Por <strong><%=eu.getNickname()%></strong></small></p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </div>
                                             <% } %>
                                         <% } %>
