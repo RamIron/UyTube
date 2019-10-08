@@ -267,9 +267,16 @@
                         LRFactory fLR = LRFactory.getInstancia();
                         IListaReproduccion iLR = fLR.getIListaReproduccion();
                         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                        iLR.setuList(usr.getNickname());
                         String lista = request.getParameter("id");
-                        List<DtElementoWeb> videoLista = iLR.listarVideosLista(lista);
+                        String usuario = request.getParameter("u");
+                        if(usuario == null && usr != null){
+                            usuario = usr.getNickname();
+                        }
+                        if(usuario == null){
+                            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
+                        }
+                        iLR.setuList(usuario);
+                        List<DtElementoWeb> videoLista = iLR.listarVideosListaWeb(lista);
                         DtListaRep infoLista = iLR.obtenerListaDeUsuario(lista);
                     %>
                     <div class="container-fluid">

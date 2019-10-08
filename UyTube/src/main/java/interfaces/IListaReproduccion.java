@@ -34,7 +34,7 @@ public interface IListaReproduccion {
 	
 	public List<DtVideoUsuario> listarVideosdeLista(String nomList);
 
-	public List<DtElementoWeb> listarVideosLista(String nomList);
+	public List<DtElementoWeb> listarVideosListaWeb(String nomList);
 
 	public List<String> obtenerCatListPart(String nomL);
 	

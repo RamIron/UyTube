@@ -157,8 +157,8 @@ public class CListaReproduccion implements IListaReproduccion {
 	}
 
 	@Override
-	public List<DtElementoWeb> listarVideosLista(String nomList) {
-		return this.uList.getCanal().listarVideosLista(nomList);
+	public List<DtElementoWeb> listarVideosListaWeb(String nomList) {
+		return this.uList.getCanal().listarVideosListaWeb(nomList);
 	}
 	
 	@Override 
