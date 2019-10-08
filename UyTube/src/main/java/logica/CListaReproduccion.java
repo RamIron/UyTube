@@ -33,6 +33,7 @@ public class CListaReproduccion implements IListaReproduccion {
 			Categoria cat = mC.obtenerCategoria(nomC);
 			cat.agregarElemento(this.lista);
 			mC.modificarCategoria(cat);
+			System.out.println("Soy la categoria: " + nomC + "y la lista: " + this.lista.getNombre());
 		}
 	}
 
@@ -70,6 +71,18 @@ public class CListaReproduccion implements IListaReproduccion {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.uList = mU.obtenerUsuario(this.uList.getNickname());
 		this.lista = this.uList.getCanal().agregarListaParticular(nomL, publico);
+		mU.modificaDatosUsuario(uList);
+	}
+
+	@Override
+	public void agregarListaParticularCategoria(String nomL, boolean publico, String nomC) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		this.uList = mU.obtenerUsuario(this.uList.getNickname());
+		Categoria cat = mC.obtenerCategoria(nomC);
+		this.lista = this.uList.getCanal().agregarListaParticularConCategoria(nomL, publico, cat);
+		cat.agregarElemento(this.lista);
+		mC.modificarCategoria(cat);
 		mU.modificaDatosUsuario(uList);
 	}
 	
@@ -144,6 +157,13 @@ public class CListaReproduccion implements IListaReproduccion {
 		return this.uList.getCanal().listarListasParticulares();
 	}
 
+	@Override
+	public List<String> listarListasParticularesPublicas(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.uList = mU.obtenerUsuario(nick);
+		return this.uList.getCanal().listarListasParticularesPublicas();
+	}
+
 	@Override 
 	public List<String> listarListasPorDefecto(String nick) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
@@ -165,20 +185,25 @@ public class CListaReproduccion implements IListaReproduccion {
 	public void modificarCategoria(String nomC) {
 		System.out.println("sa");
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		if(mC.existeCategoria(nomC)) {
 			//Debo obtener la categoria de la lista, para esa categoria sacar la lista
 			Particular part = (Particular) this.lista;
-//			Categoria catPart = part.getCategoria();
-//			if(!(catPart == null)) {
-//				catPart.quitarElemento(part);
-//				mC.modificarCategoria(catPart);
-//			}
+
+			Categoria catPart = part.getCategoria();
+			if(!(catPart == null)) {
+				catPart.quitarElemento(part);
+				mC.modificarCategoria(catPart);
+			}
 			Categoria cat = mC.obtenerCategoria(nomC);
 			cat.agregarElemento(this.lista);
 			mC.modificarCategoria(cat);
+			mU.modificaDatosUsuario(uList);
+			System.out.println("categoria--> " + part.getCategoria().getNombre());
 		}
 	}
-	
+
+
 	@Override 
 	public void modificarInfoLista(String nomL, boolean publico) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();

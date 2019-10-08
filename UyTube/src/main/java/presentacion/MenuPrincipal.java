@@ -188,7 +188,7 @@ public class MenuPrincipal extends JFrame {
 		modificarListaIF.setLocation(0, 0);
 		
 		//Usuario
-		altaUsuarioIF = new AltaUsuario(iU);
+		altaUsuarioIF = new AltaUsuario(iU, iC);
 		altaUsuarioIF.setLocation(0, 0);
 		
 		listarUsuarioIF = new ListarUsuario(iU);
@@ -227,7 +227,7 @@ public class MenuPrincipal extends JFrame {
 		mntmModificarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LimpiarFrame();
-				modificarUsuarioIF.inicializar(iU);
+				modificarUsuarioIF.inicializar(iU, iC);
 				modificarUsuarioIF.setVisible(true);
 			}
 		});

@@ -29,43 +29,47 @@ public class CrearVideo extends HttpServlet {
 
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+        if (usr != null){
 
-        String nomVideo = request.getParameter("nomVid");
-        int duracion = Integer.parseInt(request.getParameter("dur"));
-        String url = request.getParameter("url");
-        String descripcion = request.getParameter("desc");
-        String catVideo = request.getParameter("categoria");
-        String fPub = request.getParameter("fPub");
-        //CODIGO PARA EXTRAER LA FECHA
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        Date date = null;
-        Calendar cal = Calendar.getInstance();
-        try {
-            date = sdf.parse(fPub);
-            cal.setTime(date);
-        } catch (ParseException e) {
-            System.out.println("Excepcion: error con la fecha");
-        }
-        //FIN DE CODIGO PARA EXTRAER LA FECHA
+            String nomVideo = request.getParameter("nomVid");
+            int duracion = Integer.parseInt(request.getParameter("dur"));
+            String url = request.getParameter("url");
+            String descripcion = request.getParameter("desc");
+            String catVideo = request.getParameter("categoria");
+            String fPub = request.getParameter("fPub");
+            //CODIGO PARA EXTRAER LA FECHA
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            Date date = null;
+            Calendar cal = Calendar.getInstance();
+            try {
+                date = sdf.parse(fPub);
+                cal.setTime(date);
+            } catch (ParseException e) {
+                System.out.println("Excepcion: error con la fecha");
+            }
+            //FIN DE CODIGO PARA EXTRAER LA FECHA
 
-        if(iV.existeVideo(usr.getNickname(), nomVideo)){
-            RequestDispatcher rd;
-            rd = request.getRequestDispatcher("/module/nuevoVideo.jsp");
-            String message = "EXISTE EL VIDEO";
-            request.setAttribute("message", message);
-            rd.forward(request, response);
-        }else{
-            iV.agregarVideo(usr.getNickname(), nomVideo, descripcion, cal, duracion, url);
-            iV.agregarCategoria(catVideo);
-            RequestDispatcher rd;
-            rd = request.getRequestDispatcher("/index.jsp");
-            String message = "Se ha creado el video <strong>" + nomVideo + "</strong>";
-            request.setAttribute("message", message);
-            rd.forward(request, response);
+            if(iV.existeVideo(usr.getNickname(), nomVideo)){
+                RequestDispatcher rd;
+                rd = request.getRequestDispatcher("/module/nuevoVideo.jsp");
+                String message = "EXISTE EL VIDEO";
+                request.setAttribute("message", message);
+                rd.forward(request, response);
+            }else{
+                iV.agregarVideo(usr.getNickname(), nomVideo, descripcion, cal, duracion, url);
+                iV.agregarCategoria(catVideo);
+                RequestDispatcher rd;
+                rd = request.getRequestDispatcher("/index.jsp");
+                String message = "Se ha creado el video <strong>" + nomVideo + "</strong>";
+                request.setAttribute("message", message);
+                rd.forward(request, response);
+            }
+        } else {
+            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
     }
 }

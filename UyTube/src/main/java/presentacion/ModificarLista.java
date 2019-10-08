@@ -143,7 +143,8 @@ public class ModificarLista extends JInternalFrame {
 				btnSelectList.setEnabled(false);
 				publica.setEnabled(true);
 				DtListaRep infoL = iL.obtenerListaDeUsuario(nomLista);
-				if(infoL.getCategoria().isEmpty()) {
+				System.out.println(infoL);
+				if(infoL.getCategoria() == null) {
 					esVacia = true;
 					categoria.setSelectedIndex(0);
 				}else {

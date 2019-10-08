@@ -45,8 +45,6 @@ public class IniciarSesion extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd;
-        rd = request.getRequestDispatcher("/module/iniciarSesion.jsp");
-        rd.forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
     }
 }

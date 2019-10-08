@@ -11,8 +11,10 @@ public interface IListaReproduccion {
 	public void agregarListaDefecto(String nomL);
 	
 	public void agregarListaParticular(String nomL, boolean publico);
-	
-	public void agregarVideoListaParticular(String nickVideo, String nomVid, String nomList);
+
+    void agregarListaParticularCategoria(String nomL, boolean publico, String nomC);
+
+    public void agregarVideoListaParticular(String nickVideo, String nomVid, String nomList);
 	
 	public void agregarVideoListaPorDefecto(String nickVideo, String nomVid, String nomList);
 	
@@ -29,6 +31,8 @@ public interface IListaReproduccion {
 	public List<String> listarListasDeUsuario(String nick);
 	
 	public List<String> listarListasParticulares(String nick);
+
+	public List<String> listarListasParticularesPublicas(String nick);
 	
 	public List<String> listarListasPorDefecto(String nick);
 	

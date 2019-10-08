@@ -15,34 +15,38 @@ public interface IVideo {
 	 public void limpiarControlador();
 	 
 	 public List<String> listarVideosDeUsuario(String nick);
+
+	 public List<DtElementoWeb> listarVideosDeUsuarioWeb(String nick);
 	 
 	 public List<String> listarVideosPublicosDeUsuario(String nick);
 
-    List<DtElementoUsuario> listarVideosPublicos();
+	 public List<DtElementoWeb> listarVideosPublicosDeUsuarioWeb(String nick);
 
-	List<DtElementoWeb> listarVideosPublicosWeb();
+	 List<DtElementoUsuario> listarVideosPublicos();
 
-	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico);
+	 List<DtElementoWeb> listarVideosPublicosWeb();
+
+	 public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico);
 	 
 	 public List<DtComentario> obtenerComentariosVideo(String nomVid);
 	 
 	 public DtVideo obtenerInfoVideo(String nomVid);
 
-	public List<DtValoracion> obtenerValoracionVideo();
+	 public List<DtValoracion> obtenerValoracionVideo();
 	 
 	 public void responderComentario(int idCom, String nick, Calendar fcom, String texto);
 	 
 	 public void realizarComentario(String nick, Calendar fCom, String texto);
 	 
 	 public void valorarVideo(String nickVal, boolean val);
-	 
+
 	 public Boolean existeVideo(String nick, String nomV);
 
-	Integer cantidadGusta();
+	 Integer cantidadGusta();
 
-	Integer cantidadNoGusta();
+	 Integer cantidadNoGusta();
 
-	public void setUsr(String usr);
+	 public void setUsr(String usr);
 
 	 public void setVid(String vid);
 	

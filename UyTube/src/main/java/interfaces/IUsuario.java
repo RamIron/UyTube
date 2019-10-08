@@ -26,6 +26,8 @@ public interface IUsuario {
 	public boolean existeNickname(String nick);
 	
 	public void limpiarControlador();
+
+	public List<DtUsuarioWeb> listarNickFotoWeb(List <String> seguidores);
 	
 	public List<String> listarSeguidores();
 	

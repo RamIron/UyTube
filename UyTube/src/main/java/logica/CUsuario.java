@@ -1,10 +1,6 @@
 package logica;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -41,14 +37,18 @@ public class CUsuario implements IUsuario {
 		}	
 	}
 
-	//si la categoria esta vacia en canal se le agrega, si ya tiene una categoria se pisa
+	//si la categoria esta vacia en canal se le agrega, si ya tiene una categoria se pisa.
+	//si recibe null en nomCat deja al canal sin categoria
 	@Override
 	public void modificarCatCanal(String nick, String nomCat) {
 		try{
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 			Usuario user = mU.obtenerUsuario(nick);
-			Categoria cat = mC.obtenerCategoria(nomCat);
+			Categoria cat = null;
+			if(nomCat != null){
+				cat = mC.obtenerCategoria(nomCat);
+			}
 			user.getCanal().setCategoria(cat);
 			mU.modificaDatosUsuario(user);
 		} catch (Exception e) {
@@ -270,5 +270,19 @@ public class CUsuario implements IUsuario {
 			res.add(usr);
 		}
 		return res;
+	}
+
+	public List<DtUsuarioWeb> listarNickFotoWeb(List <String> seguidores){
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		List<Usuario> usrs = new LinkedList<Usuario>();
+		List<DtUsuarioWeb> dtUsrs = new ArrayList<DtUsuarioWeb>();
+		for(String s: seguidores) {
+			usrs.add(mU.obtenerUsuario(s));
+		}
+
+		for(Usuario u:usrs){
+			dtUsrs.add(new DtUsuarioWeb(u.getNickname(), u.getImagen()));
+		}
+		return dtUsrs;
 	}
 }

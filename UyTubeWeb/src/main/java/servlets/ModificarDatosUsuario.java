@@ -21,63 +21,69 @@ import java.util.Date;
 public class ModificarDatosUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession s = request.getSession();
-        String nickname = request.getParameter("nickname");
-        String nomU = request.getParameter("nomU");
-        String apellido = request.getParameter("apellido");
-        String fNac = request.getParameter("fNac");
-        String nomC = request.getParameter("nomCan");
-        String foto = request.getParameter("foto");
-        String desc = request.getParameter("descripcion");
-        String categoria = request.getParameter("categoria");
+        DtUsuarioWeb usrS = (DtUsuarioWeb) s.getAttribute("usuario");
+        if (usrS != null){
 
-        Boolean publico;
-        if(request.getParameter("publico") == null){
-            publico = false;
-        }else{
-            publico = true;
+            String nickname = request.getParameter("nickname");
+            String nomU = request.getParameter("nomU");
+            String apellido = request.getParameter("apellido");
+            String fNac = request.getParameter("fNac");
+            String nomC = request.getParameter("nomCan");
+            String foto = request.getParameter("foto");
+            String desc = request.getParameter("descripcion");
+            String categoria = request.getParameter("categoria");
+
+            Boolean publico;
+            if(request.getParameter("publico") == null){
+                publico = false;
+            }else{
+                publico = true;
+            }
+
+
+            UFactory fU = UFactory.getInstancia();
+            IUsuario iU = fU.getIUsuario();
+
+
+            //CODIGO PARA EXTRAER LA FECHA
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            Date date = null;
+            Calendar cal = Calendar.getInstance();
+            try {
+                date = sdf.parse(fNac);
+                cal.setTime(date);
+            } catch (ParseException e) {
+                System.out.println("Excepcion: error con la fecha");
+            }
+            //FIN DE CODIGO PARA EXTRAER LA FECHA
+
+            System.out.println("Nickname: " + nickname);
+
+            if(iU.existeNickname(nickname)) {
+                String fotoURL;
+                if(!foto.equals("")) {
+                    fotoURL = "img/usr/" + foto;
+                }else {
+                    fotoURL = "src/main/resources/img/default.png";
+                }
+                iU.modificarInfoUsuario(nomU, apellido, cal, fotoURL);
+                iU.modificarInfoCanal(nomC, desc, publico);
+                iU.modificarCatCanal(nickname, categoria);
+            }
+
+            DtUsuarioWeb usr = iU.obtenerUsuarioWebNick(nickname);
+            s.setAttribute("usuario", usr);
+            RequestDispatcher rd;
+            rd = request.getRequestDispatcher("/index.jsp");
+            String message = "DATOS DE USUARIO MODIFICADOS";
+            request.setAttribute("message", message);
+            rd.forward(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
         }
-
-
-        UFactory fU = UFactory.getInstancia();
-        IUsuario iU = fU.getIUsuario();
-
-
-        //CODIGO PARA EXTRAER LA FECHA
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        Date date = null;
-        Calendar cal = Calendar.getInstance();
-        try {
-            date = sdf.parse(fNac);
-            cal.setTime(date);
-        } catch (ParseException e) {
-            System.out.println("Excepcion: error con la fecha");
-        }
-        //FIN DE CODIGO PARA EXTRAER LA FECHA
-
-        System.out.println("Nickname: " + nickname);
-
-       if(iU.existeNickname(nickname)) {
-           String fotoURL;
-           if(!foto.equals("")) {
-               fotoURL = "img/usr/" + foto;
-           }else {
-               fotoURL = "src/main/resources/img/default.png";
-           }
-            iU.modificarInfoUsuario(nomU, apellido, cal, fotoURL);
-            iU.modificarInfoCanal(nomC, desc, publico);
-            iU.modificarCatCanal(nickname, categoria);
-        }
-
-        DtUsuarioWeb usr = iU.obtenerUsuarioWebNick(nickname);
-        s.setAttribute("usuario", usr);
-        RequestDispatcher rd;
-        rd = request.getRequestDispatcher("/index.jsp");
-        String message = "DATOS DE USUARIO MODIFICADOS";
-        request.setAttribute("message", message);
-        rd.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
     }
 }

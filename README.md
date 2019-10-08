@@ -1,8 +1,7 @@
 # Programacion de Aplicaciones
 
-**Laboratorio 1**
 
-Integrantes:
+**Integrantes:**
 
 -Martin Navarrete
 
@@ -13,4 +12,4 @@ Integrantes:
 -Ramiro Alves
 
 
--Tomás Gómez
+-Tomás Gómez (Press F to pay respect)

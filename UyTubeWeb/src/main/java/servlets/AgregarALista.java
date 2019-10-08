@@ -16,7 +16,7 @@ import java.io.IOException;
 @WebServlet(name = "AgregarALista", value = "/AgregarALista")
 public class AgregarALista extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        response.getWriter().append("Served at: ").append(request.getContextPath());
+        response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,7 +41,7 @@ public class AgregarALista extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         } else {
-            response.getWriter().append("Parametros invalidos");
+            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
         }
     }
 }

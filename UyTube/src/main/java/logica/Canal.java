@@ -133,6 +133,13 @@ public class Canal {
 		this.listas.add(lisPar);
 		return lisPar;
 	}
+
+	public Particular agregarListaParticularConCategoria(String nomL, boolean publico, Categoria cat) {
+		Particular lisPar = new Particular(nomL, this, publico, cat);
+		this.listas.add(lisPar);
+
+		return lisPar;
+	}
 	
 	public void agregarListaDefecto(String nomL) {
 		PorDefecto def = new PorDefecto(nomL, this);
@@ -219,6 +226,16 @@ public class Canal {
 		List<String> listasPartU = new ArrayList<String>();
 		for(ListaReproduccion lr:this.listas) {
 			if(lr instanceof Particular) {
+				listasPartU.add(lr.getNombre());
+			}
+		}
+		return listasPartU;
+	}
+
+	public List<String> listarListasParticularesPublicas() {
+		List<String> listasPartU = new ArrayList<String>();
+		for(ListaReproduccion lr:this.listas) {
+			if(lr instanceof Particular && lr.isPublico()) {
 				listasPartU.add(lr.getNombre());
 			}
 		}
