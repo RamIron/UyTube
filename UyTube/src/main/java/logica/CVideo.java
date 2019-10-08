@@ -67,6 +67,21 @@ public class CVideo implements IVideo {
 	}
 
 	@Override
+	public List<DtElementoWeb> listarVideosPublicosDeUsuarioWeb(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		Usuario u = mU.obtenerUsuario(nick);
+		List<DtElementoWeb> dtElems  = new ArrayList<DtElementoWeb>();
+		List<String> videos = listarVideosPublicosDeUsuario(nick);
+
+		for (String nomVid : videos){
+			DtVideo vid = obtenerInfoVideo(nomVid);
+			dtElems.add(new DtElementoWeb(nick, nomVid, tipoElemento.VIDEO, vid.getUrl()));
+		}
+
+		return dtElems;
+	}
+
+	@Override
 	public List<DtElementoUsuario> listarVideosPublicos() {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		List<String> usuarios = mU.listarUsuarios();

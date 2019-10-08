@@ -18,7 +18,9 @@ public interface IVideo {
 	 
 	 public List<String> listarVideosPublicosDeUsuario(String nick);
 
-    List<DtElementoUsuario> listarVideosPublicos();
+	public List<DtElementoWeb> listarVideosPublicosDeUsuarioWeb(String nick);
+
+	List<DtElementoUsuario> listarVideosPublicos();
 
 	List<DtElementoWeb> listarVideosPublicosWeb();
 
