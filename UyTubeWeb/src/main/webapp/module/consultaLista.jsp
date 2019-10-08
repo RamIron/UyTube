@@ -1,10 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="datatypes.DtVideoUsuario" %>
 <%@ page import="interfaces.*" %>
-<%@ page import="datatypes.DtVideo" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="datatypes.DtElementoWeb" %>
+<%@ page import="datatypes.*" %>
 <!--
 
 =========================================================
@@ -156,7 +153,6 @@
                     DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
                     List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
                     String lista = request.getParameter("id");
-                    System.out.println("SOY LA LISTA FUERA DEL TODO " + lista);
                     for(String l: lis){
                     %>
                 <li class="nav-item">
@@ -273,9 +269,8 @@
                         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
                         iLR.setuList(usr.getNickname());
                         String lista = request.getParameter("id");
-                        System.out.println("SOY LA LISTA DENTRO DEL TODO " + lista);
                         List<DtElementoWeb> videoLista = iLR.listarVideosLista(lista);
-                        List<String> categoriasList = iLR.obtenerCatListPart(lista);
+                        DtListaRep infoLista = iLR.obtenerListaDeUsuario(lista);
                     %>
                     <div class="container-fluid">
                         <div class="col col- ">
@@ -283,18 +278,35 @@
                                 <div class="col">
                                     <h1><%=lista%></h1>
                                 </div>
+                                <div class="col col-md-6">
+                                    <span class="badge badge-pill badge-info"><%=(infoLista.getPublico().equals(true) ? "Publica" : "Privada")%></span>
+                                    <span class="badge badge-pill badge-primary"><%=(infoLista.getCategoria().isEmpty() ? "Sin categoria" : "Aca va la categoria")%></span>
+                                </div>
                                 <div class="col- btn-group row-grid text-lg-right">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Modificar
                                     </button>
                                     <div class="dropdown-menu">
                                         <form name="modificarlista" action="<%= request.getContextPath() %>/ModificarLista" method="post">
                                             <div class="form-check">
-                                                <input class="form-check-input- text-center" type="checkbox" name="esPublica" value="" id="defaultCheck1">
+                                                <input class="form-check-input- text-center" <%=(infoLista.getPublico().equals(true) ? "checked" : "")%> type="checkbox" name="esPublica" value="" id="defaultCheck1">
+                                                <input type="hidden" name="nomL" value="<%=lista%>">
                                                 <label class="form-check-label" for="defaultCheck1">
                                                     Lista publica
                                                 </label>
                                             </div>
+                                            <%
+                                                String message = (String) request.getAttribute("message");
+                                                if(message != null){
+                                            %>
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong>Error</strong> No se pudo realizar el cambio
+                                                </div>
+                                            <%}else{%>
+                                                <div class="alert alert-success" role="alert">
+                                                    <strong>Exito</strong> Se realizo el cambio correctamente
+                                                </div>
+                                            <%}%>
                                             <br>
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm" onclick="confirmar()">Confirmar cambios</button>
@@ -305,15 +317,6 @@
                             </div>
 
                             <br><br>
-<%--                            se tiene que poder agregar categoria a lista para poder probar esto--%>
-                            <%
-                                if(!categoriasList.isEmpty()){
-                                    for(String cl: categoriasList){
-                            %>
-                                <a href="#" class="badge badge-info"><%=cl.toString()%></a>
-                                <br><br><br><br>
-                                    <%}%>
-                                <%}%>
                             <%
                                 if(!videoLista.isEmpty()){
                                 for(DtElementoWeb vl: videoLista){

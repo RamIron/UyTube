@@ -23,7 +23,7 @@ public class ModificarLista extends HttpServlet {
         IListaReproduccion iLR = fLr.getIListaReproduccion();
 
         //este string esta bien????
-        String nomLista = request.getParameter("id");
+        String nomLista = request.getParameter("nomL");
         Boolean esPublica;
 
         if(request.getParameter("esPublica") == null){
@@ -34,11 +34,15 @@ public class ModificarLista extends HttpServlet {
 
         iLR.modificarInfoLista(nomLista, esPublica);
 
+        System.out.println("Soy la lista en el servlet: " + nomLista);
+        System.out.println("Soy el checkbox en el servlet: " + esPublica);
+
         RequestDispatcher rd;
         rd = request.getRequestDispatcher("/module/consultaLista.jsp");
         String message = "Cambios realizados";
         request.setAttribute("message", message);
         rd.forward(request, response);
+
 
     }
 

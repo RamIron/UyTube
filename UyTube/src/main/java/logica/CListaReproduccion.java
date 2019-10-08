@@ -1,3 +1,4 @@
+
 package logica;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class CListaReproduccion implements IListaReproduccion {
 		}
 		return categoriasList;
 	}
+
 	
 	@Override 
 	public void agregarListaDefecto(String nomL) {	
