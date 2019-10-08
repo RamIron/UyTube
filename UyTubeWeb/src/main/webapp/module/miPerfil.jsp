@@ -297,7 +297,7 @@
                                     %>
 
                                     <div class="row">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-5">
                                             <div class="text-muted text-center mt-2 mb-3">
                                                 <h1>Datos del Usuario</h1>
                                             </div>
@@ -322,42 +322,72 @@
 
                                             <%--Email--%>
                                             <div class="row justify-content-center mb-2">
-                                                <h5 style="text-align: center">Email: <br><span class="mb-xl-2 font-weight-bold text-xl"><%=usuario.getCorreoE()%></span></h5>
+                                                <h5 style="text-align: center">Email: <br><span class="mb-xl-2 font-weight-bold text-md2"><%=usuario.getCorreoE()%></span></h5>
                                             </div>
                                             <%--Fin Email--%>
 
-                                            <%--Nombre--%>
-                                            <div class="row justify-content-center mb-2">
-                                                <h5 style="text-align: center">Nombre: <br><span class="mb-xl-2 font-weight-bold text-xl"><%=usuario.getNombre() %></span></h5>
-                                            </div>
-                                            <%--Fin Nombre--%>
 
-                                            <%--Apellido--%>
                                             <div class="row justify-content-center mb-2">
-                                                <h5 style="text-align: center">Apellido:<br> <span class="mb-xl-2 font-weight-bold text-xl"><%=usuario.getApellido() %></span></h5>
+                                                <%--Nombre--%>
+                                                <div class="col ml-5">
+                                                    <h5 style="text-align: center">Nombre: <br><span class="mb-xl-2 font-weight-bold text-lg"><%=usuario.getNombre() %> </span></h5>
+                                                </div>
+                                                <%--Fin Nombre--%>
+
+                                                <%--Apellido--%>
+                                                <div class="col mr-5">
+                                                    <h5 style="text-align: center">Apellido:<br> <span class="mb-xl-2 font-weight-bold text-lg"><%=usuario.getApellido() %></span></h5>
+                                                </div>
+                                                <%--Fin Apellido--%>
                                             </div>
-                                            <%--Fin Apellido--%>
 
                                             <%--Fecha Nacimiento--%>
                                             <div class="row justify-content-center mb-2">
                                                 <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                                                     String fechaS = sdf.format(usuario.getfNac().getTime());%>
-                                                <h5 style="text-align: center">Fecha de Nacimiento: <br><span class="mb-xl-2 font-weight-bold text-lg"><%=fechaS %></span></h5>
+                                                <h5 style="text-align: center">Fecha de Nacimiento: <br><span class="mb-xl-2 text-mm2"><%=fechaS %></span></h5>
                                             </div>
                                             <%--Fin Fecha nacimiento--%>
                                         </div>
 
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-7">
                                             <div class="text-muted text-center mt-2 mb-3">
                                                 <h1>Datos del Canal</h1>
                                             </div>
 
-                                            <%--Nombre de Canal--%>
-                                            <div class="row justify-content-center mb-2">
-                                                <h5 style="text-align: center">Nombre: <br><span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getNombre() %></span></h5>
-                                            </div>
-                                            <%--Fin Nombre de Canal--%>
 
+                                            <div class="row justify-content-center mb-2">
+                                                <%--Nombre de Canal--%>
+                                                <div class="col ml-5">
+                                                    <h5 style="text-align: center">Nombre: <br><span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getNombre() %></span></h5>
+                                                </div>
+                                                <%--Fin Nombre de Canal--%>
+
+                                                <%--Categoria de Canal--%>
+                                                <div class="col mr-5">
+                                                    <h5 style="text-align: center">Categoria: <br><span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getCategoria() %></span></h5>
+                                                </div>
+                                                <%--Fin Categoria de Canal--%>
+                                            </div>
+
+
+                                            <%--Descripcion de Canal--%>
+                                            <div class="row justify-content-center my-2 mt-5">
+                                                <h5 style="text-align: center">Descripcion: <br></h5>
+                                            </div>
+                                            <div class="card shadow">
+                                                <div class="card-body p--2 mx--2 my--2 text-sm-left">
+                                                    <span><%=canal.getDescripcion()%></span>
+                                                </div>
+                                            </div>
+                                            <%--Fin Descripcion de Canal--%>
+
+                                        </div>
+
+                                        <div class="col text-center">
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editar">
+                                                Modificar Datos
+                                            </button>
                                         </div>
                                     </div>
                                         <%--Foto de perfil--%>
@@ -468,11 +498,6 @@
                                             <button type="button" class="btn btn-primary my-4" id="btnCambiarID" disabled style="display:none;" onclick="cambiar()">Aceptar Cambios</button>
                                         </div>--%>
                                         <%--Fin Boton Modificar Datos--%>
-
-                                        <button type="button" class="btn  btn-sm btn-primary " data-toggle="modal" data-target="#editar">
-                                            Modificar Datos
-                                        </button>
-
 
                                     <hr>
                                     <div class="nav-wrapper">
@@ -585,10 +610,10 @@
                                                     <div class="row row- justify-content-right">
                                                         <% for(String lr:listListasRep) { %>
                                                         <div class="col-sm-3">
-                                                            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
-                                                                <div class="card-body px-lg-3 py-lg-3 text-lg-center">
+                                                            <div class="card shadow-sm p-1 mb-2 bg-gradient-lighter rounded">
+                                                                <div class="card-body p-2 text-lg-center">
                                                                     <%--<a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=u.getNickname()%>">--%>
-                                                                    <span class="mb-0 text-lg font-weight-bold"><%=lr%></span>
+                                                                    <span class="mb-0 text-md-center font-weight-bold"><%=lr%></span>
                                                                     <%-- </a>--%>
                                                                 </div>
                                                             </div>
