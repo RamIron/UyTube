@@ -97,7 +97,7 @@
                 </div>
             </div>
             <!-- Form -->
-            <form class="mt-4 mb-3 d-md-none" action="<%= request.getContextPath() %>/Busqueda" method="get">
+            <form class="mt-4 mb-3 d-md-none" action="<%= request.getContextPath() %>/module/buscar.jsp" method="get">
                 <div class="input-group input-group-rounded input-group-merge" >
                     <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Buscar..." aria-label="Search" name="q">
                     <div class="input-group-prepend">
@@ -187,7 +187,7 @@
         <div class="container-fluid">
 
             <!-- Form - Buscador -->
-            <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"  action="<%= request.getContextPath() %>/Busqueda" method="get">
+            <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"  action="<%= request.getContextPath() %>/module/buscar.jsp" method="get">
                 <div class="form-group mb-0">
                     <div class="input-group input-group-alternative">
                         <div class="input-group-prepend">
