@@ -1,6 +1,9 @@
+<%@ page import="interfaces.CFactory" %>
+<%@ page import="interfaces.ICategoria" %>
 <%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="interfaces.*" %>
+<%@ page import="interfaces.LRFactory" %>
+<%@ page import="interfaces.IListaReproduccion" %>
 <!--
 
 =========================================================
@@ -110,8 +113,8 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link  active" href="<%= request.getContextPath() %>/module/verUsuarios.jsp">
-              <i class="ni ni-single-02 text-blue"></i> <strong>Ver usuarios</strong>
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/verUsuarios.jsp">
+              <i class="ni ni-single-02 text-blue"></i> Ver usuarios
             </a>
           </li>
         </ul>
@@ -129,8 +132,8 @@
           </li>
           <% } %>
           <li class="nav-item">
-            <a class="nav-link" href="<%= request.getContextPath() %>/module/verVideos.jsp">
-              <i class="ni ni-button-play text-blue"></i> Ver videos
+            <a class="nav-link  active" href="<%= request.getContextPath() %>/module/verVideos.jsp">
+              <i class="ni ni-button-play text-blue"></i> <strong> Ver videos </strong>
             </a>
           </li>
         </ul>
@@ -255,46 +258,62 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Contenido aqui TODO-->
-          <%
-            UFactory uF = UFactory.getInstancia();
-            IUsuario iU = uF.getIUsuario();
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-            List<DtUsuarioWeb> listU = iU.listarUsuariosWeb();
-          %>
-
-          <div class="container-fluid">
-            <div class="row row- justify-content-right">
-              <%
-                for(DtUsuarioWeb u: listU){
-              %>
-              <div class="col-sm-4">
-                <div class="card bg-secondary shadow ">
-                  <div class="card-body px-lg-5 py-lg-5">
-                    <%if(usr != null && u.getNickname().contentEquals(usr.getNickname())){ %>
-                      <a class="" href="<%= request.getContextPath() %>/module/miPerfil.jsp" >
-                    <% }else{ %>
-                      <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
-                    <% } %>
-                      <div class="media align-items-center">
-                        <span class="avatar avatar-lg rounded-circle">
-                          <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
-                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                          <% } else { %>
-                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=u.getFoto()%>">
-                          <% } %>
-                        </span>
-                        <div class="media-body">
-                          <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
+          <form name="buscar" action="buscar.jsp" method="get">
+          <div class="row justify-content-center">
+            <div class="col-xl-10 order-xl-1">
+              <!-- inicio de filtrado -->
+              <div class="card bg-secondary shadow ">
+                <div class="card-body px-lg-5 py-lg-5">
+                  <h3>Buscador</h3>
+                    <div class="d-inline-flex" style="width: 100%">
+                      <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Buscar...">
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                         </div>
                       </div>
-                    </a>
+                    </div>
+                    <br/>
+                    <div class="d-sm-inline-flex" style="width: 100%">
+                      <p>&nbsp;&nbsp;Mostrar: &nbsp;&nbsp;&nbsp;&nbsp;</p>
+                      <div class="custom-control custom-checkbox mb-3">
+                        <input class="custom-control-input" id="canales" name="canales" type="checkbox">
+                        <label class="custom-control-label" for="canales">Canales &nbsp;&nbsp;</label>
+                      </div>
+                      <div class="custom-control custom-checkbox mb-3">
+                        <input class="custom-control-input" id="videos" name="videos" type="checkbox">
+                        <label class="custom-control-label" for="videos">Videos &nbsp;</label>
+                      </div>
+                      <div class="custom-control custom-checkbox mb-3">
+                        <input class="custom-control-input" id="listas" name="listas" type="checkbox">
+                        <label class="custom-control-label" for="listas">Listas de reproduccion</label>
+                      </div>
+                    </div>
+                  <!-- fin de filtrado -->
+                  <hr>
+                  <!-- inicio de resultados -->
+                  <div class="d-sm-inline-flex row" style="width: 100%">
+                    <div class="col-sm">
+                      <h3>82 resultados</h3>
+                    </div>
+                    <div class="col-sm text-sm-right">
+                      <div class="form-group d-sm-inline-flex align-self-center">
+                        <label for="orden" style="white-space: nowrap;">Ordenar por &nbsp;</label>
+                        <div class="input-group input-group-sm mb-3">
+                          <select class="form-control" id="orden" name="orden">
+                            <option value="a">Alfabeticamente (A-Z)</option>
+                            <option value="f">Fecha (Descendente)</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                  <!-- fin de resultados -->
                 </div>
-                <br/>
               </div>
-              <% } %>
             </div>
           </div>
+          </form>
           <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
       </div>
@@ -317,6 +336,6 @@
         application: "argon-dashboard-free"
       });
   </script>
-
 </body>
+
 </html>
