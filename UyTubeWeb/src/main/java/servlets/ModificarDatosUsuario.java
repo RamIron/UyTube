@@ -57,16 +57,15 @@ public class ModificarDatosUsuario extends HttpServlet {
             }
             //FIN DE CODIGO PARA EXTRAER LA FECHA
 
-            System.out.println("Nickname: " + nickname);
 
             if(iU.existeNickname(nickname)) {
-                String fotoURL;
+                /*String fotoURL;
                 if(!foto.equals("")) {
                     fotoURL = "img/usr/" + foto;
                 }else {
                     fotoURL = "src/main/resources/img/default.png";
-                }
-                iU.modificarInfoUsuario(nomU, apellido, cal, fotoURL);
+                }*/
+                iU.modificarInfoUsuario(nomU, apellido, cal, "src/main/resources/img/default.png");
                 iU.modificarInfoCanal(nomC, desc, publico);
                 iU.modificarCatCanal(nickname, categoria);
             }

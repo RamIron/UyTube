@@ -351,7 +351,7 @@
                                             <%--Fin Apellido--%>
 
                                             <%--Fecha Nacimiento--%>
-                                            <div class="col">
+                                            <div class="col mt-2">
                                                 <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                                                     String fechaS = sdf.format(usuario.getfNac().getTime());%>
                                                 <h5>Fecha de Nacimiento: <br><span class="mb-xl-2 font-weight-bold text-lg"><%=fechaS %></span></h5>
@@ -376,18 +376,22 @@
                                             <%--Fin Nombre Canal--%>
 
                                             <%--Categoria Canal--%>
-                                            <div class="col">
+                                            <div class="col mt-2">
                                                 <h5> Categoría:<br><span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getCategoria() %></span></h5>
                                             </div>
                                             <%--Fin Categoria Canal--%>
                                         </div>
 
-                                        <%--Descripcion Canal--%>
-                                        <div class="row justify-content-center px-lg-5 mb-lg-2 mt-4">
-                                            <h5 style="text-align: center"> Descripción: <br></h5>
-                                            <span class="mb-xl-2 font-weight-bold text-xl-center"><%=canal.getDescripcion() %></span>
+                                        <%--Descripcion de Canal--%>
+                                        <div class="row justify-content-center my-2 mt-3">
+                                            <h5 style="text-align: center">Descripcion: <br></h5>
                                         </div>
-                                        <%--Fin Descripcion Canal--%>
+                                        <div class="card shadow">
+                                            <div class="card-body p--2 mx--2 my--2 text-sm-left">
+                                                <span><%=canal.getDescripcion()%></span>
+                                            </div>
+                                        </div>
+                                        <%--Fin Descripcion de Canal--%>
 
                                         <% }else{ %>
                                         <div class="text-muted text-center mt-2 mb-3">
@@ -510,7 +514,7 @@
                                                     <div class="row row- justify-content-right">
                                                         <% for(String lr:listListasRep) { %>
                                                         <div class="col-sm-3">
-                                                            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                                                            <div class="card shadow-sm p-1 mb-2 bg-gradient-lighter rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3 text-lg-center">
                                                                     <%--<a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=u.getNickname()%>">--%>
                                                                         <span class="mb-0 text-lg font-weight-bold"><%=lr%></span>

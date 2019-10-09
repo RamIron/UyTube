@@ -14519,6 +14519,10 @@ button.section-darker:focus {
   font-size: 0.875rem !important;
 }
 
+.text-md2 {
+  font-size: 0.95rem !important;
+}
+
 .text-lg {
   font-size: 1.25rem !important;
 }
