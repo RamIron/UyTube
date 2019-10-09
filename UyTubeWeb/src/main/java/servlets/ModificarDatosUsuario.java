@@ -23,7 +23,6 @@ public class ModificarDatosUsuario extends HttpServlet {
         HttpSession s = request.getSession();
         DtUsuarioWeb usrS = (DtUsuarioWeb) s.getAttribute("usuario");
         if (usrS != null){
-
             String nickname = request.getParameter("nickname");
             String nomU = request.getParameter("nomU");
             String apellido = request.getParameter("apellido");
@@ -65,7 +64,8 @@ public class ModificarDatosUsuario extends HttpServlet {
                 }else {
                     fotoURL = "src/main/resources/img/default.png";
                 }*/
-                iU.modificarInfoUsuario(nomU, apellido, cal, "src/main/resources/img/default.png");
+
+                iU.modificarInfoUsuario(nomU, apellido, cal, usrS.getFoto());
                 iU.modificarInfoCanal(nomC, desc, publico);
                 iU.modificarCatCanal(nickname, categoria);
             }

@@ -320,21 +320,23 @@
                                             <%--Fin Nickname--%>
 
                                             <%--Email--%>
-                                            <div class="row justify-content-center mb-2">
-                                                <h5 style="text-align: center">Email: <br><span class="mb-xl-2 font-weight-bold text-md2"><%=usuario.getCorreoE()%></span></h5>
+                                            <div>
+<%--                                                <h5 style="text-align: center">Email: <br><span class="mb-xl-2 font-weight-bold text-md2"><%=usuario.getCorreoE()%></span></h5>--%>
+                                                <span style="f"> Email: </span>
+                                                <p class="font-weight-bold" style="font-size: 20px;"> ramiroGmail</p>
                                             </div>
                                             <%--Fin Email--%>
 
 
                                             <div class="row justify-content-center mb-2">
                                                 <%--Nombre--%>
-                                                <div class="col ml-5">
+                                                <div class="col justify-content-center pl-5">
                                                     <h5 style="text-align: center">Nombre: <br><span class="mb-xl-2 font-weight-bold text-lg"><%=usuario.getNombre() %> </span></h5>
                                                 </div>
                                                 <%--Fin Nombre--%>
 
                                                 <%--Apellido--%>
-                                                <div class="col mr-5">
+                                                <div class="col justify-content-center pr-5">
                                                     <h5 style="text-align: center">Apellido:<br> <span class="mb-xl-2 font-weight-bold text-lg"><%=usuario.getApellido() %></span></h5>
                                                 </div>
                                                 <%--Fin Apellido--%>
@@ -364,7 +366,11 @@
 
                                                 <%--Categoria de Canal--%>
                                                 <div class="col mr-5">
-                                                    <h5 style="text-align: center">Categoria: <br><span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getCategoria() %></span></h5>
+                                                    <% if(canal.getCategoria() != null){ %>
+                                                        <h5 style="text-align: center">Categoria: <br><span class="mb-xl-2 font-weight-bold text-xl"><%= canal.getCategoria()%></span></h5>
+                                                    <% }else{ %>
+                                                        <h5 style="text-align: center">Categoria: <br><span class="mb-xl-2 font-weight-bold text-lg"> Sin Categoria </span></h5>
+                                                    <% } %>
                                                 </div>
                                                 <%--Fin Categoria de Canal--%>
                                             </div>
@@ -372,7 +378,7 @@
 
                                             <%--Descripcion de Canal--%>
                                             <div class="row justify-content-center my-2 mt-5">
-                                                <h5 style="text-align: center">Descripcion: <br></h5>
+                                                <h5>Descripcion: <br></h5>
                                             </div>
                                             <div class="card small center" style="width: 21rem;">
                                                 <div class="card-body p--2 mx--2 my--2 text-sm-left">
@@ -647,8 +653,6 @@
                                         </div>
                                         <div class="modal-body">
                                             <form name="consultaPerfil" role="form" action="<%= request.getContextPath() %>/ModificarDatosUsuario" method="post">
-                                                <%--<form name="modificarVideo" action="<%= request.getContextPath() %>/ModificarVideo" method="post">--%>
-
                                                 <div class="text-muted text-center mt-2 mb-3">
                                                     <h3>Datos del Usuario</h3>
                                                 </div>
