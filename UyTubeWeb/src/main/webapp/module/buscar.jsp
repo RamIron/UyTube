@@ -258,13 +258,13 @@
       <div class="container-fluid">
         <div class="header-body">
           <!-- Contenido aqui TODO-->
+          <form name="buscar" action="buscar.jsp" method="get">
           <div class="row justify-content-center">
             <div class="col-xl-10 order-xl-1">
               <!-- inicio de filtrado -->
               <div class="card bg-secondary shadow ">
                 <div class="card-body px-lg-5 py-lg-5">
                   <h3>Buscador</h3>
-                  <form name="buscar" action="buscar.jsp" method="get">
                     <div class="d-inline-flex" style="width: 100%">
                       <div class="input-group">
                         <input type="text" name="q" class="form-control" placeholder="Buscar...">
@@ -289,7 +289,6 @@
                         <label class="custom-control-label" for="listas">Listas de reproduccion</label>
                       </div>
                     </div>
-                  </form>
                   <!-- fin de filtrado -->
                   <hr>
                   <!-- inicio de resultados -->
@@ -299,11 +298,11 @@
                     </div>
                     <div class="col-sm text-sm-right">
                       <div class="form-group d-sm-inline-flex align-self-center">
-                        <label for="exampleFormControlSelect1" style="white-space: nowrap;">Ordenar por &nbsp;</label>
+                        <label for="orden" style="white-space: nowrap;">Ordenar por &nbsp;</label>
                         <div class="input-group input-group-sm mb-3">
-                          <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Alfabeticamente (A-Z)</option>
-                            <option>Fecha (Descendente)</option>
+                          <select class="form-control" id="orden" name="orden">
+                            <option value="a">Alfabeticamente (A-Z)</option>
+                            <option value="f">Fecha (Descendente)</option>
                           </select>
                         </div>
                       </div>
@@ -314,7 +313,7 @@
               </div>
             </div>
           </div>
-
+          </form>
           <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
       </div>
