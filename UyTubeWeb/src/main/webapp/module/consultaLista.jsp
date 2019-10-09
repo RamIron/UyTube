@@ -286,8 +286,18 @@
                                     <h1><%=lista%></h1>
                                 </div>
                                 <div class="col col-md-6">
-                                    <span class="badge badge-pill badge-info"><%=(infoLista.getPublico().equals(true) ? "Publica" : "Privada")%></span>
-                                    <span class="badge badge-pill badge-primary"><%=(infoLista.getCategoria().isEmpty() ? "Sin categoria" : "Aca va la categoria")%></span>
+<%--                                    PARA MOSTRAR SI ES PUBLICA--%>
+                                    <% if (infoLista.getPublico()){%>
+                                        <i class="fas fa-globe"></i><small> Publico</small>
+                                    <%} else {%>
+                                        <i class="fas fa-user-lock"></i><small> Privado</small>
+                                    <%}%>
+                                    <%--PARA MOSTRAR LA CATEGORIA--%>
+                                    <% if (infoLista.getCategoria().isEmpty()){%>
+                                        <span class="badge badge-pill badge-primary">Sin categoria</span>
+                                    <%}else{%>
+                                        <span class="badge badge-pill badge-primary"><%=infoLista.getCategoria()%></span>
+                                    <%}%>
                                 </div>
                                 <%if(usr != null && usuario.equals(usr.getNickname())){%>
                                 <div class="col- btn-group row-grid text-lg-right">
