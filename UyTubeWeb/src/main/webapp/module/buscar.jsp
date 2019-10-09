@@ -4,6 +4,17 @@
 <%@ page import="datatypes.DtUsuarioWeb" %>
 <%@ page import="interfaces.LRFactory" %>
 <%@ page import="interfaces.IListaReproduccion" %>
+
+<!--   Core   -->
+<script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!--   Optional JS   -->
+<script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+<!--   Argon JS   -->
+<script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <!--
 
 =========================================================
@@ -257,7 +268,27 @@
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
         <div class="header-body">
-          <!-- Contenido aqui TODO-->
+          <!-- Contenido aqui -------------------------------------------------------------------------------------------------------------------------------->
+
+          <%
+            String query = request.getParameter("q");
+            Boolean mostrarVid = false;
+            Boolean mostrarLis = false;
+            Boolean mostrarCan = false;
+            Boolean ordFecha = false;
+            if (query == null){
+              query = "";
+            }
+            if (request.getParameter("canales") == null && request.getParameter("videos") == null && request.getParameter("listas") == null ){
+              mostrarVid = mostrarLis = mostrarCan = true;
+            }else {
+              mostrarCan = request.getParameter("canales") != null;
+              mostrarVid = request.getParameter("videos") != null;
+              mostrarLis = request.getParameter("listas") != null;
+            }
+            ordFecha = request.getParameter("orden") != null && request.getParameter("orden").equals("f");
+          %>
+
           <form name="buscar" action="buscar.jsp" method="get">
           <div class="row justify-content-center">
             <div class="col-xl-10 order-xl-1">
@@ -267,7 +298,7 @@
                   <h3>Buscador</h3>
                     <div class="d-inline-flex" style="width: 100%">
                       <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Buscar...">
+                        <input type="text" name="q" class="form-control" placeholder="Buscar..." value="<%=query%>">
                         <div class="input-group-append">
                           <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                         </div>
@@ -277,15 +308,15 @@
                     <div class="d-sm-inline-flex" style="width: 100%">
                       <p>&nbsp;&nbsp;Mostrar: &nbsp;&nbsp;&nbsp;&nbsp;</p>
                       <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="canales" name="canales" type="checkbox">
+                        <input class="custom-control-input" id="canales" name="canales" type="checkbox" <%=mostrarCan ? "checked" : " "%>>
                         <label class="custom-control-label" for="canales">Canales &nbsp;&nbsp;</label>
                       </div>
                       <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="videos" name="videos" type="checkbox">
+                        <input class="custom-control-input" id="videos" name="videos" type="checkbox" <%=mostrarVid ? "checked" : " "%>>
                         <label class="custom-control-label" for="videos">Videos &nbsp;</label>
                       </div>
                       <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="listas" name="listas" type="checkbox">
+                        <input class="custom-control-input" id="listas" name="listas" type="checkbox" <%=mostrarLis ? "checked" : " "%>>
                         <label class="custom-control-label" for="listas">Listas de reproduccion</label>
                       </div>
                     </div>
@@ -302,11 +333,14 @@
                         <div class="input-group input-group-sm mb-3">
                           <select class="form-control" id="orden" name="orden">
                             <option value="a">Alfabeticamente (A-Z)</option>
-                            <option value="f">Fecha (Descendente)</option>
+                            <option value="f" <%=ordFecha ? "selected" : " "%>>Fecha (Descendente)</option>
                           </select>
+                          <button type="submit" class="btn btn-default btn-sm">r</button>
                         </div>
                       </div>
                     </div>
+
+
                   </div>
                   <!-- fin de resultados -->
                 </div>
@@ -314,21 +348,17 @@
             </div>
           </div>
           </form>
+
+
           <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          <!-- Fin contenido -------------------------------------------------------------------------------------------------------------------------------->
         </div>
       </div>
     </div>
     
   </div>
-  <!--   Core   -->
-  <script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
-  <script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!--   Optional JS   -->
-  <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
-  <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
-  <!--   Argon JS   -->
-  <script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
-  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
+
   <script>
     window.TrackJS &&
       TrackJS.install({
