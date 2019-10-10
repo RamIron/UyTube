@@ -162,7 +162,7 @@
                     List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
                     for(String l: lis){ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/ConsultaLista?id=<%=l%>">
+                    <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
                         <i class="ni ni-books text-blue"></i> <%=l%>
                     </a>
                 </li>
@@ -180,7 +180,7 @@
                     List<String> lC = iC.listarCategorias();
                     for(String cat: lC){ %>
                 <li class="nav-item">
-                    <a class="nav-link" href="<%= request.getContextPath() %>/ConsultaCategoria?id=<%=cat%>">
+                    <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
                         <i class="ni ni-books text-blue"></i> <%=cat%>
                     </a>
                 </li>
@@ -314,10 +314,11 @@
                                                 </div>
                                                 <%--Fin Foto de perfil--%>
 
+                                                <input type="hidden" name="nickname" value="<%=usuario.getNickname()%>">
+
                                                 <div style="text-align: center" class="mt-3">
                                                     <label class="btn-sm btn-outline-primary">
-                                                        Modificar imagen <input type="file" name="foto" id="imgID" src="#" style="display: none;" value="<%= request.getContextPath() %>/<%=usuario.getImagen()%>" onchange="cambiarImagen(this.src)">
-                                                        <%--<input name="nickname" class="form-control" placeholder="Nickname" type="text" value="<%=nickname%>">--%>
+                                                        Modificar imagen <input type="file" name="foto" style="display: none;" value="<%= request.getContextPath() %>/<%=usuario.getImagen()%>" onchange="cambiarImagen()">
                                                     </label>
                                                 </div>
                                             </form>
@@ -634,21 +635,22 @@
                                                 </div>
                                                 <%--Fin Descripcion Canal--%>
 
-
+                                                <%--Canal publico--%>
                                                 <div class="text-muted text-center mt-2 mb-3">
                                                     <div class="custom-control custom-checkbox mb-3">
                                                         <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico" <%= canal.getPublico() ? "checked" : "" %>>
                                                         <label class="custom-control-label" for="customCheck5">Canal publico</label>
                                                     </div>
                                                 </div>
+                                                <%--Fin Canal publico--%>
 
                                                 <input type="hidden" name="nickname" value="<%=usuario.getNickname()%>">
 
-                                                <%--Boton crear video--%>
+                                                <%--Boton guardar cambios--%>
                                                 <div class="text-center">
                                                     <button type="button" class="btn btn-primary my-4" onclick="cambiar()">Guardar Cambios</button>
                                                 </div>
-                                                <%--Fin Boton crear video--%>
+                                                <%--Fin Boton guardar cambios--%>
 
                                             </form>
                                         </div>
@@ -713,10 +715,7 @@
 </script>
 
 <script type="text/javascript">
-    function cambiarImagen(input) {
-        document.getElementById("imgID").src = input;
-        document.getElementById("imgID").value = input;
-        document.forms["cambioImagen"]["imgID"].value = input;
+    function cambiarImagen() {
         document.forms["cambioImagen"].submit();
     }
 </script>
