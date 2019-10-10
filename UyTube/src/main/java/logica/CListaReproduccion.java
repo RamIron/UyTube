@@ -264,20 +264,28 @@ public class CListaReproduccion implements IListaReproduccion {
 
 	@Override
 	public List<DtElementoWeb> busqueda(String query, Boolean ordFecha){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
 		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
 		List<Object> resQuery;
 		if(ordFecha){
 			//TODO ordenado por fecha
 			//resQuery = nativequery
+			Query consulta = em.createNativeQuery("buscarListasFecha");
+			consulta.setParameter(1, query);
+			resQuery = consulta.getResultList();
 		} else {
 			//TODO ordenado alfabetico
 			//resQuery = nativequery
+			Query consulta = em.createNativeQuery("buscarListasNombre");
+			consulta.setParameter(1, query);
+			resQuery = consulta.getResultList();
 		}
 		Integer size = resQuery.size();
-		for(int i=0; i<size; i++){
-			DtElementoWeb lis = new DtElementoWeb(resQuery[i][0], resQuery[i][1], tipoElemento.LISTA, "");
-			res.add(lis);
-		}
+//		for(int i=0; i<size; i++){
+//			DtElementoWeb lis = new DtElementoWeb(resQuery[i][0], resQuery[i][1], tipoElemento.LISTA, "");
+//			res.add(lis);
+//		}
 		return res;
 	}
 	
