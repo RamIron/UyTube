@@ -4,6 +4,9 @@
 <%@ page import="datatypes.DtUsuarioWeb" %>
 <%@ page import="interfaces.LRFactory" %>
 <%@ page import="interfaces.IListaReproduccion" %>
+<%@ page import="datatypes.DtElementoWeb" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="datatypes.DtCanalWeb" %>
 
 <!--   Core   -->
 <script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
@@ -33,7 +36,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<% HttpSession s = request.getSession(); %>
+<%
+  HttpSession s = request.getSession();
+  DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -163,7 +169,6 @@
           <%
             LRFactory f = LRFactory.getInstancia();
             IListaReproduccion iL = f.getIListaReproduccion();
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
             List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
             for(String l: lis){ %>
           <li class="nav-item">
@@ -226,8 +231,7 @@
             </a>
           </li>
         </ul>
-        <% }else {
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else {%>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -276,6 +280,12 @@
             Boolean mostrarLis = false;
             Boolean mostrarCan = false;
             Boolean ordFecha = false;
+            Integer cantRes = 0;
+
+            List<DtCanalWeb> listaC = new ArrayList<DtCanalWeb>();
+            List<DtElementoWeb> listaV = new ArrayList<DtElementoWeb>();
+            List<DtElementoWeb> listaL = new ArrayList<DtElementoWeb>();
+
             if (query == null){
               query = "";
             }
@@ -285,6 +295,18 @@
               mostrarCan = request.getParameter("canales") != null;
               mostrarVid = request.getParameter("videos") != null;
               mostrarLis = request.getParameter("listas") != null;
+
+              if(!query.equals("")){
+                if(mostrarCan){
+                  //TODO cargar canales del query en el orden q se indique y sumar la cantidad a "cantRes"
+                }
+                if(mostrarVid){
+                  //TODO cargar videos del query en el orden q se indique y sumar la cantidad a "cantRes"
+                }
+                if(mostrarLis){
+                  //TODO cargar listas del query en el orden q se indique y sumar la cantidad a "cantRes"
+                }
+              }
             }
             ordFecha = request.getParameter("orden") != null && request.getParameter("orden").equals("f");
           %>
@@ -325,7 +347,7 @@
                   <!-- inicio de resultados -->
                   <div class="d-sm-inline-flex row" style="width: 100%">
                     <div class="col-sm">
-                      <h3>82 resultados</h3>
+                      <h3><%=cantRes%> resultados</h3>
                     </div>
                     <div class="col-sm text-sm-right">
                       <div class="form-group d-sm-inline-flex align-self-center">
@@ -343,56 +365,80 @@
                     </div>
                     <div class="container-fluid">
                       <div class="col col- justify-content-left">
+                        <!-- Listado de Canales -->
+                        <% for (DtCanalWeb c: listaC){ %>
                         <div class="card mb-3" style="max-width: 630px;">
-                          <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=#&v=#">
+                          <%if(usr != null && c.getNickname().contentEquals(usr.getNickname())){ %>
+                            <a class="" href="<%= request.getContextPath() %>/module/miPerfil.jsp" >
+                              <% }else{ %>
+                            <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=c.getNickname()%>">
+                                <% } %>
                             <div class="row no-gutters">
-                              <div class="col-md-4">
-                                <img src="http://img.youtube.com/vi/a/0.jpg" class="card-img" alt="...">
+                              <div class="col-md-4 text-center">
+                                <% if (c.getImgUsr().equals("src/main/resources/img/default.png")) {%>
+                                <img src="<%= request.getContextPath()%>/img/default.png" class="avatar avatar-ramiro-lg rounded-circle" alt="...">
+                                <% } else { %>
+                                <img src="<%= request.getContextPath()%>/<%=c.getImgUsr()%>" class="avatar avatar-ramiro-lg rounded-circle" alt="...">
+                                <% } %>
                               </div>
                               <div class="col-md-5">
                                 <div class="card-body">
-                                  <h5 class="card-title mb-0 text-lg">Titulo Video</h5>
+                                  <h5 class="card-title mb-0 text-lg"><%=c.getNomCanal()%></h5>
+                                  <span class="badge badge-pill badge-info">Canal</span>
+                                  <p class="card-text"><small class="text-muted">De <strong><%=c.getNickname()%></strong></small></p>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                        <%}%>
+                        <!-- Fin listado de Canales -->
+
+                        <!-- Listado de Videos -->
+                        <% for (DtElementoWeb v: listaV){%>
+                        <div class="card mb-3" style="max-width: 630px;">
+                          <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=v.getNickname()%>&v=<%=v.getNombreE()%>">
+                            <div class="row no-gutters">
+                              <div class="col-md-4">
+                                <img src="http://img.youtube.com/vi/<%=v.getUrl()%>/0.jpg" class="card-img" alt="...">
+                              </div>
+                              <div class="col-md-5">
+                                <div class="card-body">
+                                  <h5 class="card-title mb-0 text-lg"><%=v.getNombreE()%></h5>
                                   <span class="badge badge-pill badge-default">Video</span>
-                                  <p class="card-text"><small class="text-muted">Por <strong>nickname</strong></small></p>
+                                  <p class="card-text"><small class="text-muted">Por <strong><%=v.getNickname()%></strong></small></p>
                                 </div>
                               </div>
                             </div>
                           </a>
                         </div>
+                        <%}%>
+                        <!-- Fin listado de Videos -->
+
+                        <!-- Listado de Listas -->
+                        <% for (DtElementoWeb l: listaL){%>
                         <div class="card mb-3" style="max-width: 630px;">
-                          <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=#&v=#">
+                          <a href="<%= request.getContextPath() %>/module/consultaLista.jsp?u=<%=l.getNickname()%>&id=<%=l.getNombreE()%>">
                             <div class="row no-gutters">
                               <div class="col-md-4">
                                 <img src="http://img.youtube.com/vi/a/0.jpg" class="card-img" alt="...">
                               </div>
                               <div class="col-md-5">
                                 <div class="card-body">
-                                  <h5 class="card-title mb-0 text-lg">Titulo Lista de reproduccion</h5>
+                                  <h5 class="card-title mb-0 text-lg"><%=l.getNombreE()%></h5>
                                   <span class="badge badge-pill badge-primary">Lista de reproduccion</span>
-                                  <p class="card-text"><small class="text-muted">Por <strong>nickname</strong></small></p>
+                                  <p class="card-text"><small class="text-muted">Por <strong><%=l.getNickname()%></strong></small></p>
                                 </div>
                               </div>
                             </div>
                           </a>
                         </div>
+                        <%}%>
+                        <!-- Fin listado de Listas -->
+
                       </div>
 
-                      <div class="card mb-3" style="max-width: 630px;">
-                        <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=#&v=#">
-                          <div class="row no-gutters">
-                            <div class="col-md-4 text-center">
-                                <img src="<%= request.getContextPath() %>/img/usr/flor.jpg" class="avatar avatar-ramiro-lg rounded-circle" alt="...">
-                            </div>
-                            <div class="col-md-5">
-                              <div class="card-body">
-                                <h5 class="card-title mb-0 text-lg">Nombre Canal</h5>
-                                <span class="badge badge-pill badge-info">Canal</span>
-                                <p class="card-text"><small class="text-muted">De <strong>nickname</strong></small></p>
-                              </div>
-                            </div>
-                          </div>
-                        </a>
-                      </div>
+
                     </div>
 
                   </div>
