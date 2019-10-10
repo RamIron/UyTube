@@ -1,9 +1,20 @@
-<%@ page import="interfaces.CFactory" %>
-<%@ page import="interfaces.ICategoria" %>
 <%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="interfaces.LRFactory" %>
-<%@ page import="interfaces.IListaReproduccion" %>
+<%@ page import="datatypes.DtElementoWeb" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="datatypes.DtCanalWeb" %>
+<%@ page import="interfaces.*" %>
+
+<!--   Core   -->
+<script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!--   Optional JS   -->
+<script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+<!--   Argon JS   -->
+<script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <!--
 
 =========================================================
@@ -22,7 +33,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<% HttpSession s = request.getSession(); %>
+<%
+  HttpSession s = request.getSession();
+  DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -152,7 +166,6 @@
           <%
             LRFactory f = LRFactory.getInstancia();
             IListaReproduccion iL = f.getIListaReproduccion();
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
             List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
             for(String l: lis){ %>
           <li class="nav-item">
@@ -215,8 +228,7 @@
             </a>
           </li>
         </ul>
-        <% }else {
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else {%>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -257,7 +269,55 @@
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
         <div class="header-body">
-          <!-- Contenido aqui TODO-->
+          <!-- Contenido aqui -------------------------------------------------------------------------------------------------------------------------------->
+
+          <%
+            String query = request.getParameter("q");
+            Boolean mostrarVid = false;
+            Boolean mostrarLis = false;
+            Boolean mostrarCan = false;
+            Boolean ordFecha = false;
+            Integer cantRes = 0;
+
+            List<DtCanalWeb> listaC = new ArrayList<DtCanalWeb>();
+            List<DtElementoWeb> listaV = new ArrayList<DtElementoWeb>();
+            List<DtElementoWeb> listaL = new ArrayList<DtElementoWeb>();
+
+            UFactory uF = UFactory.getInstancia();
+            IUsuario iU = uF.getIUsuario();
+            VFactory vF = VFactory.getInstancia();
+            IVideo iV = vF.getIVideo();
+            LRFactory lF = LRFactory.getInstancia();
+            IListaReproduccion iL = lF.getIListaReproduccion();
+
+            if (query == null){
+              query = "";
+            }
+            if (request.getParameter("canales") == null && request.getParameter("videos") == null && request.getParameter("listas") == null ){
+              mostrarVid = mostrarLis = mostrarCan = true;
+            }else {
+              mostrarCan = request.getParameter("canales") != null;
+              mostrarVid = request.getParameter("videos") != null;
+              mostrarLis = request.getParameter("listas") != null;
+
+              if(!query.equals("")){
+                if(mostrarCan){
+                  listaC = iU.busqueda(query, ordFecha);
+                  cantRes = cantRes + listaC.size();
+                }
+                if(mostrarVid){
+                  listaV = iV.busqueda(query,ordFecha);
+                  cantRes = cantRes + listaV.size();
+                }
+                if(mostrarLis){
+                  listaL =  iL.busqueda(query, ordFecha);
+                  cantRes = cantRes + listaL.size();
+                }
+              }
+            }
+            ordFecha = request.getParameter("orden") != null && request.getParameter("orden").equals("f");
+          %>
+
           <form name="buscar" action="buscar.jsp" method="get">
           <div class="row justify-content-center">
             <div class="col-xl-10 order-xl-1">
@@ -267,7 +327,7 @@
                   <h3>Buscador</h3>
                     <div class="d-inline-flex" style="width: 100%">
                       <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Buscar...">
+                        <input type="text" name="q" class="form-control" placeholder="Buscar..." value="<%=query%>">
                         <div class="input-group-append">
                           <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                         </div>
@@ -277,15 +337,15 @@
                     <div class="d-sm-inline-flex" style="width: 100%">
                       <p>&nbsp;&nbsp;Mostrar: &nbsp;&nbsp;&nbsp;&nbsp;</p>
                       <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="canales" name="canales" type="checkbox">
+                        <input class="custom-control-input" id="canales" name="canales" type="checkbox" <%=mostrarCan ? "checked" : " "%>>
                         <label class="custom-control-label" for="canales">Canales &nbsp;&nbsp;</label>
                       </div>
                       <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="videos" name="videos" type="checkbox">
+                        <input class="custom-control-input" id="videos" name="videos" type="checkbox" <%=mostrarVid ? "checked" : " "%>>
                         <label class="custom-control-label" for="videos">Videos &nbsp;</label>
                       </div>
                       <div class="custom-control custom-checkbox mb-3">
-                        <input class="custom-control-input" id="listas" name="listas" type="checkbox">
+                        <input class="custom-control-input" id="listas" name="listas" type="checkbox" <%=mostrarLis ? "checked" : " "%>>
                         <label class="custom-control-label" for="listas">Listas de reproduccion</label>
                       </div>
                     </div>
@@ -294,7 +354,7 @@
                   <!-- inicio de resultados -->
                   <div class="d-sm-inline-flex row" style="width: 100%">
                     <div class="col-sm">
-                      <h3>82 resultados</h3>
+                      <h3><%=cantRes%> resultados</h3>
                     </div>
                     <div class="col-sm text-sm-right">
                       <div class="form-group d-sm-inline-flex align-self-center">
@@ -302,11 +362,92 @@
                         <div class="input-group input-group-sm mb-3">
                           <select class="form-control" id="orden" name="orden">
                             <option value="a">Alfabeticamente (A-Z)</option>
-                            <option value="f">Fecha (Descendente)</option>
+                            <option value="f" <%=ordFecha ? "selected" : " "%>>Fecha (Descendente)</option>
                           </select>
+                          <div class="input-group-append">
+                            <button type="submit" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    <div class="container-fluid">
+                      <div class="col col- justify-content-left">
+                        <!-- Listado de Canales -->
+                        <% for (DtCanalWeb c: listaC){ %>
+                        <div class="card mb-3" style="max-width: 630px;">
+                          <%if(usr != null && c.getNickname().contentEquals(usr.getNickname())){ %>
+                            <a class="" href="<%= request.getContextPath() %>/module/miPerfil.jsp" >
+                              <% }else{ %>
+                            <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=c.getNickname()%>">
+                                <% } %>
+                            <div class="row no-gutters">
+                              <div class="col-md-4 text-center">
+                                <% if (c.getImgUsr().equals("src/main/resources/img/default.png")) {%>
+                                <img src="<%= request.getContextPath()%>/img/default.png" class="avatar avatar-ramiro-lg rounded-circle" alt="...">
+                                <% } else { %>
+                                <img src="<%= request.getContextPath()%>/<%=c.getImgUsr()%>" class="avatar avatar-ramiro-lg rounded-circle" alt="...">
+                                <% } %>
+                              </div>
+                              <div class="col-md-5">
+                                <div class="card-body">
+                                  <h5 class="card-title mb-0 text-lg"><%=c.getNomCanal()%></h5>
+                                  <span class="badge badge-pill badge-info">Canal</span>
+                                  <p class="card-text"><small class="text-muted">De <strong><%=c.getNickname()%></strong></small></p>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                        <%}%>
+                        <!-- Fin listado de Canales -->
+
+                        <!-- Listado de Videos -->
+                        <% for (DtElementoWeb v: listaV){%>
+                        <div class="card mb-3" style="max-width: 630px;">
+                          <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=v.getNickname()%>&v=<%=v.getNombreE()%>">
+                            <div class="row no-gutters">
+                              <div class="col-md-4">
+                                <img src="http://img.youtube.com/vi/<%=v.getUrl()%>/0.jpg" class="card-img" alt="...">
+                              </div>
+                              <div class="col-md-5">
+                                <div class="card-body">
+                                  <h5 class="card-title mb-0 text-lg"><%=v.getNombreE()%></h5>
+                                  <span class="badge badge-pill badge-default">Video</span>
+                                  <p class="card-text"><small class="text-muted">Por <strong><%=v.getNickname()%></strong></small></p>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                        <%}%>
+                        <!-- Fin listado de Videos -->
+
+                        <!-- Listado de Listas -->
+                        <% for (DtElementoWeb l: listaL){%>
+                        <div class="card mb-3" style="max-width: 630px;">
+                          <a href="<%= request.getContextPath() %>/module/consultaLista.jsp?u=<%=l.getNickname()%>&id=<%=l.getNombreE()%>">
+                            <div class="row no-gutters">
+                              <div class="col-md-4">
+                                <img src="http://img.youtube.com/vi/a/0.jpg" class="card-img" alt="...">
+                              </div>
+                              <div class="col-md-5">
+                                <div class="card-body">
+                                  <h5 class="card-title mb-0 text-lg"><%=l.getNombreE()%></h5>
+                                  <span class="badge badge-pill badge-primary">Lista de reproduccion</span>
+                                  <p class="card-text"><small class="text-muted">Por <strong><%=l.getNickname()%></strong></small></p>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                        <%}%>
+                        <!-- Fin listado de Listas -->
+
+                      </div>
+
+
+                    </div>
+
                   </div>
                   <!-- fin de resultados -->
                 </div>
@@ -314,21 +455,17 @@
             </div>
           </div>
           </form>
+
+
           <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          <!-- Fin contenido -------------------------------------------------------------------------------------------------------------------------------->
         </div>
       </div>
     </div>
     
   </div>
-  <!--   Core   -->
-  <script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
-  <script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!--   Optional JS   -->
-  <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
-  <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
-  <!--   Argon JS   -->
-  <script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
-  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
+
   <script>
     window.TrackJS &&
       TrackJS.install({

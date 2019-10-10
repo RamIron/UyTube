@@ -335,7 +335,7 @@
           %>
           <div class="container-fluid">
             <div class="row row- justify-content-right">
-              <div class="col-sm-9">
+              <div class="col-sm">
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
                     <div class="embed-responsive embed-responsive-16by9">
@@ -598,14 +598,6 @@
                 </div>
                 <br/>
                 <%}%>
-              </div>
-              <div class="col-sm-3">
-                <div class="card bg-secondary shadow ">
-                  <div class="card-body px-lg-5 py-lg-5">
-                    <h2>Recomendados</h2>
-
-                  </div>
-                </div>
               </div>
             </div>
           </div>

@@ -263,6 +263,12 @@ public class CListaReproduccion implements IListaReproduccion {
 //		catPart.quitarElemento(part);
 //		mC.modificarCategoria(catPart);
 	}
-	
+
+	@Override
+	public List<DtElementoWeb> busqueda(String query, Boolean ordFecha){
+		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
+		//TODO funcion de mateo
+		return res;
+	}
 	
 }

@@ -11,6 +11,7 @@ import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorPorDefecto;
 import Manejadores.ManejadorUsuario;
 import datatypes.DtCanal;
+import datatypes.DtCanalWeb;
 import datatypes.DtUsuario;
 import datatypes.DtUsuarioWeb;
 import interfaces.IUsuario;
@@ -284,5 +285,12 @@ public class CUsuario implements IUsuario {
 			dtUsrs.add(new DtUsuarioWeb(u.getNickname(), u.getImagen()));
 		}
 		return dtUsrs;
+	}
+
+	@Override
+	public List<DtCanalWeb> busqueda(String query, Boolean ordFecha){
+		List<DtCanalWeb> res = new ArrayList<DtCanalWeb>();
+		//TODO funcion de mateo
+		return res;
 	}
 }

@@ -103,6 +103,9 @@
         <form class="mt-4 mb-3 d-md-none" action="./module/buscar.jsp" method="get">
           <div class="input-group input-group-rounded input-group-merge" >
             <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Buscar..." aria-label="Search" name="q">
+            <input type="hidden" name="canales" value="on">
+            <input type="hidden" name="videos" value="on">
+            <input type="hidden" name="listas" value="on">
             <div class="input-group-prepend">
               <div class="input-group-text">
                 <span class="fa fa-search"></span>

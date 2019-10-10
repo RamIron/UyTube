@@ -247,6 +247,11 @@ public class CVideo implements IVideo {
 		this.vid = usr.getCanal().obtenerVideo(vid);
 	}
 
-	
+	@Override
+	public List<DtElementoWeb> busqueda(String query, Boolean ordFecha){
+		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
+		//TODO funcion de mateo
+		return res;
+	}
 	
 }
