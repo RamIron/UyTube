@@ -299,23 +299,23 @@
               mostrarCan = request.getParameter("canales") != null;
               mostrarVid = request.getParameter("videos") != null;
               mostrarLis = request.getParameter("listas") != null;
-
-              if(!query.equals("")){
-                if(mostrarCan){
-                  listaC = iU.busqueda(query, ordFecha);
-                  cantRes = cantRes + listaC.size();
-                }
-                if(mostrarVid){
-                  listaV = iV.busqueda(query,ordFecha);
-                  cantRes = cantRes + listaV.size();
-                }
-                if(mostrarLis){
-                  listaL =  iL.busqueda(query, ordFecha);
-                  cantRes = cantRes + listaL.size();
-                }
-              }
             }
+
             ordFecha = request.getParameter("orden") != null && request.getParameter("orden").equals("f");
+
+            if(mostrarCan){
+              listaC = iU.busqueda(query, ordFecha);
+              cantRes = cantRes + listaC.size();
+            }
+            if(mostrarVid){
+              listaV = iV.busqueda(query,ordFecha);
+              cantRes = cantRes + listaV.size();
+            }
+            if(mostrarLis){
+              listaL =  iL.busqueda(query, ordFecha);
+              cantRes = cantRes + listaL.size();
+            }
+
           %>
 
           <form name="buscar" action="buscar.jsp" method="get">
