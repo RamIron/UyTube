@@ -318,7 +318,11 @@ src="<%= request.getContextPath() %>/img/default.png"<%@ page import="java.util.
 
                                                 <div style="text-align: center" class="mt-3">
                                                     <label class="btn-sm btn-outline-primary">
-                                                        Modificar imagen <input type="file" name="foto" style="display: none;" value="<%= request.getContextPath() %>/<%=usuario.getImagen()%>" onchange="cambiarImagen()">
+                                                        Modificar imagen <input type="file" name="foto" style="display: none;"  onchange="cambiarImagen()">
+                                                    </label>
+                                                    <label class="btn-sm btn-outline-primary">
+                                                        Eliminar imagen <input type=button name="fotoEliminar" style="display: none;" data-toggle="modal" data-target="#eliminarImg">
+                                                        <%--type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">--%>
                                                     </label>
                                                 </div>
                                             </form>
@@ -335,7 +339,7 @@ src="<%= request.getContextPath() %>/img/default.png"<%@ page import="java.util.
                                             <%--Email--%>
                                             <div style="text-align: center">
                                                 <h4 class="mb-0"> Email: </h4>
-                                                <p class="font-weight-bold mt--1" style="font-size: 20px;"> <%=usuario.getCorreoE()%></p>
+                                                <p class="font-weight-bold mt--1" style="font-size: 17px;"> <%=usuario.getCorreoE()%></p>
                                             </div>
                                             <%--Fin Email--%>
 
@@ -659,13 +663,20 @@ src="<%= request.getContextPath() %>/img/default.png"<%@ page import="java.util.
                             </div>
 
 
-
-
-
-
-
-
-
+                            <%--Aqui comienza el cartel si desea eliminar imagen--%>
+                            <div class="modal fade" id="eliminarImg" tabindex="-1" role="dialog" aria-labelledby="ModalEliminarImagen" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            Desea eliminar su foto de perfil?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                            <button type="button" class="btn btn-primary" onclick="eliminarImagen()">Sí, deseo eliminar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -716,6 +727,13 @@ src="<%= request.getContextPath() %>/img/default.png"<%@ page import="java.util.
 
 <script type="text/javascript">
     function cambiarImagen() {
+        document.forms["cambioImagen"].submit();
+    }
+</script>
+
+
+<script type="text/javascript">
+    function eliminarImagen() {
         document.forms["cambioImagen"].submit();
     }
 </script>
