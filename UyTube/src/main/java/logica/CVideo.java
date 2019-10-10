@@ -258,11 +258,11 @@ public class CVideo implements IVideo {
 			//TODO ordenado alfabetico
 			//resQuery = nativequery
 		}
-		Integer size = resQuery.size();
-		for(int i=0; i<size; i++){
-			DtElementoWeb vid = new DtElementoWeb(resQuery[i][0], resQuery[i][1], tipoElemento.VIDEO, resQuery[i][2]);
-			res.add(vid);
-		}
+//		Integer size = resQuery.size();
+//		for(int i=0; i<size; i++){
+//			DtElementoWeb vid = new DtElementoWeb(resQuery[i][0], resQuery[i][1], tipoElemento.VIDEO, resQuery[i][2]);
+//			res.add(vid);
+//		}
 		return res;
 	}
 	
