@@ -272,18 +272,18 @@ public class CListaReproduccion implements IListaReproduccion {
 			//TODO ordenado por fecha
 			//resQuery = nativequery
 			Query consulta = em.createNamedQuery("buscarListasFecha");
-			consulta.setParameter(1, query);
+			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		} else {
 			//TODO ordenado alfabetico
 			//resQuery = nativequery
 			Query consulta = em.createNamedQuery("buscarListasNombre");
-			consulta.setParameter(1, query);
+			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		}
 //		Integer size = resQuery.size();
 		for(Object[] o : resQuery){
-			DtElementoWeb lis = new DtElementoWeb(o[0].toString(), o[1].toString(), tipoElemento.LISTA, "");
+			DtElementoWeb lis = new DtElementoWeb(o[1].toString(), o[0].toString(), tipoElemento.LISTA, "");
 			res.add(lis);
 		}
 		return res;

@@ -24,7 +24,7 @@ import datatypes.tipoElemento;
 				"left join video ON video.id = lpv.videos_id " +
 				"where c.publico = true " +
 				"and p.publico = true " +
-				"and e.nombre = (?)" +
+				"and e.nombre like (?)" +
 				"order by video.fpublicacion desc "),
 		@NamedNativeQuery(name = "buscarListasNombre", query = "SELECT e.nombre, c.usuario_nickname, video.descripcion from particular p\n" +
 				"inner join elemento e " +
@@ -38,7 +38,7 @@ import datatypes.tipoElemento;
 				"left join video ON video.id = lpv.videos_id " +
 				"where c.publico = true " +
 				"and p.publico = true " +
-				"and e.nombre = (?)" +
+				"and e.nombre like (?)" +
 				"order by e.nombre asc")
 })
 

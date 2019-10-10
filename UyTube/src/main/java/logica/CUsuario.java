@@ -10,10 +10,7 @@ import javax.persistence.TypedQuery;
 import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorPorDefecto;
 import Manejadores.ManejadorUsuario;
-import datatypes.DtCanal;
-import datatypes.DtCanalWeb;
-import datatypes.DtUsuario;
-import datatypes.DtUsuarioWeb;
+import datatypes.*;
 import interfaces.IUsuario;
 
 public class CUsuario implements IUsuario {
@@ -289,11 +286,27 @@ public class CUsuario implements IUsuario {
 
 	@Override
 	public List<DtCanalWeb> busqueda(String query, Boolean ordFecha){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
 		List<DtCanalWeb> res = new ArrayList<DtCanalWeb>();
+		List<Object[]> resQuery;
 		if(ordFecha){
 			//TODO ordenado por fecha
+			//resQuery = nativequery
+			Query consulta = em.createNamedQuery("buscarCanalFecha");
+			consulta.setParameter(1, "%" + query + "%");
+			resQuery = consulta.getResultList();
 		} else {
 			//TODO ordenado alfabetico
+			//resQuery = nativequery
+			Query consulta = em.createNamedQuery("buscarCanalNombre");
+			consulta.setParameter(1, "%" + query + "%");
+			resQuery = consulta.getResultList();
+		}
+//		Integer size = resQuery.size();
+		for(Object[] o : resQuery){
+			DtCanalWeb canal = new DtCanalWeb(o[0].toString(), o[1].toString(), o[2].toString());
+			res.add(canal);
 		}
 		return res;
 	}

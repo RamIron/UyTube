@@ -249,20 +249,28 @@ public class CVideo implements IVideo {
 
 	@Override
 	public List<DtElementoWeb> busqueda(String query, Boolean ordFecha){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
 		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
-		List<Object> resQuery;
+		List<Object[]> resQuery;
 		if(ordFecha){
 			//TODO ordenado por fecha
 			//resQuery = nativequery
+			Query consulta = em.createNamedQuery("buscarVideoFecha");
+			consulta.setParameter(1, "%" + query + "%");
+			resQuery = consulta.getResultList();
 		} else {
 			//TODO ordenado alfabetico
 			//resQuery = nativequery
+			Query consulta = em.createNamedQuery("buscarVideoNombre");
+			consulta.setParameter(1, "%" + query + "%");
+			resQuery = consulta.getResultList();
 		}
 //		Integer size = resQuery.size();
-//		for(int i=0; i<size; i++){
-//			DtElementoWeb vid = new DtElementoWeb(resQuery[i][0], resQuery[i][1], tipoElemento.VIDEO, resQuery[i][2]);
-//			res.add(vid);
-//		}
+		for(Object[] o : resQuery){
+			DtElementoWeb lis = new DtElementoWeb(o[0].toString(), o[1].toString(), tipoElemento.VIDEO, o[2].toString());
+			res.add(lis);
+		}
 		return res;
 	}
 	

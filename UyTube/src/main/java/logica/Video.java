@@ -7,6 +7,22 @@ import datatypes.*;
 
 @Entity
 @DiscriminatorValue("V")
+@NamedNativeQueries({
+		@NamedNativeQuery(name = "buscarVideoNombre", query = "SELECT c.usuario_nickname, e.nombre, v.url from video v \n" +
+				"\t\t\t\tinner join elemento e on e.id = v.id inner join canal c \n" +
+				"\t\t\t\ton c.id = e.canal_id\n" +
+				"\t\t\t\twhere c.publico = true \n" +
+				"\t\t\t\tand v.publico = true \n" +
+				"\t\t\t\tand e.nombre like (?)\n" +
+				"\t\t\t\torder by e.nombre asc"),
+		@NamedNativeQuery(name = "buscarVideoFecha", query = "SELECT c.usuario_nickname, e.nombre, v.url from video v \n" +
+				"\t\t\t\tinner join elemento e on e.id = v.id inner join canal c \n" +
+				"\t\t\t\ton c.id = e.canal_id\n" +
+				"\t\t\t\twhere c.publico = true \n" +
+				"\t\t\t\tand v.publico = true \n" +
+				"\t\t\t\tand e.nombre like (?)\n" +
+				"\t\t\t\torder by v.fpublicacion desc")
+})
 public class Video extends Elemento {
 	//Atributos
 	private String descripcion;
