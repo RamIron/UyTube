@@ -275,7 +275,6 @@
 <%--            empieza contenido de la tab de videos--%>
                                 <%
                                     List<DtElementoWeb> videosCat = iC.listarVideosCategoria(categoria);
-                                    System.out.println("SOY LA LIST EN EL JSP -------------  " + videosCat.isEmpty());
                                 %>
 
                                 <div class="container-fluid">

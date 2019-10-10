@@ -335,11 +335,65 @@
                             <option value="a">Alfabeticamente (A-Z)</option>
                             <option value="f" <%=ordFecha ? "selected" : " "%>>Fecha (Descendente)</option>
                           </select>
-                          <button type="submit" class="btn btn-default btn-sm">r</button>
+                          <div class="input-group-append">
+                            <button type="submit" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    <div class="container-fluid">
+                      <div class="col col- justify-content-left">
+                        <div class="card mb-3" style="max-width: 630px;">
+                          <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=#&v=#">
+                            <div class="row no-gutters">
+                              <div class="col-md-4">
+                                <img src="http://img.youtube.com/vi/a/0.jpg" class="card-img" alt="...">
+                              </div>
+                              <div class="col-md-5">
+                                <div class="card-body">
+                                  <h5 class="card-title mb-0 text-lg">Titulo Video</h5>
+                                  <span class="badge badge-pill badge-default">Video</span>
+                                  <p class="card-text"><small class="text-muted">Por <strong>nickname</strong></small></p>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                        <div class="card mb-3" style="max-width: 630px;">
+                          <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=#&v=#">
+                            <div class="row no-gutters">
+                              <div class="col-md-4">
+                                <img src="http://img.youtube.com/vi/a/0.jpg" class="card-img" alt="...">
+                              </div>
+                              <div class="col-md-5">
+                                <div class="card-body">
+                                  <h5 class="card-title mb-0 text-lg">Titulo Lista de reproduccion</h5>
+                                  <span class="badge badge-pill badge-primary">Lista de reproduccion</span>
+                                  <p class="card-text"><small class="text-muted">Por <strong>nickname</strong></small></p>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
 
+                      <div class="card mb-3" style="max-width: 630px;">
+                        <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=#&v=#">
+                          <div class="row no-gutters">
+                            <div class="col-md-4 text-center">
+                                <img src="<%= request.getContextPath() %>/img/usr/flor.jpg" class="avatar avatar-ramiro-lg rounded-circle" alt="...">
+                            </div>
+                            <div class="col-md-5">
+                              <div class="card-body">
+                                <h5 class="card-title mb-0 text-lg">Nombre Canal</h5>
+                                <span class="badge badge-pill badge-info">Canal</span>
+                                <p class="card-text"><small class="text-muted">De <strong>nickname</strong></small></p>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
 
                   </div>
                   <!-- fin de resultados -->
