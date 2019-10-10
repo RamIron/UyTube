@@ -20,12 +20,13 @@ import java.util.Date;
 @WebServlet(name = "ModificarImagen", value = "/ModificarImagen")
 public class ModificarImagen extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Entra al servlet modificar imagen");
         HttpSession s = request.getSession();
         DtUsuarioWeb usrS = (DtUsuarioWeb) s.getAttribute("usuario");
         if (usrS != null){
             String nickname = request.getParameter("nickname");
             String foto = request.getParameter("foto");
-
+            System.out.println("La foto es: " + foto);
 
             UFactory fU = UFactory.getInstancia();
             IUsuario iU = fU.getIUsuario();
