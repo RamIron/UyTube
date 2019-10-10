@@ -301,17 +301,29 @@ src="<%= request.getContextPath() %>/img/default.png"<%@ page import="java.util.
                                                 <h1>Datos del Usuario</h1>
                                             </div>
 
-                                            <%--Foto de perfil--%>
-                                            <div class="row justify-content-center">
-                                                <span href="" class="avatar avatar-ramiro-lg rounded-circle">
-                                                    <% if (usuario.getImagen().equals("src/main/resources/img/default.png")) {%>
-                                                        <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                                    <% } else { %>
-                                                        <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usuario.getImagen()%>">
-                                                    <% } %>
-                                                </span>
-                                            </div>
-                                            <%--Fin Foto de perfil--%>
+                                            <form name="cambioImagen" role="form" action="<%= request.getContextPath() %>/ModificarImagen" method="post">
+                                                <%--Foto de perfil--%>
+                                                <div class="row justify-content-center">
+                                                    <span href="" class="avatar avatar-ramiro-lg rounded-circle">
+                                                        <% if (usuario.getImagen().equals("src/main/resources/img/default.png")) {%>
+                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                                                        <% } else { %>
+                                                            <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usuario.getImagen()%>">
+                                                        <% } %>
+                                                    </span>
+                                                </div>
+                                                <%--Fin Foto de perfil--%>
+
+                                                <div style="text-align: center" class="mt-3">
+                                                    <label class="btn-sm btn-outline-primary">
+                                                        Modificar imagen <input type="file" name="foto" id="imgID" src="#" style="display: none;" value="<%= request.getContextPath() %>/<%=usuario.getImagen()%>" onchange="cambiarImagen(this.src)">
+                                                        <%--<input name="nickname" class="form-control" placeholder="Nickname" type="text" value="<%=nickname%>">--%>
+                                                    </label>
+                                                </div>
+                                            </form>
+
+
+
 
                                             <%--Nickname--%>
                                             <div class="row justify-content-center mb-3">
@@ -339,23 +351,6 @@ src="<%= request.getContextPath() %>/img/default.png"<%@ page import="java.util.
                                                 <p class="font-weight-bold mt--1" style="font-size: 20px;"> <%=usuario.getApellido()%></p>
                                             </div>
                                             <%--Fin Apellido--%>
-
-
-
-<%--                                            <div class="row justify-content-center mb-2">--%>
-                                                <%--Nombre--%>
-                                               <%-- <div class="col justify-content-center pl-5">
-                                                    <h5 style="text-align: center">Nombre: <br><span class="mb-xl-2 font-weight-bold text-lg"><%=usuario.getNombre() %> </span></h5>
-                                                </div>--%>
-
-                                                <%--Fin Nombre--%>
-
-                                                <%--Apellido--%>
-                                                <%--<div class="col justify-content-center pr-5">
-                                                    <h5 style="text-align: center">Apellido:<br> <span class="mb-xl-2 font-weight-bold text-lg"><%=usuario.getApellido() %></span></h5>
-                                                </div>--%>
-                                                <%--Fin Apellido--%>
-<%--                                            </div>--%>
 
                                             <%--Fecha Nacimiento--%>
                                             <div style="text-align: center">
@@ -414,115 +409,9 @@ src="<%= request.getContextPath() %>/img/default.png"<%@ page import="java.util.
                                         </div>
                                     </div>
 
-                                        <%--Foto de perfil--%>
-                                        <%--<div style="text-align: center;">
-                                            <a href="#!" class="avatar avatar-ramiro-lg rounded-circle">
-                                                <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
-                                                    <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                                                <% } else { %>
-                                                    <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
-                                                <% } %>
-                                            </a>
-                                            <div class="row justify-content-center align-items-center minh-100">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <div class="input-group input-group-alternative">
-                                                            <input type="file" class="custom-file-input" id="fotoID" name="foto" disabled value="<%=usuario.getImagen()%>">
-                                                            <label class="custom-file-label" for="fotoID">"<%= request.getContextPath() %>/<%=usr.getFoto()%>"</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>--%>
-                                        <%--Fin Foto de perfil--%>
 
 
-
-                                            <%--
-
-
-                                        &lt;%&ndash;Fecha nacimiento&ndash;%&gt;
-                                        <div class="row">
-                                            <div class="col">
-                                                <label for="fnacID" > Fehca de Nacimiento </label>
-                                                <div class="form-group">
-                                                    <div class="input-group input-group-alternative">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                                            <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                                            String fechaS = sdf.format(usuario.getfNac().getTime());%>
-                                                        </div>
-                                                        <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" id="fNacID" type="text" value="<%=fechaS%>" disabled>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        &lt;%&ndash;Fin Fecha nacimiento&ndash;%&gt;
-
-                                        <div class="text-muted text-center mt-2 mb-3">
-                                            <hr/>
-                                            <h1>Datos del Canal</h1>
-                                        </div>
-                                        <div class="row">
-                                            &lt;%&ndash;Nombre Canal&ndash;%&gt;
-                                            <div class="col">
-                                                <label for="nomCanalID" > Nombre de Canal </label>
-                                                <div class="form-group">
-                                                    <div class="input-group input-group-alternative">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                                                        </div>
-                                                        <input name="nomCan" class="form-control" placeholder="Nombre (opcional)" id="nomCanalID" type="text" value="<%=canal.getNombre()%>" disabled>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            &lt;%&ndash;Fin Nombre Canal&ndash;%&gt;
-
-                                            &lt;%&ndash;Categoria Canal&ndash;%&gt;
-                                            <div class="col">
-                                                <label for="selCategoriaID" > Categoría </label>
-                                                <div class="form-group">
-                                                    <select class="custom-select" id="selCategoriaID" name="categoria" disabled>
-                                                        <option value="" <%= (canal.getCategoria().equals("") )? "selected": "" %>> --Sin Categoria-- </option>
-                                                        <%for(String cat: lC){ %>
-                                                        <option value="<%=cat%>" <%= (canal.getCategoria().equals(cat)) ? "selected" : ""%>><%=cat%></option>
-                                                        <% } %>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            &lt;%&ndash;Fin Categoria Canal&ndash;%&gt;
-                                        </div>
-
-                                        &lt;%&ndash;Descripcion Canal&ndash;%&gt;
-                                        <div class="form-group">
-                                            <label for="descripCanID" > Descripción de Canal </label>
-                                            <div class="input-group input-group-alternative">
-                                                <textarea class="form-control" id="descripCanID" rows="3" placeholder="Descripcion..." disabled name="descripcion"><%=canal.getDescripcion()%></textarea>
-                                            </div>
-                                        </div>
-                                        &lt;%&ndash;Fin Descripcion Canal&ndash;%&gt;
-
-                                        &lt;%&ndash;Publico Canal&ndash;%&gt;
-                                        <div class="text-muted text-center mt-2 mb-3">
-                                            <div class="custom-control custom-control-alternative custom-checkbox mb-3">
-                                                <input class="custom-control-input" id="checkPublico" type="checkbox" name="publico" <%= canal.getPublico() ? "checked" : "" %> disabled>
-                                                <label class="custom-control-label" for="checkPublico">Canal publico</label>
-                                            </div>
-                                        </div>--%>
-                                        <%--Fin Publico Canal--%>
-
-                                        <%--Boton Habilitar Datos--%>
-                                        <%--<div class="text-center">
-                                            <button type="button" class="btn btn-primary my-4" id="btnHabilitarID" onclick="habilitarCambios()">Modificar Datos</button>
-                                        </div>--%>
-                                        <%--Fin Boton Habilitar Datos--%>
-
-                                        <%--Boton Modificar Datos--%>
-                                        <%--<div class="text-center">
-                                            <button type="button" class="btn btn-primary my-4" id="btnCambiarID" disabled style="display:none;" onclick="cambiar()">Aceptar Cambios</button>
-                                        </div>--%>
-                                        <%--Fin Boton Modificar Datos--%>
-
+                                    <%--Aqui comienzan las tabs con Seguidores, seguidos, videos y listas--%>
                                     <hr>
                                     <div class="nav-wrapper">
                                         <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
@@ -654,11 +543,7 @@ src="<%= request.getContextPath() %>/img/default.png"<%@ page import="java.util.
 
 
 
-
-
-
-
-
+                            <%--Aqui empieza el formulario para cambio de datos del usuario--%>
                             <div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                                     <div class="modal-content">
@@ -828,9 +713,11 @@ src="<%= request.getContextPath() %>/img/default.png"<%@ page import="java.util.
 </script>
 
 <script type="text/javascript">
-    function cambiarImagen() {
-
-        //document.forms["consultaPerfil"].submit();
+    function cambiarImagen(input) {
+        document.getElementById("imgID").src = input;
+        document.getElementById("imgID").value = input;
+        document.forms["cambioImagen"]["imgID"].value = input;
+        document.forms["cambioImagen"].submit();
     }
 </script>
 
