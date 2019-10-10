@@ -20,7 +20,6 @@ import java.util.Date;
 @WebServlet(name = "ModificarImagen", value = "/ModificarImagen")
 public class ModificarImagen extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Entro a Modificar Imagen");
         HttpSession s = request.getSession();
         DtUsuarioWeb usrS = (DtUsuarioWeb) s.getAttribute("usuario");
         if (usrS != null){
