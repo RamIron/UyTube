@@ -250,7 +250,19 @@ public class CVideo implements IVideo {
 	@Override
 	public List<DtElementoWeb> busqueda(String query, Boolean ordFecha){
 		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
-		//TODO funcion de mateo
+		List<Object> resQuery;
+		if(ordFecha){
+			//TODO ordenado por fecha
+			//resQuery = nativequery
+		} else {
+			//TODO ordenado alfabetico
+			//resQuery = nativequery
+		}
+		Integer size = resQuery.size();
+		for(int i=0; i<size; i++){
+			DtElementoWeb vid = new DtElementoWeb(resQuery[i][0], resQuery[i][1], tipoElemento.VIDEO, resQuery[i][2]);
+			res.add(vid);
+		}
 		return res;
 	}
 	

@@ -1,9 +1,7 @@
 
 package logica;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -267,7 +265,19 @@ public class CListaReproduccion implements IListaReproduccion {
 	@Override
 	public List<DtElementoWeb> busqueda(String query, Boolean ordFecha){
 		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
-		//TODO funcion de mateo
+		List<Object> resQuery;
+		if(ordFecha){
+			//TODO ordenado por fecha
+			//resQuery = nativequery
+		} else {
+			//TODO ordenado alfabetico
+			//resQuery = nativequery
+		}
+		Integer size = resQuery.size();
+		for(int i=0; i<size; i++){
+			DtElementoWeb lis = new DtElementoWeb(resQuery[i][0], resQuery[i][1], tipoElemento.LISTA, "");
+			res.add(lis);
+		}
 		return res;
 	}
 	

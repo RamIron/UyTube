@@ -290,7 +290,11 @@ public class CUsuario implements IUsuario {
 	@Override
 	public List<DtCanalWeb> busqueda(String query, Boolean ordFecha){
 		List<DtCanalWeb> res = new ArrayList<DtCanalWeb>();
-		//TODO funcion de mateo
+		if(ordFecha){
+			//TODO ordenado por fecha
+		} else {
+			//TODO ordenado alfabetico
+		}
 		return res;
 	}
 }
