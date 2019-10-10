@@ -1,12 +1,9 @@
-<%@ page import="interfaces.CFactory" %>
-<%@ page import="interfaces.ICategoria" %>
 <%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="interfaces.LRFactory" %>
-<%@ page import="interfaces.IListaReproduccion" %>
 <%@ page import="datatypes.DtElementoWeb" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="datatypes.DtCanalWeb" %>
+<%@ page import="interfaces.*" %>
 
 <!--   Core   -->
 <script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
@@ -286,6 +283,13 @@
             List<DtElementoWeb> listaV = new ArrayList<DtElementoWeb>();
             List<DtElementoWeb> listaL = new ArrayList<DtElementoWeb>();
 
+            UFactory uF = UFactory.getInstancia();
+            IUsuario iU = uF.getIUsuario();
+            VFactory vF = VFactory.getInstancia();
+            IVideo iV = vF.getIVideo();
+            LRFactory lF = LRFactory.getInstancia();
+            IListaReproduccion iL = lF.getIListaReproduccion();
+
             if (query == null){
               query = "";
             }
@@ -298,13 +302,16 @@
 
               if(!query.equals("")){
                 if(mostrarCan){
-                  //TODO cargar canales del query en el orden q se indique y sumar la cantidad a "cantRes"
+                  listaC = iU.busqueda(query, ordFecha);
+                  cantRes = cantRes + listaC.size();
                 }
                 if(mostrarVid){
-                  //TODO cargar videos del query en el orden q se indique y sumar la cantidad a "cantRes"
+                  listaV = iV.busqueda(query,ordFecha);
+                  cantRes = cantRes + listaV.size();
                 }
                 if(mostrarLis){
-                  //TODO cargar listas del query en el orden q se indique y sumar la cantidad a "cantRes"
+                  listaL =  iL.busqueda(query, ordFecha);
+                  cantRes = cantRes + listaL.size();
                 }
               }
             }
