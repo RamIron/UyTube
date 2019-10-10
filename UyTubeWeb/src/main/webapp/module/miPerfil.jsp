@@ -264,7 +264,7 @@
         <div class="container-fluid">
             <div class="header-body">
                     <div class="row justify-content-center">
-                        <div class="col-xl-10 order-xl-1">
+                        <div class="col-sm-8 order-xl-1">
                             <div class="card bg-secondary shadow ">
                                 <div class="card-body px-lg-5 py-lg-5">
                                     <%
@@ -296,8 +296,8 @@
                                         List<String> listListasRep = iLR.listarListasDeUsuario(usuario.getNickname());
                                     %>
                                     <div class="row">
-                                        <div class="col-sm-5">
-                                            <div class="text-muted text-center mt-2 mb-3">
+                                        <div class="col-sm-5 mb-4">
+                                            <div class="text-muted text-center mt-2 mb-4">
                                                 <h1>Datos del Usuario</h1>
                                             </div>
 
@@ -320,56 +320,74 @@
                                             <%--Fin Nickname--%>
 
                                             <%--Email--%>
-                                            <div>
-<%--                                                <h5 style="text-align: center">Email: <br><span class="mb-xl-2 font-weight-bold text-md2"><%=usuario.getCorreoE()%></span></h5>--%>
-                                                <span style="f"> Email: </span>
-                                                <p class="font-weight-bold" style="font-size: 20px;"> ramiroGmail</p>
+                                            <div style="text-align: center">
+                                                <h4 class="mb-0"> Email: </h4>
+                                                <p class="font-weight-bold mt--1" style="font-size: 20px;"> <%=usuario.getCorreoE()%></p>
                                             </div>
                                             <%--Fin Email--%>
 
+                                            <%--Nombre--%>
+                                            <div style="text-align: center">
+                                                <h4 class="mb-0"> Nombre: </h4>
+                                                <p class="font-weight-bold mt--1" style="font-size: 20px;"> <%=usuario.getNombre()%></p>
+                                            </div>
+                                            <%--Fin Nombre--%>
 
-                                            <div class="row justify-content-center mb-2">
+                                            <%--Apellido--%>
+                                            <div style="text-align: center">
+                                                <h4 class="mb-0"> Apellido: </h4>
+                                                <p class="font-weight-bold mt--1" style="font-size: 20px;"> <%=usuario.getApellido()%></p>
+                                            </div>
+                                            <%--Fin Apellido--%>
+
+
+
+<%--                                            <div class="row justify-content-center mb-2">--%>
                                                 <%--Nombre--%>
-                                                <div class="col justify-content-center pl-5">
+                                               <%-- <div class="col justify-content-center pl-5">
                                                     <h5 style="text-align: center">Nombre: <br><span class="mb-xl-2 font-weight-bold text-lg"><%=usuario.getNombre() %> </span></h5>
-                                                </div>
+                                                </div>--%>
+
                                                 <%--Fin Nombre--%>
 
                                                 <%--Apellido--%>
-                                                <div class="col justify-content-center pr-5">
+                                                <%--<div class="col justify-content-center pr-5">
                                                     <h5 style="text-align: center">Apellido:<br> <span class="mb-xl-2 font-weight-bold text-lg"><%=usuario.getApellido() %></span></h5>
-                                                </div>
+                                                </div>--%>
                                                 <%--Fin Apellido--%>
-                                            </div>
+<%--                                            </div>--%>
 
                                             <%--Fecha Nacimiento--%>
-                                            <div class="row justify-content-center mb-2">
+                                            <div style="text-align: center">
                                                 <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                                    String fechaS = sdf.format(usuario.getfNac().getTime());%>
-                                                <h5 style="text-align: center">Fecha de Nacimiento: <br><span class="mb-xl-2 text-mm2"><%=fechaS %></span></h5>
+                                                String fechaS = sdf.format(usuario.getfNac().getTime());%>
+                                                <h4 class="mb-0">Fecha de Nacimiento: </h4>
+                                                <p style="font-size: 16px " class="font-weight-bold mt--1"><%=fechaS %></p>
                                             </div>
                                             <%--Fin Fecha nacimiento--%>
                                         </div>
 
-                                        <div class="col-sm-7">
-                                            <div class="text-muted text-center mt-2 mb-3">
+                                        <div class="col-sm-7 px-4 mb-4" style="text-align: center">
+                                            <div class="text-muted mt-2 mb-5">
                                                 <h1>Datos del Canal</h1>
                                             </div>
 
-
-                                            <div class="row justify-content-center mb-2">
+                                            <div class="row mb-2 px--3">
                                                 <%--Nombre de Canal--%>
-                                                <div class="col ml-5">
-                                                    <h5 style="text-align: center">Nombre: <br><span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getNombre() %></span></h5>
+                                                <div class="col">
+                                                    <h4>Nombre: </h4>
+                                                    <p class="mb-xl-2 font-weight-bold text-xl"><%=canal.getNombre() %></p>
                                                 </div>
                                                 <%--Fin Nombre de Canal--%>
 
                                                 <%--Categoria de Canal--%>
-                                                <div class="col mr-5">
+                                                <div class="col">
                                                     <% if(canal.getCategoria() != null){ %>
-                                                        <h5 style="text-align: center">Categoria: <br><span class="mb-xl-2 font-weight-bold text-xl"><%= canal.getCategoria()%></span></h5>
+                                                        <h4>Categoria: </h4>
+                                                        <p class="mb-xl-2 font-weight-bold text-xl"><%= canal.getCategoria()%></p>
                                                     <% }else{ %>
-                                                        <h5 style="text-align: center">Categoria: <br><span class="mb-xl-2 font-weight-bold text-lg"> Sin Categoria </span></h5>
+                                                        <h4>Categoria: </h4>
+                                                        <p class="mb-xl-2 font-weight-bold text-lg"> Sin Categoria </p>
                                                     <% } %>
                                                 </div>
                                                 <%--Fin Categoria de Canal--%>
@@ -378,9 +396,9 @@
 
                                             <%--Descripcion de Canal--%>
                                             <div class="row justify-content-center my-2 mt-5">
-                                                <h5>Descripcion: <br></h5>
+                                                <h4>Descripción: <br></h4>
                                             </div>
-                                            <div class="card small center" style="width: 21rem;">
+                                            <div class="card small center">
                                                 <div class="card-body p--2 mx--2 my--2 text-sm-left">
                                                     <span><%=canal.getDescripcion()%></span>
                                                 </div>
@@ -390,7 +408,7 @@
                                         </div>
 
                                         <div class="col text-center">
-                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editar">
+                                            <button type="button" class="btn-sm btn-outline-primary" data-toggle="modal" data-target="#editar">
                                                 Modificar Datos
                                             </button>
                                         </div>
@@ -532,8 +550,8 @@
                                                         <% for(DtUsuarioWeb u:listSeguidores) { %>
                                                         <div class="col-sm-3">
                                                             <div class="card bg-secondary shadow ">
-                                                                <div class="card-body px-lg-3 py-lg-3">
-                                                                    <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                    <div class="card-body px-lg-3 py-lg-3">
                                                                         <div class="media align-items-center">
                                                                             <span class="avatar avatar-lg rounded-circle">
                                                                               <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
@@ -546,8 +564,8 @@
                                                                                 <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
                                                                             </div>
                                                                         </div>
-                                                                    </a>
-                                                                </div>
+                                                                    </div>
+                                                                </a>
                                                             </div>
                                                             <br/>
                                                         </div>
@@ -562,8 +580,8 @@
                                                         <% for(DtUsuarioWeb u:listSeguidos) { %>
                                                         <div class="col-sm-3">
                                                             <div class="card bg-secondary shadow ">
-                                                                <div class="card-body px-lg-3 py-lg-3">
-                                                                    <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                    <div class="card-body px-lg-3 py-lg-3">
                                                                         <div class="media align-items-center">
                                                                             <span class="avatar avatar-lg rounded-circle">
                                                                               <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
@@ -576,8 +594,8 @@
                                                                                 <span class="mb-0 text-lg  font-weight-bold"> @<%=u.getNickname()%></span>
                                                                             </div>
                                                                         </div>
-                                                                    </a>
-                                                                </div>
+                                                                    </div>
+                                                                </a>
                                                             </div>
                                                             <br/>
                                                         </div>
@@ -593,9 +611,9 @@
                                                             <%
                                                                 for(DtElementoWeb eu: listVideos){
                                                             %>
-                                                            <div class="col-sm-3">
+                                                            <div class="col-sm-4">
                                                                 <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getNickname()%>&v=<%=eu.getNombreE()%>">
-                                                                    <div class="card-body px-lg-3 py-lg-3">
+                                                                    <div class="card-body px-2 py-2 mb-4">
                                                                         <div class="card">
                                                                             <img src="http://img.youtube.com/vi/<%=eu.getUrl()%>/0.jpg" class="card-img-top" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=eu.getNombreE()%>">
                                                                             <div class="card-body mx--2">
@@ -616,14 +634,13 @@
                                                     <div class="row row- justify-content-right">
                                                         <% for(String lr:listListasRep) { %>
                                                         <div class="col-sm-3">
-                                                            <div class="card shadow-sm p-1 mb-2 bg-gradient-lighter rounded">
+                                                            <a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=lr%>">
+                                                            <div class="card shadow-sm p-1 mb-4 card border-info rounded" style="text-align: center">
                                                                 <div class="card-body p-2 text-lg-center">
-                                                                    <%--<a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=u.getNickname()%>">--%>
-                                                                    <span class="mb-0 text-md-center font-weight-bold"><%=lr%></span>
-                                                                    <%-- </a>--%>
+                                                                    <span class="mb-0 text-md-center font-weight-bold" style="color: #11b7d8"><%=lr%></span>
                                                                 </div>
                                                             </div>
-                                                            <br/>
+                                                            </a>
                                                         </div>
                                                         <% } %>
                                                     </div>
@@ -706,7 +723,7 @@
                                                         <% } %>
                                                     </select>--%>
 
-                                                    <select class="custom-select" id="inputGroupSelect01" name="categoria">
+                                                    <select class="form-control form-control-sm" id="inputGroupSelect01" name="categoria">
                                                         <option value="" <%= (canal.getCategoria() == null) ? "selected" : ""%>> --Sin Categoría-- </option>
                                                         <%
                                                             String categoria = "";
@@ -781,6 +798,9 @@
 <!--   Optional JS   -->
 <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
 <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+<script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+
 <!--   Argon JS   -->
 <script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
