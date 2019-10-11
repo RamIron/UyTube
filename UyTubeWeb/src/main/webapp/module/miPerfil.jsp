@@ -1,4 +1,4 @@
-src="<%= request.getContextPath() %>/img/default.png"<%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
 <%@ page import="datatypes.DtUsuario" %>
 <%@ page import="interfaces.*" %>
