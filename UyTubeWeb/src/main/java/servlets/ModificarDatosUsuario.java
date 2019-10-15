@@ -73,7 +73,7 @@ public class ModificarDatosUsuario extends HttpServlet {
             DtUsuarioWeb usr = iU.obtenerUsuarioWebNick(nickname);
             s.setAttribute("usuario", usr);
             RequestDispatcher rd;
-            rd = request.getRequestDispatcher("/index.jsp");
+            rd = request.getRequestDispatcher("/module/miPerfil.jsp");
             String message = "DATOS DE USUARIO MODIFICADOS";
             request.setAttribute("message", message);
             rd.forward(request, response);

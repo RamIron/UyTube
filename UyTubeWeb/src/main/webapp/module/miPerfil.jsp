@@ -271,7 +271,7 @@
                                         String message = (String) request.getAttribute("message");
                                         if(message != null){
                                     %>
-                                    <div class="alert alert-danger" role="alert">
+                                    <div class="alert alert-info" role="alert">
                                         <%=message%>
                                     </div>
                                     <%}%>

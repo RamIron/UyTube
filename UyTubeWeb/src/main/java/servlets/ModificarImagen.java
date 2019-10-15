@@ -20,7 +20,6 @@ import java.util.Date;
 @WebServlet(name = "ModificarImagen", value = "/ModificarImagen")
 public class ModificarImagen extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Entra al servlet modificar imagen");
         HttpSession s = request.getSession();
         DtUsuarioWeb usrS = (DtUsuarioWeb) s.getAttribute("usuario");
         if (usrS != null){
@@ -31,12 +30,16 @@ public class ModificarImagen extends HttpServlet {
             UFactory fU = UFactory.getInstancia();
             IUsuario iU = fU.getIUsuario();
 
+            String message = "";
+
             if(iU.existeNickname(nickname)) {
                 String fotoURL;
                 if(!foto.equals("")) {
                     fotoURL = "img/usr/" + foto;
+                    message = "IMAGEN DE USUARIO MODIFICADA";
                 }else {
                     fotoURL = "src/main/resources/img/default.png";
+                    message = "IMAGEN DE USUARIO ELIMINADA";
                 }
                 iU.modificarImagen(fotoURL);
             }
@@ -44,8 +47,7 @@ public class ModificarImagen extends HttpServlet {
             DtUsuarioWeb usr = iU.obtenerUsuarioWebNick(nickname);
             s.setAttribute("usuario", usr);
             RequestDispatcher rd;
-            rd = request.getRequestDispatcher("/index.jsp");
-            String message = "IMAGEN DE USUARIO MODIFICADA";
+            rd = request.getRequestDispatcher("/module/miPerfil.jsp");
             request.setAttribute("message", message);
             rd.forward(request, response);
         } else {
