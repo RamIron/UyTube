@@ -275,6 +275,9 @@
 <%--            empieza contenido de la tab de videos--%>
                                 <%
                                     List<DtElementoWeb> videosCat = iC.listarVideosCategoria(categoria);
+
+                                    List<DtElementoUsuario> listListsU = iC.listarElemCategoria(categoria);
+
                                 %>
 
                                 <div class="container-fluid">
@@ -312,17 +315,20 @@
                             </div>
                             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
 <%--      empieza contenido de la tab de listas--%>
-                                <%
-                                    List<DtElementoUsuario> listListsU = iC.listarElemCategoria(categoria);
-                                %>
                                 <div class="container-fluid">
                                     <div class="col col- justify-content-left">
                                         <%if(listListsU.isEmpty()){%>
-                                        <div class="alert alert-warning col col- justify-content-left" role="alert">
-                                            <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
-                                            <span class="alert-inner--text">No existen listas con la categoria <strong><%=categoria%></strong></span>
-                                        </div>
+                                            <div class="alert alert-warning col col- justify-content-left" role="alert">
+                                                <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
+                                                <span class="alert-inner--text">No existen listas con la categoria <strong><%=categoria%></strong></span>
+                                            </div>
+                                        <%} else if(!videosCat.isEmpty() || listListsU.isEmpty()){%>
+                                            <div class="alert alert-warning col col- justify-content-left" role="alert">
+                                                <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
+                                                <span class="alert-inner--text">No existen listas con la categoria <strong><%=categoria%></strong></span>
+                                            </div>
                                         <%}%>
+
                                         <%
                                             for(DtElementoUsuario eu: listListsU){
                                                 if (eu.getTipo().equals(tipoElemento.LISTA)){
