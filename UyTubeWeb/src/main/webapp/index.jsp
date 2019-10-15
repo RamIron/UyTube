@@ -308,13 +308,14 @@
             List<DtElementoWeb> totalVideosPub = iV.listarVideosPublicosWeb();
             List<DtElementoWeb> videos = new ArrayList<DtElementoWeb>();
             Random rand = new Random();
-            for (int i = 0; i < 3; i++) {
-              int randomIndex = rand.nextInt(totalVideosPub.size());
-              DtElementoWeb randomElement = totalVideosPub.get(randomIndex);
-              videos.add(randomElement);
-              totalVideosPub.remove(randomIndex);
-            }
-            if(!(videos.size() < 3)){
+            if(totalVideosPub.size() >= 3){
+
+              for (int i = 0; i < 3; i++) {
+                int randomIndex = rand.nextInt(totalVideosPub.size());
+                DtElementoWeb randomElement = totalVideosPub.get(randomIndex);
+                videos.add(randomElement);
+                totalVideosPub.remove(randomIndex);
+              }
           %>
 
           <br>
