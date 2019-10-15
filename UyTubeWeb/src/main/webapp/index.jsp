@@ -1,9 +1,9 @@
-<%@ page import="interfaces.CFactory" %>
-<%@ page import="interfaces.ICategoria" %>
 <%@ page import="java.util.List" %>
 <%@ page import="datatypes.DtUsuarioWeb" %>
-<%@ page import="interfaces.LRFactory" %>
-<%@ page import="interfaces.IListaReproduccion" %>
+<%@ page import="datatypes.DtElementoWeb" %>
+<%@ page import="interfaces.*" %>
+<%@ page import="java.util.Random" %>
+<%@ page import="java.util.ArrayList" %>
 <!--
 
 =========================================================
@@ -271,7 +271,117 @@
             <%=message%>
           </div>
           <%}%>
-          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+          <%
+            VFactory fV = VFactory.getInstancia();
+            IVideo iV = fV.getIVideo();
+
+            //obtener categorias con mas de 3 elementos
+            List<String> todasCategorias = iC.listarCategorias();
+            List<String> nomCats3 = new ArrayList<String>();
+            for(String c : todasCategorias){
+              List<DtElementoWeb> vidsCat = iC.listarVideosCategoria(c);
+              if(vidsCat.size() >= 3){
+                nomCats3.add(c);
+              }
+
+            }
+
+            //Para obtener categorias random
+            String nomCat3 = null;
+            Random rand2 = new Random();
+            for (int i = 0; i < 1; i++) {
+                int randomIndex = rand2.nextInt(nomCats3.size());
+                nomCat3 = nomCats3.get(randomIndex);
+            }
+
+            List<DtElementoWeb> vidsCategoria = iC.listarVideosCategoria(nomCat3);
+
+
+            //PARA OBTENER VIDEOS RANDOM
+            List<DtElementoWeb> totalVideosPub = iV.listarVideosPublicosWeb();
+            List<DtElementoWeb> videos = new ArrayList<DtElementoWeb>();
+            Random rand = new Random();
+            for (int i = 0; i < totalVideosPub.size(); i++) {
+              int randomIndex = rand.nextInt(totalVideosPub.size());
+              DtElementoWeb randomElement = totalVideosPub.get(randomIndex);
+              videos.add(randomElement);
+              totalVideosPub.remove(randomIndex);
+            }
+          %>
+
+          <br>
+
+            <h1><span class="badge badge-secondary">Videos que podrian gustarte</span></h1>
+            <br>
+            <div class="card-deck">
+                <%for(DtElementoWeb vids : videos){%>
+                    <div class="card">
+                        <div class="embed-responsive embed-responsive-31by19">--%>
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%=vids.getUrl()%>" allowfullscreen></iframe>
+                        </div>
+                        <a  href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=vids.getNickname()%>&v=<%=vids.getNombreE()%>">
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted"></small><strong><%=vids.getNombreE()%></strong></p>
+                            <h5 class="card-title text-muted">Subido por: <%=vids.getNickname()%></h5>
+                        </div>
+                        </a>
+                    </div>
+                <%}%>
+            </div>
+
+            <br><br>
+<%--            <%if(vidsCategoria.size() >= 3){%>--%>
+                <h1><span class="badge badge-secondary"><%=nomCat3%> - Categoria</span></h1>
+                <br>
+                <div class="card-deck">
+                    <%for(DtElementoWeb vc : vidsCategoria){%>
+                        <div class="card">
+                            <div class="embed-responsive embed-responsive-31by19">--%>
+                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%=vc.getUrl()%>" allowfullscreen></iframe>
+                            </div>
+                            <a  href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=vc.getNickname()%>&v=<%=vc.getNombreE()%>">
+                                <div class="card-body">
+                                    <p class="card-text"><small class="text-muted"></small><strong><%=vc.getNombreE()%></strong></p>
+                                    <h5 class="card-title text-muted">Subido por: <%=vc.getNickname()%></h5>
+                                </div>
+                            </a>
+                        </div>
+                    <%}%>
+                </div>
+<%--            <%}%>--%>
+
+
+
+<%--          <div class="container-fluid">--%>
+<%--            <div class="row row- justify-content-right">--%>
+<%--              <div class="col-sm">--%>
+<%--                <div class="card bg-secondary shadow">--%>
+<%--                  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">--%>
+<%--                    <div class="carousel-inner">--%>
+<%--                      <%for(DtElementoWeb vids : videos){%>--%>
+<%--                        <div class="carousel-item active">--%>
+<%--                          <div class="embed-responsive embed-responsive-31by19">--%>
+<%--                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/<%=vids.getUrl()%>" allowfullscreen></iframe>--%>
+<%--                          </div>--%>
+<%--                        </div>--%>
+<%--                      <%}%>--%>
+<%--                    </div>--%>
+<%--                  </div>--%>
+<%--                </div>--%>
+<%--              </div>--%>
+<%--            </div>--%>
+<%--          </div>--%>
+
+
+
+
+
+
+
+
+
+          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
       </div>
     </div>
