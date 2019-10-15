@@ -270,7 +270,7 @@
                                     String message = (String) request.getAttribute("message");
                                     if(message != null){
                                 %>
-                                <div class="alert alert-danger" role="alert">
+                                <div class="alert alert-info" role="alert">
                                     <%=message%>
                                 </div>
                                 <%}%>
@@ -340,21 +340,24 @@
                                         <div class="row text-center px-lg-8 mb-lg-2">
                                             <%--Nombre--%>
                                             <div class="col">
-                                                <h5>Nombre: <br><span class="mb-xl-2 font-weight-bold text-xl"><%=usuario.getNombre() %></span></h5>
+                                                <h5 class="mb-0">Nombre: </h5>
+                                                <span class="mb-xl-2 font-weight-bold text-xl"><%=usuario.getNombre() %></span>
                                             </div>
                                             <%--Fin Nombre--%>
 
                                             <%--Apellido--%>
                                             <div class="col">
-                                                <h5>Apellido:<br> <span class="mb-xl-2 font-weight-bold text-xl"><%=usuario.getApellido() %></span></h5>
+                                                <h5 class="mb-0">Apellido:</h5>
+                                                <span class="mb-xl-2 font-weight-bold text-xl"><%=usuario.getApellido() %></span>
                                             </div>
                                             <%--Fin Apellido--%>
 
                                             <%--Fecha Nacimiento--%>
-                                            <div class="col mt-2">
+                                            <div class="col">
                                                 <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                                                     String fechaS = sdf.format(usuario.getfNac().getTime());%>
-                                                <h5>Fecha de Nacimiento: <br><span class="mb-xl-2 font-weight-bold text-lg"><%=fechaS %></span></h5>
+                                                <h5 class="mb-0">Fecha de Nacimiento: </h5>
+                                                <span class="mb-xl-2 font-weight-bold text-lg"><%=fechaS %></span>
                                             </div>
                                             <%--Fin Fecha nacimiento--%>
                                         </div>
@@ -371,13 +374,20 @@
                                         <div class="row text-center px-lg-8 mb-lg-2">
                                             <%--Nombre Canal--%>
                                             <div class="col">
-                                                <h5> Nombre:<br><span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getNombre() %></span></h5>
+                                                <h5 class="mb-0"> Nombre:</h5>
+                                                <span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getNombre() %></span>
                                             </div>
                                             <%--Fin Nombre Canal--%>
 
                                             <%--Categoria Canal--%>
-                                            <div class="col mt-2">
-                                                <h5> Categoría:<br><span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getCategoria() %></span></h5>
+                                            <div class="col">
+                                                <% if(canal.getCategoria() != null){ %>
+                                                    <h5 class="mb-0">Categoria: </h5>
+                                                    <span class="mb-xl-2 font-weight-bold text-xl"><%= canal.getCategoria()%></span>
+                                                <% }else{ %>
+                                                    <h5 class="mb-0">Categoria: </h5>
+                                                    <span class="mb-xl-2 font-weight-bold text-lg"> Sin Categoria </span>
+                                                <% } %>
                                             </div>
                                             <%--Fin Categoria Canal--%>
                                         </div>
