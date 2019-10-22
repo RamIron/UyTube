@@ -55,30 +55,44 @@
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
-            <li class="nav-item dropdown">
-                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="<%= request.getContextPath() %>/assets/img/theme/team-1-800x800.jpg">
-              </span>
-                    </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-                    <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Bienvenido</h6>
-                    </div>
-                    <a href="<%= request.getContextPath() %>/module/miPerfil.jsp" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
-                        <span>Mi perfil</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="<%= request.getContextPath() %>/CerrarSesion" class="dropdown-item">
-                        <i class="ni ni-user-run"></i>
-                        <span>Cerrar sesion</span>
-                    </a>
-                </div>
-            </li>
-        </ul>
+        <% if (s.getAttribute("usuario") == null){ %>
+        <li class="nav-item">
+          <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
+            <i class="fas fa-sign-in-alt"></i>
+            <span class="nav-link-inner--text">Entrar</span>
+          </a>
+        </li>
+        <% }else {
+            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="media align-items-center">
+               <span class="avatar avatar-sm rounded-circle">
+                  <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                  <% } else { %>
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
+                  <% } %>
+                </span>
+            </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+            <div class=" dropdown-header noti-title">
+              <h6 class="text-overflow m-0">Bienvenido</h6>
+            </div>
+            <a href=""<%= request.getContextPath() %>/module/miPerfil.jsp" class="dropdown-item">
+              <i class="ni ni-single-02"></i>
+              <span>Mi perfil</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href=""<%= request.getContextPath() %>/CerrarSesion" class="dropdown-item">
+              <i class="ni ni-user-run"></i>
+              <span>Cerrar sesion</span>
+            </a>
+          </div>
+        </li>
+      <% } %>
+      </ul>
         <!-- Collapse -->
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
             <!-- Collapse header -->
