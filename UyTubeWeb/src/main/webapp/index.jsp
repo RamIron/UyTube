@@ -57,19 +57,32 @@
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
+        <% if (s.getAttribute("usuario") == null){ %>
+        <li class="nav-item">
+          <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
+            <i class="fas fa-sign-in-alt"></i>
+            <span class="nav-link-inner--text">Entrar</span>
+          </a>
+        </li>
+        <% }else {
+          DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg">
-              </span>
+               <span class="avatar avatar-sm rounded-circle">
+                  <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
+                  <img alt="Image placeholder" src="./img/default.png">
+                  <% } else { %>
+                  <img alt="Image placeholder" src="<%=usr.getFoto()%>">
+                  <% } %>
+                </span>
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
             <div class=" dropdown-header noti-title">
               <h6 class="text-overflow m-0">Bienvenido</h6>
             </div>
-            <a href="./examples/miPerfil.jsp" class="dropdown-item">
+            <a href="./module/miPerfil.jsp" class="dropdown-item">
               <i class="ni ni-single-02"></i>
               <span>Mi perfil</span>
             </a>
@@ -80,6 +93,7 @@
             </a>
           </div>
         </li>
+      <% } %>
       </ul>
       <!-- Collapse -->
       <div class="collapse navbar-collapse" id="sidenav-collapse-main">

@@ -126,6 +126,9 @@
                                     <input class="form-control" placeholder="Contrasena" type="password" name="pass">
                                 </div>
                             </div>
+                            <div class="d-sm-none" style="width: 100%">
+                                <p>¿No tenes usuario? <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/registro.jsp">Registrate</a></p>
+                            </div>
                             <div class="text-center">
                                 <button type="button" class="btn btn-primary my-4" onclick="continuar()">Iniciar Sesion</button>
                             </div>
