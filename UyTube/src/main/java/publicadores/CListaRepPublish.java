@@ -21,23 +21,22 @@ import java.util.List;
 public class CListaRepPublish {
     private LRFactory lisRepFactory;
     private IListaReproduccion iLisRep;
-    private WebServiceConfiguracion configuracion;
+//    private WebServiceConfiguracion configuracion;
     private Endpoint endpoint;
 
     public CListaRepPublish() {
         this.lisRepFactory = LRFactory.getInstancia();
         this.iLisRep = this.lisRepFactory.getIListaReproduccion();
-        try {
-            configuracion = new WebServiceConfiguracion();
-        } catch (Exception ex) {
-
-        }
+//        try {
+//            configuracion = new WebServiceConfiguracion();
+//        } catch (Exception ex) {
+//
+//        }
     }
 
     @WebMethod(exclude = true)
     public void publicar() {
-        endpoint = Endpoint.publish("http://" + configuracion.getConfigOf("#WS_IP") + ":" + configuracion.getConfigOf("#WS_PORT") + "/controlador", this);
-        System.out.println("http://" + configuracion.getConfigOf("#WS_IP") + ":" + configuracion.getConfigOf("#WS_PORT") + "/controlador"); //Cambiar controlador?
+        endpoint = Endpoint.publish("http://" + "127.0.0.1" + ":" + "16000" + "/Lista", this);
     }
 
     @WebMethod(exclude = true)
@@ -193,25 +192,12 @@ public class CListaRepPublish {
         iLisRep.modificarInfoLista(nomL, publico);
     }
 
-    /*@WebMethod
-    public List<DtComentario> obtenerComentariosVideo(String nomVid) {
-        return null;
-    }
-
-    @WebMethod
-    public DtVideo obtenerInfoVideo(String nomVid) {
-        return null;
-    }*/
 
     @WebMethod
     public DtListaRep obtenerListaDeUsuario(String nomList) {
         return iLisRep.obtenerListaDeUsuario(nomList); //Como hacer con el canal?
     }
 
-   /* @WebMethod
-    public ArrayList<DtValoracion> obtenerValoracionVideo(String nomVid) {
-        return null;
-    }*/
 
     @WebMethod
     public void setuVid(String nick) {

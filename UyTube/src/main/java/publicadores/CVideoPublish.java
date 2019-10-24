@@ -19,23 +19,22 @@ import java.util.List;
 public class CVideoPublish {
     private VFactory vidFactory;
     private IVideo iVid;
-    private WebServiceConfiguracion configuracion;
+//    private WebServiceConfiguracion configuracion;
     private Endpoint endpoint;
 
     public CVideoPublish() {
         this.vidFactory = VFactory.getInstancia();
         this.iVid = this.vidFactory.getIVideo();
-        try {
-            configuracion = new WebServiceConfiguracion();
-        } catch (Exception ex) {
-
-        }
+//        try {
+//            configuracion = new WebServiceConfiguracion();
+//        } catch (Exception ex) {
+//
+//        }
     }
 
     @WebMethod(exclude = true)
     public void publicar() {
-        endpoint = Endpoint.publish("http://" + configuracion.getConfigOf("#WS_IP") + ":" + configuracion.getConfigOf("#WS_PORT") + "/controlador", this);
-        System.out.println("http://" + configuracion.getConfigOf("#WS_IP") + ":" + configuracion.getConfigOf("#WS_PORT") + "/controlador"); //Cambiar controlador?
+        endpoint = Endpoint.publish("http://" + "127.0.0.1" + ":" + "16000" + "/Video", this);
     }
 
     @WebMethod(exclude = true)

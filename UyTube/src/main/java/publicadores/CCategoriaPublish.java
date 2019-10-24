@@ -21,23 +21,23 @@ import java.util.List;
 public class CCategoriaPublish {
     private CFactory catFactory;
     private ICategoria iCat;
-    private WebServiceConfiguracion configuracion;
+//    private WebServiceConfiguracion configuracion;
     private Endpoint endpoint;
 
     public CCategoriaPublish() {
         this.catFactory = CFactory.getInstancia();
         this.iCat = this.catFactory.getICategoria();
-        try {
-            configuracion = new WebServiceConfiguracion();
-        } catch (Exception ex) {
-
-        }
+//        try {
+//            configuracion = new WebServiceConfiguracion();
+//        } catch (Exception ex) {
+//
+//        }
     }
 
     @WebMethod(exclude = true)
     public void publicar() {
-        endpoint = Endpoint.publish("http://" + configuracion.getConfigOf("#WS_IP") + ":" + configuracion.getConfigOf("#WS_PORT") + "/controlador", this);
-        System.out.println("http://" + configuracion.getConfigOf("#WS_IP") + ":" + configuracion.getConfigOf("#WS_PORT") + "/controlador"); //Cambiar controlador?
+        endpoint = Endpoint.publish("http://" + "127.0.0.1" + ":" + "16000" + "/Categoria", this);
+//        System.out.println("http://" + "127.0.0.1" + ":" + "16000" + "/Categoria");
     }
 
     @WebMethod(exclude = true)

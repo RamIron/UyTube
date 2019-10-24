@@ -22,23 +22,22 @@ import java.util.List;
 public class CUsuarioPublish {
     private UFactory usrFactory;
     private IUsuario iUsr;
-    private WebServiceConfiguracion configuracion;
+//    private WebServiceConfiguracion configuracion;
     private Endpoint endpoint;
 
     public CUsuarioPublish() {
         this.usrFactory = UFactory.getInstancia();
         this.iUsr = this.usrFactory.getIUsuario();
-        try {
-            configuracion = new WebServiceConfiguracion();
-        } catch (Exception ex) {
-
-        }
+//        try {
+//            configuracion = new WebServiceConfiguracion();
+//        } catch (Exception ex) {
+//
+//        }
     }
 
     @WebMethod(exclude = true)
     public void publicar() {
-        endpoint = Endpoint.publish("http://" + configuracion.getConfigOf("#WS_IP") + ":" + configuracion.getConfigOf("#WS_PORT") + "/controlador", this);
-        System.out.println("http://" + configuracion.getConfigOf("#WS_IP") + ":" + configuracion.getConfigOf("#WS_PORT") + "/controlador"); //Cambiar controlador?
+        endpoint = Endpoint.publish("http://" + "127.0.0.1" + ":" + "16000" + "/Usuario", this);
     }
 
     @WebMethod(exclude = true)
