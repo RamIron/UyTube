@@ -3,6 +3,10 @@ package datatypes;
 import java.util.*;
 import logica.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtComentario {
 	private Integer id;
 	private String nickname;
@@ -29,13 +33,14 @@ public class DtComentario {
 		this.nickname = nickname;
 		this.fecha = fecha;
 		this.texto = texto;
-	}				
-	
+	}
+
 	public DtComentario(String texto) { //temporal
 		super();
 		this.texto = texto;
 	}
 
+	//Getters
 	public Integer getId() {
 		return id;
 	}
@@ -54,6 +59,27 @@ public class DtComentario {
 
 	public List<DtComentario> getRespuestas() {
 		return respuestas;
+	}
+
+	//Setters
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void setFecha(Calendar fecha) {
+		this.fecha = fecha;
+	}
+
+	public void setTexto(String texto) {
+		this.texto = texto;
+	}
+
+	public void setRespuestas(List<DtComentario> respuestas) {
+		this.respuestas = respuestas;
 	}
 
 	@Override

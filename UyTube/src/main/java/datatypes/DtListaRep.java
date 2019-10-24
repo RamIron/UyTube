@@ -1,5 +1,9 @@
 package datatypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtListaRep {
 	private String nombre;
 	private Boolean publico;
@@ -28,6 +32,7 @@ public class DtListaRep {
 		this.categoria = categoria;
 	}
 
+	//Getters
 	public String getNombre() {
 		return nombre;
 	}
@@ -43,6 +48,21 @@ public class DtListaRep {
 	public String getCategoria() {
 		return categoria;
 	}
-	
-	
+
+	//Setters
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setPublico(Boolean publico) {
+		this.publico = publico;
+	}
+
+	public void setEsParticular(Boolean esParticular) {
+		this.esParticular = esParticular;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
 }

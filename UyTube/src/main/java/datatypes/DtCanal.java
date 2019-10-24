@@ -1,7 +1,9 @@
 package datatypes;
 
-import logica.Categoria;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtCanal {
 	private String nombre;
 	private String descripcion;
@@ -21,6 +23,7 @@ public class DtCanal {
 		this.categoria = categoria;
 	}
 
+	//Getters
 	public String getNombre() {
 		return nombre;
 	}
@@ -34,4 +37,21 @@ public class DtCanal {
 	}
 
 	public String getCategoria() { return categoria;}
+
+	//Setters
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public void setPublico(Boolean publico) {
+		this.publico = publico;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
 }

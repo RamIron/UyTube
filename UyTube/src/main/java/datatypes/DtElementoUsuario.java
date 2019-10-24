@@ -1,5 +1,9 @@
 package datatypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtElementoUsuario {
 	private String nickname;
 	private String nombreE;
@@ -30,6 +34,16 @@ public class DtElementoUsuario {
 		return tipo;
 	}
 	
+	//Setters
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 
-	
+	public void setNombreE(String nombreE) {
+		this.nombreE = nombreE;
+	}
+
+	public void setTipo(tipoElemento tipo) {
+		this.tipo = tipo;
+	}
 }
