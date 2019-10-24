@@ -92,7 +92,7 @@ public class CListaRepPublish {
 
     @WebMethod
     public void eliminarVideoDeLista(String nickVid, String nomVid, String nomList) {
-        this.iLisRep.
+        this.iLisRep.eliminarVideoDeLista(nickVid, nomVid, nomList);
     }
 
     /*@WebMethod
