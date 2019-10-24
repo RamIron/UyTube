@@ -2,6 +2,10 @@ package datatypes;
 
 import java.util.*;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtUsuario {
 	private String nickname;
 	private String nombre;
@@ -25,6 +29,7 @@ public class DtUsuario {
 		this.correoE = correoE;
 	}
 
+	//Getters
 	public String getNickname() {
 		return nickname;
 	}
@@ -48,7 +53,32 @@ public class DtUsuario {
 	public String getCorreoE() {
 		return correoE;
 	}
-	
+
+	//Setters
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public void setfNac(Calendar fNac) {
+		this.fNac = fNac;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+	public void setCorreoE(String correoE) {
+		this.correoE = correoE;
+	}
+
 	@Override
 	public String toString() {
 		return "DtUsuario [nickname=" + nickname + ", nombre=" + nombre + ", apellido=" + apellido + ", fNac=" + fNac

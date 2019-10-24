@@ -1,7 +1,10 @@
 package datatypes;
 
 import java.util.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtVideo {
 	private String nombre;
 	private String descripcion;
@@ -28,7 +31,7 @@ public class DtVideo {
 		this.categoria = categoria;
 	}
 
-
+	//Getters
 	public String getNombre() {
 		return nombre;
 	}
@@ -57,8 +60,32 @@ public class DtVideo {
 		return categoria;
 	} 
 	
-	
-	
-	
-	
+	//Setters
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public void setfPublicacion(Calendar fPublicacion) {
+		this.fPublicacion = fPublicacion;
+	}
+
+	public void setDuracion(Integer duracion) {
+		this.duracion = duracion;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public void setPublico(Boolean publico) {
+		this.publico = publico;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
 }

@@ -1,5 +1,9 @@
 package datatypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtElementoWeb {
     private String nickname;
     private String nombreE;
@@ -7,8 +11,6 @@ public class DtElementoWeb {
     private String url;
 
     //Constructores
-
-
     public DtElementoWeb() {
     }
 
@@ -34,5 +36,22 @@ public class DtElementoWeb {
 
     public String getUrl() {
         return url;
+    }
+
+    //Setters
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setNombreE(String nombreE) {
+        this.nombreE = nombreE;
+    }
+
+    public void setTipo(tipoElemento tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

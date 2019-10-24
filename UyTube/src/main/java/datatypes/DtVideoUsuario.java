@@ -1,5 +1,9 @@
 package datatypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtVideoUsuario {
 	private String nickname;
 	private String nombreE;
@@ -23,5 +27,14 @@ public class DtVideoUsuario {
 	
 	public String getNombreE() {
 		return nombreE;
+	}
+
+	//Setters
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void setNombreE(String nombreE) {
+		this.nombreE = nombreE;
 	}
 }

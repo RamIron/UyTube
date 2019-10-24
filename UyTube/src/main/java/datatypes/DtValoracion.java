@@ -1,5 +1,9 @@
 package datatypes;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtValoracion {
 	private String nickname;
 	private Boolean gusta;
@@ -14,6 +18,7 @@ public class DtValoracion {
 		this.gusta = gusta;
 	}
 
+	//Getters
 	public String getNickname() {
 		return nickname;
 	}
@@ -21,5 +26,13 @@ public class DtValoracion {
 	public Boolean getGusta() {
 		return gusta;
 	}
-		
+
+	//Setters
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void setGusta(Boolean gusta) {
+		this.gusta = gusta;
+	}
 }

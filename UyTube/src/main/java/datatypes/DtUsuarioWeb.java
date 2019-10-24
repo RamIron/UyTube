@@ -3,6 +3,10 @@ package datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtUsuarioWeb {
     private String nickname;
     private String foto;
@@ -22,6 +26,7 @@ public class DtUsuarioWeb {
         this.listaRep = listaRep;
     }
 
+    //Getters
     public String getNickname() {
         return nickname;
     }
@@ -32,6 +37,19 @@ public class DtUsuarioWeb {
 
     public List<String> getListaRep() {
         return listaRep;
+    }
+
+    //Setters
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public void setListaRep(List<String> listaRep) {
+        this.listaRep = listaRep;
     }
 }
 
