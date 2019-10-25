@@ -94,10 +94,10 @@ public class CListaRepPublish {
         this.iLisRep.eliminarVideoDeLista(nickVid, nomVid, nomList);
     }
 
-    /*@WebMethod
+    @WebMethod
     public boolean existeLista(String nomL) {
-        return this.uList.getCanal().existeLista(nomL);
-    }*/ //Como hacer con el canal?
+        return this.iLisRep.existeLista(nomL);
+    }
 
     @WebMethod
     public boolean existeListaDefecto(String nomL) {
