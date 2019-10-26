@@ -291,23 +291,49 @@ public class CUsuario implements IUsuario {
 		List<DtCanalWeb> res = new ArrayList<DtCanalWeb>();
 		List<Object[]> resQuery;
 		if(ordFecha){
-			//TODO ordenado por fecha
-			//resQuery = nativequery
 			Query consulta = em.createNamedQuery("buscarCanalFecha");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		} else {
-			//TODO ordenado alfabetico
-			//resQuery = nativequery
 			Query consulta = em.createNamedQuery("buscarCanalNombre");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		}
-//		Integer size = resQuery.size();
 		for(Object[] o : resQuery){
 			DtCanalWeb canal = new DtCanalWeb(o[0].toString(), o[1].toString(), o[2].toString());
 			res.add(canal);
 		}
 		return res;
 	}
+
+	@Override
+	public void eliminarUsuario(String nick){
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usr = mU.obtenerUsuario(nick);
+		//TODO Respaldar el usuario
+		borrarTodosSeguidores();
+		borrarTodosSeguidos();
+		//TODO borrar tus videos de las listas de otros
+		//TODO borrar valoraciones y comentarios de tus videos
+		//TODO borrar tus listas y videos
+		//TODO borrar todos tus comentarios y valoraciones en videos de otros
+		//TODO borrar el usuario
+		//TODO PERSISTIR LOS CAMBIOS
+
+	}
+
+	private void borrarTodosSeguidores(){
+		List<String> seguidores = listarSeguidores();
+		for (String u: seguidores){
+			dejarDeSeguirUsuario(u, usr.getNickname());
+		}
+	}
+
+	private void borrarTodosSeguidos(){
+		List<String> seguidos = listarSeguidos();
+		for (String u: seguidos){
+			dejarDeSeguirUsuario(usr.getNickname(), u);
+		}
+	}
+
 }

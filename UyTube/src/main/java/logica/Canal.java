@@ -107,37 +107,6 @@ public class Canal {
 	}
 
 	
-//	
-//	//Operaciones
-//	public void agregarCategoriaALista(String nomL, Categoria cat) {
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		Map<String, ListaReproduccion> listas = this.getListas();
-//		ListaReproduccion listaRep = listas.get(nomL);
-//		if(listaRep instanceof Particular) { //me fijo si la lista es particular o no
-//			((Particular) listaRep).modificarCategoria(cat.getNombre());
-//		}
-//		try {
-//			em.getTransaction().begin();
-//			em.persist(listaRep);
-//			em.getTransaction().commit();
-//			} catch (Exception e){
-//				if(e instanceof RollbackException)
-//					if(em.getTransaction().isActive())
-//						em.getTransaction().rollback();
-//				throw new IllegalArgumentException("Hubo un error inesperado");
-//			}
-//			finally { 
-//				em.close();
-//			}
-//		
-//	}
-	
-	public void agregarCategoriaVideo(String nomV, Categoria cat) {
-		/*Video v = this.videos.get(nomV);
-		v.setCategoria(cat);*/
-	}
-	
 	public Particular agregarListaParticular(String nomL, boolean publico) {
 		Particular lisPar = new Particular(nomL, this, publico);
 		this.listas.add(lisPar);
@@ -269,16 +238,7 @@ public class Canal {
 		}
 		return null;
 	}
-	
-//	public List<DtComentario> obtenerComentariosVideo(String nomVid) {}
-	
 
-//	
-//	public DtVideo obtenerInfoVideo(String nomVid) {
-//		Video v= this.videos.get(nomVid);
-//		DtVideo dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico());
-//		return dtVid;
-//	}
 	
 	public DtListaRep obtenerListaDeUsuario(String nomList) {
 		for(ListaReproduccion lr:this.listas) {
@@ -299,10 +259,7 @@ public class Canal {
 		}
 		return null;
 	}
-	
-//	public String obtenerUsuarioCanal() {
-//		return this.usuario.getNickname();
-//	}
+
 	
 	public DtVideo obtenerInfoVideo(String nomVid) {
 		for(Video v:this.videos) {
@@ -356,7 +313,6 @@ public class Canal {
 		int i=0;
 		while(!encontre && i<this.videos.size()-1) {
 			if(nomVid.contentEquals(this.videos.get(i).getNombre())){
-			/*if(this.videos.get(i).getNombre().contentEquals(nomVid)) {*/
 				encontre = true;
 			}else {
 				i++;
@@ -379,17 +335,23 @@ public class Canal {
 		return existe;
 	}
 
-//	public Video obtenerVideo(String nomVid) {
-//		Video v= this.videos.get(nomVid);
-//		return v;
-//	}
-//	
-//	public void valorarVideo(Video v, Usuario uVal, boolean val) {
-//		v.valorarVideo(val, uVal, v);
-//	}
-//	
-//	public Video obtenerVideo() {
-//		Video v= this.videos.get(0);
-//		return v;
-//	}
+	public void borrarContenidoCanal(){
+		borrarTodosVideos();
+		borrarTodasListas();
+	}
+
+	private void borrarTodosVideos(){
+		for (Video v: this.videos){
+			//TODO borrar los comentarios y respuestas
+			//TODO borrar el video
+		}
+	}
+	private  void borrarTodasListas(){
+		for(ListaReproduccion l: this.listas){
+			listas.remove(l);
+			if (l.categoria != null){
+				l.categoria.getElementos().remove(l);
+			}
+		}
+	}
 }

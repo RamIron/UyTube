@@ -92,4 +92,8 @@ public class ManejadorUsuario {
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}
 	}
+
+	public void eliminarUsuario(String nickname){
+		//TODO
+	}
 }
