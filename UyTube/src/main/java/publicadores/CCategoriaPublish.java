@@ -37,7 +37,7 @@ public class CCategoriaPublish {
     @WebMethod(exclude = true)
     public void publicar() {
         endpoint = Endpoint.publish("http://" + "127.0.0.1" + ":" + "16000" + "/Categoria", this);
-//        System.out.println("http://" + "127.0.0.1" + ":" + "16000" + "/Categoria");
+        System.out.println("WebService de ControladorVideo publicado en: "+ "http://" + "127.0.0.1" + ":" + "16000" + "/Categoria" + "?wsdl");
     }
 
     @WebMethod(exclude = true)

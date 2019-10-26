@@ -37,6 +37,7 @@ public class CListaRepPublish {
     @WebMethod(exclude = true)
     public void publicar() {
         endpoint = Endpoint.publish("http://" + "127.0.0.1" + ":" + "16000" + "/Lista", this);
+        System.out.println("WebService de ControladorVideo publicado en: "+ "http://" + "127.0.0.1" + ":" + "16000" + "/Lista" + "?wsdl");
     }
 
     @WebMethod(exclude = true)

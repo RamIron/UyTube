@@ -35,6 +35,7 @@ public class CVideoPublish {
     @WebMethod(exclude = true)
     public void publicar() {
         endpoint = Endpoint.publish("http://" + "127.0.0.1" + ":" + "16000" + "/Video", this);
+        System.out.println("WebService de ControladorVideo publicado en: "+ "http://" + "127.0.0.1" + ":" + "16000" + "/Video" + "?wsdl");
     }
 
     @WebMethod(exclude = true)

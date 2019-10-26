@@ -14,6 +14,7 @@ import datatypes.DtUsuarioWeb;
 import interfaces.IUsuario;
 import interfaces.UFactory;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class CUsuarioPublish {
     @WebMethod(exclude = true)
     public void publicar() {
         endpoint = Endpoint.publish("http://" + "127.0.0.1" + ":" + "16000" + "/Usuario", this);
+        System.out.println("WebService de ControladorVideo publicado en: "+ "http://" + "127.0.0.1" + ":" + "16000" + "/Usuario" + "?wsdl");
     }
 
     @WebMethod(exclude = true)
@@ -185,8 +187,12 @@ public class CUsuarioPublish {
         return ret;
     }
 
-    public DtUsuarioWeb[] listarNickFotoWeb(List<String> seguidores){
-        List<DtUsuarioWeb> dtUsr = iUsr.listarNickFotoWeb(seguidores);
+    public DtUsuarioWeb[] listarNickFotoWeb(String[] seguidores){
+        List<String> listaSeg = new ArrayList<String>();
+        for (int i=0; i< seguidores.length; i++){
+            listaSeg.add(seguidores[i]);
+        }
+        List<DtUsuarioWeb> dtUsr = iUsr.listarNickFotoWeb(listaSeg);
         int i = 0;
         DtUsuarioWeb[] ret = new DtUsuarioWeb[dtUsr.size()];
         for(DtUsuarioWeb u : dtUsr) {

@@ -18,6 +18,12 @@ import java.io.File;
 import java.awt.event.ActionEvent;
 
 import interfaces.*;
+import logica.CCategoria;
+import publicadores.CCategoriaPublish;
+import publicadores.CListaRepPublish;
+import publicadores.CUsuarioPublish;
+import publicadores.CVideoPublish;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -460,5 +466,20 @@ public class MenuPrincipal extends JFrame {
 
 		
 		LimpiarFrame();
+
+		/////////////////WEB SERVICES////////////////////////////
+		CVideoPublish pV = new CVideoPublish();
+		pV.publicar();
+
+		CUsuarioPublish pU = new CUsuarioPublish();
+		pU.publicar();
+
+		CListaRepPublish pL = new CListaRepPublish();
+		pL.publicar();
+
+		CCategoriaPublish pC = new CCategoriaPublish();
+		pC.publicar();
+
+
 	}
 }
