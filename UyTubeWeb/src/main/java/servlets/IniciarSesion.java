@@ -3,6 +3,7 @@ package servlets;
 import datatypes.DtUsuarioWeb;
 import interfaces.IUsuario;
 import interfaces.UFactory;
+import publicadores.CUsuarioPublish;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,6 +43,9 @@ public class IniciarSesion extends HttpServlet {
             rd.forward(request, response);
 
         }
+
+
+        publicadores.CUsuarioPublishService servicio = new publicadores.CUsuarioPublishService();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -52,19 +52,6 @@ public interface CUsuarioPublish {
 
     /**
      * 
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CUsuarioPublish/esCanalPublicoRequest", output = "http://publicadores/CUsuarioPublish/esCanalPublicoResponse")
-    public boolean esCanalPublico(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
      * @param arg3
      * @param arg2
      * @param arg4
@@ -110,6 +97,19 @@ public interface CUsuarioPublish {
         String arg0,
         @WebParam(name = "arg1", partName = "arg1")
         String arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CUsuarioPublish/esCanalPublicoRequest", output = "http://publicadores/CUsuarioPublish/esCanalPublicoResponse")
+    public boolean esCanalPublico(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
 
     /**
      * 

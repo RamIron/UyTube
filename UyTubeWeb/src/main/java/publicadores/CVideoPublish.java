@@ -69,54 +69,6 @@ public interface CVideoPublish {
     /**
      * 
      * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CVideoPublish/agregarCategoriaRequest", output = "http://publicadores/CVideoPublish/agregarCategoriaResponse")
-    public void agregarCategoria(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CVideoPublish/valorarVideoRequest", output = "http://publicadores/CVideoPublish/valorarVideoResponse")
-    public void valorarVideo(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        boolean arg1);
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg5
-     * @param arg4
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CVideoPublish/agregarVideoRequest", output = "http://publicadores/CVideoPublish/agregarVideoResponse")
-    public void agregarVideo(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        XMLGregorianCalendar arg3,
-        @WebParam(name = "arg4", partName = "arg4")
-        int arg4,
-        @WebParam(name = "arg5", partName = "arg5")
-        String arg5);
-
-    /**
-     * 
-     * @param arg0
      * @return
      *     returns publicadores.DtElementoWebArray
      */
@@ -174,6 +126,70 @@ public interface CVideoPublish {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CVideoPublish/existeVideoRequest", output = "http://publicadores/CVideoPublish/existeVideoResponse")
+    public boolean existeVideo(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CVideoPublish/agregarCategoriaRequest", output = "http://publicadores/CVideoPublish/agregarCategoriaResponse")
+    public void agregarCategoria(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CVideoPublish/valorarVideoRequest", output = "http://publicadores/CVideoPublish/valorarVideoResponse")
+    public void valorarVideo(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        boolean arg1);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg5
+     * @param arg4
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CVideoPublish/agregarVideoRequest", output = "http://publicadores/CVideoPublish/agregarVideoResponse")
+    public void agregarVideo(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        XMLGregorianCalendar arg3,
+        @WebParam(name = "arg4", partName = "arg4")
+        int arg4,
+        @WebParam(name = "arg5", partName = "arg5")
+        String arg5);
+
+    /**
+     * 
      * @param arg3
      * @param arg2
      * @param arg1
@@ -206,22 +222,6 @@ public interface CVideoPublish {
         XMLGregorianCalendar arg1,
         @WebParam(name = "arg2", partName = "arg2")
         String arg2);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CVideoPublish/existeVideoRequest", output = "http://publicadores/CVideoPublish/existeVideoResponse")
-    public boolean existeVideo(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
 
     /**
      * 

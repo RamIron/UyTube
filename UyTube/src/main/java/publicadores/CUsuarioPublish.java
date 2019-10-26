@@ -39,7 +39,7 @@ public class CUsuarioPublish {
     @WebMethod(exclude = true)
     public void publicar() {
         endpoint = Endpoint.publish("http://" + "127.0.0.1" + ":" + "16000" + "/Usuario", this);
-        System.out.println("WebService de ControladorVideo publicado en: "+ "http://" + "127.0.0.1" + ":" + "16000" + "/Usuario" + "?wsdl");
+        System.out.println("WebService de ControladorUsuario publicado en: "+ "http://" + "127.0.0.1" + ":" + "16000" + "/Usuario" + "?wsdl");
     }
 
     @WebMethod(exclude = true)

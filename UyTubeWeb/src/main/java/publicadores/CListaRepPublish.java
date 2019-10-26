@@ -44,6 +44,72 @@ public interface CListaRepPublish {
 
     /**
      * 
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CListaRepPublish/agregarListaDefectoRequest", output = "http://publicadores/CListaRepPublish/agregarListaDefectoResponse")
+    public void agregarListaDefecto(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns net.java.dev.jaxb.array.StringArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CListaRepPublish/listarListasDeUsuarioRequest", output = "http://publicadores/CListaRepPublish/listarListasDeUsuarioResponse")
+    public StringArray listarListasDeUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CListaRepPublish/existeListaRequest", output = "http://publicadores/CListaRepPublish/existeListaResponse")
+    public boolean existeLista(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CListaRepPublish/setVideoRequest", output = "http://publicadores/CListaRepPublish/setVideoResponse")
+    public void setVideo(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CListaRepPublish/setuVidRequest", output = "http://publicadores/CListaRepPublish/setuVidResponse")
+    public void setuVid(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CListaRepPublish/agregarCategoriaAListaRequest", output = "http://publicadores/CListaRepPublish/agregarCategoriaAListaResponse")
+    public void agregarCategoriaALista(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
      * @param arg1
      * @param arg0
      */
@@ -240,72 +306,6 @@ public interface CListaRepPublish {
     @WebMethod
     @Action(input = "http://publicadores/CListaRepPublish/modificarCategoriaRequest", output = "http://publicadores/CListaRepPublish/modificarCategoriaResponse")
     public void modificarCategoria(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CListaRepPublish/agregarListaDefectoRequest", output = "http://publicadores/CListaRepPublish/agregarListaDefectoResponse")
-    public void agregarListaDefecto(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns net.java.dev.jaxb.array.StringArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CListaRepPublish/listarListasDeUsuarioRequest", output = "http://publicadores/CListaRepPublish/listarListasDeUsuarioResponse")
-    public StringArray listarListasDeUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CListaRepPublish/agregarCategoriaAListaRequest", output = "http://publicadores/CListaRepPublish/agregarCategoriaAListaResponse")
-    public void agregarCategoriaALista(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CListaRepPublish/existeListaRequest", output = "http://publicadores/CListaRepPublish/existeListaResponse")
-    public boolean existeLista(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CListaRepPublish/setVideoRequest", output = "http://publicadores/CListaRepPublish/setVideoResponse")
-    public void setVideo(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CListaRepPublish/setuVidRequest", output = "http://publicadores/CListaRepPublish/setuVidResponse")
-    public void setuVid(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
 
