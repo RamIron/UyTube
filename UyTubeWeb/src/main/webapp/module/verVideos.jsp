@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="datatypes.DtUsuarioWeb" %>
+<%@ page import="publicadores.DtUsuarioWeb" %>
 <%@ page import="interfaces.*" %>
 <%@ page import="datatypes.DtElementoUsuario" %>
 <%@ page import="datatypes.tipoElemento" %>

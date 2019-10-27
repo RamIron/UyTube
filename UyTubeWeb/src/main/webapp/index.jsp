@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="datatypes.DtUsuarioWeb" %>
+<%@ page import="publicadores.DtUsuarioWeb" %>
 <%@ page import="datatypes.DtElementoWeb" %>
 <%@ page import="interfaces.*" %>
 <%@ page import="java.util.Random" %>

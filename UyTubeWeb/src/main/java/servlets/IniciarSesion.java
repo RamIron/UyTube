@@ -1,6 +1,6 @@
 package servlets;
 
-import datatypes.DtUsuarioWeb;
+import publicadores.DtUsuarioWeb;
 import interfaces.IUsuario;
 import interfaces.UFactory;
 import publicadores.CUsuarioPublish;
@@ -17,20 +17,26 @@ import java.io.IOException;
 @WebServlet(name = "IniciarSesion", value = "/IniciarSesion")
 public class IniciarSesion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UFactory uF = UFactory.getInstancia();
-        IUsuario iU = uF.getIUsuario();
+        /////////////WEB SERVICE/////////////////
+        publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
+        publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
+        //////////FIN WEBSERVICE///////////
+
+//        UFactory uF = UFactory.getInstancia();
+//        IUsuario iU = uF.getIUsuario();
         HttpSession s = request.getSession();
         String nick = request.getParameter("nick");
         String pass = request.getParameter("pass");
-        Integer valido = iU.iniciarSesion(nick, pass);
+
+        Integer valido = port.iniciarSesion(nick, pass);
         if(valido.equals(1)){
-            DtUsuarioWeb usr = iU.obtenerUsuarioWebNick(nick);
+            DtUsuarioWeb usr = port.obtenerUsuarioWebNick(nick);
             s.setAttribute("usuario", usr);
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         }else if (valido.equals(2)){
-            DtUsuarioWeb usr = iU.obtenerUsuarioWebEmail(nick);
+            DtUsuarioWeb usr = port.obtenerUsuarioWebEmail(nick);
             s.setAttribute("usuario", usr);
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/index.jsp");
@@ -41,11 +47,8 @@ public class IniciarSesion extends HttpServlet {
             String message = "Los datos ingresados no son correctos";
             request.setAttribute("message", message);
             rd.forward(request, response);
-
         }
 
-
-        publicadores.CUsuarioPublishService servicio = new publicadores.CUsuarioPublishService();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

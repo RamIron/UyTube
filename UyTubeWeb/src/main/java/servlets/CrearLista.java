@@ -1,6 +1,6 @@
 package servlets;
 
-import datatypes.DtUsuarioWeb;
+import publicadores.DtUsuarioWeb;
 import interfaces.IUsuario;
 import interfaces.LRFactory;
 import interfaces.IListaReproduccion;

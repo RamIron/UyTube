@@ -1,6 +1,6 @@
 package servlets;
 
-import datatypes.DtUsuarioWeb;
+import publicadores.DtUsuarioWeb;
 import interfaces.IUsuario;
 import interfaces.UFactory;
 
@@ -20,6 +20,10 @@ import java.util.Date;
 @WebServlet(name = "ModificarImagen", value = "/ModificarImagen")
 public class ModificarImagen extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /////////////WEB SERVICE/////////////////
+        publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
+        publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
+        //////////FIN WEBSERVICE///////////
         HttpSession s = request.getSession();
         DtUsuarioWeb usrS = (DtUsuarioWeb) s.getAttribute("usuario");
         if (usrS != null){
@@ -44,7 +48,7 @@ public class ModificarImagen extends HttpServlet {
                 iU.modificarImagen(fotoURL);
             }
 
-            DtUsuarioWeb usr = iU.obtenerUsuarioWebNick(nickname);
+            DtUsuarioWeb usr = port.obtenerUsuarioWebNick(nickname);
             s.setAttribute("usuario", usr);
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/module/miPerfil.jsp");
