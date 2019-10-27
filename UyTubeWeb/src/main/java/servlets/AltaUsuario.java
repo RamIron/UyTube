@@ -9,16 +9,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.Duration;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 @WebServlet(name = "AltaUsuario", value = "/AltaUsuario")
 public class AltaUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        /////////////WEB SERVICE/////////////////
+        publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
+        publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
+        //////////FIN WEBSERVICE///////////
         String nickname = request.getParameter("nickname");
         String email = request.getParameter("email");
         String nomU = request.getParameter("nomU");
@@ -36,32 +45,43 @@ public class AltaUsuario extends HttpServlet {
         }
         String categoria = request.getParameter("categoria");
 
-        UFactory fU = UFactory.getInstancia();
-        IUsuario iU = fU.getIUsuario();
 
 
 
         //CODIGO PARA EXTRAER LA FECHA
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         Date date = null;
-        Calendar cal = Calendar.getInstance();
+        XMLGregorianCalendar cal = null;
         try {
-            date = sdf.parse(fNac);
-            cal.setTime(date);
-        } catch (ParseException e) {
-            System.out.println("Excepcion: error con la fecha");
+            date = sdf.parse(fNac);//TODO nose esta cargando bien la fecha
+            System.out.println("FechaCompleta: " + fNac);
+            System.out.println("Año: " + date.getYear());
+            System.out.println("Mes: " + date.getMonth());
+            System.out.println("Dia: " + date.getDay());
+            cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(1900 + date.getYear(),date.getMonth(),date.getDay(), 0, 0, 0, 0, -3);
+        } catch (DatatypeConfigurationException | ParseException e) {
+            e.printStackTrace();
         }
+//        try {
+//            date = sdf.parse(fNac);
+//            //cal.setTime(date);
+//            cal.setDay(date.getDay());
+//            cal.setMonth(date.getMonth());
+//            cal.setYear(date.getYear());
+//        } catch (ParseException e) {
+//            System.out.println("Excepcion: error con la fecha");
+//        }
         //FIN DE CODIGO PARA EXTRAER LA FECHA
 
 
-        if(iU.existeNickname(nickname)){
+        if(port.existeNickname(nickname)){
             // existe nickname
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/module/registro.jsp");
             String message = "Ya existe un Usuario con el nickname <strong>" + nickname + "</strong>";
             request.setAttribute("message", message);
             rd.forward(request, response);
-        } else if (iU.existeEmail(email)){
+        } else if (port.existeEmail(email)){
             // existe mail
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/module/registro.jsp");
@@ -69,21 +89,21 @@ public class AltaUsuario extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         }else{
-            iU.agregarUsuario(nickname, nomU, apellido, cal, email);
+            port.agregarUsuario(nickname, nomU, apellido, cal, email);
             if(!foto.equals("")) {
-                iU.modificarImagen("img/usr/" + foto);
+                port.modificarImagen("img/usr/" + foto);
             }else {
-                iU.modificarImagen("src/main/resources/img/default.png");
+                port.modificarImagen("src/main/resources/img/default.png");
             }
-            iU.modificarContrasena(pass);
-            iU.agregarCanal();
+            port.modificarContrasena(pass);
+            port.agregarCanal();
             if(!nomC.equals("")) {
-                iU.modificarInfoCanal(nomC, desc, publico);
+                port.modificarInfoCanal(nomC, desc, publico);
             }else {
-                iU.modificarInfoCanal(nickname, desc, publico);
+                port.modificarInfoCanal(nickname, desc, publico);
             }
             if(!categoria.equals("")){
-                iU.modificarCatCanal(nickname, categoria);
+                port.modificarCatCanal(nickname, categoria);
             }
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/index.jsp");
@@ -98,3 +118,5 @@ public class AltaUsuario extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
     }
 }
+
+

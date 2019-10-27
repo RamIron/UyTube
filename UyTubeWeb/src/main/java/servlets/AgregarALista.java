@@ -20,21 +20,23 @@ public class AgregarALista extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /////////////WEB SERVICE/////////////////
+        publicadores.CListaRepPublishService service = new publicadores.CListaRepPublishService();
+        publicadores.CListaRepPublish port = service.getCListaRepPublishPort();
+        //////////FIN WEBSERVICE///////////
         String nomLis = request.getParameter("l");
         String usrVid = request.getParameter("vu");
         String nomVid = request.getParameter("vn");
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-        if (nomLis != null && usrVid != null && nomVid != null && usr != null){
+        if (nomLis != null && usrVid != null && nomVid != null && usr != null) {
             String usrLis = usr.getNickname();
-            LRFactory f = LRFactory.getInstancia();
-            IListaReproduccion iL = f.getIListaReproduccion();
-            if(!iL.existeListaParticular(usrLis, nomLis)) {
-                iL.agregarVideoListaPorDefecto(usrVid, nomVid, nomLis);
+            if (!port.existeListaParticular(usrLis, nomLis)) {
+                port.agregarVideoListaPorDefecto(usrVid, nomVid, nomLis);
             } else {
-                iL.agregarVideoListaParticular(usrVid, nomVid, nomLis);
+                port.agregarVideoListaParticular(usrVid, nomVid, nomLis);
             }
-            String path = "/module/visualizarVideo.jsp?u=" + usrVid +"&v=" + nomVid;
+            String path = "/module/visualizarVideo.jsp?u=" + usrVid + "&v=" + nomVid;
             RequestDispatcher rd;
             rd = request.getRequestDispatcher(path);
             String message = "Video agregado a la lista " + nomLis;

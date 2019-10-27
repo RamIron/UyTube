@@ -1,9 +1,6 @@
 package servlets;
 
 import publicadores.DtUsuarioWeb;
-import interfaces.IUsuario;
-import interfaces.UFactory;
-import publicadores.CUsuarioPublish;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
