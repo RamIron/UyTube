@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
 <%@ page import="interfaces.*" %>
+<%@ page import="publicadores.DtUsuarioWebArray" %>
 <!--
 
 =========================================================
@@ -270,10 +271,20 @@
         <div class="header-body">
           <!-- Contenido aqui TODO-->
           <%
-            UFactory uF = UFactory.getInstancia();
-            IUsuario iU = uF.getIUsuario();
+            /*UFactory uF = UFactory.getInstancia();
+            IUsuario iU = uF.getIUsuario();*/
+
+            /////////////WEB SERVICE/////////////////
+            publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
+            publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
+            //////////FIN WEBSERVICE///////////
+
             DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-            List<DtUsuarioWeb> listU = iU.listarUsuariosWeb();
+            DtUsuarioWebArray listUsrs = port.listarUsuariosWeb();
+
+
+            List<DtUsuarioWeb> listU = listUsrs.getItem();
+
           %>
 
           <div class="container-fluid">

@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,34 +47,31 @@ public class ModificarDatosUsuario extends HttpServlet {
             }
 
 
-            UFactory fU = UFactory.getInstancia();
-            IUsuario iU = fU.getIUsuario();
+            //UFactory fU = UFactory.getInstancia();
+            //IUsuario iU = fU.getIUsuario();
 
 
             //CODIGO PARA EXTRAER LA FECHA
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date date = null;
-            Calendar cal = Calendar.getInstance();
+            XMLGregorianCalendar cal = null;
             try {
-                date = sdf.parse(fNac);
-                cal.setTime(date);
-            } catch (ParseException e) {
-                System.out.println("Excepcion: error con la fecha");
+                date = sdf.parse(fNac);//TODO nose esta cargando bien la fecha
+                System.out.println("FechaCompleta: " + fNac);
+                System.out.println("Año: " + date.getYear());
+                System.out.println("Mes: " + date.getMonth());
+                System.out.println("Dia: " + date.getDay());
+                cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(1900 + date.getYear(),date.getMonth(),date.getDay(), 0, 0, 0, 0, -3);
+            } catch (DatatypeConfigurationException | ParseException e) {
+                e.printStackTrace();
             }
             //FIN DE CODIGO PARA EXTRAER LA FECHA
 
 
-            if(iU.existeNickname(nickname)) {
-                /*String fotoURL;
-                if(!foto.equals("")) {
-                    fotoURL = "img/usr/" + foto;
-                }else {
-                    fotoURL = "src/main/resources/img/default.png";
-                }*/
-
-                iU.modificarInfoUsuario(nomU, apellido, cal, usrS.getFoto());
-                iU.modificarInfoCanal(nomC, desc, publico);
-                iU.modificarCatCanal(nickname, categoria);
+            if(port.existeNickname(nickname)) {
+                port.modificarInfoUsuario(nomU, apellido, cal, usrS.getFoto());
+                port.modificarInfoCanal(nomC, desc, publico);
+                port.modificarCatCanal(nickname, categoria);
             }
 
             DtUsuarioWeb usr = port.obtenerUsuarioWebNick(nickname);
