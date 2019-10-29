@@ -61,7 +61,7 @@ public class ModificarDatosUsuario extends HttpServlet {
                 System.out.println("Año: " + date.getYear());
                 System.out.println("Mes: " + date.getMonth());
                 System.out.println("Dia: " + date.getDay());
-                cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(1900 + date.getYear(),date.getMonth(),date.getDay(), 0, 0, 0, 0, -3);
+                cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(1900 + date.getYear(), date.getMonth(), date.getDay(), 0, 0, 0, 0, -3);
             } catch (DatatypeConfigurationException | ParseException e) {
                 e.printStackTrace();
             }

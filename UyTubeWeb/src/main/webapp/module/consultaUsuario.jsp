@@ -6,6 +6,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="net.java.dev.jaxb.array.StringArray" %>
 <%@ page import="publicadores.*" %>
+<%@ page import="java.security.spec.RSAOtherPrimeInfo" %>
 <!--
 
 =========================================================
@@ -199,7 +200,6 @@
                     publicadores.CCategoriaPublish portC = serviceC.getCCategoriaPublishPort();
                     List<String> lC = portC.listarCategorias().getItem();
                     //////////FIN WEBSERVICE///////////
-
                     for(String cat: lC){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -319,37 +319,26 @@
 
                                     String nickUsr =  request.getParameter("nick");
                                     DtUsuarioWeb usrSession = (DtUsuarioWeb) s.getAttribute("usuario");
-                                    /*DtUsuario usuario = iUsr.obtenerInfoUsuario(nickUsr);
-                                    DtCanal canal = iUsr.obtenerInfoCanal();
-                                    List<String> seguidos = iUsr.listarSeguidos();
-                                    List<String> seguidores = iUsr.listarSeguidores();
-                                    DtUsuarioWeb usrSession = (DtUsuarioWeb) s.getAttribute("usuario");
-                                    List<DtUsuarioWeb> listSeguidores = iUsr.listarNickFotoWeb(seguidores);
-                                    List<DtUsuarioWeb> listSeguidos = iUsr.listarNickFotoWeb(seguidos);
-
-                                    List<DtElementoWeb> listVideos = iV.listarVideosPublicosDeUsuarioWeb(usuario.getNickname());
-                                    List<String> listListasRep = iLR.listarListasParticularesPublicas(usuario.getNickname());*/
-
 
                                     DtUsuario usuario = portU.obtenerInfoUsuario(nickUsr);
                                     DtCanal canal = portU.obtenerInfoCanal();
-                                    List<String> seguidores = portU.listarSeguidores().getItem();
-                                    List<String> seguidos = portU.listarSeguidos().getItem();
 
-                                    String[] arrSeguidores = new String[seguidores.size()];
-                                    arrSeguidores = seguidores.toArray(arrSeguidores);
+                                    StringArray seguidoresSA = portU.listarSeguidores();
+                                    List<String> seguidores = seguidoresSA.getItem();
 
-                                    for (int i=0; i< seguidores.size(); i++){
-                                        arrSeguidores[i] = seguidores.get(i);
+                                    StringArray seguidosSA = portU.listarSeguidos();
+                                    List<String> seguidos = seguidosSA.getItem();
+
+                                    List<DtUsuarioWeb> listSeguidores = portU.listarNickFotoWeb(seguidoresSA).getItem();
+                                    List<DtUsuarioWeb> listSeguidos = portU.listarNickFotoWeb(seguidosSA).getItem();
+
+                                    List<DtElementoWeb> listVideos = portV.listarVideosPublicosDeUsuarioWeb(usuario.getNickname()).getItem();
+                                    List<String> listListasRep = portL.listarListasParticularesPublicas(usuario.getNickname()).getItem();
+                                    System.out.println("Usuario: " + usuario.getNickname() + " y su cantidad de listas: " + listListasRep.size());
+                                    System.out.println("Usuario: " + usuario.getNickname() + " y su cantidad de videos: " + listVideos.size());
+                                    for(String ls: listListasRep){
+                                        System.out.println(ls);
                                     }
-
-                                    String[] lSeguidores2 = portU.listarNickFotoWeb(arrSeguidores);
-
-
-                                    /*List<DtUsuarioWeb> listSeguidos = (List<DtUsuarioWeb>) portU.listarNickFotoWeb((StringArray) seguidos);
-
-                                    List<DtElementoWeb> listVideos = (List<DtElementoWeb>) portV.listarVideosPublicosDeUsuarioWeb(usuario.getNickname());
-                                    List<String> listListasRep = (List<String>) portL.listarListasParticularesPublicas(usuario.getNickname());*/
                                 %>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -473,10 +462,10 @@
 
                                 <%if(canal.isPublico()){%>
                                     <hr>
-                                    <%--<div class="nav-wrapper">
+                                    <div class="nav-wrapper">
                                         <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i> <%=seguidores.size()%> Seguidores &lt;%&ndash;<span class="badge badge-white"><%=seguidores.size()%></span>&ndash;%&gt;</a>
+                                                <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i> <%=seguidores.size()%> Seguidores <%--<span class="badge badge-white"><%=seguidores.size()%></span>--%></a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i> <%=seguidos.size()%> Seguidos </a>
@@ -493,12 +482,12 @@
                                         <div class="card-body">
                                             <div class="tab-content" id="myTabContent">
 
-                                                &lt;%&ndash;Comienzo muestra seguidores&ndash;%&gt;
+                                                <%--Comienzo muestra seguidores--%>
                                                 <div class="tab-pane fade" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
                                                     <div class="row row- justify-content-right">
                                                         <% for(DtUsuarioWeb u:listSeguidores) { %>
                                                         <div class="col-sm-3">
-                                                            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                                                            <div class="card shadow-sm p-3 mb-4 bg-white rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3">
                                                                     <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
                                                                         <div class="media align-items-center">
@@ -521,14 +510,14 @@
                                                         <% } %>
                                                     </div>
                                                 </div>
-                                                &lt;%&ndash;Fin muestra seguidores&ndash;%&gt;
+                                                <%--Fin muestra seguidores--%>
 
-                                                &lt;%&ndash;Comienzo muestra seguidos&ndash;%&gt;
+                                                <%--Comienzo muestra seguidos--%>
                                                 <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                                                     <div class="row row- justify-content-right">
                                                         <% for(DtUsuarioWeb u:listSeguidos) { %>
                                                         <div class="col-sm-3">
-                                                            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                                                            <div class="card shadow-sm p-3 mb-4 bg-white rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3">
                                                                     <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
                                                                         <div class="media align-items-center">
@@ -551,13 +540,13 @@
                                                         <% } %>
                                                     </div>
                                                 </div>
-                                                &lt;%&ndash;Fin muestra seguidos&ndash;%&gt;
+                                                <%--Fin muestra seguidos--%>
 
-                                                &lt;%&ndash;Comienzo muestra videos&ndash;%&gt;
+                                                <%--Comienzo muestra videos--%>
                                                 <div class="tab-pane fade show active" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                                                     <div class="container-fluid">
                                                         <div class="row row- justify-content-right">
-                                                            <%
+                                                           <%
                                                                 for(DtElementoWeb eu: listVideos){
                                                             %>
                                                             <div class="col-sm-3">
@@ -576,18 +565,18 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                &lt;%&ndash;Fin muestra videos&ndash;%&gt;
+                                                <%--Fin muestra videos--%>
 
-                                                &lt;%&ndash;Comienzo muestra listas&ndash;%&gt;
+                                                <%--Comienzo muestra listas--%>
                                                 <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
                                                     <div class="row row- justify-content-right">
                                                         <% for(String lr:listListasRep) { %>
                                                         <div class="col-sm-3">
                                                             <div class="card shadow-sm p-1 mb-2 bg-gradient-lighter rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3 text-lg-center">
-                                                                    &lt;%&ndash;<a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=u.getNickname()%>">&ndash;%&gt;
+                                                                    <a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=usuario.getNickname()%>">
                                                                         <span class="mb-0 text-lg font-weight-bold"><%=lr%></span>
-                                                                   &lt;%&ndash; </a>&ndash;%&gt;
+                                                                    </a>
                                                                 </div>
                                                             </div>
                                                             <br/>
@@ -595,10 +584,10 @@
                                                         <% } %>
                                                     </div>
                                                 </div>
-                                                &lt;%&ndash;Fin muestra listas&ndash;%&gt;
+                                                <%--Fin muestra listas--%>
                                             </div>
                                         </div>
-                                    </div>--%>
+                                    </div>
                                 <%}%>
                                 </div>
                             </div>
