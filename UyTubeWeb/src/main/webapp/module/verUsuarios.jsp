@@ -280,11 +280,8 @@
             //////////FIN WEBSERVICE///////////
 
             DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-            DtUsuarioWebArray listUsrs = port.listarUsuariosWeb();
 
-
-            List<DtUsuarioWeb> listU = listUsrs.getItem();
-
+            List<DtUsuarioWeb> listU = port.listarUsuariosWeb().getItem();
           %>
 
           <div class="container-fluid">

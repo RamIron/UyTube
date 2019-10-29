@@ -1,12 +1,11 @@
-<%@ page import="java.util.List" %>
 <%@ page import="interfaces.*" %>
-<%@ page import="java.util.Calendar" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="java.text.ParseException" %>
-<%@ page import="java.util.GregorianCalendar" %>
 <%@ page import="com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput" %>
-<%@ page import="datatypes.*" %>
+<%--<%@ page import="datatypes.*" %>--%>
+<%@ page import="java.util.*" %>
+<%@ page import="net.java.dev.jaxb.array.StringArray" %>
+<%@ page import="publicadores.*" %>
 <!--
 
 =========================================================
@@ -167,10 +166,18 @@
                     </a>
                 </li>
                 <%
-                    LRFactory f = LRFactory.getInstancia();
+                    /*LRFactory f = LRFactory.getInstancia();
                     IListaReproduccion iL = f.getIListaReproduccion();
                     DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                    List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+                    List<String> lis = iL.listarListasDeUsuario(usr.getNickname());*/
+
+                    /////////////WEB SERVICE/////////////////
+                    publicadores.CListaRepPublishService serviceL = new publicadores.CListaRepPublishService();
+                    publicadores.CListaRepPublish portL = serviceL.getCListaRepPublishPort();
+                    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+                    List<String> lis = portL.listarListasDeUsuario(usr.getNickname()).getItem();
+                    //List<String> lis = (List<String>) portL.listarListasDeUsuario(usr.getNickname());
+                    //////////FIN WEBSERVICE///////////
                     for(String l: lis){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
@@ -186,9 +193,13 @@
             <h6 class="navbar-heading text-muted">Categorias</h6>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <% CFactory fC = CFactory.getInstancia();
-                    ICategoria iC = fC.getICategoria();
-                    List<String> lC = iC.listarCategorias();
+                <%
+                    /////////////WEB SERVICE/////////////////
+                    publicadores.CCategoriaPublishService serviceC = new publicadores.CCategoriaPublishService();
+                    publicadores.CCategoriaPublish portC = serviceC.getCCategoriaPublishPort();
+                    List<String> lC = portC.listarCategorias().getItem();
+                    //////////FIN WEBSERVICE///////////
+
                     for(String cat: lC){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -289,15 +300,26 @@
                                 </div>
                                 <%}%>
                                 <%
-                                    VFactory uF = VFactory.getInstancia();
+                                    /*VFactory uF = VFactory.getInstancia();
                                     IVideo iV = uF.getIVideo();
                                     UFactory fU = UFactory.getInstancia();
                                     IUsuario iUsr = fU.getIUsuario();
                                     LRFactory lrF = LRFactory.getInstancia();
-                                    IListaReproduccion iLR = lrF.getIListaReproduccion();
+                                    IListaReproduccion iLR = lrF.getIListaReproduccion();*/
+
+                                    /////////////WEB SERVICE/////////////////
+                                    publicadores.CUsuarioPublishService serviceU = new publicadores.CUsuarioPublishService();
+                                    publicadores.CVideoPublishService serviceV = new publicadores.CVideoPublishService();
+                                    publicadores.CListaRepPublishService serviceL = new publicadores.CListaRepPublishService();
+
+                                    publicadores.CUsuarioPublish portU = serviceU.getCUsuarioPublishPort();
+                                    publicadores.CVideoPublish portV = serviceV.getCVideoPublishPort();
+                                    publicadores.CListaRepPublish portL = serviceL.getCListaRepPublishPort();
+                                    //////////FIN WEBSERVICE///////////
 
                                     String nickUsr =  request.getParameter("nick");
-                                    DtUsuario usuario = iUsr.obtenerInfoUsuario(nickUsr);
+                                    DtUsuarioWeb usrSession = (DtUsuarioWeb) s.getAttribute("usuario");
+                                    /*DtUsuario usuario = iUsr.obtenerInfoUsuario(nickUsr);
                                     DtCanal canal = iUsr.obtenerInfoCanal();
                                     List<String> seguidos = iUsr.listarSeguidos();
                                     List<String> seguidores = iUsr.listarSeguidores();
@@ -306,7 +328,28 @@
                                     List<DtUsuarioWeb> listSeguidos = iUsr.listarNickFotoWeb(seguidos);
 
                                     List<DtElementoWeb> listVideos = iV.listarVideosPublicosDeUsuarioWeb(usuario.getNickname());
-                                    List<String> listListasRep = iLR.listarListasParticularesPublicas(usuario.getNickname());
+                                    List<String> listListasRep = iLR.listarListasParticularesPublicas(usuario.getNickname());*/
+
+
+                                    DtUsuario usuario = portU.obtenerInfoUsuario(nickUsr);
+                                    DtCanal canal = portU.obtenerInfoCanal();
+                                    List<String> seguidores = portU.listarSeguidores().getItem();
+                                    List<String> seguidos = portU.listarSeguidos().getItem();
+
+                                    String[] arrSeguidores = new String[seguidores.size()];
+                                    arrSeguidores = seguidores.toArray(arrSeguidores);
+
+                                    for (int i=0; i< seguidores.size(); i++){
+                                        arrSeguidores[i] = seguidores.get(i);
+                                    }
+
+                                    String[] lSeguidores2 = portU.listarNickFotoWeb(arrSeguidores);
+
+
+                                    /*List<DtUsuarioWeb> listSeguidos = (List<DtUsuarioWeb>) portU.listarNickFotoWeb((StringArray) seguidos);
+
+                                    List<DtElementoWeb> listVideos = (List<DtElementoWeb>) portV.listarVideosPublicosDeUsuarioWeb(usuario.getNickname());
+                                    List<String> listListasRep = (List<String>) portL.listarListasParticularesPublicas(usuario.getNickname());*/
                                 %>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -368,8 +411,10 @@
 
                                             <%--Fecha Nacimiento--%>
                                             <div class="col">
-                                                <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                                    String fechaS = sdf.format(usuario.getfNac().getTime());%>
+                                                <%
+                                                    Calendar calendar = usuario.getFNac().toGregorianCalendar();
+                                                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                                    String fechaS = sdf.format(calendar.getTime());%>
                                                 <h5 class="mb-0">Fecha de Nacimiento: </h5>
                                                 <span class="mb-xl-2 font-weight-bold text-lg"><%=fechaS %></span>
                                             </div>
@@ -380,7 +425,7 @@
 
                                         <hr>
 
-                                        <%if(canal.getPublico()){%>
+                                        <%if(canal.isPublico()){%>
                                         <div class="text-muted text-center mt-2 mb-3">
                                             <h1>Datos del Canal</h1>
                                         </div>
@@ -426,12 +471,12 @@
                                 </div>
 
 
-                                <%if(canal.getPublico()){%>
+                                <%if(canal.isPublico()){%>
                                     <hr>
-                                    <div class="nav-wrapper">
+                                    <%--<div class="nav-wrapper">
                                         <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                                             <li class="nav-item">
-                                                <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i> <%=seguidores.size()%> Seguidores <%--<span class="badge badge-white"><%=seguidores.size()%></span>--%></a>
+                                                <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i> <%=seguidores.size()%> Seguidores &lt;%&ndash;<span class="badge badge-white"><%=seguidores.size()%></span>&ndash;%&gt;</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link mb-sm-4 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-bell-55 mr-2"></i> <%=seguidos.size()%> Seguidos </a>
@@ -448,7 +493,7 @@
                                         <div class="card-body">
                                             <div class="tab-content" id="myTabContent">
 
-                                                <%--Comienzo muestra seguidores--%>
+                                                &lt;%&ndash;Comienzo muestra seguidores&ndash;%&gt;
                                                 <div class="tab-pane fade" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
                                                     <div class="row row- justify-content-right">
                                                         <% for(DtUsuarioWeb u:listSeguidores) { %>
@@ -476,9 +521,9 @@
                                                         <% } %>
                                                     </div>
                                                 </div>
-                                                <%--Fin muestra seguidores--%>
+                                                &lt;%&ndash;Fin muestra seguidores&ndash;%&gt;
 
-                                                <%--Comienzo muestra seguidos--%>
+                                                &lt;%&ndash;Comienzo muestra seguidos&ndash;%&gt;
                                                 <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                                                     <div class="row row- justify-content-right">
                                                         <% for(DtUsuarioWeb u:listSeguidos) { %>
@@ -506,9 +551,9 @@
                                                         <% } %>
                                                     </div>
                                                 </div>
-                                                <%--Fin muestra seguidos--%>
+                                                &lt;%&ndash;Fin muestra seguidos&ndash;%&gt;
 
-                                                <%--Comienzo muestra videos--%>
+                                                &lt;%&ndash;Comienzo muestra videos&ndash;%&gt;
                                                 <div class="tab-pane fade show active" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                                                     <div class="container-fluid">
                                                         <div class="row row- justify-content-right">
@@ -531,18 +576,18 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <%--Fin muestra videos--%>
+                                                &lt;%&ndash;Fin muestra videos&ndash;%&gt;
 
-                                                <%--Comienzo muestra listas--%>
+                                                &lt;%&ndash;Comienzo muestra listas&ndash;%&gt;
                                                 <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
                                                     <div class="row row- justify-content-right">
                                                         <% for(String lr:listListasRep) { %>
                                                         <div class="col-sm-3">
                                                             <div class="card shadow-sm p-1 mb-2 bg-gradient-lighter rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3 text-lg-center">
-                                                                    <%--<a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=u.getNickname()%>">--%>
+                                                                    &lt;%&ndash;<a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=u.getNickname()%>">&ndash;%&gt;
                                                                         <span class="mb-0 text-lg font-weight-bold"><%=lr%></span>
-                                                                   <%-- </a>--%>
+                                                                   &lt;%&ndash; </a>&ndash;%&gt;
                                                                 </div>
                                                             </div>
                                                             <br/>
@@ -550,10 +595,10 @@
                                                         <% } %>
                                                     </div>
                                                 </div>
-                                                <%--Fin muestra listas--%>
+                                                &lt;%&ndash;Fin muestra listas&ndash;%&gt;
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>--%>
                                 <%}%>
                                 </div>
                             </div>
