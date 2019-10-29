@@ -1,15 +1,16 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
-<%@ page import="datatypes.DtUsuario" %>
+<%@ page import="publicadores.DtUsuario" %>
 <%@ page import="interfaces.*" %>
-<%@ page import="datatypes.DtCanal" %>
+<%@ page import="publicadores.DtCanal" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.util.GregorianCalendar" %>
 <%@ page import="com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput" %>
-<%@ page import="datatypes.DtElementoWeb" %>
+<%@ page import="publicadores.DtElementoWeb" %>
+<%@ page import="net.java.dev.jaxb.array.StringArray" %>
 <!--
 
 =========================================================
@@ -170,10 +171,13 @@
                     </a>
                 </li>
                 <%
-                    LRFactory f = LRFactory.getInstancia();
-                    IListaReproduccion iL = f.getIListaReproduccion();
+                    /////////////WEB SERVICE/////////////////
+                    publicadores.CListaRepPublishService serviceL = new publicadores.CListaRepPublishService();
+                    publicadores.CListaRepPublish portL = serviceL.getCListaRepPublishPort();
                     DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                    List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+                    List<String> lis = portL.listarListasDeUsuario(usr.getNickname()).getItem();
+
+                    //////////FIN WEBSERVICE///////////
                     for(String l: lis){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
@@ -189,9 +193,12 @@
             <h6 class="navbar-heading text-muted">Categorias</h6>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <% CFactory fC = CFactory.getInstancia();
-                    ICategoria iC = fC.getICategoria();
-                    List<String> lC = iC.listarCategorias();
+                <%
+                    /////////////WEB SERVICE/////////////////
+                    publicadores.CCategoriaPublishService serviceC = new publicadores.CCategoriaPublishService();
+                    publicadores.CCategoriaPublish portC = serviceC.getCCategoriaPublishPort();
+                    List<String> lC = portC.listarCategorias().getItem();
+                    //////////FIN WEBSERVICE///////////
                     for(String cat: lC){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -278,7 +285,7 @@
         <div class="container-fluid">
             <div class="header-body">
                     <div class="row justify-content-center">
-                        <div class="col-sm-8 order-xl-1">
+                        <div class="col-sm-10 order-xl-1">
                             <div class="card bg-secondary shadow ">
                                 <div class="card-body px-lg-5 py-lg-5">
                                     <%
@@ -290,24 +297,31 @@
                                     </div>
                                     <%}%>
                                     <%
-                                        UFactory fU = UFactory.getInstancia();
-                                        IUsuario iUsr = fU.getIUsuario();
-                                        VFactory uF = VFactory.getInstancia();
-                                        IVideo iV = uF.getIVideo();
-                                        LRFactory lrF = LRFactory.getInstancia();
-                                        IListaReproduccion iLR = lrF.getIListaReproduccion();
+                                        /////////////WEB SERVICE/////////////////
+                                        publicadores.CUsuarioPublishService serviceU = new publicadores.CUsuarioPublishService();
+                                        publicadores.CVideoPublishService serviceV = new publicadores.CVideoPublishService();
+                                        publicadores.CListaRepPublishService serviceL = new publicadores.CListaRepPublishService();
+
+                                        publicadores.CUsuarioPublish portU = serviceU.getCUsuarioPublishPort();
+                                        publicadores.CVideoPublish portV = serviceV.getCVideoPublishPort();
+                                        publicadores.CListaRepPublish portL = serviceL.getCListaRepPublishPort();
+                                        //////////FIN WEBSERVICE///////////
 
                                         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                                        DtUsuario usuario = iUsr.obtenerInfoUsuario(usr.getNickname());
-                                        DtCanal canal = iUsr.obtenerInfoCanal();
+                                        DtUsuario usuario = portU.obtenerInfoUsuario(usr.getNickname());
+                                        DtCanal canal = portU.obtenerInfoCanal();
 
-                                        List<String> seguidos = iUsr.listarSeguidos();
-                                        List<String> seguidores = iUsr.listarSeguidores();
-                                        List<DtUsuarioWeb> listSeguidores = iUsr.listarNickFotoWeb(seguidores);
-                                        List<DtUsuarioWeb> listSeguidos = iUsr.listarNickFotoWeb(seguidos);
+                                        StringArray seguidoresSA = portU.listarSeguidores();
+                                        List<String> seguidores = seguidoresSA.getItem();
 
-                                        List<DtElementoWeb> listVideos = iV.listarVideosDeUsuarioWeb(usuario.getNickname());
-                                        List<String> listListasRep = iLR.listarListasDeUsuario(usuario.getNickname());
+                                        StringArray seguidosSA = portU.listarSeguidos();
+                                        List<String> seguidos = seguidosSA.getItem();
+
+                                        List<DtUsuarioWeb> listSeguidores = portU.listarNickFotoWeb(seguidoresSA).getItem();
+                                        List<DtUsuarioWeb> listSeguidos = portU.listarNickFotoWeb(seguidosSA).getItem();
+
+                                        List<DtElementoWeb> listVideos = portV.listarVideosDeUsuarioWeb(usuario.getNickname()).getItem();
+                                        List<String> listListasRep = portL.listarListasDeUsuario(usuario.getNickname()).getItem();
                                     %>
                                     <div class="row">
                                         <div class="col-sm-5 mb-4">
@@ -373,8 +387,10 @@
 
                                             <%--Fecha Nacimiento--%>
                                             <div style="text-align: center">
-                                                <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                                String fechaS = sdf.format(usuario.getfNac().getTime());%>
+                                                <%
+                                                    Calendar calendar = usuario.getFNac().toGregorianCalendar();
+                                                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                                    String fechaS = sdf.format(calendar.getTime());%>
                                                 <h4 class="mb-0">Fecha de Nacimiento: </h4>
                                                 <p style="font-size: 16px " class="font-weight-bold mt--1"><%=fechaS %></p>
                                             </div>
@@ -634,7 +650,7 @@
                                                             if(canal.getCategoria() != null){
                                                                 categoria = canal.getCategoria();
                                                             }
-                                                            List<String> lC2 = iC.listarCategorias();
+                                                            List<String> lC2 = portC.listarCategorias().getItem();
                                                             for(String cat2: lC2){ %>
                                                         <option value="<%=cat2%>" <%= (categoria.equals(cat2)) ? "selected" : ""%>><%=cat2%></option>
                                                         <% } %>
@@ -656,7 +672,7 @@
                                                 <%--Canal publico--%>
                                                 <div class="text-muted text-center mt-2 mb-3">
                                                     <div class="custom-control custom-checkbox mb-3">
-                                                        <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico" <%= canal.getPublico() ? "checked" : "" %>>
+                                                        <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico" <%= canal.isPublico() ? "checked" : "" %>>
                                                         <label class="custom-control-label" for="customCheck5">Canal publico</label>
                                                     </div>
                                                 </div>

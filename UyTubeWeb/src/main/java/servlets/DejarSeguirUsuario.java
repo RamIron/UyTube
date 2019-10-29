@@ -25,9 +25,13 @@ public class DejarSeguirUsuario extends HttpServlet {
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
         if (seguido != null && usr != null){
             String seguidor = usr.getNickname();
-            UFactory f = UFactory.getInstancia();
-            IUsuario iU = f.getIUsuario();
-            iU.dejarDeSeguirUsuario(seguidor, seguido);
+
+            /////////////WEB SERVICE/////////////////
+            publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
+            publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
+            //////////FIN WEBSERVICE///////////
+
+            port.dejarDeSeguirUsuario(seguidor, seguido);
             RequestDispatcher rd;
             String path = "/module/consultaUsuario.jsp?nick=" + seguido;
             rd = request.getRequestDispatcher(path);
