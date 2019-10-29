@@ -1,9 +1,6 @@
-<%@ page import="interfaces.CFactory" %>
-<%@ page import="interfaces.ICategoria" %>
+
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
-<%@ page import="interfaces.LRFactory" %>
-<%@ page import="interfaces.IListaReproduccion" %>
 <!--
 
 =========================================================
@@ -22,7 +19,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<% HttpSession s = request.getSession(); %>
+<%
+  HttpSession s = request.getSession();
+  DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+
+  //WEBSERVICES
+  publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+  publicadores.CListaRepPublish portListaRep = serviceListaRep.getCListaRepPublishPort();
+
+  publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+  publicadores.CCategoriaPublish portCategoria = serviceCategoria.getCCategoriaPublishPort();
+  //FIN WEBSERVICES
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,15 +65,14 @@
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
-        <% if (s.getAttribute("usuario") == null){ %>
+        <% if (usr == null){ %>
         <li class="nav-item">
           <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
             <i class="fas fa-sign-in-alt"></i>
             <span class="nav-link-inner--text">Entrar</span>
           </a>
         </li>
-        <% }else {
-          DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else {%>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
@@ -164,10 +171,7 @@
             </a>
           </li>
           <%
-            LRFactory f = LRFactory.getInstancia();
-            IListaReproduccion iL = f.getIListaReproduccion();
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-            List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+            List<String> lis = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
             for(String l: lis){ %>
           <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
@@ -183,9 +187,8 @@
         <h6 class="navbar-heading text-muted">Categorias</h6>
         <!-- Navigation -->
         <ul class="navbar-nav">
-          <% CFactory fC = CFactory.getInstancia();
-            ICategoria iC = fC.getICategoria();
-            List<String> lC = iC.listarCategorias();
+          <%
+            List<String> lC = portCategoria.listarCategorias().getItem();
             for(String cat: lC){ %>
           <li class="nav-item">
             <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -214,7 +217,7 @@
           </div>
         </form>
         <!-- User -->
-        <% if (s.getAttribute("usuario") == null){ %>
+        <% if (usr == null){ %>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item">
             <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/registro.jsp">
@@ -229,8 +232,7 @@
             </a>
           </li>
         </ul>
-        <% }else {
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else {%>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
