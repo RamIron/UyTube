@@ -1,9 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
-<%@ page import="datatypes.DtElementoWeb" %>
+<%@ page import="publicadores.DtElementoWeb" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="datatypes.DtCanalWeb" %>
-<%@ page import="interfaces.*" %>
+<%@ page import="publicadores.DtCanalWeb" %>
 
 <!--   Core   -->
 <script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
@@ -34,8 +33,22 @@
          pageEncoding="UTF-8"%>
 
 <%
-  HttpSession s = request.getSession();
-  DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+    HttpSession s = request.getSession();
+    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+
+    //WEBSERVICES
+    publicadores.CUsuarioPublishService serviceUsuario = new publicadores.CUsuarioPublishService();
+    publicadores.CUsuarioPublish portUsuario = serviceUsuario.getCUsuarioPublishPort();
+
+    publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
+    publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
+
+    publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+    publicadores.CListaRepPublish portListaRep = serviceListaRep.getCListaRepPublishPort();
+
+    publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+    publicadores.CCategoriaPublish portCategoria = serviceCategoria.getCCategoriaPublishPort();
+    //FIN WEBSERVICES
 %>
 
 <!DOCTYPE html>
@@ -178,9 +191,7 @@
             </a>
           </li>
           <%
-            LRFactory f = LRFactory.getInstancia();
-            IListaReproduccion iL = f.getIListaReproduccion();
-            List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+            List<String> lis = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
             for(String l: lis){ %>
           <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
@@ -196,9 +207,8 @@
         <h6 class="navbar-heading text-muted">Categorias</h6>
         <!-- Navigation -->
         <ul class="navbar-nav">
-          <% CFactory fC = CFactory.getInstancia();
-            ICategoria iC = fC.getICategoria();
-            List<String> lC = iC.listarCategorias();
+          <%
+            List<String> lC = portCategoria.listarCategorias().getItem();
             for(String cat: lC){ %>
           <li class="nav-item">
             <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -297,13 +307,6 @@
             List<DtElementoWeb> listaV = new ArrayList<DtElementoWeb>();
             List<DtElementoWeb> listaL = new ArrayList<DtElementoWeb>();
 
-            UFactory uF = UFactory.getInstancia();
-            IUsuario iU = uF.getIUsuario();
-            VFactory vF = VFactory.getInstancia();
-            IVideo iV = vF.getIVideo();
-            LRFactory lF = LRFactory.getInstancia();
-            IListaReproduccion iL = lF.getIListaReproduccion();
-
             if (query == null){
               query = "";
             }
@@ -318,15 +321,15 @@
             ordFecha = request.getParameter("orden") != null && request.getParameter("orden").equals("f");
 
             if(mostrarCan){
-              listaC = iU.busqueda(query, ordFecha);
+              listaC = portUsuario.busqueda(query, ordFecha).getItem();
               cantRes = cantRes + listaC.size();
             }
             if(mostrarVid){
-              listaV = iV.busqueda(query,ordFecha);
+              listaV = portVideo.busqueda(query,ordFecha).getItem();
               cantRes = cantRes + listaV.size();
             }
             if(mostrarLis){
-              listaL =  iL.busqueda(query, ordFecha);
+              listaL =  portListaRep.busqueda(query, ordFecha).getItem();
               cantRes = cantRes + listaL.size();
             }
 
