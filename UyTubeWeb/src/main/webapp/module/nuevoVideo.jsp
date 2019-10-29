@@ -4,6 +4,7 @@
 <%@ page import="publicadores.DtUsuarioWeb" %>
 <%@ page import="interfaces.LRFactory" %>
 <%@ page import="interfaces.IListaReproduccion" %>
+<%@ page import="net.java.dev.jaxb.array.StringArray" %>
 <!--
 
 =========================================================
@@ -334,10 +335,17 @@
                                         <div class="form-group">
                                             <select class="custom-select" id="inputGroupSelect01" name="categoria">
                                                 <option value="" selected> --Sin Categoría-- </option>
-                                                <% List<String> lC2 = iC.listarCategorias();
-                                                    for(String cat2: lC2){ %>
+                                                <%
+                                                /////////////WEB SERVICE CATEGORIA/////////////////
+                                                    publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+                                                    publicadores.CCategoriaPublish portCategoria = serviceCategoria.getCCategoriaPublishPort();
+                                                //////////FIN WEBSERVICE CATEGORIA///////////
+
+                                                    List<String> categorias = portCategoria.listarCategorias().getItem();
+                                                    for(String cat2: categorias){ %>
                                                 <option value="<%=cat2%>"><%=cat2%></option>
                                                 <% } %>
+
                                             </select>
                                         </div>
                                         <%--Fin Categoria de video--%>

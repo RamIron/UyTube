@@ -40,10 +40,11 @@ public class CrearVideo extends HttpServlet {
             String descripcion = request.getParameter("desc");
             String catVideo = request.getParameter("categoria");
             String fPub = request.getParameter("fPub");
+
             //CODIGO PARA EXTRAER LA FECHA
             /*SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date date = null;
-            Calendar cal = Calendar.getInstance();
+            XMLGregorianCalendar cal = null;
             try {
                 date = sdf.parse(fPub);
                 cal.setTime(date);
