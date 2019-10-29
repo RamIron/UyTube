@@ -19,10 +19,9 @@ import java.io.IOException;
 @WebServlet(name = "ModificarLista", value = "/ModificarLista")
 public class ModificarLista extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LRFactory fLr = LRFactory.getInstancia();
-        IListaReproduccion iLR = fLr.getIListaReproduccion();
+        publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+        publicadores.CListaRepPublish portL = serviceListaRep.getCListaRepPublishPort();
 
-        //este string esta bien????
         String nomLista = request.getParameter("nomL");
         Boolean esPublica;
         HttpSession s = request.getSession();
@@ -34,12 +33,9 @@ public class ModificarLista extends HttpServlet {
                 esPublica = true;
             }
 
-            iLR.setuList(usr.getNickname());
-            iLR.setLista(nomLista);
-            iLR.modificarInfoLista(nomLista, esPublica);
-
-            System.out.println("Soy la lista en el servlet: " + nomLista);
-            System.out.println("Soy el checkbox en el servlet: " + esPublica);
+            portL.setuList(usr.getNickname());
+            portL.setLista(nomLista);
+            portL.modificarInfoLista(nomLista, esPublica);
 
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/module/consultaLista.jsp?id=" + nomLista);
@@ -47,7 +43,7 @@ public class ModificarLista extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         } else {
-//            aca se redirecciona a la pagina de no deberias estar aqui
+            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
         }
 
 
