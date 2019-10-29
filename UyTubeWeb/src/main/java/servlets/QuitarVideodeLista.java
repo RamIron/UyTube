@@ -20,10 +20,8 @@ public class QuitarVideodeLista extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LRFactory fLr = LRFactory.getInstancia();
-        IListaReproduccion iLR = fLr.getIListaReproduccion();
-
-        System.out.println("Entre al servlet");
+        publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+        publicadores.CListaRepPublish portL = serviceListaRep.getCListaRepPublishPort();
 
         String usuario = request.getParameter("uv");
         String video = request.getParameter("v");
@@ -31,15 +29,11 @@ public class QuitarVideodeLista extends HttpServlet {
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
         if(usuario != null && video != null && lista != null) {
-
-            System.out.println("Soy la lista en el servlet " + lista);
-
-
-            iLR.setuVid(usuario);
-            iLR.setVideo(video);
-            iLR.setuList(usr.getNickname());
-            iLR.setLista(lista);
-            iLR.eliminarVideoDeLista(usuario, video, lista);
+            portL.setuVid(usuario);
+            portL.setVideo(video);
+            portL.setuList(usr.getNickname());
+            portL.setLista(lista);
+            portL.eliminarVideoDeLista(usuario, video, lista);
 
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/module/consultaLista.jsp?id=" + lista);
@@ -47,7 +41,7 @@ public class QuitarVideodeLista extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         } else {
-            //se tiene que redireccionar a la pagina de martin
+            response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
         }
     }
 }

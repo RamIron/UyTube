@@ -1,7 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
-<%@ page import="datatypes.DtElementoWeb" %>
-<%@ page import="interfaces.*" %>
+<%@ page import="publicadores.DtElementoWeb" %>
 <%@ page import="java.util.Random" %>
 <%@ page import="java.util.ArrayList" %>
 <!--
@@ -22,7 +21,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<% HttpSession s = request.getSession(); %>
+<%
+  HttpSession s = request.getSession();
+  DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+
+  //WEBSERVICES
+  publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
+  publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
+
+  publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+  publicadores.CListaRepPublish portListaRep = serviceListaRep.getCListaRepPublishPort();
+
+  publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+  publicadores.CCategoriaPublish portCategoria = serviceCategoria.getCCategoriaPublishPort();
+  //FIN WEBSERVICES
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,8 +77,7 @@
             <span class="nav-link-inner--text">Entrar</span>
           </a>
         </li>
-        <% }else {
-          DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else {%>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
@@ -167,13 +179,10 @@
             </a>
           </li>
           <%
-            LRFactory f = LRFactory.getInstancia();
-            IListaReproduccion iL = f.getIListaReproduccion();
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-            List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
-            for(String l: lis){ %>
+            System.out.println("Tamaño listas: " + portListaRep.listarListasDeUsuario(usr.getNickname()).getItem().size());
+            List<String> lista = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
+            for(String l: lista){ %>
           <li class="nav-item">
-<%--              <a class="nav-link" href="./consultaLista.jsp?id=<%=l%>">--%>
                   <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
                   <i class="ni ni-books text-blue"></i> <%=l%>
               </a>
@@ -187,10 +196,9 @@
         <h6 class="navbar-heading text-muted">Categorias</h6>
         <!-- Navigation -->
         <ul class="navbar-nav">
-          <% CFactory fC = CFactory.getInstancia();
-            ICategoria iC = fC.getICategoria();
-            List<String> lC = iC.listarCategorias();
-            for(String cat: lC){ %>
+          <%
+            List<String> listaCat = portCategoria.listarCategorias().getItem();
+            for(String cat: listaCat){ %>
           <li class="nav-item">
             <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
               <i class="ni ni-books text-blue"></i> <%=cat%>
@@ -233,8 +241,7 @@
             </a>
           </li>
         </ul>
-        <% }else {
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else {%>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
             <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -301,14 +308,11 @@
           <%}%>
 
           <%
-            VFactory fV = VFactory.getInstancia();
-            IVideo iV = fV.getIVideo();
-
             //obtener categorias con mas de 3 elementos
-            List<String> todasCategorias = iC.listarCategorias();
+            List<String> todasCategorias = portCategoria.listarCategorias().getItem();
             List<String> nomCats3 = new ArrayList<String>();
             for(String c : todasCategorias){
-              List<DtElementoWeb> vidsCat = iC.listarVideosCategoria(c);
+              List<DtElementoWeb> vidsCat = portCategoria.listarVideosCategoria(c).getItem();
               if(vidsCat.size() >= 3){
                 nomCats3.add(c);
               }
@@ -319,7 +323,7 @@
 
 
             //PARA OBTENER VIDEOS RANDOM
-            List<DtElementoWeb> totalVideosPub = iV.listarVideosPublicosWeb();
+            List<DtElementoWeb> totalVideosPub = portVideo.listarVideosPublicosWeb().getItem();
             List<DtElementoWeb> videos = new ArrayList<DtElementoWeb>();
             Random rand = new Random();
             if(totalVideosPub.size() >= 3){
@@ -362,7 +366,7 @@
               while (0 < nomCats3.size() && vidsCategoria.size() < 3){
                 int randomIndex = rand2.nextInt(nomCats3.size());
                 nomCat3 = nomCats3.get(randomIndex);
-                vidsCategoria = iC.listarVideosCategoria(nomCat3);
+                vidsCategoria = portCategoria.listarVideosCategoria(nomCat3).getItem();
                 nomCats3.remove(randomIndex);
               }
               if(!(vidsCategoria.size() < 3)){

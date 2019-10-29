@@ -1,12 +1,12 @@
-<%@ page import="java.util.List" %>
 <%@ page import="interfaces.*" %>
-<%@ page import="java.util.Calendar" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="java.text.ParseException" %>
-<%@ page import="java.util.GregorianCalendar" %>
 <%@ page import="com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput" %>
-<%@ page import="datatypes.*" %>
+<%--<%@ page import="datatypes.*" %>--%>
+<%@ page import="java.util.*" %>
+<%@ page import="net.java.dev.jaxb.array.StringArray" %>
+<%@ page import="publicadores.*" %>
+<%@ page import="java.security.spec.RSAOtherPrimeInfo" %>
 <!--
 
 =========================================================
@@ -25,7 +25,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<% HttpSession s = request.getSession(); %>
+<%
+    HttpSession s = request.getSession();
+    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+    //WEBSERVICES
+    publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
+    publicadores.CVideoPublish portV = serviceVideo.getCVideoPublishPort();
+
+    publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+    publicadores.CListaRepPublish portL = serviceListaRep.getCListaRepPublishPort();
+
+    publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+    publicadores.CCategoriaPublish portC = serviceCategoria.getCCategoriaPublishPort();
+
+    publicadores.CUsuarioPublishService serviceUsuario = new publicadores.CUsuarioPublishService();
+    publicadores.CUsuarioPublish portU = serviceUsuario.getCUsuarioPublishPort();
+    //FIN WEBSERVICES
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,8 +83,7 @@
             <span class="nav-link-inner--text">Entrar</span>
           </a>
         </li>
-        <% }else {
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else { %>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
@@ -167,10 +182,7 @@
                     </a>
                 </li>
                 <%
-                    LRFactory f = LRFactory.getInstancia();
-                    IListaReproduccion iL = f.getIListaReproduccion();
-                    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                    List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+                    List<String> lis = portL.listarListasDeUsuario(usr.getNickname()).getItem();
                     for(String l: lis){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
@@ -186,9 +198,8 @@
             <h6 class="navbar-heading text-muted">Categorias</h6>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <% CFactory fC = CFactory.getInstancia();
-                    ICategoria iC = fC.getICategoria();
-                    List<String> lC = iC.listarCategorias();
+                <%
+                    List<String> lC = portC.listarCategorias().getItem();
                     for(String cat: lC){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -232,8 +243,7 @@
                     </a>
                 </li>
             </ul>
-            <% }else {
-                DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+            <% }else { %>
             <ul class="navbar-nav align-items-center d-none d-md-flex">
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -289,24 +299,23 @@
                                 </div>
                                 <%}%>
                                 <%
-                                    VFactory uF = VFactory.getInstancia();
-                                    IVideo iV = uF.getIVideo();
-                                    UFactory fU = UFactory.getInstancia();
-                                    IUsuario iUsr = fU.getIUsuario();
-                                    LRFactory lrF = LRFactory.getInstancia();
-                                    IListaReproduccion iLR = lrF.getIListaReproduccion();
-
                                     String nickUsr =  request.getParameter("nick");
-                                    DtUsuario usuario = iUsr.obtenerInfoUsuario(nickUsr);
-                                    DtCanal canal = iUsr.obtenerInfoCanal();
-                                    List<String> seguidos = iUsr.listarSeguidos();
-                                    List<String> seguidores = iUsr.listarSeguidores();
                                     DtUsuarioWeb usrSession = (DtUsuarioWeb) s.getAttribute("usuario");
-                                    List<DtUsuarioWeb> listSeguidores = iUsr.listarNickFotoWeb(seguidores);
-                                    List<DtUsuarioWeb> listSeguidos = iUsr.listarNickFotoWeb(seguidos);
 
-                                    List<DtElementoWeb> listVideos = iV.listarVideosPublicosDeUsuarioWeb(usuario.getNickname());
-                                    List<String> listListasRep = iLR.listarListasParticularesPublicas(usuario.getNickname());
+                                    DtUsuario usuario = portU.obtenerInfoUsuario(nickUsr);
+                                    DtCanal canal = portU.obtenerInfoCanal();
+
+                                    StringArray seguidoresSA = portU.listarSeguidores();
+                                    List<String> seguidores = seguidoresSA.getItem();
+
+                                    StringArray seguidosSA = portU.listarSeguidos();
+                                    List<String> seguidos = seguidosSA.getItem();
+
+                                    List<DtUsuarioWeb> listSeguidores = portU.listarNickFotoWeb(seguidoresSA).getItem();
+                                    List<DtUsuarioWeb> listSeguidos = portU.listarNickFotoWeb(seguidosSA).getItem();
+
+                                    List<DtElementoWeb> listVideos = portV.listarVideosPublicosDeUsuarioWeb(usuario.getNickname()).getItem();
+                                    List<String> listListasRep = portL.listarListasParticularesPublicas(usuario.getNickname()).getItem();
                                 %>
                                 <div class="row">
                                     <div class="col-sm-4">
@@ -368,8 +377,10 @@
 
                                             <%--Fecha Nacimiento--%>
                                             <div class="col">
-                                                <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                                    String fechaS = sdf.format(usuario.getfNac().getTime());%>
+                                                <%
+                                                    Calendar calendar = usuario.getFNac().toGregorianCalendar();
+                                                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                                    String fechaS = sdf.format(calendar.getTime());%>
                                                 <h5 class="mb-0">Fecha de Nacimiento: </h5>
                                                 <span class="mb-xl-2 font-weight-bold text-lg"><%=fechaS %></span>
                                             </div>
@@ -380,7 +391,7 @@
 
                                         <hr>
 
-                                        <%if(canal.getPublico()){%>
+                                        <%if(canal.isPublico()){%>
                                         <div class="text-muted text-center mt-2 mb-3">
                                             <h1>Datos del Canal</h1>
                                         </div>
@@ -426,7 +437,7 @@
                                 </div>
 
 
-                                <%if(canal.getPublico()){%>
+                                <%if(canal.isPublico()){%>
                                     <hr>
                                     <div class="nav-wrapper">
                                         <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
@@ -453,7 +464,7 @@
                                                     <div class="row row- justify-content-right">
                                                         <% for(DtUsuarioWeb u:listSeguidores) { %>
                                                         <div class="col-sm-3">
-                                                            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                                                            <div class="card shadow-sm p-3 mb-4 bg-white rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3">
                                                                     <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
                                                                         <div class="media align-items-center">
@@ -483,7 +494,7 @@
                                                     <div class="row row- justify-content-right">
                                                         <% for(DtUsuarioWeb u:listSeguidos) { %>
                                                         <div class="col-sm-3">
-                                                            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                                                            <div class="card shadow-sm p-3 mb-4 bg-white rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3">
                                                                     <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
                                                                         <div class="media align-items-center">
@@ -512,7 +523,7 @@
                                                 <div class="tab-pane fade show active" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                                                     <div class="container-fluid">
                                                         <div class="row row- justify-content-right">
-                                                            <%
+                                                           <%
                                                                 for(DtElementoWeb eu: listVideos){
                                                             %>
                                                             <div class="col-sm-3">
@@ -540,9 +551,9 @@
                                                         <div class="col-sm-3">
                                                             <div class="card shadow-sm p-1 mb-2 bg-gradient-lighter rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3 text-lg-center">
-                                                                    <%--<a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=u.getNickname()%>">--%>
+                                                                    <a class="" href="<%= request.getContextPath() %>/module/consultaLista.jsp?nick=<%=usuario.getNickname()%>">
                                                                         <span class="mb-0 text-lg font-weight-bold"><%=lr%></span>
-                                                                   <%-- </a>--%>
+                                                                    </a>
                                                                 </div>
                                                             </div>
                                                             <br/>

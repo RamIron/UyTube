@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,8 +25,19 @@ import java.util.Date;
 @WebServlet(name = "ModificarVideo" , value = "/ModificarVideo")
 public class ModificarVideo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        VFactory vF = VFactory.getInstancia();
-        IVideo iV = vF.getIVideo();
+        //WEBSERVICES
+        publicadores.CUsuarioPublishService serviceUsuario = new publicadores.CUsuarioPublishService();
+        publicadores.CUsuarioPublish portUsuario = serviceUsuario.getCUsuarioPublishPort();
+
+        publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
+        publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
+
+        publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+        publicadores.CListaRepPublish portListaRep = serviceListaRep.getCListaRepPublishPort();
+
+        publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+        publicadores.CCategoriaPublish portCategoria = serviceCategoria.getCCategoriaPublishPort();
+        //FIN WEBSERVICES
 
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
@@ -39,12 +53,16 @@ public class ModificarVideo extends HttpServlet {
             //CODIGO PARA EXTRAER LA FECHA
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date date = null;
-            Calendar cal = Calendar.getInstance();
+            XMLGregorianCalendar cal = null;
             try {
-                date = sdf.parse(fPub);
-                cal.setTime(date);
-            } catch (ParseException e) {
-                System.out.println("Excepcion: error con la fecha");
+                date = sdf.parse(fPub);//TODO nose esta cargando bien la fecha
+                System.out.println("FechaCompleta: " + fPub);
+                System.out.println("Año: " + date.getYear());
+                System.out.println("Mes: " + date.getMonth());
+                System.out.println("Dia: " + date.getDay());
+                cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(1900 + date.getYear(),date.getMonth(),date.getDay(), 0, 0, 0, 0, -3);
+            } catch (DatatypeConfigurationException | ParseException e) {
+                e.printStackTrace();
             }
             //FIN DE CODIGO PARA EXTRAER LA FECHA
 
@@ -54,11 +72,11 @@ public class ModificarVideo extends HttpServlet {
             }else{
                 publico = true;
             }
-            iV.setUsr(usr.getNickname());
-            iV.setVid(nomOriginal);
-            iV.modificarInfoVideo(nomVideo, descripcion, cal, duracion, url, publico);
+            portVideo.setUsr(usr.getNickname());
+            portVideo.setVid(nomOriginal);
+            portVideo.modificarInfoVideo(nomVideo, descripcion, cal, duracion, url, publico);
             if(!catVideo.isEmpty()) {
-                iV.agregarCategoria(catVideo);
+                portVideo.agregarCategoria(catVideo);
             }
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/index.jsp");

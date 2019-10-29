@@ -25,17 +25,10 @@ import java.util.Date;
 @WebServlet(name = "CrearVideo", value= "/CrearVideo")
 public class CrearVideo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-/////////////WEB SERVICE VIDEO/////////////////
+        //WEBSERVICES
         publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
-        publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
-//////////FIN WEBSERVICE VIDEO///////////
-
-
-//        UFactory uF = UFactory.getInstancia();
-//        IUsuario iU = uF.getIUsuario();
-//        VFactory vF = VFactory.getInstancia();
-//        IVideo iV = vF.getIVideo();
+        publicadores.CVideoPublish portV = serviceVideo.getCVideoPublishPort();
+        //FIN WEBSERVICES
 
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
@@ -49,26 +42,42 @@ public class CrearVideo extends HttpServlet {
             String fPub = request.getParameter("fPub");
 
             //CODIGO PARA EXTRAER LA FECHA
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            /*SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date date = null;
             XMLGregorianCalendar cal = null;
             try {
                 date = sdf.parse(fPub);
-                cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(1900 + date.getYear(),date.getMonth(),date.getDay(), 0, 0, 0, 0, -3);
+                cal.setTime(date);
+            } catch (ParseException e) {
+                System.out.println("Excepcion: error con la fecha");
+            }*/
+            //FIN DE CODIGO PARA EXTRAER LA FECHA
+
+            //CODIGO PARA EXTRAER LA FECHA
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            Date date = null;
+            XMLGregorianCalendar cal = null;
+            try {
+                date = sdf.parse(fPub);//TODO nose esta cargando bien la fecha
+                System.out.println("FechaCompleta: " + fPub);
+                System.out.println("Año: " + date.getYear());
+                System.out.println("Mes: " + date.getMonth());
+                System.out.println("Dia: " + date.getDay());
+                cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(1900 + date.getYear(), date.getMonth(), date.getDay(), 0, 0, 0, 0, -3);
             } catch (DatatypeConfigurationException | ParseException e) {
                 e.printStackTrace();
             }
             //FIN DE CODIGO PARA EXTRAER LA FECHA
 
-            if(portVideo.existeVideo(usr.getNickname(), nomVideo)){
+            if(portV.existeVideo(usr.getNickname(), nomVideo)){
                 RequestDispatcher rd;
                 rd = request.getRequestDispatcher("/module/nuevoVideo.jsp");
                 String message = "EXISTE EL VIDEO";
                 request.setAttribute("message", message);
                 rd.forward(request, response);
             }else{
-                portVideo.agregarVideo(usr.getNickname(), nomVideo, descripcion, cal, duracion, url);
-                portVideo.agregarCategoria(catVideo);
+                portV.agregarVideo(usr.getNickname(), nomVideo, descripcion, cal, duracion, url);
+                portV.agregarCategoria(catVideo);
                 RequestDispatcher rd;
                 rd = request.getRequestDispatcher("/index.jsp");
                 String message = "Se ha creado el video <strong>" + nomVideo + "</strong>";

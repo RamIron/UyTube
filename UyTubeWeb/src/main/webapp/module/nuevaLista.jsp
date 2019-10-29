@@ -22,7 +22,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<% HttpSession s = request.getSession(); %>
+<%
+    HttpSession s = request.getSession();
+    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+    //WEBSERVICES
+    publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+    publicadores.CListaRepPublish portL = serviceListaRep.getCListaRepPublishPort();
+
+    publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+    publicadores.CCategoriaPublish portC = serviceCategoria.getCCategoriaPublishPort();
+    //FIN WEBSERVICES
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,8 +74,7 @@
             <span class="nav-link-inner--text">Entrar</span>
           </a>
         </li>
-        <% }else {
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else { ;%>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
@@ -164,10 +173,7 @@
                     </a>
                 </li>
                 <%
-                    LRFactory f = LRFactory.getInstancia();
-                    IListaReproduccion iL = f.getIListaReproduccion();
-                    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                    List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+                    List<String> lis = portL.listarListasDeUsuario(usr.getNickname()).getItem();
                     for(String l: lis){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
@@ -183,9 +189,7 @@
             <h6 class="navbar-heading text-muted">Categorias</h6>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <% CFactory fC = CFactory.getInstancia();
-                    ICategoria iC = fC.getICategoria();
-                    List<String> lC = iC.listarCategorias();
+                <%  List<String> lC = portC.listarCategorias().getItem();
                     for(String cat: lC){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -229,19 +233,18 @@
                     </a>
                 </li>
             </ul>
-            <% }else {
-                DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+            <% }else { %>
             <ul class="navbar-nav align-items-center d-none d-md-flex">
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="media align-items-center">
-                <span class="avatar avatar-sm rounded-circle">
-                  <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
-                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
-                  <% } else { %>
-                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
-                  <% } %>
-                </span>
+                            <span class="avatar avatar-sm rounded-circle">
+                              <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
+                              <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
+                              <% } else { %>
+                              <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
+                              <% } %>
+                            </span>
                             <div class="media-body ml-2 d-none d-lg-block">
                                 <span class="mb-0 text-sm  font-weight-bold">@<%=usr.getNickname() %></span>
                             </div>
@@ -272,9 +275,6 @@
         <div class="container-fluid">
             <div class="header-body">
                 <!-- Contenido aqui TODO-->
-
-
-
                     <div class="row justify-content-center">
                         <div class="col-xl-10 order-xl-1">
                             <div class="card bg-secondary shadow ">

@@ -1,12 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
-<%@ page import="interfaces.*" %>
-<%@ page import="logica.CVideo" %>
-<%@ page import="datatypes.DtVideo" %>
-<%@ page import="java.sql.SQLOutput" %>
-<%@ page import="java.util.Calendar" %>
-<%@ page import="datatypes.DtComentario" %>
-<%@ page import="datatypes.DtValoracion" %>
+<%@ page import="publicadores.DtVideo" %>
+<%@ page import="publicadores.DtComentario" %>
+<%@ page import="publicadores.DtValoracion" %>
 <!--
 
 =========================================================
@@ -35,9 +31,9 @@
     }else {
       for (DtComentario c :comentarios){
 
-        Integer dia = c.getFecha().get(Calendar.DAY_OF_MONTH);
-        Integer mes = c.getFecha().get(Calendar.MONTH);
-        Integer ano = c.getFecha().get(Calendar.YEAR);
+        Integer dia = c.getFecha().getDay();
+        Integer mes = c.getFecha().getMonth();
+        Integer ano = c.getFecha().getYear();
         res += "<div class=\"bloque-comentario\">\n" +
                 "                      <div>\n" +
                 "                        <h5>@" + c.getNickname() + " · " + dia + "/" + mes + "/" + ano;
@@ -85,6 +81,20 @@
 <%
   HttpSession s = request.getSession();
   DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+
+  //WEBSERVICES
+  publicadores.CUsuarioPublishService serviceUsuario = new publicadores.CUsuarioPublishService();
+  publicadores.CUsuarioPublish portUsuario = serviceUsuario.getCUsuarioPublishPort();
+
+  publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
+  publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
+
+  publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+  publicadores.CListaRepPublish portListaRep = serviceListaRep.getCListaRepPublishPort();
+
+  publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+  publicadores.CCategoriaPublish portCategoria = serviceCategoria.getCCategoriaPublishPort();
+  //FIN WEBSERVICES
 %>
 
 <!DOCTYPE html>
@@ -227,9 +237,7 @@
             </a>
           </li>
           <%
-            LRFactory f = LRFactory.getInstancia();
-            IListaReproduccion iL = f.getIListaReproduccion();
-            List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+            List<String> lis = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
             for(String l: lis){ %>
           <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
@@ -245,9 +253,8 @@
         <h6 class="navbar-heading text-muted">Categorias</h6>
         <!-- Navigation -->
         <ul class="navbar-nav">
-          <% CFactory fC = CFactory.getInstancia();
-            ICategoria iC = fC.getICategoria();
-            List<String> lC = iC.listarCategorias();
+          <%
+            List<String> lC = portCategoria.listarCategorias().getItem();
             for(String cat: lC){ %>
           <li class="nav-item">
             <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -336,15 +343,9 @@
           <%
             if(request.getParameter("u") != null && request.getParameter("v") != null){
                 String nick = request.getParameter("u");
-              System.out.println("nick " + nick);
                 String nomVid = request.getParameter("v");
-              System.out.println("vid " + nomVid);
-                VFactory vF = VFactory.getInstancia();
-
-                IVideo cV = vF.getIVideo();
-                cV.setUsr(nick);
-                DtVideo infoV = cV.obtenerInfoVideo(nomVid);
-                System.out.println("InfoV " + infoV);
+                portVideo.setUsr(nick);
+                DtVideo infoV = portVideo.obtenerInfoVideo(nomVid);
 
           %>
           <div class="container-fluid">
@@ -359,7 +360,7 @@
                     <h1>
                       <%=infoV.getNombre()%>
                       <%
-                        List<DtValoracion> listaVal = cV.obtenerValoracionVideo();
+                        List<DtValoracion> listaVal = portVideo.obtenerValoracionVideo().getItem();
                         if(infoV.getCategoria() != null){
                       %>
                       <a href="#" class="badge badge-pill badge-primary"><%=infoV.getCategoria()%></a>
@@ -367,12 +368,12 @@
                     </h1>
                     <div class="row row- justify-content-right">
                       <div class="col-sm-6">
-                        <h3><a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=nick%>">@<%=nick%></a> | <%=infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.YEAR)%> | <%=infoV.getDuracion()%> seg.</h3>
+                        <h3><a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=nick%>">@<%=nick%></a> | <%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getYear()%> | <%=infoV.getDuracion()%> seg.</h3>
                       </div>
                       <div class="col-sm-6">
                         <div class="float-sm-right d-sm-inline-flex ">
                           <div>
-                            <% if (infoV.getPublico()){%>
+                            <% if (infoV.isPublico()){%>
                             <i class="fas fa-globe"></i><small> Publico</small>
                             <%} else {%>
                             <i class="fas fa-user-lock"></i><small> Privado</small>
@@ -386,12 +387,12 @@
                                 Boolean no = false;
                                 for (DtValoracion v: listaVal){
                                   if(usr != null && v.getNickname().equals(usr.getNickname())){
-                                    si = v.getGusta();
-                                    no = !v.getGusta();
+                                    si = v.isGusta();
+                                    no = !v.isGusta();
                                   }
                                 }
                               %>
-                              <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=si"><i class="fa<%= si ? "s" : "r" %> fa-thumbs-up"></i> <%=cV.cantidadGusta()%></a> | <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=no"><%=cV.cantidadNoGusta()%> <i class="fa<%= no ? "s" : "r" %> fa-thumbs-down"></i></a>
+                              <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=si"><i class="fa<%= si ? "s" : "r" %> fa-thumbs-up"></i> <%=portVideo.cantidadGusta()%></a> | <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=no"><%=portVideo.cantidadNoGusta()%> <i class="fa<%= no ? "s" : "r" %> fa-thumbs-down"></i></a>
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </p>
                           </div>
@@ -409,9 +410,7 @@
                               </button>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <%
-                                  LRFactory f = LRFactory.getInstancia();
-                                  IListaReproduccion iL = f.getIListaReproduccion();
-                                  List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+                                  List<String> lis = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
                                   for(String l: lis){
                                 %>
                                 <a class="dropdown-item" href="<%= request.getContextPath() %>/AgregarALista?l=<%=l%>&vu=<%=nick%>&vn=<%=infoV.getNombre()%>"><%=l%></a>
@@ -457,7 +456,7 @@
                                       int i = 0;
                                       for(DtValoracion v: listaVal) {
                                         if(!listaVal.isEmpty()) {
-                                          if(v.getGusta()) { %>
+                                          if(v.isGusta()) { %>
                                     <small>@<%=v.getNickname()%></small><br>
                                     <%}
                                     }
@@ -473,7 +472,7 @@
                                     <%
                                       for(DtValoracion v: listaVal) {
                                         if(!listaVal.isEmpty()) {
-                                          if(!v.getGusta()) { %>
+                                          if(!v.isGusta()) { %>
                                     <small>@<%=v.getNickname()%></small><br>
                                     <%}
                                     }
@@ -533,7 +532,7 @@
                                       <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                       </div>
-                                      <input name="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" value="<%=infoV.getfPublicacion().get(Calendar.MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH)%>/<%=infoV.getfPublicacion().get(Calendar.YEAR)%>"> <!-- //TODO -->
+                                      <input name="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" value="<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getYear()%>">
                                     </div>
                                   </div>
                                   <%--Fin Fecha de Publicacion--%>
@@ -549,7 +548,7 @@
                                         if(infoV.getCategoria() != null){
                                           categoria = infoV.getCategoria();
                                         }
-                                        List<String> lC2 = iC.listarCategorias();
+                                        List<String> lC2 = portCategoria.listarCategorias().getItem();
                                         for(String cat2: lC2){ %>
                                       <option value="<%=cat2%>" <%= (categoria.equals(cat2)) ? "selected" : ""%>><%=cat2%></option>
                                       <% } %>
@@ -559,7 +558,7 @@
 
                                   <div class="text-muted text-center mt-2 mb-3">
                                     <div class="custom-control custom-control-alternative custom-checkbox mb-3">
-                                      <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico" <%= infoV.getPublico() ? "checked" : "" %>>
+                                      <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico" <%= infoV.isPublico() ? "checked" : "" %>>
                                       <label class="custom-control-label" for="customCheck5">Video publico</label>
                                     </div>
                                   </div>
@@ -587,13 +586,13 @@
                   </div>
                 </div>
                 <br/>
-                <% if(infoV.getPublico()){
+                <% if(infoV.isPublico()){
                     String path = "/module/visualizarVideo.jsp?u=" + nick +"&v=" + infoV.getNombre();
                 %>
                 <div class="card bg-secondary shadow ">
                   <div class="card-body px-lg-5 py-lg-5">
                     <h2>Comentarios</h2>
-                    <%=imprimirComentarios(cV.obtenerComentariosVideo(nomVid), request, path)%>
+                    <%=imprimirComentarios(portVideo.obtenerComentariosVideo(nomVid).getItem(), request, path)%>
                     <% if (s.getAttribute("usuario") != null){ %>
                     <form name="comentar" action="<%= request.getContextPath() %>/ComentarVideo" method="post">
                       <div class="input-group input-group-alternative">

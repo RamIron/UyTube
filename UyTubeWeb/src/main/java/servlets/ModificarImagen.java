@@ -29,14 +29,13 @@ public class ModificarImagen extends HttpServlet {
         if (usrS != null){
             String nickname = request.getParameter("nickname");
             String foto = request.getParameter("foto");
-            System.out.println("La foto es: " + foto);
 
-            UFactory fU = UFactory.getInstancia();
-            IUsuario iU = fU.getIUsuario();
+            //UFactory fU = UFactory.getInstancia();
+            //IUsuario iU = fU.getIUsuario();
 
             String message = "";
 
-            if(iU.existeNickname(nickname)) {
+            if(port.existeNickname(nickname)) {
                 String fotoURL;
                 if(!foto.equals("")) {
                     fotoURL = "img/usr/" + foto;
@@ -45,7 +44,7 @@ public class ModificarImagen extends HttpServlet {
                     fotoURL = "src/main/resources/img/default.png";
                     message = "IMAGEN DE USUARIO ELIMINADA";
                 }
-                iU.modificarImagen(fotoURL);
+                port.modificarImagen(fotoURL);
             }
 
             DtUsuarioWeb usr = port.obtenerUsuarioWebNick(nickname);

@@ -22,12 +22,16 @@ public class DejarSeguirUsuario extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String seguido = request.getParameter("u");
         HttpSession s = request.getSession();
+        /////////////WEB SERVICE/////////////////
+        publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
+        publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
+        //////////FIN WEBSERVICE///////////
+
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
         if (seguido != null && usr != null){
             String seguidor = usr.getNickname();
-            UFactory f = UFactory.getInstancia();
-            IUsuario iU = f.getIUsuario();
-            iU.dejarDeSeguirUsuario(seguidor, seguido);
+
+            port.dejarDeSeguirUsuario(seguidor, seguido);
             RequestDispatcher rd;
             String path = "/module/consultaUsuario.jsp?nick=" + seguido;
             rd = request.getRequestDispatcher(path);

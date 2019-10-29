@@ -1,15 +1,16 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
-<%@ page import="datatypes.DtUsuario" %>
+<%@ page import="publicadores.DtUsuario" %>
 <%@ page import="interfaces.*" %>
-<%@ page import="datatypes.DtCanal" %>
+<%@ page import="publicadores.DtCanal" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.util.GregorianCalendar" %>
 <%@ page import="com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput" %>
-<%@ page import="datatypes.DtElementoWeb" %>
+<%@ page import="publicadores.DtElementoWeb" %>
+<%@ page import="net.java.dev.jaxb.array.StringArray" %>
 <!--
 
 =========================================================
@@ -28,7 +29,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<% HttpSession s = request.getSession();%>
+<%
+    HttpSession s = request.getSession();
+    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+    //WEBSERVICES
+    publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
+    publicadores.CVideoPublish portV = serviceVideo.getCVideoPublishPort();
+
+    publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+    publicadores.CListaRepPublish portL = serviceListaRep.getCListaRepPublishPort();
+
+    publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+    publicadores.CCategoriaPublish portC = serviceCategoria.getCCategoriaPublishPort();
+
+    publicadores.CUsuarioPublishService serviceUsuario = new publicadores.CUsuarioPublishService();
+    publicadores.CUsuarioPublish portU = serviceUsuario.getCUsuarioPublishPort();
+    //FIN WEBSERVICES
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -70,8 +87,7 @@
             <span class="nav-link-inner--text">Entrar</span>
           </a>
         </li>
-        <% }else {
-          DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else { %>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
@@ -170,10 +186,7 @@
                     </a>
                 </li>
                 <%
-                    LRFactory f = LRFactory.getInstancia();
-                    IListaReproduccion iL = f.getIListaReproduccion();
-                    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                    List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+                    List<String> lis = portL.listarListasDeUsuario(usr.getNickname()).getItem();
                     for(String l: lis){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
@@ -189,9 +202,8 @@
             <h6 class="navbar-heading text-muted">Categorias</h6>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <% CFactory fC = CFactory.getInstancia();
-                    ICategoria iC = fC.getICategoria();
-                    List<String> lC = iC.listarCategorias();
+                <%
+                    List<String> lC = portC.listarCategorias().getItem();
                     for(String cat: lC){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -235,8 +247,7 @@
                     </a>
                 </li>
             </ul>
-            <% }else {
-                DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+            <% }else { %>
             <ul class="navbar-nav align-items-center d-none d-md-flex">
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -278,7 +289,7 @@
         <div class="container-fluid">
             <div class="header-body">
                     <div class="row justify-content-center">
-                        <div class="col-sm-8 order-xl-1">
+                        <div class="col-sm-10 order-xl-1">
                             <div class="card bg-secondary shadow ">
                                 <div class="card-body px-lg-5 py-lg-5">
                                     <%
@@ -290,24 +301,20 @@
                                     </div>
                                     <%}%>
                                     <%
-                                        UFactory fU = UFactory.getInstancia();
-                                        IUsuario iUsr = fU.getIUsuario();
-                                        VFactory uF = VFactory.getInstancia();
-                                        IVideo iV = uF.getIVideo();
-                                        LRFactory lrF = LRFactory.getInstancia();
-                                        IListaReproduccion iLR = lrF.getIListaReproduccion();
+                                        DtUsuario usuario = portU.obtenerInfoUsuario(usr.getNickname());
+                                        DtCanal canal = portU.obtenerInfoCanal();
 
-                                        DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                                        DtUsuario usuario = iUsr.obtenerInfoUsuario(usr.getNickname());
-                                        DtCanal canal = iUsr.obtenerInfoCanal();
+                                        StringArray seguidoresSA = portU.listarSeguidores();
+                                        List<String> seguidores = seguidoresSA.getItem();
 
-                                        List<String> seguidos = iUsr.listarSeguidos();
-                                        List<String> seguidores = iUsr.listarSeguidores();
-                                        List<DtUsuarioWeb> listSeguidores = iUsr.listarNickFotoWeb(seguidores);
-                                        List<DtUsuarioWeb> listSeguidos = iUsr.listarNickFotoWeb(seguidos);
+                                        StringArray seguidosSA = portU.listarSeguidos();
+                                        List<String> seguidos = seguidosSA.getItem();
 
-                                        List<DtElementoWeb> listVideos = iV.listarVideosDeUsuarioWeb(usuario.getNickname());
-                                        List<String> listListasRep = iLR.listarListasDeUsuario(usuario.getNickname());
+                                        List<DtUsuarioWeb> listSeguidores = portU.listarNickFotoWeb(seguidoresSA).getItem();
+                                        List<DtUsuarioWeb> listSeguidos = portU.listarNickFotoWeb(seguidosSA).getItem();
+
+                                        List<DtElementoWeb> listVideos = portV.listarVideosDeUsuarioWeb(usuario.getNickname()).getItem();
+                                        List<String> listListasRep = portL.listarListasDeUsuario(usuario.getNickname()).getItem();
                                     %>
                                     <div class="row">
                                         <div class="col-sm-5 mb-4">
@@ -373,8 +380,10 @@
 
                                             <%--Fecha Nacimiento--%>
                                             <div style="text-align: center">
-                                                <%SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                                String fechaS = sdf.format(usuario.getfNac().getTime());%>
+                                                <%
+                                                    Calendar calendar = usuario.getFNac().toGregorianCalendar();
+                                                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                                    String fechaS = sdf.format(calendar.getTime());%>
                                                 <h4 class="mb-0">Fecha de Nacimiento: </h4>
                                                 <p style="font-size: 16px " class="font-weight-bold mt--1"><%=fechaS %></p>
                                             </div>
@@ -634,7 +643,7 @@
                                                             if(canal.getCategoria() != null){
                                                                 categoria = canal.getCategoria();
                                                             }
-                                                            List<String> lC2 = iC.listarCategorias();
+                                                            List<String> lC2 = portC.listarCategorias().getItem();
                                                             for(String cat2: lC2){ %>
                                                         <option value="<%=cat2%>" <%= (categoria.equals(cat2)) ? "selected" : ""%>><%=cat2%></option>
                                                         <% } %>
@@ -656,7 +665,7 @@
                                                 <%--Canal publico--%>
                                                 <div class="text-muted text-center mt-2 mb-3">
                                                     <div class="custom-control custom-checkbox mb-3">
-                                                        <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico" <%= canal.getPublico() ? "checked" : "" %>>
+                                                        <input class="custom-control-input" id="customCheck5" type="checkbox" name="publico" <%= canal.isPublico() ? "checked" : "" %>>
                                                         <label class="custom-control-label" for="customCheck5">Canal publico</label>
                                                     </div>
                                                 </div>
