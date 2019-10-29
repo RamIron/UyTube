@@ -1,10 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
-<%@ page import="interfaces.*" %>
-<%@ page import="logica.CVideo" %>
 <%@ page import="publicadores.DtVideo" %>
-<%@ page import="java.sql.SQLOutput" %>
-<%@ page import="java.util.Calendar" %>
 <%@ page import="publicadores.DtComentario" %>
 <%@ page import="publicadores.DtValoracion" %>
 <!--
