@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="interfaces.*" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="datatypes.*" %>
+<%@ page import="publicadores.DtUsuarioWeb" %>
+<%@ page import="publicadores.DtElementoWeb" %>
+<%@ page import="publicadores.DtListaRep" %>
 <!--
 
 =========================================================
@@ -20,7 +20,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<% HttpSession s = request.getSession(); %>
+<%
+    HttpSession s = request.getSession();
+    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+
+    //WEBSERVICES
+    publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+    publicadores.CListaRepPublish portListaRep = serviceListaRep.getCListaRepPublishPort();
+
+    publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+    publicadores.CCategoriaPublish portCategoria = serviceCategoria.getCCategoriaPublishPort();
+    //FIN WEBSERVICES
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,8 +73,7 @@
             <span class="nav-link-inner--text">Entrar</span>
           </a>
         </li>
-        <% }else {
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else {%>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
@@ -162,10 +172,7 @@
                     </a>
                 </li>
                 <%
-                    LRFactory f = LRFactory.getInstancia();
-                    IListaReproduccion iL = f.getIListaReproduccion();
-                    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-                    List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
+                    List<String> lis = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
                     String lista = request.getParameter("id");
                     for(String l: lis){
                     %>
@@ -183,9 +190,8 @@
             <h6 class="navbar-heading text-muted">Categorias</h6>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <% CFactory fC = CFactory.getInstancia();
-                    ICategoria iC = fC.getICategoria();
-                    List<String> lC = iC.listarCategorias();
+                <%
+                    List<String> lC = portCategoria.listarCategorias().getItem();
                     for(String cat: lC){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -229,8 +235,7 @@
                     </a>
                 </li>
             </ul>
-            <% }else {
-                DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+            <% }else {%>
             <ul class="navbar-nav align-items-center d-none d-md-flex">
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -278,9 +283,6 @@
                     <div class="card-body">
 <%--            empieza contenido de la tab de videos--%>
                     <%
-                        LRFactory fLR = LRFactory.getInstancia();
-                        IListaReproduccion iLR = fLR.getIListaReproduccion();
-                        DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
                         String lista = request.getParameter("id");
                         String usuario = request.getParameter("u");
                         if(usuario == null && usr != null){
@@ -289,9 +291,10 @@
                         if(usuario == null){
                             response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
                         } else {
-                        iLR.setuList(usuario);
-                        List<DtElementoWeb> videoLista = iLR.listarVideosListaWeb(lista);
-                        DtListaRep infoLista = iLR.obtenerListaDeUsuario(lista);
+                            System.out.println("usuario: " + usuario);
+                            portListaRep.setuList(usuario);
+                            List<DtElementoWeb> videoLista = portListaRep.listarVideosListaWeb(lista).getItem();
+                            DtListaRep infoLista = portListaRep.obtenerListaDeUsuario(lista);
                     %>
                     <div class="container-fluid">
                         <div class="col col- ">
@@ -301,7 +304,7 @@
                                 </div>
                                 <div class="col col-md-6">
 <%--                                    PARA MOSTRAR SI ES PUBLICA--%>
-                                    <% if (infoLista.getPublico()){%>
+                                    <% if (infoLista.isPublico()){%>
                                         <i class="fas fa-globe"></i><small> Publico</small>
                                     <%} else {%>
                                         <i class="fas fa-user-lock"></i><small> Privado</small>
@@ -321,7 +324,7 @@
                                     <div class="dropdown-menu">
                                         <form name="modificarlista" action="<%= request.getContextPath() %>/ModificarLista" method="post">
                                             <div class="form-check">
-                                                <input class="form-check-input- text-center" <%=(infoLista.getPublico().equals(true) ? "checked" : "")%> type="checkbox" name="esPublica" value="" id="defaultCheck1">
+                                                <input class="form-check-input- text-center" <%=(infoLista.isPublico().equals(true) ? "checked" : "")%> type="checkbox" name="esPublica" value="" id="defaultCheck1">
                                                 <input type="hidden" name="nomL" value="<%=lista%>">
                                                 <label class="form-check-label" for="defaultCheck1">
                                                     Lista publica

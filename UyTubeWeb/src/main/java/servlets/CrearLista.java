@@ -18,15 +18,15 @@ import java.io.IOException;
 @WebServlet(name = "CrearLista", value = "/CrearLista")
 public class CrearLista extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UFactory uF = UFactory.getInstancia();
-        IUsuario iU = uF.getIUsuario();
-        LRFactory fLr = LRFactory.getInstancia();
-        IListaReproduccion iLR = fLr.getIListaReproduccion();
+
 
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
         if (usr != null){
-
+            //WEBSERVICES
+            publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+            publicadores.CListaRepPublish portListaRep = serviceListaRep.getCListaRepPublishPort();
+            //FIN WEBSERVICES
             String nomLista = request.getParameter("nomList");
             String categoria = request.getParameter("categoria");
             Boolean esPublica;
@@ -36,18 +36,18 @@ public class CrearLista extends HttpServlet {
                 esPublica = true;
             }
             if (nomLista != null && usr != null){
-                if(iLR.existeListaParticular(usr.getNickname(), nomLista)){
+                if(portListaRep.existeListaParticular(usr.getNickname(), nomLista)){
                     RequestDispatcher rd;
                     rd = request.getRequestDispatcher("/module/nuevaLista.jsp");
-                    String message = "EXISTE LA LISTAAAAAAAAAAAAA";
+                    String message = "Ya existe una lista con ese nombre";
                     request.setAttribute("message", message);
                     rd.forward(request, response);
                 } else {
 
                     if(categoria.equals("")) {
-                        iLR.agregarListaParticular(nomLista, esPublica);
+                        portListaRep.agregarListaParticular(nomLista, esPublica);
                     } else {
-                        iLR.agregarListaParticularCategoria(nomLista, esPublica, categoria);
+                        portListaRep.agregarListaParticularCategoria(nomLista, esPublica, categoria);
                     }
                     RequestDispatcher rd;
                     rd = request.getRequestDispatcher("/index.jsp");
