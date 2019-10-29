@@ -52,7 +52,7 @@ public class ComentarVideo extends HttpServlet {
         response.getWriter().append("Parametros invalidos");
     }
 
-    public XMLGregorianCalendar getXMLGregorianCalendarNow()
+    private XMLGregorianCalendar getXMLGregorianCalendarNow()
             throws DatatypeConfigurationException {
 
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
