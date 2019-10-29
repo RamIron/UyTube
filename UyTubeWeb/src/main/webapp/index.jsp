@@ -1,10 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
 <%@ page import="publicadores.DtElementoWeb" %>
-<%@ page import="interfaces.*" %>
 <%@ page import="java.util.Random" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="net.java.dev.jaxb.array.StringArray" %>
 <!--
 
 =========================================================
@@ -28,9 +26,6 @@
   DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
 
   //WEBSERVICES
-  publicadores.CUsuarioPublishService serviceUsuario = new publicadores.CUsuarioPublishService();
-  publicadores.CUsuarioPublish portUsuario = serviceUsuario.getCUsuarioPublishPort();
-
   publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
   publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
 
@@ -184,15 +179,10 @@
             </a>
           </li>
           <%
-//            LRFactory f = LRFactory.getInstancia();
-//            IListaReproduccion iL = f.getIListaReproduccion();
-
-//            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
             System.out.println("Tamaño listas: " + portListaRep.listarListasDeUsuario(usr.getNickname()).getItem().size());
             List<String> lista = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
             for(String l: lista){ %>
           <li class="nav-item">
-<%--              <a class="nav-link" href="./consultaLista.jsp?id=<%=l%>">--%>
                   <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
                   <i class="ni ni-books text-blue"></i> <%=l%>
               </a>
@@ -206,8 +196,7 @@
         <h6 class="navbar-heading text-muted">Categorias</h6>
         <!-- Navigation -->
         <ul class="navbar-nav">
-          <% //CFactory fC = CFactory.getInstancia();
-            //ICategoria iC = fC.getICategoria();
+          <%
             List<String> listaCat = portCategoria.listarCategorias().getItem();
             for(String cat: listaCat){ %>
           <li class="nav-item">
@@ -319,9 +308,6 @@
           <%}%>
 
           <%
-//            VFactory fV = VFactory.getInstancia();
-//            IVideo iV = fV.getIVideo();
-
             //obtener categorias con mas de 3 elementos
             List<String> todasCategorias = portCategoria.listarCategorias().getItem();
             List<String> nomCats3 = new ArrayList<String>();
