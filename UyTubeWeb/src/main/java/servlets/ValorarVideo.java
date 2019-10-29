@@ -1,8 +1,6 @@
 package servlets;
 
 import publicadores.DtUsuarioWeb;
-import interfaces.IVideo;
-import interfaces.VFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,17 +18,20 @@ public class ValorarVideo extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //WEBSERVICES
+        publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
+        publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
+        //FIN WEBSERVICES
+
         String uVid = request.getParameter("u");
         String nVid = request.getParameter("v");
         String gustaS = request.getParameter("g");
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
         if(usr != null && uVid != null && nVid != null && gustaS != null && (gustaS.equals("si") || gustaS.equals("no"))){
-            VFactory f = VFactory.getInstancia();
-            IVideo iV = f.getIVideo();
-            iV.setUsr(uVid);
-            iV.setVid(nVid);
-            iV.valorarVideo(usr.getNickname(), gustaS.equals("si"));
+            portVideo.setUsr(uVid);
+            portVideo.setVid(nVid);
+            portVideo.valorarVideo(usr.getNickname(), gustaS.equals("si"));
             String path = "/module/visualizarVideo.jsp?u=" + uVid +"&v=" + nVid;
             RequestDispatcher rd;
             rd = request.getRequestDispatcher(path);
