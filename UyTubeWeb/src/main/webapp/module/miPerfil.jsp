@@ -29,7 +29,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<% HttpSession s = request.getSession();%>
+<%
+    HttpSession s = request.getSession();
+    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+    //WEBSERVICES
+    publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
+    publicadores.CVideoPublish portV = serviceVideo.getCVideoPublishPort();
+
+    publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+    publicadores.CListaRepPublish portL = serviceListaRep.getCListaRepPublishPort();
+
+    publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+    publicadores.CCategoriaPublish portC = serviceCategoria.getCCategoriaPublishPort();
+
+    publicadores.CUsuarioPublishService serviceUsuario = new publicadores.CUsuarioPublishService();
+    publicadores.CUsuarioPublish portU = serviceUsuario.getCUsuarioPublishPort();
+    //FIN WEBSERVICES
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,8 +87,7 @@
             <span class="nav-link-inner--text">Entrar</span>
           </a>
         </li>
-        <% }else {
-          DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+        <% }else { %>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
@@ -171,13 +186,7 @@
                     </a>
                 </li>
                 <%
-                    /////////////WEB SERVICE/////////////////
-                    publicadores.CListaRepPublishService serviceL = new publicadores.CListaRepPublishService();
-                    publicadores.CListaRepPublish portL = serviceL.getCListaRepPublishPort();
-                    DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
                     List<String> lis = portL.listarListasDeUsuario(usr.getNickname()).getItem();
-
-                    //////////FIN WEBSERVICE///////////
                     for(String l: lis){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
@@ -194,11 +203,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <%
-                    /////////////WEB SERVICE/////////////////
-                    publicadores.CCategoriaPublishService serviceC = new publicadores.CCategoriaPublishService();
-                    publicadores.CCategoriaPublish portC = serviceC.getCCategoriaPublishPort();
                     List<String> lC = portC.listarCategorias().getItem();
-                    //////////FIN WEBSERVICE///////////
                     for(String cat: lC){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
@@ -242,8 +247,7 @@
                     </a>
                 </li>
             </ul>
-            <% }else {
-                DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");%>
+            <% }else { %>
             <ul class="navbar-nav align-items-center d-none d-md-flex">
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -297,17 +301,6 @@
                                     </div>
                                     <%}%>
                                     <%
-                                        /////////////WEB SERVICE/////////////////
-                                        publicadores.CUsuarioPublishService serviceU = new publicadores.CUsuarioPublishService();
-                                        publicadores.CVideoPublishService serviceV = new publicadores.CVideoPublishService();
-                                        publicadores.CListaRepPublishService serviceL = new publicadores.CListaRepPublishService();
-
-                                        publicadores.CUsuarioPublish portU = serviceU.getCUsuarioPublishPort();
-                                        publicadores.CVideoPublish portV = serviceV.getCVideoPublishPort();
-                                        publicadores.CListaRepPublish portL = serviceL.getCListaRepPublishPort();
-                                        //////////FIN WEBSERVICE///////////
-
-                                        DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
                                         DtUsuario usuario = portU.obtenerInfoUsuario(usr.getNickname());
                                         DtCanal canal = portU.obtenerInfoCanal();
 

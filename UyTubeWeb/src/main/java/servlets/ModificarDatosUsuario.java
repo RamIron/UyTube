@@ -46,11 +46,6 @@ public class ModificarDatosUsuario extends HttpServlet {
                 publico = true;
             }
 
-
-            //UFactory fU = UFactory.getInstancia();
-            //IUsuario iU = fU.getIUsuario();
-
-
             //CODIGO PARA EXTRAER LA FECHA
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date date = null;
@@ -66,7 +61,6 @@ public class ModificarDatosUsuario extends HttpServlet {
                 e.printStackTrace();
             }
             //FIN DE CODIGO PARA EXTRAER LA FECHA
-
 
             if(port.existeNickname(nickname)) {
                 port.modificarInfoUsuario(nomU, apellido, cal, usrS.getFoto());

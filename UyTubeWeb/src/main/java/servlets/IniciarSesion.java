@@ -19,8 +19,6 @@ public class IniciarSesion extends HttpServlet {
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
         //////////FIN WEBSERVICE///////////
 
-//        UFactory uF = UFactory.getInstancia();
-//        IUsuario iU = uF.getIUsuario();
         HttpSession s = request.getSession();
         String nick = request.getParameter("nick");
         String pass = request.getParameter("pass");
