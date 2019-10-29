@@ -23,6 +23,14 @@
 =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
+
+<%
+  //WEBSERVICES
+  publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
+  publicadores.CCategoriaPublish portCategoria = serviceCategoria.getCCategoriaPublishPort();
+  //FIN WEBSERVICES
+%>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -230,9 +238,8 @@
                   <div class="form-group">
                     <select class="custom-select" id="inputGroupSelect01" name="categoria" >
                       <option value="" <%= (categoria.equals("") )? "selected": "" %>> --Sin Categoria-- </option>
-                      <% CFactory fC = CFactory.getInstancia();
-                        ICategoria iC = fC.getICategoria();
-                        List<String> lC = iC.listarCategorias();
+                      <%
+                        List<String> lC = portCategoria.listarCategorias().getItem();
                         for(String cat: lC){ %>
                       <option value="<%=cat%>" <%= (categoria.equals(cat)) ? "selected" : ""%>><%=cat%></option>
                       <% } %>
