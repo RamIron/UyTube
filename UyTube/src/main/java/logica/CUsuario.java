@@ -308,17 +308,39 @@ public class CUsuario implements IUsuario {
 
 	@Override
 	public void eliminarUsuario(String nick){
+		//hecho: borrar valoraciones y comentarios de tus videos
+		//hecho: borrar tus listas y videos
+		//hecho: borrar el usuario
+		//hecho: PERSISTIR LOS CAMBIOS
+
+		//TODO Respaldar el usuario
+		//TODO borrar tus videos de las listas de otros
+		//TODO borrar todos tus comentarios y valoraciones en videos de otros
+
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.usr = mU.obtenerUsuario(nick);
-		//TODO Respaldar el usuario
+
 		borrarTodosSeguidores();
 		borrarTodosSeguidos();
 		this.usr.getCanal().borrarContenidoCanal();
-		//TODO borrar tus videos de las listas de otros
-		//hecho: borrar valoraciones y comentarios de tus videos
-		//hecho: borrar tus listas y videos
-		//TODO borrar todos tus comentarios y valoraciones en videos de otros
-		//hecho: borrar el usuario
+
+		Query q = em.createNativeQuery("SELECT v.id FROM valoracion where v.usuario_nickname = ?1");
+		q.setParameter(1, nick);
+		List<Integer> idValoraciones = q.getResultList();
+		for(Integer i:idValoraciones){
+			Query q2 = em.createNativeQuery("SELECT v.video_id FROM video_valoracion v where v.valoraciones_id = ?1");
+			q2.setParameter(1, i);
+			Integer idVideo = (Integer) q2.getSingleResult();
+
+			Query q3 = em.createNativeQuery("SELECT * FROM video v where v.id = ?1");
+			q3.setParameter(1, idVideo);
+			Video vid = (Video) q3.getSingleResult();
+
+			System.out.println(vid.getNombre());
+		}
+
 		this.usr.setNickname(null);
 		this.usr.setNombre(null);
 		this.usr.setApellido(null);
@@ -326,7 +348,7 @@ public class CUsuario implements IUsuario {
 		this.usr.setCorreoE(null);
 		this.usr.setContrasena(null);
 		this.usr.setImagen(null);
-		//hecho: PERSISTIR LOS CAMBIOS
+
 		mU.eliminarUsuario(this.usr);
 		this.usr = null;
 	}

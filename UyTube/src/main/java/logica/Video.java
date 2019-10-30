@@ -32,7 +32,7 @@ public class Video extends Elemento {
 	
 	private boolean publico;
 		
-	@OneToMany(/*mappedBy="video",*/cascade=CascadeType.ALL,orphanRemoval=true)
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Valoracion> valoraciones = new ArrayList<Valoracion>();
 	
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
