@@ -313,13 +313,22 @@ public class CUsuario implements IUsuario {
 		//TODO Respaldar el usuario
 		borrarTodosSeguidores();
 		borrarTodosSeguidos();
+		this.usr.getCanal().borrarContenidoCanal();
 		//TODO borrar tus videos de las listas de otros
-		//TODO borrar valoraciones y comentarios de tus videos
-		//TODO borrar tus listas y videos
+		//hecho: borrar valoraciones y comentarios de tus videos
+		//hecho: borrar tus listas y videos
 		//TODO borrar todos tus comentarios y valoraciones en videos de otros
-		//TODO borrar el usuario
-		//TODO PERSISTIR LOS CAMBIOS
-
+		//hecho: borrar el usuario
+		this.usr.setNickname(null);
+		this.usr.setNombre(null);
+		this.usr.setApellido(null);
+		this.usr.setfNac(null);
+		this.usr.setCorreoE(null);
+		this.usr.setContrasena(null);
+		this.usr.setImagen(null);
+		//hecho: PERSISTIR LOS CAMBIOS
+		mU.eliminarUsuario(this.usr);
+		this.usr = null;
 	}
 
 	private void borrarTodosSeguidores(){

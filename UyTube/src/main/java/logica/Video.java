@@ -110,13 +110,7 @@ public class Video extends Elemento {
 		Comentario c = new Comentario(fCom, texto, uC);
 		comentarios.add(c);
 	}
-	
-//	public void crearRespuesta(int idCom, Usuario uC, Calendar fCom, String texto) {
-//		//hay que buscar en la lista general de comentarios
-//		Comentario c = comentarios.get(idCom);
-//		c.crearRespuesta(uC, fCom, texto);
-//		
-//	}
+
 		
 	public List<DtValoracion> listarValoraciones() {
 		List<DtValoracion> res = new ArrayList<DtValoracion>();
@@ -145,11 +139,6 @@ public class Video extends Elemento {
 		DtElementoUsuario video = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO);
 		return video;
 	}
-
-//	public DtElementoWeb obtenerVideoWeb() {
-//		DtElementoWeb video = new DtElementoWeb(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.VIDEO, this.getUrl());
-//		return video;
-//	}
 	
 	
 	public void valorarVideo(boolean gusta, Usuario usrVal) {
@@ -165,5 +154,32 @@ public class Video extends Elemento {
 			Valoracion val = new Valoracion(gusta, usrVal);
 			this.valoraciones.add(val);
 		}
+	}
+
+	public void eliminarValoraciones(){
+		for(Valoracion v: this.valoraciones){
+			v.setUsuario(null);
+			this.valoraciones.remove(v);
+			v = null;
+		}
+		this.valoraciones = null;
+	}
+
+	public void sacarCategoria(){
+		this.categoria.quitarElemento(this);
+		this.categoria = null;
+	}
+
+	public void eliminarComentarios(){
+		for(Comentario c: this.comentarios){
+			c.eliminarRespuestas();
+			this.comentarios.remove(c);
+			c.setFecha(null);
+			c.setId(null); //que pasa con los ID?
+			c.setTexto(null);
+			c.setUsuario(null);
+			c = null;
+		}
+		this.comentarios = null;
 	}
 }

@@ -24,10 +24,8 @@ public class Canal {
 	@Id
 	@GeneratedValue
 	private int id;
-	
 
 	private String descripcion;
-	
 
 	private boolean publico;
 	
@@ -56,6 +54,7 @@ public class Canal {
 		this.publico = publico;
 	}
 
+	//Getters & Setters
 	public String getNombre() {
 		return nombre;
 	}
@@ -89,10 +88,7 @@ public class Canal {
         this.categoria = categoria;
     }
 
-    public Boolean getPublico() {
-		return publico;
-
-	}
+    public Boolean getPublico() { return publico; }
 
 	public void setPublico(Boolean publico) {
 		this.publico = publico;
@@ -106,6 +102,8 @@ public class Canal {
 		return listas;
 	}
 
+	//Fin Getters & Setters
+
 	
 	public Particular agregarListaParticular(String nomL, boolean publico) {
 		Particular lisPar = new Particular(nomL, this, publico);
@@ -116,7 +114,6 @@ public class Canal {
 	public Particular agregarListaParticularConCategoria(String nomL, boolean publico, Categoria cat) {
 		Particular lisPar = new Particular(nomL, this, publico, cat);
 		this.listas.add(lisPar);
-
 		return lisPar;
 	}
 	
@@ -160,9 +157,7 @@ public class Canal {
 			}
 		}
 	}
-	
-//	//public boolean existeListaDefecto(String nomL) {}
-	
+
 	public boolean existeLista(String nomL) {
 		for(ListaReproduccion lr:this.listas) {
 			if(nomL.contentEquals(lr.getNombre())) {
@@ -239,7 +234,6 @@ public class Canal {
 		return null;
 	}
 
-	
 	public DtListaRep obtenerListaDeUsuario(String nomList) {
 		for(ListaReproduccion lr:this.listas) {
 			if(nomList.contentEquals(lr.getNombre())) {
@@ -318,7 +312,6 @@ public class Canal {
 				i++;
 			}
 		}
-			
 		return this.videos.get(i);
 	}
 	
@@ -338,20 +331,37 @@ public class Canal {
 	public void borrarContenidoCanal(){
 		borrarTodosVideos();
 		borrarTodasListas();
+		this.setCategoria(null);
+		this.setUsuario(null);
+		this.setDescripcion(null);
+		this.setNombre(null);
+		this.setPublico(null);
 	}
 
 	private void borrarTodosVideos(){
 		for (Video v: this.videos){
-			//TODO borrar los comentarios y respuestas
-			//TODO borrar el video
+			v.eliminarValoraciones();
+			v.eliminarComentarios();
+			v.sacarCategoria();
+			this.videos.remove(v);
+			v.setCanal(null);
+			v.setDescripcion(null);
+			v.setfPublicacion(null);
+			v.setDuracion(null);
+			v.setUrl(null);
+			v = null;
 		}
+		this.videos = null;
 	}
 	private  void borrarTodasListas(){
 		for(ListaReproduccion l: this.listas){
+			l.eliminarVideos();
+			l.sacarCategoria();
 			listas.remove(l);
-			if (l.categoria != null){
-				l.categoria.getElementos().remove(l);
-			}
+			l.setNombre(null);
+			l.setCanal(null);
+			l = null;
 		}
+		this.listas = null;
 	}
 }
