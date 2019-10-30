@@ -83,5 +83,22 @@ public class Comentario {
 			}
 		}
 		return retorno;
-	}	
+	}
+
+	public void eliminarRespuestas(){
+		List<Comentario> respuestas = this.getRespuestas();
+		if(!respuestas.isEmpty()){ //Si tiene respuestas
+			for(Comentario r: respuestas){
+				r.eliminarRespuestas();
+				this.respuestas.remove(r);
+				r = null;
+			}
+			this.respuestas = null;
+		} else {
+			this.setFecha(null);
+			this.setId(null); //que pasa con los ID?
+			this.setTexto(null);
+			this.setUsuario(null);
+		}
+	}
 }

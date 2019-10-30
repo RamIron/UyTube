@@ -12,7 +12,7 @@ import datatypes.DtVideo;
 
 @NamedQueries( {
 	@NamedQuery(name = "existeMail", query = "select u.correoE from Usuario u where u.correoE = :correoE"),
-		@NamedQuery(name = "usuarioMail", query = "select u.nickname from Usuario u where u.correoE = :correoE")
+	@NamedQuery(name = "usuarioMail", query = "select u.nickname from Usuario u where u.correoE = :correoE")
 } )
 @Entity
 @Table(name="USUARIOS")
@@ -207,11 +207,8 @@ public class Usuario {
 	}
 	
 	public void seguirUsuario(Usuario u2) {
-		//u2.getSeguidores().add(this);
 		if(!this.seguidos.contains(u2)) {
 			this.seguidos.add(u2);			
 		}
 	}
-
-
 }

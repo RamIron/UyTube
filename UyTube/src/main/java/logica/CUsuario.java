@@ -291,23 +291,80 @@ public class CUsuario implements IUsuario {
 		List<DtCanalWeb> res = new ArrayList<DtCanalWeb>();
 		List<Object[]> resQuery;
 		if(ordFecha){
-			//TODO ordenado por fecha
-			//resQuery = nativequery
 			Query consulta = em.createNamedQuery("buscarCanalFecha");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		} else {
-			//TODO ordenado alfabetico
-			//resQuery = nativequery
 			Query consulta = em.createNamedQuery("buscarCanalNombre");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		}
-//		Integer size = resQuery.size();
 		for(Object[] o : resQuery){
 			DtCanalWeb canal = new DtCanalWeb(o[0].toString(), o[1].toString(), o[2].toString());
 			res.add(canal);
 		}
 		return res;
 	}
+
+	@Override
+	public void eliminarUsuario(String nick){
+		//hecho: borrar valoraciones y comentarios de tus videos
+		//hecho: borrar tus listas y videos
+		//hecho: borrar el usuario
+		//hecho: PERSISTIR LOS CAMBIOS
+
+		//TODO Respaldar el usuario
+		//TODO borrar tus videos de las listas de otros
+		//TODO borrar todos tus comentarios y valoraciones en videos de otros
+
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usr = mU.obtenerUsuario(nick);
+
+		borrarTodosSeguidores();
+		borrarTodosSeguidos();
+		this.usr.getCanal().borrarContenidoCanal();
+
+		Query q = em.createNativeQuery("SELECT v.id FROM valoracion where v.usuario_nickname = ?1");
+		q.setParameter(1, nick);
+		List<Integer> idValoraciones = q.getResultList();
+		for(Integer i:idValoraciones){
+			Query q2 = em.createNativeQuery("SELECT v.video_id FROM video_valoracion v where v.valoraciones_id = ?1");
+			q2.setParameter(1, i);
+			Integer idVideo = (Integer) q2.getSingleResult();
+
+			Query q3 = em.createNativeQuery("SELECT * FROM video v where v.id = ?1");
+			q3.setParameter(1, idVideo);
+			Video vid = (Video) q3.getSingleResult();
+
+			System.out.println(vid.getNombre());
+		}
+
+		this.usr.setNickname(null);
+		this.usr.setNombre(null);
+		this.usr.setApellido(null);
+		this.usr.setfNac(null);
+		this.usr.setCorreoE(null);
+		this.usr.setContrasena(null);
+		this.usr.setImagen(null);
+
+		mU.eliminarUsuario(this.usr);
+		this.usr = null;
+	}
+
+	private void borrarTodosSeguidores(){
+		List<String> seguidores = listarSeguidores();
+		for (String u: seguidores){
+			dejarDeSeguirUsuario(u, usr.getNickname());
+		}
+	}
+
+	private void borrarTodosSeguidos(){
+		List<String> seguidos = listarSeguidos();
+		for (String u: seguidos){
+			dejarDeSeguirUsuario(usr.getNickname(), u);
+		}
+	}
+
 }
