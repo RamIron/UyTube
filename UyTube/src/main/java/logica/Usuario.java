@@ -213,5 +213,25 @@ public class Usuario {
 		}
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Usuario usuario = (Usuario) o;
+		return Objects.equals(nickname, usuario.nickname) &&
+				Objects.equals(contrasena, usuario.contrasena) &&
+				Objects.equals(nombre, usuario.nombre) &&
+				Objects.equals(apellido, usuario.apellido) &&
+				Objects.equals(fNac, usuario.fNac) &&
+				Objects.equals(imagen, usuario.imagen) &&
+				Objects.equals(correoE, usuario.correoE) &&
+				Objects.equals(canal, usuario.canal) &&
+				Objects.equals(seguidores, usuario.seguidores) &&
+				Objects.equals(seguidos, usuario.seguidos);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(nickname, contrasena, nombre, apellido, fNac, imagen, correoE, canal, seguidores, seguidos);
+	}
 }

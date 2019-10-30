@@ -1,6 +1,5 @@
 package publicadores;
 
-import configuraciones.WebServiceConfiguracion;
 import datatypes.DtElementoWeb;
 import datatypes.DtListaRep;
 import datatypes.DtVideoUsuario;

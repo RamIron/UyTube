@@ -379,17 +379,23 @@ public class Canal {
 		return existe;
 	}
 
-//	public Video obtenerVideo(String nomVid) {
-//		Video v= this.videos.get(nomVid);
-//		return v;
-//	}
-//	
-//	public void valorarVideo(Video v, Usuario uVal, boolean val) {
-//		v.valorarVideo(val, uVal, v);
-//	}
-//	
-//	public Video obtenerVideo() {
-//		Video v= this.videos.get(0);
-//		return v;
-//	}
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Canal canal = (Canal) o;
+		return id == canal.id &&
+				publico == canal.publico &&
+				Objects.equals(nombre, canal.nombre) &&
+				Objects.equals(descripcion, canal.descripcion) &&
+				Objects.equals(usuario, canal.usuario) &&
+				Objects.equals(categoria, canal.categoria) &&
+				Objects.equals(videos, canal.videos) &&
+				Objects.equals(listas, canal.listas);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nombre, id, descripcion, publico, usuario, categoria, videos, listas);
+	}
 }
