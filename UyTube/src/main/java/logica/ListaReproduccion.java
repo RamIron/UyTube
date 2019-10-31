@@ -64,8 +64,10 @@ public abstract class ListaReproduccion extends Elemento {
 	}
 
 	public void sacarCategoria(){
-		this.categoria.quitarElemento(this);
-		this.categoria = null;
+		if(this.categoria != null) {
+			this.categoria.quitarElemento(this);
+			this.categoria = null;
+		}
 	}
 
 	public void eliminarVideos(){

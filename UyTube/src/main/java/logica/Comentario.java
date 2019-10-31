@@ -88,17 +88,21 @@ public class Comentario {
 	public void eliminarRespuestas(){
 		List<Comentario> respuestas = this.getRespuestas();
 		if(!respuestas.isEmpty()){ //Si tiene respuestas
-			for(Comentario r: respuestas){
+			Iterator iterator = respuestas.iterator();
+			while(iterator.hasNext() && respuestas.size()>0) {
+			//for(Comentario r: respuestas){
+				Comentario r = (Comentario) iterator.next();
 				r.eliminarRespuestas();
 				this.respuestas.remove(r);
 				r = null;
 			}
-			this.respuestas = null;
+			//this.respuestas = null;
 		} else {
 			this.setFecha(null);
 			this.setId(null); //que pasa con los ID?
 			this.setTexto(null);
 			this.setUsuario(null);
+			this.respuestas = null;
 		}
 	}
 }

@@ -27,7 +27,7 @@ public class Canal {
 
 	private String descripcion;
 
-	private boolean publico;
+	private Boolean publico;
 	
 	@OneToOne
 	private Usuario usuario;

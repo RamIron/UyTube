@@ -162,11 +162,8 @@
             </a>
           </li>
           <%
-            LRFactory f = LRFactory.getInstancia();
-            IListaReproduccion iL = f.getIListaReproduccion();
-            DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-            List<String> lis = iL.listarListasDeUsuario(usr.getNickname());
-            for(String l: lis){ %>
+            List<String> lista = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
+            for(String l: lista){ %>
           <li class="nav-item">
               <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
                   <i class="ni ni-books text-blue"></i> <%=l%>

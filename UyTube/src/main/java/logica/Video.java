@@ -182,4 +182,34 @@ public class Video extends Elemento {
 		}
 		this.comentarios = null;
 	}
+
+	public void eliminarValoracion(Integer i){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+
+		TypedQuery<Valoracion> consulta = em.createQuery("FROM Valoracion v where v.id=:param", Valoracion.class);
+		consulta.setParameter("param", i);
+		Valoracion v = consulta.getSingleResult();
+
+		v.setUsuario(null);
+		this.valoraciones.remove(v);
+		v = null;
+	}
+
+	public void eliminarComentario(Integer i){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+
+		TypedQuery<Comentario> consulta = em.createQuery("FROM Comentario c where c.id=:param", Comentario.class);
+		consulta.setParameter("param", i);
+		Comentario c = consulta.getSingleResult();
+
+		c.eliminarRespuestas();
+		this.comentarios.remove(c);
+		c.setFecha(null);
+		c.setId(null); //que pasa con los ID?
+		c.setTexto(null);
+		c.setUsuario(null);
+		c = null;
+	}
 }

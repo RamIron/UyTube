@@ -320,37 +320,61 @@ public class CUsuario implements IUsuario {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		this.usr = mU.obtenerUsuario(nick);
+		Usuario usr = mU.obtenerUsuario(nick);
 
-		borrarTodosSeguidores();
-		borrarTodosSeguidos();
-		this.usr.getCanal().borrarContenidoCanal();
+		//borrarTodosSeguidores();
+		//borrarTodosSeguidos();
+		//usr.getCanal().borrarContenidoCanal();
 
-		Query q = em.createNativeQuery("SELECT v.id FROM valoracion where v.usuario_nickname = ?1");
-		q.setParameter(1, nick);
+		//Borrar valoraciones en videos de otros
+		Query q = em.createNativeQuery("SELECT v.id FROM valoracion v WHERE v.usuario_nickname like :keyword");
+		q.setParameter("keyword", nick);
 		List<Integer> idValoraciones = q.getResultList();
 		for(Integer i:idValoraciones){
-			Query q2 = em.createNativeQuery("SELECT v.video_id FROM video_valoracion v where v.valoraciones_id = ?1");
+			Query q2 = em.createNativeQuery("SELECT v.video_id FROM video_valoracion v WHERE v.valoraciones_id = ?1");
 			q2.setParameter(1, i);
 			Integer idVideo = (Integer) q2.getSingleResult();
 
-			Query q3 = em.createNativeQuery("SELECT * FROM video v where v.id = ?1");
-			q3.setParameter(1, idVideo);
-			Video vid = (Video) q3.getSingleResult();
-
-			System.out.println(vid.getNombre());
+			TypedQuery<Elemento> consulta = em.createQuery("FROM Elemento v where v.id=:param", Elemento.class);
+			consulta.setParameter("param", idVideo);
+			Elemento elem = consulta.getSingleResult();
+			Video vid = (Video) elem;
+			vid.eliminarValoracion(i);
 		}
 
-		this.usr.setNickname(null);
-		this.usr.setNombre(null);
-		this.usr.setApellido(null);
-		this.usr.setfNac(null);
-		this.usr.setCorreoE(null);
-		this.usr.setContrasena(null);
-		this.usr.setImagen(null);
+		//borrar todos los comentarios en videos de otros
+		//Obtengo todos los id de comentarios del usuario a eliminar
+		/*Query qC = em.createNativeQuery("SELECT c.id FROM comentario c WHERE c.usuario_nickname like :keyword");
+		qC.setParameter("keyword", nick);
+		List<Integer> idComentarios = q.getResultList();*/
+
+		Query qC = em.createNativeQuery("SELECT c.id FROM comentario c WHERE c.usuario_nickname like :keyword");
+		qC.setParameter("keyword", nick);
+		List<Integer> idComentarios = q.getResultList();
+
+		for(Integer i:idComentarios){
+			//Por cada idComentario, busco el video al cual pertenece dicho comentario
+			Query q2 = em.createNativeQuery("SELECT v.video_id FROM video_comentario v WHERE v.comentarios_id = ?1");
+			q2.setParameter(1, i);
+			Integer idVideo = (Integer) q2.getSingleResult();
+
+			TypedQuery<Elemento> consulta = em.createQuery("FROM Elemento v where v.id=:param", Elemento.class);
+			consulta.setParameter("param", idVideo);
+			Video vid = (Video) consulta.getSingleResult();
+			vid.eliminarComentario(i);
+		}
+
+		usr.setNickname(null);
+		usr.setNombre(null);
+		usr.setApellido(null);
+		usr.setfNac(null);
+		usr.setCorreoE(null);
+		usr.setContrasena(null);
+		usr.setImagen(null);
 
 		mU.eliminarUsuario(this.usr);
-		this.usr = null;
+		usr = null;
+
 	}
 
 	private void borrarTodosSeguidores(){
