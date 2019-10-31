@@ -275,8 +275,8 @@ public class CUsuarioTest {
         iU.agregarUsuario("usr1", "nom", "apellido", fecha, "email");
         iU.agregarCanal();
         iU.modificarInfoCanal("nom", "des", true);
-        List<DtCanalWeb> lisAlfa = iU.busqueda(null, false);
-        List<DtCanalWeb> lisFecha = iU.busqueda(null, true);
+        List<DtCanalWeb> lisAlfa = iU.busqueda("usr1", false);
+        List<DtCanalWeb> lisFecha = iU.busqueda("usr1", true);
         Integer[] obtenido = {lisAlfa.size(), lisFecha.size()};
         assertArrayEquals(esperado, obtenido);
     }
