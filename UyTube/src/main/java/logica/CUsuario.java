@@ -327,7 +327,7 @@ public class CUsuario implements IUsuario {
 		//usr.getCanal().borrarContenidoCanal();
 
 		//Borrar valoraciones en videos de otros
-		Query q = em.createNativeQuery("SELECT v.id FROM valoracion v WHERE v.usuario_nickname like :keyword");
+		/*Query q = em.createNativeQuery("SELECT v.id FROM valoracion v WHERE v.usuario_nickname like :keyword");
 		q.setParameter("keyword", nick);
 		List<Integer> idValoraciones = q.getResultList();
 		for(Integer i:idValoraciones){
@@ -340,7 +340,7 @@ public class CUsuario implements IUsuario {
 			Elemento elem = consulta.getSingleResult();
 			Video vid = (Video) elem;
 			vid.eliminarValoracion(i);
-		}
+		}*/
 
 		//borrar todos los comentarios en videos de otros
 		//Obtengo todos los id de comentarios del usuario a eliminar
@@ -350,10 +350,10 @@ public class CUsuario implements IUsuario {
 
 		Query qC = em.createNativeQuery("SELECT c.id FROM comentario c WHERE c.usuario_nickname like :keyword");
 		qC.setParameter("keyword", nick);
-		List<Integer> idComentarios = q.getResultList();
+		List<Integer> idComentarios = qC.getResultList();
 
 		for(Integer i:idComentarios){
-			//Por cada idComentario, busco el video al cual pertenece dicho comentario
+			//Por cada idComentario, obtengo el objeto Comentario con ese id
 			Query q2 = em.createNativeQuery("SELECT v.video_id FROM video_comentario v WHERE v.comentarios_id = ?1");
 			q2.setParameter(1, i);
 			Integer idVideo = (Integer) q2.getSingleResult();

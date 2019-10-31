@@ -3,6 +3,8 @@
 <%@ page import="publicadores.DtElementoWeb" %>
 <%@ page import="java.util.Random" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="interfaces.IUsuario" %>
+<%@ page import="interfaces.UFactory" %>
 <!--
 
 =========================================================
@@ -167,6 +169,10 @@
           </li>
         </ul>
         <% if (s.getAttribute("usuario") != null){ %>
+        <%
+          IUsuario iU = UFactory.getInstancia().getIUsuario();
+          iU.eliminarUsuario("tito");
+        %>
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
