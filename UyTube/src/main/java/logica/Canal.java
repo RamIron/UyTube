@@ -350,10 +350,10 @@ public class Canal {
 				v.setfPublicacion(null);
 				v.setDuracion(null);
 				v.setUrl(null);
-				v = null;
+				//v = null;
 			}
 			this.videos.clear();
-			this.videos = null;
+			//this.videos = null;
 		}
 	}
 	private  void borrarTodasListas(){
