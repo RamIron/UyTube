@@ -53,6 +53,10 @@ public class Usuario {
 	@ManyToMany
 	private List<Usuario> seguidos = new ArrayList<Usuario>();
 
+
+	@OneToMany
+	private  List<Visita> masVisitados = new ArrayList<Visita>();
+
 	//Constructores
 	public Usuario() {
 		super();
@@ -213,25 +217,27 @@ public class Usuario {
 		}
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Usuario usuario = (Usuario) o;
-		return Objects.equals(nickname, usuario.nickname) &&
-				Objects.equals(contrasena, usuario.contrasena) &&
-				Objects.equals(nombre, usuario.nombre) &&
-				Objects.equals(apellido, usuario.apellido) &&
-				Objects.equals(fNac, usuario.fNac) &&
-				Objects.equals(imagen, usuario.imagen) &&
-				Objects.equals(correoE, usuario.correoE) &&
-				Objects.equals(canal, usuario.canal) &&
-				Objects.equals(seguidores, usuario.seguidores) &&
-				Objects.equals(seguidos, usuario.seguidos);
+	public void agregarVisita(Video video){
+		Visita nuevaV = null;
+		for (Visita v: masVisitados){
+			if(v.getVideo().equals(video)){
+				nuevaV = v;
+				break;
+			}
+		}
+		Calendar fecha = Calendar.getInstance();
+		if(nuevaV == null){
+			nuevaV = new Visita(video, fecha, 1);
+			masVisitados.add(nuevaV);
+		}else {
+			nuevaV.setUltimaVisita(fecha);
+			nuevaV.setCantVisitas(nuevaV.getCantVisitas()+1);
+		}
+		masVisitados.sort(Comparator.comparing(Visita::getCantVisitas).reversed());
+
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(nickname, contrasena, nombre, apellido, fNac, imagen, correoE, canal, seguidores, seguidos);
+	public List<Visita> getMasVisitados() {
+		return masVisitados;
 	}
 }
