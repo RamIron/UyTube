@@ -7,7 +7,9 @@ import datatypes.DtCanalWeb;
 import datatypes.DtUsuario;
 import datatypes.DtUsuarioWeb;
 import interfaces.IUsuario;
+import interfaces.IVideo;
 import interfaces.UFactory;
+import interfaces.VFactory;
 import logica.CUsuario;
 import logica.Canal;
 import logica.Categoria;
@@ -23,12 +25,14 @@ import static org.junit.Assert.*;
 
 public class CUsuarioTest {
     private IUsuario iU = null;
+    private IVideo iV = null;
     private ManejadorUsuario mU = null;
     private ManejadorCategoria mC = null;
 
     @Before
     public void inicializar(){
         iU = UFactory.getInstancia().getIUsuario();
+        iV = VFactory.getInstancia().getIVideo();
         mU = ManejadorUsuario.getInstancia();
         mC = ManejadorCategoria.getInstancia();
     }
@@ -280,6 +284,16 @@ public class CUsuarioTest {
         List<DtCanalWeb> lisFecha = iU.busqueda("nom", true);
         Integer[] obtenido = {lisAlfa.size(), lisFecha.size()};
         assertArrayEquals(esperado, obtenido);
+    }
+
+    @Test
+    public void visitasAll(){
+        Calendar fecha = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        iV.agregarVideo("usr", "vid", "desc", fecha, 10, "url");
+        iU.agregarVisita("usr", "usr", "vid");
+        assertEquals(1, iU.listarMasVisitados("usr"));
     }
 
     @After

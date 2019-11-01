@@ -89,7 +89,7 @@ public class ManejadorUsuario {
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())
 					em.getTransaction().rollback();
-			throw new IllegalArgumentException("Hubo un error inesperado");
+			throw e;
 		}
 	}
 
