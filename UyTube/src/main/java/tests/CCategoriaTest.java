@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.transaction.RollbackException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,15 +39,25 @@ public class CCategoriaTest {
     @Test
     public void listarElemCategoria() {
         iC.altaCategoria("Deportes");
-        List<DtElementoUsuario> elemObtenidos= iC.listarElemCategoria("Deportes");
+        List<DtElementoUsuario> elemObtenidos = iC.listarElemCategoria("Deportes");
         assertEquals(0, elemObtenidos.size());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void listarElemCategoriaException() {
+        List<DtElementoUsuario> elemObtenidos = iC.listarElemCategoria("Deportes");
     }
 
     @Test
     public void listarVideosCategoria() {
         iC.altaCategoria("Deportes");
-        List<DtElementoWeb> vidsObtenidos= iC.listarVideosCategoria("Deportes");
+        List<DtElementoWeb> vidsObtenidos = iC.listarVideosCategoria("Deportes");
         assertEquals(0, vidsObtenidos.size());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void listarVideosException() {
+        List<DtElementoWeb> vidsObtenidos = iC.listarVideosCategoria("Deportes");
     }
 
     @Test
