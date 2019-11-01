@@ -53,6 +53,10 @@ public class Usuario {
 	@ManyToMany
 	private List<Usuario> seguidos = new ArrayList<Usuario>();
 
+
+	@OneToMany
+	private  List<Visita> masVisitados = new ArrayList<Visita>();
+
 	//Constructores
 	public Usuario() {
 		super();
@@ -213,5 +217,27 @@ public class Usuario {
 		}
 	}
 
+	public void agregarVisita(Video video){
+		Visita nuevaV = null;
+		for (Visita v: masVisitados){
+			if(v.getVideo().equals(video)){
+				nuevaV = v;
+				break;
+			}
+		}
+		Calendar fecha = Calendar.getInstance();
+		if(nuevaV == null){
+			nuevaV = new Visita(video, fecha, 1);
+			masVisitados.add(nuevaV);
+		}else {
+			nuevaV.setUltimaVisita(fecha);
+			nuevaV.setCantVisitas(nuevaV.getCantVisitas()+1);
+		}
+		masVisitados.sort(Comparator.comparing(Visita::getCantVisitas).reversed());
 
+	}
+
+	public List<Visita> getMasVisitados() {
+		return masVisitados;
+	}
 }

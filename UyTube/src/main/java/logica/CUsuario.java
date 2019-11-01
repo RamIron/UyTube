@@ -310,4 +310,30 @@ public class CUsuario implements IUsuario {
 		}
 		return res;
 	}
+
+	@Override
+	public void agregarVisita(String usrSesion, String usrVid, String nomVid){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usr = mU.obtenerUsuario(usrSesion);
+		Video vid = mU.obtenerUsuario(usrVid).getCanal().obtenerVideo(nomVid);
+		this.usr.agregarVisita(vid);
+		mU.modificaDatosUsuario(this.usr);
+	}
+
+	@Override
+	public List<DtVisita> listarMasVisitados(String nick){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usr = mU.obtenerUsuario(nick);
+		List<Visita> visitas = this.usr.getMasVisitados();
+		List<DtVisita> res = new ArrayList<DtVisita>();
+		for (Visita v: visitas){
+			DtVisita dtVisita = new DtVisita(v.getVideo().getCanal().getUsuario().getNickname(), v.getVideo().getNombre(), v.getUltimaVisita(), v.getCantVisitas());
+			res.add(dtVisita);
+		}
+		return res;
+	}
 }
