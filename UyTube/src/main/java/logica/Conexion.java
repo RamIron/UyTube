@@ -24,4 +24,9 @@ public class Conexion {
 		}
 		return instancia;
 	}
+
+	public void cerrar(){
+		em.close();
+		instancia = null;
+	}
 }
