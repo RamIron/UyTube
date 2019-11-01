@@ -50,18 +50,6 @@ public class CListaRepPublish {
         this.iLisRep.agregarCategoriaALista(nomC);
     }
 
-    @WebMethod
-    public String[] obtenerCatListPart(String nomL){
-        List<String> cats = iLisRep.obtenerCatListPart(nomL);
-        int i = 0;
-        String[] ret = new String[cats.size()];
-        for(String c : cats) {
-            ret[i]=c;
-            i++;
-        }
-        return ret;
-    }
-
 
     @WebMethod
     public void agregarListaDefecto(String nomL) {

@@ -273,10 +273,11 @@ public class CUsuarioTest {
         Integer[] esperado = {1, 1};
         Calendar fecha = Calendar.getInstance();
         iU.agregarUsuario("usr1", "nom", "apellido", fecha, "email");
+        iU.modificarImagen("img");
         iU.agregarCanal();
         iU.modificarInfoCanal("nom", "des", true);
-        List<DtCanalWeb> lisAlfa = iU.busqueda("usr1", false);
-        List<DtCanalWeb> lisFecha = iU.busqueda("usr1", true);
+        List<DtCanalWeb> lisAlfa = iU.busqueda("nom", false);
+        List<DtCanalWeb> lisFecha = iU.busqueda("nom", true);
         Integer[] obtenido = {lisAlfa.size(), lisFecha.size()};
         assertArrayEquals(esperado, obtenido);
     }
