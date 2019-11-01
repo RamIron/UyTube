@@ -27,22 +27,15 @@ public class CVideo implements IVideo {
 			Categoria cat = mC.obtenerCategoria(nomC);
 			cat.agregarElemento(this.vid);
 			mC.modificarCategoria(cat);
-			//mU.modificaDatosUsuario(this.vid.getCanal().getUsuario());
 		}
 	}
 	
 	@Override 
 	public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url){
-		//ManejadorVideo mV = ManejadorVideo.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.usr = mU.obtenerUsuario(nick);
 		this.vid = this.usr.getCanal().agregarVideo(nomV, desc, fPub, dur, url);
 		mU.modificaDatosUsuario(this.usr);
-		/*if(!existeVideo(usr.getNickname(), nomV)) {
-			mV.agregarVideo(this.vid);
-		} else {
-			throw new java.lang.RuntimeException("Ya existe un video con ese nombre");
-		}*/
 	}
 	
 	@Override
@@ -130,7 +123,6 @@ public class CVideo implements IVideo {
 
 	@Override 
 	public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {
-		//ManejadorVideo mV = ManejadorVideo.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.vid.setNombre(nomV);
 		this.vid.setDescripcion(desc);
@@ -139,7 +131,6 @@ public class CVideo implements IVideo {
 		this.vid.setUrl(url);
 		this.vid.setPublico(publico);
 		mU.modificaDatosUsuario(this.usr);
-		//mV.modificarVideo(this.vid);
 	}
 	
 	@Override 
@@ -254,19 +245,14 @@ public class CVideo implements IVideo {
 		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
 		List<Object[]> resQuery;
 		if(ordFecha){
-			//TODO ordenado por fecha
-			//resQuery = nativequery
 			Query consulta = em.createNamedQuery("buscarVideoFecha");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		} else {
-			//TODO ordenado alfabetico
-			//resQuery = nativequery
 			Query consulta = em.createNamedQuery("buscarVideoNombre");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		}
-//		Integer size = resQuery.size();
 		for(Object[] o : resQuery){
 			DtElementoWeb lis = new DtElementoWeb(o[0].toString(), o[1].toString(), tipoElemento.VIDEO, o[2].toString());
 			res.add(lis);

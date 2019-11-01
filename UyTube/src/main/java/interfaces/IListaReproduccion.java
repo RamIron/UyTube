@@ -39,20 +39,12 @@ public interface IListaReproduccion {
 	public List<DtVideoUsuario> listarVideosdeLista(String nomList);
 
 	public List<DtElementoWeb> listarVideosListaWeb(String nomList);
-
-	public List<String> obtenerCatListPart(String nomL);
 	
 	public void modificarCategoria(String nomC);
 	
 	public void modificarInfoLista(String nomL, boolean publico);
 	
-	public List<DtComentario> obtenerComentariosVideo(String nomVid);
-	
-	public DtVideo obtenerInfoVideo(String nomVid);
-	
 	public DtListaRep obtenerListaDeUsuario(String nomList);
-	
-	public List<DtValoracion> obtenerValoracionVideo(String nomVid);
 
 	void setuVid(String nick);
 
