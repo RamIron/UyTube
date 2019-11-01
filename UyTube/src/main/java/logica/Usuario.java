@@ -211,4 +211,5 @@ public class Usuario {
 			this.seguidos.add(u2);			
 		}
 	}
+
 }

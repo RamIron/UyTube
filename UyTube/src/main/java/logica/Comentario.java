@@ -18,7 +18,7 @@ public class Comentario {
 	@ManyToOne
 	private Usuario usuario;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Comentario> respuestas = new ArrayList<Comentario>();
 	
 	//Constructores
@@ -94,15 +94,31 @@ public class Comentario {
 				Comentario r = (Comentario) iterator.next();
 				r.eliminarRespuestas();
 				this.respuestas.remove(r);
-				r = null;
+				//r = null;
 			}
 			//this.respuestas = null;
 		} else {
 			this.setFecha(null);
-			this.setId(null); //que pasa con los ID?
+			//this.setId(null); //que pasa con los ID?
 			this.setTexto(null);
 			this.setUsuario(null);
-			this.respuestas = null;
+			this.respuestas.clear();
+			//this.respuestas = null;
 		}
+	}
+
+	public void eliminarRespuesta(Comentario c){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		c.eliminarRespuestas();
+		this.respuestas.remove(c);
+		c.setFecha(null);
+		//c.setId(null); //que pasa con los ID?
+		c.setTexto(null);
+		c.setUsuario(null);
+		em.getTransaction().begin();
+		em.remove(c);
+		em.getTransaction().commit();
+		c = null;
 	}
 }

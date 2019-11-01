@@ -159,10 +159,11 @@ public class Video extends Elemento {
 	public void eliminarValoraciones(){
 		for(Valoracion v: this.valoraciones){
 			v.setUsuario(null);
-			this.valoraciones.remove(v);
-			v = null;
+			//this.valoraciones.remove(v);
+			//v = null;
 		}
-		this.valoraciones = null;
+		this.valoraciones.clear();
+		//this.valoraciones = null;
 	}
 
 	public void sacarCategoria(){
@@ -171,16 +172,22 @@ public class Video extends Elemento {
 	}
 
 	public void eliminarComentarios(){
+		/*Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();*/
 		for(Comentario c: this.comentarios){
 			c.eliminarRespuestas();
-			this.comentarios.remove(c);
+			//this.comentarios.remove(c);
 			c.setFecha(null);
 			c.setId(null); //que pasa con los ID?
 			c.setTexto(null);
 			c.setUsuario(null);
-			c = null;
+			/*em.getTransaction().begin();
+			em.persist(c);
+			em.getTransaction().commit();*/
+			//c = null;
 		}
-		this.comentarios = null;
+		this.comentarios.clear();
+		//this.comentarios = null;
 	}
 
 	public void eliminarValoracion(Integer i){
@@ -193,23 +200,22 @@ public class Video extends Elemento {
 
 		v.setUsuario(null);
 		this.valoraciones.remove(v);
-		v = null;
+		//v = null;
 	}
 
-	public void eliminarComentario(Integer i){
-		Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();
-
-		TypedQuery<Comentario> consulta = em.createQuery("FROM Comentario c where c.id=:param", Comentario.class);
-		consulta.setParameter("param", i);
-		Comentario c = consulta.getSingleResult();
+	public void eliminarComentario(Comentario c){
+		/*Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();*/
 
 		c.eliminarRespuestas();
 		this.comentarios.remove(c);
 		c.setFecha(null);
-		c.setId(null); //que pasa con los ID?
+		//c.setId(null); //que pasa con los ID?
 		c.setTexto(null);
 		c.setUsuario(null);
-		c = null;
+		/*em.getTransaction().begin();
+		em.persist(c);
+		em.getTransaction().commit();*/
+		//c = null;
 	}
 }

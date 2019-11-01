@@ -98,6 +98,7 @@ public class ManejadorUsuario {
 		EntityManager em = conexion.getEntityManager();
 		try {
 			em.getTransaction().begin();
+			//em.detach(usuario);
 			em.remove(usuario);
 			em.getTransaction().commit();
 		}catch (Exception e){

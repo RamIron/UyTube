@@ -338,30 +338,34 @@ public class Canal {
 		this.setPublico(null);
 	}
 
-	private void borrarTodosVideos(){
-		for (Video v: this.videos){
-			v.eliminarValoraciones();
-			v.eliminarComentarios();
-			v.sacarCategoria();
-			this.videos.remove(v);
-			v.setCanal(null);
-			v.setDescripcion(null);
-			v.setfPublicacion(null);
-			v.setDuracion(null);
-			v.setUrl(null);
-			v = null;
+	private void borrarTodosVideos() {
+		if (!this.videos.isEmpty()){
+			for (Video v : this.videos) {
+				v.eliminarValoraciones();
+				v.sacarCategoria();
+				v.eliminarComentarios();
+				//this.videos.remove(v);
+				v.setCanal(null);
+				v.setDescripcion(null);
+				v.setfPublicacion(null);
+				v.setDuracion(null);
+				v.setUrl(null);
+				v = null;
+			}
+			this.videos.clear();
+			this.videos = null;
 		}
-		this.videos = null;
 	}
 	private  void borrarTodasListas(){
 		for(ListaReproduccion l: this.listas){
 			l.eliminarVideos();
 			l.sacarCategoria();
-			listas.remove(l);
+			//listas.remove(l);
 			l.setNombre(null);
 			l.setCanal(null);
 			l = null;
 		}
-		this.listas = null;
+		this.listas.clear();
+		//this.listas = null;
 	}
 }

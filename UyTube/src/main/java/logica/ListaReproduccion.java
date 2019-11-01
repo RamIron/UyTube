@@ -71,10 +71,15 @@ public abstract class ListaReproduccion extends Elemento {
 	}
 
 	public void eliminarVideos(){
-		for(Video v: this.videos){
+		/*for(Video v: this.videos){
 			this.videos.remove(v);
-		}
+		}*/
+		this.videos.clear();
 		this.videos = null;
+	}
+
+	public void quitarVideo(Video vid){
+		this.videos.remove(vid);
 	}
 
 }

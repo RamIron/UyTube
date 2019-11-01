@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import datatypes.*;
+import logica.Usuario;
 
 public interface IUsuario {
 	
 	public void agregarCanal();
 
     //si la categoria esta vacia en canal se le agrega, si ya tiene una categoria se pisa
-    void modificarCatCanal(String nick, String nomCat);
+    public void modificarCatCanal(String nick, String nomCat);
 
     public void agregarUsuario(String nick, String nom, String ape, Calendar fechaN, String email);
 	
@@ -35,7 +36,7 @@ public interface IUsuario {
 	
 	public void modificarImagen(String img);
 
-    void modificarContrasena(String pass);
+    public void modificarContrasena(String pass);
 
     public void modificarInfoCanal(String nomC, String descC, boolean publico);
 	
@@ -49,15 +50,19 @@ public interface IUsuario {
 
 	public Integer iniciarSesion(String nick, String pass);
 
-    DtUsuarioWeb obtenerUsuarioWebNick(String nickname);
+    public DtUsuarioWeb obtenerUsuarioWebNick(String nickname);
 
-	DtUsuarioWeb obtenerUsuarioWebEmail(String email);
+	public DtUsuarioWeb obtenerUsuarioWebEmail(String email);
 
-    List<DtUsuarioWeb> listarUsuariosWeb();
+    public List<DtUsuarioWeb> listarUsuariosWeb();
 
 	/*si ordFecha es true se debe devolver la busqueda en ordenada del mas nuevo al mas viejo, de lo contario alfabeticamente
          en caso de que la busqueda no obtenga ningun resultado, debe devolverse una lista vacia (nunca null)	  */
 	public List<DtCanalWeb> busqueda(String query, Boolean ordFecha);
 
-    void eliminarUsuario(String nick);
+    public void eliminarUsuario(String nick);
+
+	public void borrarTodosSeguidores(Usuario usr);
+
+	public void borrarTodosSeguidos(Usuario usr);
 }

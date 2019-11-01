@@ -171,7 +171,11 @@
         <% if (s.getAttribute("usuario") != null){ %>
         <%
           IUsuario iU = UFactory.getInstancia().getIUsuario();
-          iU.eliminarUsuario("tito");
+          //iU.eliminarUsuario("pepe");
+          List<String> todosUsuarios = iU.listarUsuarios();
+          for(String sss:todosUsuarios){
+            System.out.println(sss);
+          }
         %>
         <!-- Divider -->
         <hr class="my-3">
@@ -185,7 +189,6 @@
             </a>
           </li>
           <%
-            System.out.println("Tamaño listas: " + portListaRep.listarListasDeUsuario(usr.getNickname()).getItem().size());
             List<String> lista = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
             for(String l: lista){ %>
           <li class="nav-item">
