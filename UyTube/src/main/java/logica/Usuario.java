@@ -54,7 +54,7 @@ public class Usuario {
 	private List<Usuario> seguidos = new ArrayList<Usuario>();
 
 
-	@OneToMany
+	@OneToMany(mappedBy = "video")
 	private  List<Visita> masVisitados = new ArrayList<Visita>();
 
 	//Constructores

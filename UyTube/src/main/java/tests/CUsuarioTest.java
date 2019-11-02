@@ -25,6 +25,7 @@ import static org.junit.Assert.*;
 
 public class CUsuarioTest {
     private IUsuario iU = null;
+    private IUsuario iU2 = null;
     private IVideo iV = null;
     private ManejadorUsuario mU = null;
     private ManejadorCategoria mC = null;
@@ -32,6 +33,7 @@ public class CUsuarioTest {
     @Before
     public void inicializar(){
         iU = UFactory.getInstancia().getIUsuario();
+        iU2 = UFactory.getInstancia().getIUsuario();
         iV = VFactory.getInstancia().getIVideo();
         mU = ManejadorUsuario.getInstancia();
         mC = ManejadorCategoria.getInstancia();
@@ -289,11 +291,13 @@ public class CUsuarioTest {
     @Test
     public void visitasAll(){
         Calendar fecha = Calendar.getInstance();
-        iU.agregarUsuario("usr", "nom", "apellido", fecha, "email");
+        iU.agregarUsuario("usrSesion", "nom", "apellido", fecha, "email");
         iU.agregarCanal();
-        iV.agregarVideo("usr", "vid", "desc", fecha, 10, "url");
-        iU.agregarVisita("usr", "usr", "vid");
-        assertEquals(1, iU.listarMasVisitados("usr"));
+        iU.agregarUsuario("usrVideo", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        iV.agregarVideo("usrVideo", "vid", "desc", fecha, 10, "url");
+        iU.agregarVisita("usrSesion", "usrVideo", "vid");
+        assertEquals(1, iU.listarMasVisitados("usrSesion").size());
     }
 
     @After

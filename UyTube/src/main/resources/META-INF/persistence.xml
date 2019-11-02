@@ -16,6 +16,7 @@
 		<class>logica.Particular</class>
 		<class>logica.Comentario</class>
 		<class>logica.Valoracion</class>
+		<class>logica.Visita</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
