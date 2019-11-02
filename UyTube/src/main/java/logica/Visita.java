@@ -6,8 +6,6 @@ import java.util.Objects;
 @Entity
 public class Visita {
    @Id
-    @SequenceGenerator(name = "elementoGenerator", sequenceName = "ELEMENTO_SEQUENCE", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "elementoGenerator")
     private Integer id;
 
     @ManyToOne
@@ -21,6 +19,7 @@ public class Visita {
         this.video = video;
         this.ultimaVisita = ultimaVisita;
         this.cantVisitas = cantVisitas;
+        this.id = 0;
     }
 
     public Integer getId() {
