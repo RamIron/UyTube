@@ -159,11 +159,8 @@ public class Video extends Elemento {
 	public void eliminarValoraciones(){
 		for(Valoracion v: this.valoraciones){
 			v.setUsuario(null);
-			//this.valoraciones.remove(v);
-			//v = null;
 		}
 		this.valoraciones.clear();
-		//this.valoraciones = null;
 	}
 
 	public void sacarCategoria(){
@@ -172,22 +169,10 @@ public class Video extends Elemento {
 	}
 
 	public void eliminarComentarios(){
-		/*Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();*/
 		for(Comentario c: this.comentarios){
 			c.eliminarRespuestas();
-			//this.comentarios.remove(c);
-			c.setFecha(null);
-			c.setId(null); //que pasa con los ID?
-			c.setTexto(null);
-			c.setUsuario(null);
-			/*em.getTransaction().begin();
-			em.persist(c);
-			em.getTransaction().commit();*/
-			//c = null;
 		}
 		this.comentarios.clear();
-		//this.comentarios = null;
 	}
 
 	public void eliminarValoracion(Integer i){
@@ -200,22 +185,10 @@ public class Video extends Elemento {
 
 		v.setUsuario(null);
 		this.valoraciones.remove(v);
-		//v = null;
 	}
 
 	public void eliminarComentario(Comentario c){
-		/*Conexion conexion = Conexion.getInstancia();
-		EntityManager em = conexion.getEntityManager();*/
-
 		c.eliminarRespuestas();
 		this.comentarios.remove(c);
-		c.setFecha(null);
-		//c.setId(null); //que pasa con los ID?
-		c.setTexto(null);
-		c.setUsuario(null);
-		/*em.getTransaction().begin();
-		em.persist(c);
-		em.getTransaction().commit();*/
-		//c = null;
 	}
 }

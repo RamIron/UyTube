@@ -231,9 +231,9 @@ public class CUsuario implements IUsuario {
 	//		   2-> si coincide con email
 	public Integer iniciarSesion(String nick, String pass){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(existeNickname(nick) && mU.obtenerUsuario(nick).getContrasena().equals(pass)) {
+		if(existeNickname(nick) && mU.obtenerUsuario(nick).getContrasena().equals(pass) && mU.obtenerUsuario(nick).isActivo()) {
 			return 1;
-		}else if(existeEmail(nick) && mU.obtenerUsuarioMail(nick).getContrasena().equals(pass)){
+		}else if(existeEmail(nick) && mU.obtenerUsuarioMail(nick).getContrasena().equals(pass) && mU.obtenerUsuarioMail(nick).isActivo()){
 			return 2;
 		}else{
 			return 0;
@@ -404,16 +404,9 @@ public class CUsuario implements IUsuario {
 			}
 
 			usr.getCanal().borrarContenidoCanal();
-
-			//usr.setNickname(null);
-			usr.setNombre(null);
-			usr.setApellido(null);
-			usr.setfNac(null);
-			usr.setCorreoE(null);
-			usr.setContrasena(null);
-			usr.setImagen(null);
-			mU.eliminarUsuario(usr);
-			//usr = null;
+			usr.setActivo(false);
+			mU.quitarUsuario(usr);
+			System.gc();
 		}catch (Exception e){
 			throw new IllegalArgumentException("No se pudo eliminar el usuario");
 		}

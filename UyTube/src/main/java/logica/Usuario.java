@@ -39,12 +39,12 @@ public class Usuario {
 	
 	@Column(name="CORREO_ELECTRONICO")
 	private String correoE;
+
+	@Column(name="ACTIVO")
+	private boolean activo;
 	
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	private Canal canal;
-	
-	/*@OneToMany(mappedBy="usuario",cascade=CascadeType.ALL,orphanRemoval=true)
-	private List<Valoracion> valoraciones = new ArrayList<>();*/
 	
 	@ManyToMany(mappedBy="seguidos")
 	//@JoinTable(name="USUARIOS_SEGUIDOS")
@@ -70,6 +70,7 @@ public class Usuario {
 		this.apellido = apellido;
 		this.fNac = fNac;
 		this.correoE = correoE;
+		this.activo = true;
 	}
 
 	//Getters y Setters
@@ -125,13 +126,10 @@ public class Usuario {
 		return seguidos;
 	}
 
-
 	public List<Usuario> getSeguidores() {
 		return seguidores;
 	}
 
-	
-	
 	public Canal getCanal() {
 		return this.canal;
 	}
@@ -140,7 +138,6 @@ public class Usuario {
 		this.canal = c;
 	}
 
-
 	public String getContrasena() {
 		return contrasena;
 	}
@@ -148,6 +145,10 @@ public class Usuario {
 	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
 	}
+
+	public boolean isActivo() { return activo; }
+
+	public void setActivo(boolean activo) {	this.activo = activo; }
 
 	//Operaciones
 	public void agregarCanal() {

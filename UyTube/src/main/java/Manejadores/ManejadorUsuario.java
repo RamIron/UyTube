@@ -1,5 +1,6 @@
 package Manejadores;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,7 +12,7 @@ import logica.Usuario;
 
 public class ManejadorUsuario {
 	private static ManejadorUsuario instancia = null;
-	
+
 	private ManejadorUsuario(){}
 	
 	public static ManejadorUsuario getInstancia() {
@@ -55,7 +56,7 @@ public class ManejadorUsuario {
 	public List<Usuario> obtenerUsuarios(){
 		Conexion conexion=Conexion.getInstancia();
 		EntityManager em =conexion.getEntityManager();
-		TypedQuery<Usuario> consulta = em.createQuery("FROM Usuario", Usuario.class);
+		TypedQuery<Usuario> consulta = em.createQuery("FROM Usuario WHERE activo = true", Usuario.class);
 		List<Usuario> usuarios = consulta.getResultList();
 		return usuarios;
 	}
@@ -63,7 +64,7 @@ public class ManejadorUsuario {
 	public List<String> listarUsuarios(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		TypedQuery<String> consulta = em.createQuery("SELECT u.nickname FROM Usuario u", String.class);
+		TypedQuery<String> consulta = em.createQuery("SELECT u.nickname FROM Usuario u WHERE u.activo = true", String.class);
 	    List<String> usuarios = consulta.getResultList();
 	    return usuarios;
 	}
@@ -93,13 +94,12 @@ public class ManejadorUsuario {
 		}
 	}
 
-	public void eliminarUsuario(Usuario usuario){
+	public void quitarUsuario(Usuario usuario){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		try {
 			em.getTransaction().begin();
-			//em.detach(usuario);
-			em.remove(usuario);
+			em.persist(usuario);
 			em.getTransaction().commit();
 		}catch (Exception e){
 			if(e instanceof RollbackException)
