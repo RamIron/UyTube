@@ -83,8 +83,8 @@ public interface CListaRepPublish {
      * @param arg0
      */
     @WebMethod
-    @Action(input = "http://publicadores/CListaRepPublish/setVideoRequest", output = "http://publicadores/CListaRepPublish/setVideoResponse")
-    public void setVideo(
+    @Action(input = "http://publicadores/CListaRepPublish/setuVidRequest", output = "http://publicadores/CListaRepPublish/setuVidResponse")
+    public void setuVid(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
 
@@ -93,8 +93,34 @@ public interface CListaRepPublish {
      * @param arg0
      */
     @WebMethod
-    @Action(input = "http://publicadores/CListaRepPublish/setuVidRequest", output = "http://publicadores/CListaRepPublish/setuVidResponse")
-    public void setuVid(
+    @Action(input = "http://publicadores/CListaRepPublish/setVideoRequest", output = "http://publicadores/CListaRepPublish/setVideoResponse")
+    public void setVideo(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns net.java.dev.jaxb.array.StringArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CListaRepPublish/listarListasParticularesPublicasRequest", output = "http://publicadores/CListaRepPublish/listarListasParticularesPublicasResponse")
+    public StringArray listarListasParticularesPublicas(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns net.java.dev.jaxb.array.StringArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CListaRepPublish/listarListasPorDefectoRequest", output = "http://publicadores/CListaRepPublish/listarListasPorDefectoResponse")
+    public StringArray listarListasPorDefecto(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
 
@@ -230,26 +256,10 @@ public interface CListaRepPublish {
     /**
      * 
      * @param arg0
-     * @return
-     *     returns net.java.dev.jaxb.array.StringArray
      */
     @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CListaRepPublish/listarListasParticularesPublicasRequest", output = "http://publicadores/CListaRepPublish/listarListasParticularesPublicasResponse")
-    public StringArray listarListasParticularesPublicas(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns net.java.dev.jaxb.array.StringArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CListaRepPublish/listarListasPorDefectoRequest", output = "http://publicadores/CListaRepPublish/listarListasPorDefectoResponse")
-    public StringArray listarListasPorDefecto(
+    @Action(input = "http://publicadores/CListaRepPublish/modificarCategoriaRequest", output = "http://publicadores/CListaRepPublish/modificarCategoriaResponse")
+    public void modificarCategoria(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
 
@@ -263,19 +273,6 @@ public interface CListaRepPublish {
     @WebResult(partName = "return")
     @Action(input = "http://publicadores/CListaRepPublish/listarVideosListaWebRequest", output = "http://publicadores/CListaRepPublish/listarVideosListaWebResponse")
     public DtElementoWebArray listarVideosListaWeb(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns net.java.dev.jaxb.array.StringArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CListaRepPublish/obtenerCatListPartRequest", output = "http://publicadores/CListaRepPublish/obtenerCatListPartResponse")
-    public StringArray obtenerCatListPart(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
 
@@ -304,8 +301,8 @@ public interface CListaRepPublish {
      * @param arg0
      */
     @WebMethod
-    @Action(input = "http://publicadores/CListaRepPublish/modificarCategoriaRequest", output = "http://publicadores/CListaRepPublish/modificarCategoriaResponse")
-    public void modificarCategoria(
+    @Action(input = "http://publicadores/CListaRepPublish/setListaRequest", output = "http://publicadores/CListaRepPublish/setListaResponse")
+    public void setLista(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
 
@@ -342,16 +339,6 @@ public interface CListaRepPublish {
     @WebResult(partName = "return")
     @Action(input = "http://publicadores/CListaRepPublish/listarVideosdeListaRequest", output = "http://publicadores/CListaRepPublish/listarVideosdeListaResponse")
     public DtVideoUsuarioArray listarVideosdeLista(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CListaRepPublish/setListaRequest", output = "http://publicadores/CListaRepPublish/setListaResponse")
-    public void setLista(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
 
