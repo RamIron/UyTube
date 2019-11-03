@@ -2,10 +2,7 @@ package tests;
 
 import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorUsuario;
-import datatypes.DtCanal;
-import datatypes.DtCanalWeb;
-import datatypes.DtUsuario;
-import datatypes.DtUsuarioWeb;
+import datatypes.*;
 import interfaces.IUsuario;
 import interfaces.IVideo;
 import interfaces.UFactory;
