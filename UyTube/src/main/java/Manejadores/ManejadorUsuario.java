@@ -68,6 +68,14 @@ public class ManejadorUsuario {
 	    List<String> usuarios = consulta.getResultList();
 	    return usuarios;
 	}
+	
+	public List<String> listarUsuariosEliminados(){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		TypedQuery<String> consulta = em.createQuery("SELECT u.nickname FROM Usuario u WHERE u.activo = false", String.class);
+	    List<String> usuarios = consulta.getResultList();
+	    return usuarios;
+	}
 
 	public Usuario obtenerUsuarioMail(String email){
 		Conexion conexion = Conexion.getInstancia();

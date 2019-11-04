@@ -34,6 +34,8 @@ public interface IUsuario {
 	
 	public List<String> listarUsuarios();
 	
+	public List<String> listarUsuariosEliminados();
+	
 	public void modificarImagen(String img);
 
     public void modificarContrasena(String pass);

@@ -169,14 +169,14 @@
           </li>
         </ul>
         <% if (s.getAttribute("usuario") != null){ %>
-        <%
+        <%--<%
           IUsuario iU = UFactory.getInstancia().getIUsuario();
-          //iU.eliminarUsuario("pepe2");
+          iU.eliminarUsuario("lobezno");
           List<String> todosUsuarios = iU.listarUsuarios();
           for(String sss:todosUsuarios){
             System.out.println(sss);
           }
-        %>
+        %>--%>
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
