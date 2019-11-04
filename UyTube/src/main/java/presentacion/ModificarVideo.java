@@ -163,8 +163,8 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 					duracion.setText(infoV.getDuracion().toString());
 					url.setText(infoV.getUrl());
 					descripcion.setText(infoV.getDescripcion());
-					fDia.setSelectedIndex(infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH));
-					fMes.setSelectedIndex(infoV.getfPublicacion().get(Calendar.MONTH));
+					fDia.setSelectedItem(infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH));
+					fMes.setSelectedItem(infoV.getfPublicacion().get(Calendar.MONTH)+1);
 					fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
 					if(infoV.getCategoria() == null) {
 						categoria.setSelectedIndex(0);
