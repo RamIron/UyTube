@@ -51,8 +51,12 @@ public class CVideoPublish {
     }
 
     @WebMethod
-    public void agregarVideo(String nick, String nomV, String desc, Calendar fPub, int dur, String url){
-        iVid.agregarVideo(nick, nomV, desc, fPub, dur, url);
+    public void agregarVideo(String nick, String nomV, String desc, DtFecha fPub, int dur, String url){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fPub.getAnio());
+        cal.set(Calendar.MONTH, fPub.getMes());
+        cal.set(Calendar.DAY_OF_MONTH, fPub.getDia());
+        iVid.agregarVideo(nick, nomV, desc, cal, dur, url);
     }
 
     @WebMethod
@@ -129,8 +133,12 @@ public class CVideoPublish {
     }
 
     @WebMethod
-    public void modificarInfoVideo(String nomV, String desc, Calendar fecha, int dur, String url, boolean publico) {
-        iVid.modificarInfoVideo(nomV, desc, fecha, dur, url, publico);
+    public void modificarInfoVideo(String nomV, String desc, DtFecha fecha, int dur, String url, boolean publico) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fecha.getAnio());
+        cal.set(Calendar.MONTH, fecha.getMes());
+        cal.set(Calendar.DAY_OF_MONTH, fecha.getDia());
+        iVid.modificarInfoVideo(nomV, desc, cal, dur, url, publico);
     }
 
     @WebMethod
@@ -163,13 +171,21 @@ public class CVideoPublish {
     }
 
     @WebMethod
-    public void responderComentario(int idCom, String nick, Calendar fcom, String texto) {
-        iVid.responderComentario(idCom, nick, fcom, texto);
+    public void responderComentario(int idCom, String nick, DtFecha fcom, String texto) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fcom.getAnio());
+        cal.set(Calendar.MONTH, fcom.getMes());
+        cal.set(Calendar.DAY_OF_MONTH, fcom.getDia());
+        iVid.responderComentario(idCom, nick, cal, texto);
     }
 
     @WebMethod
-    public void realizarComentario(String nick, Calendar fCom, String texto) {
-        iVid.realizarComentario(nick, fCom, texto);
+    public void realizarComentario(String nick, DtFecha fCom, String texto) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fCom.getAnio());
+        cal.set(Calendar.MONTH, fCom.getMes());
+        cal.set(Calendar.DAY_OF_MONTH, fCom.getDia());
+        iVid.realizarComentario(nick, cal, texto);
     }
 
     @WebMethod
