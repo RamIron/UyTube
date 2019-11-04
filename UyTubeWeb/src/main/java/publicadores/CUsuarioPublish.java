@@ -28,6 +28,94 @@ public interface CUsuarioPublish {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns publicadores.DtCanalWebArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CUsuarioPublish/busquedaRequest", output = "http://publicadores/CUsuarioPublish/busquedaResponse")
+    public DtCanalWebArray busqueda(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        boolean arg1);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CUsuarioPublish/dejarDeSeguirUsuarioRequest", output = "http://publicadores/CUsuarioPublish/dejarDeSeguirUsuarioResponse")
+    public void dejarDeSeguirUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CUsuarioPublish/esCanalPublicoRequest", output = "http://publicadores/CUsuarioPublish/esCanalPublicoResponse")
+    public boolean esCanalPublico(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CUsuarioPublish/eliminarUsuarioRequest", output = "http://publicadores/CUsuarioPublish/eliminarUsuarioResponse")
+    public void eliminarUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CUsuarioPublish/agregarVisitaRequest", output = "http://publicadores/CUsuarioPublish/agregarVisitaResponse")
+    public void agregarVisita(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns publicadores.DtVisitaArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CUsuarioPublish/listarMasVisitadosRequest", output = "http://publicadores/CUsuarioPublish/listarMasVisitadosResponse")
+    public DtVisitaArray listarMasVisitados(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CUsuarioPublish/agregarCanalRequest", output = "http://publicadores/CUsuarioPublish/agregarCanalResponse")
+    public void agregarCanal();
+
+    /**
+     * 
      * @param arg3
      * @param arg2
      * @param arg4
@@ -63,16 +151,16 @@ public interface CUsuarioPublish {
 
     /**
      * 
-     * @param arg1
      * @param arg0
+     * @return
+     *     returns boolean
      */
     @WebMethod
-    @Action(input = "http://publicadores/CUsuarioPublish/dejarDeSeguirUsuarioRequest", output = "http://publicadores/CUsuarioPublish/dejarDeSeguirUsuarioResponse")
-    public void dejarDeSeguirUsuario(
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CUsuarioPublish/existeEmailRequest", output = "http://publicadores/CUsuarioPublish/existeEmailResponse")
+    public boolean existeEmail(
         @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
+        String arg0);
 
     /**
      * 
@@ -262,94 +350,6 @@ public interface CUsuarioPublish {
     @WebResult(partName = "return")
     @Action(input = "http://publicadores/CUsuarioPublish/listarUsuariosWebRequest", output = "http://publicadores/CUsuarioPublish/listarUsuariosWebResponse")
     public DtUsuarioWebArray listarUsuariosWeb();
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CUsuarioPublish/eliminarUsuarioRequest", output = "http://publicadores/CUsuarioPublish/eliminarUsuarioResponse")
-    public void eliminarUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CUsuarioPublish/agregarVisitaRequest", output = "http://publicadores/CUsuarioPublish/agregarVisitaResponse")
-    public void agregarVisita(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns publicadores.DtVisitaArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CUsuarioPublish/listarMasVisitadosRequest", output = "http://publicadores/CUsuarioPublish/listarMasVisitadosResponse")
-    public DtVisitaArray listarMasVisitados(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns publicadores.DtCanalWebArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CUsuarioPublish/busquedaRequest", output = "http://publicadores/CUsuarioPublish/busquedaResponse")
-    public DtCanalWebArray busqueda(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        boolean arg1);
-
-    /**
-     * 
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CUsuarioPublish/agregarCanalRequest", output = "http://publicadores/CUsuarioPublish/agregarCanalResponse")
-    public void agregarCanal();
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CUsuarioPublish/esCanalPublicoRequest", output = "http://publicadores/CUsuarioPublish/esCanalPublicoResponse")
-    public boolean esCanalPublico(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CUsuarioPublish/existeEmailRequest", output = "http://publicadores/CUsuarioPublish/existeEmailResponse")
-    public boolean existeEmail(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
 
     /**
      * 
