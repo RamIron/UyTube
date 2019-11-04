@@ -1,10 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
 <%@ page import="publicadores.DtElementoWeb" %>
-<%@ page import="java.util.Random" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="interfaces.IUsuario" %>
-<%@ page import="interfaces.UFactory" %>
 <!--
 
 =========================================================
@@ -28,8 +24,8 @@
   DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
 
   //WEBSERVICES
-  publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
-  publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
+  publicadores.CUsuarioPublishService serviceUsuario = new publicadores.CUsuarioPublishService();
+  publicadores.CUsuarioPublish portUsr = serviceUsuario.getCUsuarioPublishPort();
 
   publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
   publicadores.CListaRepPublish portListaRep = serviceListaRep.getCListaRepPublishPort();
@@ -49,14 +45,14 @@
     UyTube
   </title>
   <!-- Favicon -->
-  <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png">
+  <link href="<%= request.getContextPath() %>/assets/img/brand/favicon.png" rel="icon" type="image/png">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
-  <link href="./assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
-  <link href="./assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+  <link href="<%= request.getContextPath() %>/assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+  <link href="<%= request.getContextPath() %>/assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link href="./assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
+  <link href="<%= request.getContextPath() %>/assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
 </head>
 
 <body class="">
@@ -67,12 +63,12 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="./index.jsp">
-        <img src="./assets/img/brand/logo.png" class="navbar-brand-img" alt="...">
+      <a class="navbar-brand pt-0" href="<%= request.getContextPath() %>/index.jsp">
+        <img src="<%= request.getContextPath() %>/assets/img/brand/logo.png" class="navbar-brand-img" alt="...">
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
-        <% if (s.getAttribute("usuario") == null){ %>
+        <% if (usr == null){ %>
         <li class="nav-item">
           <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
             <i class="fas fa-sign-in-alt"></i>
@@ -85,9 +81,9 @@
             <div class="media align-items-center">
                <span class="avatar avatar-sm rounded-circle">
                   <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
-                  <img alt="Image placeholder" src="./img/default.png">
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
                   <% } else { %>
-                  <img alt="Image placeholder" src="<%=usr.getFoto()%>">
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
                   <% } %>
                 </span>
             </div>
@@ -96,12 +92,12 @@
             <div class=" dropdown-header noti-title">
               <h6 class="text-overflow m-0">Bienvenido</h6>
             </div>
-            <a href="./module/miPerfil.jsp" class="dropdown-item">
+            <a href=""<%= request.getContextPath() %>/module/miPerfil.jsp" class="dropdown-item">
               <i class="ni ni-single-02"></i>
               <span>Mi perfil</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="./CerrarSesion" class="dropdown-item">
+            <a href=""<%= request.getContextPath() %>/CerrarSesion" class="dropdown-item">
               <i class="ni ni-user-run"></i>
               <span>Cerrar sesion</span>
             </a>
@@ -115,8 +111,8 @@
         <div class="navbar-collapse-header d-md-none">
           <div class="row">
             <div class="col-6 collapse-brand">
-              <a href="./index.jsp">
-                <img src="./assets/img/brand/logo.png">
+              <a href="<%= request.getContextPath() %>/index.jsp">
+                <img src="<%= request.getContextPath() %>/assets/img/brand/logo.png">
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -128,12 +124,9 @@
           </div>
         </div>
         <!-- Form -->
-        <form class="mt-4 mb-3 d-md-none" action="./module/buscar.jsp" method="get">
+        <form class="mt-4 mb-3 d-md-none" action="<%= request.getContextPath() %>/module/buscar.jsp" method="get">
           <div class="input-group input-group-rounded input-group-merge" >
             <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Buscar..." aria-label="Search" name="q">
-            <input type="hidden" name="canales" value="on">
-            <input type="hidden" name="videos" value="on">
-            <input type="hidden" name="listas" value="on">
             <div class="input-group-prepend">
               <div class="input-group-text">
                 <span class="fa fa-search"></span>
@@ -144,7 +137,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="./module/verUsuarios.jsp">
+            <a class="nav-link  " href="<%= request.getContextPath() %>/module/verUsuarios.jsp">
               <i class="ni ni-single-02 text-blue"></i> Ver usuarios
             </a>
           </li>
@@ -157,26 +150,18 @@
         <ul class="navbar-nav">
           <% if (s.getAttribute("usuario") != null){ %>
           <li class="nav-item">
-            <a class="nav-link " href="./module/nuevoVideo.jsp">
+            <a class="nav-link" href="<%= request.getContextPath() %>/module/nuevoVideo.jsp">
               <i class="ni ni-fat-add text-blue"></i> Subir video
             </a>
           </li>
           <% } %>
           <li class="nav-item">
-            <a class="nav-link " href="./module/verVideos.jsp">
-              <i class="ni ni-button-play text-blue"></i> Ver videos
+            <a class="nav-link active" href="<%= request.getContextPath() %>/module/verVideos.jsp">
+              <i class="ni ni-button-play text-blue"></i> <strong>Ver videos</strong>
             </a>
           </li>
         </ul>
         <% if (s.getAttribute("usuario") != null){ %>
-        <%--<%
-          IUsuario iU = UFactory.getInstancia().getIUsuario();
-          iU.eliminarUsuario("lobezno");
-          List<String> todosUsuarios = iU.listarUsuarios();
-          for(String sss:todosUsuarios){
-            System.out.println(sss);
-          }
-        %>--%>
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
@@ -184,24 +169,19 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="./module/nuevaLista.jsp">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/nuevaLista.jsp">
               <i class="ni ni-fat-add text-blue"></i> Crear lista
             </a>
           </li>
           <%
-            List<String> lista = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
-            for(String l: lista){ %>
+            List<String> lis = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
+            for(String l: lis){ %>
           <li class="nav-item">
-                  <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
+              <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
                   <i class="ni ni-books text-blue"></i> <%=l%>
               </a>
           </li>
           <% } %>
-          <li class="nav-item">
-            <a class="nav-link " href="./module/favoritos.jsp">
-              <i class="fas fa-star text-blue"></i> Mis Favoritos
-            </a>
-          </li>
         </ul>
         <% } %>
         <!-- Divider -->
@@ -211,8 +191,8 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <%
-            List<String> listaCat = portCategoria.listarCategorias().getItem();
-            for(String cat: listaCat){ %>
+            List<String> lC = portCategoria.listarCategorias().getItem();
+            for(String cat: lC){ %>
           <li class="nav-item">
             <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
               <i class="ni ni-books text-blue"></i> <%=cat%>
@@ -227,9 +207,9 @@
     <!-- Navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
-        
+
         <!-- Form - Buscador -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"  action="./module/buscar.jsp" method="get">
+        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"  action="<%= request.getContextPath() %>/module/buscar.jsp" method="get">
           <div class="form-group mb-0">
             <div class="input-group input-group-alternative">
               <div class="input-group-prepend">
@@ -240,16 +220,16 @@
           </div>
         </form>
         <!-- User -->
-        <% if (s.getAttribute("usuario") == null){ %>
+        <% if (usr == null){ %>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="./module/registro.jsp">
+            <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/registro.jsp">
               <i class="ni ni-circle-08"></i>
               <span class="nav-link-inner--text">Registrarse</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
+            <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/iniciarSesion.jsp">
               <i class="ni ni-key-25"></i>
               <span class="nav-link-inner--text">Iniciar sesion</span>
             </a>
@@ -262,9 +242,9 @@
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
                   <% if (usr.getFoto().equals("src/main/resources/img/default.png")) {%>
-                  <img alt="Image placeholder" src="./img/default.png">
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/img/default.png">
                   <% } else { %>
-                  <img alt="Image placeholder" src="<%=usr.getFoto()%>">
+                  <img alt="Image placeholder" src="<%= request.getContextPath() %>/<%=usr.getFoto()%>">
                   <% } %>
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
@@ -276,12 +256,12 @@
               <div class=" dropdown-header noti-title">
                 <h6 class="text-overflow m-0">Bienvenido</h6>
               </div>
-              <a href="./module/miPerfil.jsp" class="dropdown-item">
+              <a href="<%= request.getContextPath() %>/module/miPerfil.jsp" class="dropdown-item">
                 <i class="ni ni-single-02"></i>
                 <span>Mi perfil</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="./CerrarSesion" class="dropdown-item">
+              <a href="<%= request.getContextPath() %>/CerrarSesion" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Cerrar sesion</span>
               </a>
@@ -295,138 +275,53 @@
     <!-- Header -->
     <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
       <div class="container-fluid">
-        <div class="header-body">
-          <!-- Contenido aqui TODO-->
-          <%
-            String message = (String) request.getAttribute("message");
-            System.out.println(message);
-            if(message != null){
-          %>
-          <div class="col-md-4">
-            <div class="modal fade" id="modal-notification" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true">
-              <div class="modal-dialog modal-light modal-dialog-centered modal-" role="document">
-                <div class="modal-content bg-gradient-green">
-                  <div class="modal-body">
-                    <div class="py-1 text-center">
-                      <i class="ni ni-check-bold ni-5x"></i>
-                      <p><%=message%></p>
+          <div class="header-body">
+              <!-- Contenido aqui -->
+              <%
+                  List<DtElementoWeb> listEU = portVideo.listarVideosPublicosWeb().getItem();
+              %>
+
+            <div class="container-fluid">
+              <div class="col col- justify-content-left">
+                <%
+                  for(DtElementoWeb eu: listEU){
+                %>
+
+                <div class="card mb-3" style="max-width: 630px;">
+                  <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getNickname()%>&v=<%=eu.getNombreE()%>">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        <img src="http://img.youtube.com/vi/<%=eu.getUrl()%>/0.jpg" class="card-img" alt="...">
+                      </div>
+                      <div class="col-md-5">
+                        <div class="card-body">
+                          <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
+                          <br>
+                          <br>
+                          <p class="card-text"><small class="text-muted">Por <strong><%=eu.getNickname()%></strong></small></p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-link text-white ml-auto" data-dismiss="modal">Cerrar</button>
-                  </div>
+                  </a>
                 </div>
+                <% } %>
               </div>
             </div>
           </div>
-          <%}%>
-
-          <%
-            //obtener categorias con mas de 3 elementos
-            List<String> todasCategorias = portCategoria.listarCategorias().getItem();
-            List<String> nomCats3 = new ArrayList<String>();
-            for(String c : todasCategorias){
-              List<DtElementoWeb> vidsCat = portCategoria.listarVideosCategoria(c).getItem();
-              if(vidsCat.size() >= 3){
-                nomCats3.add(c);
-              }
-
-            }
-
-
-
-
-            //PARA OBTENER VIDEOS RANDOM
-            List<DtElementoWeb> totalVideosPub = portVideo.listarVideosPublicosWeb().getItem();
-            List<DtElementoWeb> videos = new ArrayList<DtElementoWeb>();
-            Random rand = new Random();
-            if(totalVideosPub.size() >= 3){
-
-              for (int i = 0; i < 3; i++) {
-                int randomIndex = rand.nextInt(totalVideosPub.size());
-                DtElementoWeb randomElement = totalVideosPub.get(randomIndex);
-                videos.add(randomElement);
-                totalVideosPub.remove(randomIndex);
-              }
-          %>
-
-          <br>
-
-            <h1><span class="badge badge-secondary">Videos que podrian gustarte</span></h1>
-            <br>
-            <div class="card-deck">
-                <%for(DtElementoWeb vids : videos){%>
-                    <div class="card">
-                      <img src="http://img.youtube.com/vi/<%=vids.getUrl()%>/0.jpg" class="card-img" alt="...">
-                        <a  href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=vids.getNickname()%>&v=<%=vids.getNombreE()%>">
-                        <div class="card-body">
-                            <p class="card-text"><small class="text-muted"></small><strong><%=vids.getNombreE()%></strong></p>
-                            <h5 class="card-title text-muted">Subido por: <%=vids.getNickname()%></h5>
-                        </div>
-                        </a>
-                    </div>
-                <%}%>
-            </div>
-
-            <br><br>
-          <%
-            }
-
-            //Para obtener categorias random
-            String nomCat3 = null;
-            Random rand2 = new Random();
-            if(!nomCats3.isEmpty()){
-              List<DtElementoWeb> vidsCategoria = new ArrayList<DtElementoWeb>();
-              while (0 < nomCats3.size() && vidsCategoria.size() < 3){
-                int randomIndex = rand2.nextInt(nomCats3.size());
-                nomCat3 = nomCats3.get(randomIndex);
-                vidsCategoria = portCategoria.listarVideosCategoria(nomCat3).getItem();
-                nomCats3.remove(randomIndex);
-              }
-              if(!(vidsCategoria.size() < 3)){
-                rand = new Random();
-                List<DtElementoWeb> videosC = new ArrayList<DtElementoWeb>();
-                for (int i = 0; i < 3; i++) {
-                  int randomIndex = rand.nextInt(vidsCategoria.size());
-                  DtElementoWeb randomElement = vidsCategoria.get(randomIndex);
-                  videosC.add(randomElement);
-                  vidsCategoria.remove(randomIndex);
-                }
-
-
-          %>
-                <h1><span class="badge badge-secondary"><%=nomCat3%> - Categoria</span></h1>
-                <br>
-                <div class="card-deck">
-                    <%for(DtElementoWeb vc : videosC){%>
-                        <div class="card">
-                          <img src="http://img.youtube.com/vi/<%=vc.getUrl()%>/0.jpg" class="card-img" alt="...">
-                            <a  href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=vc.getNickname()%>&v=<%=vc.getNombreE()%>">
-                                <div class="card-body">
-                                    <p class="card-text"><small class="text-muted"></small><strong><%=vc.getNombreE()%></strong></p>
-                                    <h5 class="card-title text-muted">Subido por: <%=vc.getNickname()%></h5>
-                                </div>
-                            </a>
-                        </div>
-                    <%}%>
-                </div>
-            <%}
-            }%>
-
-          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
       </div>
     </div>
-    
+
   </div>
   <!--   Core   -->
-  <script src="./assets/js/plugins/jquery/dist/jquery.min.js"></script>
-  <script src="./assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="<%= request.getContextPath() %>/assets/js/plugins/jquery/dist/jquery.min.js"></script>
+  <script src="<%= request.getContextPath() %>/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <!--   Optional JS   -->
-  <script src="./assets/js/plugins/chart.js/dist/Chart.min.js"></script>
-  <script src="./assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+  <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.min.js"></script>
+  <script src="<%= request.getContextPath() %>/assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
   <!--   Argon JS   -->
-  <script src="./assets/js/argon-dashboard.min.js?v=1.1.0"></script>
+  <script src="<%= request.getContextPath() %>/assets/js/argon-dashboard.min.js?v=1.1.0"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
     window.TrackJS &&
@@ -435,13 +330,6 @@
         application: "argon-dashboard-free"
       });
   </script>
-  <% if(message != null){ %>
-  <script type="text/javascript">
-    $(window).on('load',function(){
-      $('#modal-notification').modal('show');
-    });
-  </script>
-  <%  }  %>
 </body>
 
 </html>
