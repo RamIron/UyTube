@@ -418,7 +418,7 @@ public class CUsuario implements IUsuario {
 		}
 	}
 
-	public void borrarTodosSeguidores(Usuario usr){
+	private void borrarTodosSeguidores(Usuario usr){
 		if(!usr.getSeguidores().isEmpty()) {
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			List<String> seguidores = usr.listarSeguidores();
@@ -430,7 +430,7 @@ public class CUsuario implements IUsuario {
 		}
 	}
 
-	public void borrarTodosSeguidos(Usuario usr){
+	private void borrarTodosSeguidos(Usuario usr){
 		if(!usr.getSeguidos().isEmpty()) {
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			List<String> seguidos = usr.listarSeguidos();
@@ -442,7 +442,7 @@ public class CUsuario implements IUsuario {
 		}
 	}
 
-
+	@Override
 	public void agregarVisita(String usrSesion, String usrVid, String nomVid){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();

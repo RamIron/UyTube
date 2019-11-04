@@ -61,13 +61,10 @@ public interface IUsuario {
 	/*si ordFecha es true se debe devolver la busqueda en ordenada del mas nuevo al mas viejo, de lo contario alfabeticamente
          en caso de que la busqueda no obtenga ningun resultado, debe devolverse una lista vacia (nunca null)	  */
 	public List<DtCanalWeb> busqueda(String query, Boolean ordFecha);
-    public void eliminarUsuario(String nick);
 
-	public void borrarTodosSeguidores(Usuario usr);
+	public void eliminarUsuario(String nick);
 
-	public void borrarTodosSeguidos(Usuario usr);
+    public void agregarVisita(String usrSesion, String usrVid, String nomVid);
 
-    void agregarVisita(String usrSesion, String usrVid, String nomVid);
-
-    List<DtVisita> listarMasVisitados(String nick);
+    public List<DtVisita> listarMasVisitados(String nick);
 }
