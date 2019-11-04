@@ -1,6 +1,5 @@
-<%@ page import="interfaces.CFactory" %>
-<%@ page import="interfaces.ICategoria" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%--
   Created by IntelliJ IDEA.
   User: Martin
   Date: 13/09/2019

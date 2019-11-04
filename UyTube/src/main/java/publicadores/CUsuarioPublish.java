@@ -6,11 +6,8 @@ import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.ParameterStyle;
 import javax.jws.soap.SOAPBinding.Style;
 import javax.xml.ws.Endpoint;
-import configuraciones.WebServiceConfiguracion;
-import datatypes.DtCanal;
-import datatypes.DtCanalWeb;
-import datatypes.DtUsuario;
-import datatypes.DtUsuarioWeb;
+
+import datatypes.*;
 import interfaces.IUsuario;
 import interfaces.UFactory;
 
@@ -61,8 +58,12 @@ public class CUsuarioPublish {
     }
 
     @WebMethod
-    public void agregarUsuario(String nick, String nom, String ape, Calendar fechaN, String email) {
-        iUsr.agregarUsuario(nick, nom, ape, fechaN, email);
+    public void agregarUsuario(String nick, String nom, String ape, DtFecha fechaN, String email) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fechaN.getAnio());
+        cal.set(Calendar.MONTH, fechaN.getMes());
+        cal.set(Calendar.DAY_OF_MONTH, fechaN.getDia());
+        iUsr.agregarUsuario(nick, nom, ape, cal, email);
     }
 
     @WebMethod
@@ -133,8 +134,12 @@ public class CUsuarioPublish {
     }
 
     @WebMethod
-    public void modificarInfoUsuario(String nomU, String apeU, Calendar fNacU, String imagen) {
-        iUsr.modificarInfoUsuario(nomU, apeU, fNacU, imagen);
+    public void modificarInfoUsuario(String nomU, String apeU, DtFecha fNacU, String imagen) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, fNacU.getAnio());
+        cal.set(Calendar.MONTH, fNacU.getMes());
+        cal.set(Calendar.DAY_OF_MONTH, fNacU.getDia());
+        iUsr.modificarInfoUsuario(nomU, apeU, cal, imagen);
     }
 
     @WebMethod

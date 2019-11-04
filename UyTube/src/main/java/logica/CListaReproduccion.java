@@ -35,19 +35,7 @@ public class CListaReproduccion implements IListaReproduccion {
 		}
 	}
 
-	@Override
-	public List<String> obtenerCatListPart(String nomL){
-		List<String> categoriasList = new ArrayList<String>();
-		if(this.lista instanceof Particular){
-			for(String c : categoriasList){
-				String cat = this.lista.getCategoria().getNombre();
-				categoriasList.add(cat);
-			}
-		}
-		return categoriasList;
-	}
 
-	
 	@Override 
 	public void agregarListaDefecto(String nomL) {	
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
@@ -210,25 +198,11 @@ public class CListaReproduccion implements IListaReproduccion {
 		part.setPublico(publico);
 		mU.modificaDatosUsuario(this.uList);
 	}
-	
-	@Override 
-	public List<DtComentario> obtenerComentariosVideo(String nomVid) {
-		return null;
-	}
-	
-	@Override 
-	public DtVideo obtenerInfoVideo(String nomVid) {
-		return null;
-	}
+
 	
 	@Override 
 	public DtListaRep obtenerListaDeUsuario(String nomList) {
 		return this.uList.getCanal().obtenerListaDeUsuario(nomList);
-	}
-	
-	@Override 
-	public ArrayList<DtValoracion> obtenerValoracionVideo(String nomVid) {
-		return null;
 	}
 
 	@Override
@@ -257,9 +231,10 @@ public class CListaReproduccion implements IListaReproduccion {
 	public void eliminarCategoria() {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 		Particular part = (Particular) this.lista;
-//		Categoria catPart = part.getCategoria();
-//		catPart.quitarElemento(part);
-//		mC.modificarCategoria(catPart);
+		Categoria cat = part.getCategoria();
+		if(cat != null ){
+			cat.quitarElemento(part);
+		}
 	}
 
 	@Override
@@ -269,14 +244,10 @@ public class CListaReproduccion implements IListaReproduccion {
 		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
 		List<Object[]> resQuery;
 		if(ordFecha){
-			//TODO ordenado por fecha
-			//resQuery = nativequery
 			Query consulta = em.createNamedQuery("buscarListasFecha");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		} else {
-			//TODO ordenado alfabetico
-			//resQuery = nativequery
 			Query consulta = em.createNamedQuery("buscarListasNombre");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();

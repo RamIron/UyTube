@@ -1,10 +1,6 @@
-<%@ page import="interfaces.CFactory" %>
-<%@ page import="interfaces.ICategoria" %>
+
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
-<%@ page import="interfaces.LRFactory" %>
-<%@ page import="interfaces.IListaReproduccion" %>
-<%@ page import="net.java.dev.jaxb.array.StringArray" %>
 <!--
 
 =========================================================
@@ -36,7 +32,6 @@
     publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
     publicadores.CCategoriaPublish portCategoria = serviceCategoria.getCCategoriaPublishPort();
     //////////FIN WEBSERVICE///////////
-
 %>
 
 <!DOCTYPE html>
@@ -80,7 +75,7 @@
             <span class="nav-link-inner--text">Entrar</span>
           </a>
         </li>
-        <% }else { %>
+        <% }else {%>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">

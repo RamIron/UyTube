@@ -1,5 +1,6 @@
 package servlets;
 
+import publicadores.DtFecha;
 import publicadores.DtUsuarioWeb;
 
 import javax.servlet.RequestDispatcher;
@@ -29,13 +30,13 @@ public class ResponderComentario extends HttpServlet {
         //FIN WEBSERVICES
         System.out.println(idC + comentario + path + usr);
         if (usr != null && idC != null && comentario != null && !comentario.isEmpty()){
-            XMLGregorianCalendar fPub = null;
-            try {
-                fPub = getXMLGregorianCalendarNow();
-            } catch (DatatypeConfigurationException e) {
-                e.printStackTrace();
-            }
-            portVideo.responderComentario(Integer.parseInt(idC), usr.getNickname(), fPub, comentario);
+//            XMLGregorianCalendar fPub = null;
+//            try {
+//                fPub = getXMLGregorianCalendarNow();
+//            } catch (DatatypeConfigurationException e) {
+//                e.printStackTrace();
+//            }
+            portVideo.responderComentario(Integer.parseInt(idC), usr.getNickname(), new DtFecha(), comentario);
             RequestDispatcher rd;
             rd = request.getRequestDispatcher(path);
             String message = "Comentario Agregado";

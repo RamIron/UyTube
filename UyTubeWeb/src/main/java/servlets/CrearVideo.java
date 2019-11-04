@@ -1,5 +1,6 @@
 package servlets;
 
+import publicadores.DtFecha;
 import publicadores.DtUsuarioWeb;
 import interfaces.IUsuario;
 import interfaces.IVideo;
@@ -56,17 +57,20 @@ public class CrearVideo extends HttpServlet {
             //CODIGO PARA EXTRAER LA FECHA
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date date = null;
-            XMLGregorianCalendar cal = null;
             try {
                 date = sdf.parse(fPub);//TODO nose esta cargando bien la fecha
-                System.out.println("FechaCompleta: " + fPub);
-                System.out.println("Año: " + date.getYear());
-                System.out.println("Mes: " + date.getMonth());
-                System.out.println("Dia: " + date.getDay());
-                cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(1900 + date.getYear(), date.getMonth(), date.getDay(), 0, 0, 0, 0, -3);
-            } catch (DatatypeConfigurationException | ParseException e) {
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
+            System.out.println("FechaCompleta: " + fPub);
+            System.out.println("Año: " + date.getYear()+1900);
+            System.out.println("Mes: " + date.getMonth());
+            System.out.println("Dia: " + date.getDay());
+            DtFecha fecha = new DtFecha();
+            fecha.setAnio(date.getYear()+1900);
+            fecha.setMes(date.getMonth());
+            fecha.setDia(date.getDay());
+
             //FIN DE CODIGO PARA EXTRAER LA FECHA
 
             if(portV.existeVideo(usr.getNickname(), nomVideo)){
@@ -76,7 +80,7 @@ public class CrearVideo extends HttpServlet {
                 request.setAttribute("message", message);
                 rd.forward(request, response);
             }else{
-                portV.agregarVideo(usr.getNickname(), nomVideo, descripcion, cal, duracion, url);
+                portV.agregarVideo(usr.getNickname(), nomVideo, descripcion, fecha, duracion, url);
                 portV.agregarCategoria(catVideo);
                 RequestDispatcher rd;
                 rd = request.getRequestDispatcher("/index.jsp");

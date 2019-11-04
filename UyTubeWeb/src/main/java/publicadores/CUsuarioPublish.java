@@ -7,7 +7,6 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.Action;
 import net.java.dev.jaxb.array.StringArray;
 
@@ -68,7 +67,7 @@ public interface CUsuarioPublish {
         @WebParam(name = "arg2", partName = "arg2")
         String arg2,
         @WebParam(name = "arg3", partName = "arg3")
-        XMLGregorianCalendar arg3,
+        DtFecha arg3,
         @WebParam(name = "arg4", partName = "arg4")
         String arg4);
 
@@ -221,7 +220,7 @@ public interface CUsuarioPublish {
         @WebParam(name = "arg1", partName = "arg1")
         String arg1,
         @WebParam(name = "arg2", partName = "arg2")
-        XMLGregorianCalendar arg2,
+        DtFecha arg2,
         @WebParam(name = "arg3", partName = "arg3")
         String arg3);
 

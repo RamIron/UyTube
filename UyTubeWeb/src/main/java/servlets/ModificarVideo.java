@@ -1,5 +1,6 @@
 package servlets;
 
+import publicadores.DtFecha;
 import publicadores.DtUsuarioWeb;
 import interfaces.IUsuario;
 import interfaces.IVideo;
@@ -53,17 +54,20 @@ public class ModificarVideo extends HttpServlet {
             //CODIGO PARA EXTRAER LA FECHA
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date date = null;
-            XMLGregorianCalendar cal = null;
             try {
                 date = sdf.parse(fPub);//TODO nose esta cargando bien la fecha
-                System.out.println("FechaCompleta: " + fPub);
-                System.out.println("Año: " + date.getYear());
-                System.out.println("Mes: " + date.getMonth());
-                System.out.println("Dia: " + date.getDay());
-                cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(1900 + date.getYear(),date.getMonth(),date.getDay(), 0, 0, 0, 0, -3);
-            } catch (DatatypeConfigurationException | ParseException e) {
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
+            System.out.println("FechaCompleta: " + fPub);
+            System.out.println("Año: " + date.getYear()+1900);
+            System.out.println("Mes: " + date.getMonth());
+            System.out.println("Dia: " + date.getDay());
+            DtFecha fecha = new DtFecha();
+            fecha.setAnio(date.getYear()+1900);
+            fecha.setMes(date.getMonth());
+            fecha.setDia(date.getDay());
+
             //FIN DE CODIGO PARA EXTRAER LA FECHA
 
             Boolean publico;
@@ -74,7 +78,7 @@ public class ModificarVideo extends HttpServlet {
             }
             portVideo.setUsr(usr.getNickname());
             portVideo.setVid(nomOriginal);
-            portVideo.modificarInfoVideo(nomVideo, descripcion, cal, duracion, url, publico);
+            portVideo.modificarInfoVideo(nomVideo, descripcion, fecha, duracion, url, publico);
             if(!catVideo.isEmpty()) {
                 portVideo.agregarCategoria(catVideo);
             }

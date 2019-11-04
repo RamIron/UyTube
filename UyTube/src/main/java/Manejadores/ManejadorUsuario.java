@@ -90,9 +90,10 @@ public class ManejadorUsuario {
 			if(e instanceof RollbackException)
 				if(em.getTransaction().isActive())
 					em.getTransaction().rollback();
-			throw new IllegalArgumentException("Hubo un error inesperado");
+			throw e;
 		}
 	}
+
 
 	public void quitarUsuario(Usuario usuario){
 		Conexion conexion = Conexion.getInstancia();
@@ -107,5 +108,11 @@ public class ManejadorUsuario {
 					em.getTransaction().rollback();
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}
+    }
+	
+	public void cerrarConexion(){
+		Conexion conexion=Conexion.getInstancia();
+		EntityManager em =conexion.getEntityManager();
+		conexion.cerrar();
 	}
 }

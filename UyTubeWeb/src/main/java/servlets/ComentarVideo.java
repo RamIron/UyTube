@@ -1,5 +1,6 @@
 package servlets;
 
+import publicadores.DtFecha;
 import publicadores.DtUsuarioWeb;
 
 import javax.servlet.RequestDispatcher;
@@ -30,13 +31,13 @@ public class ComentarVideo extends HttpServlet {
         if (usr != null && uVid != null && nVid != null && comentario != null && !comentario.isEmpty()){
             portVideo.setUsr(uVid);
             portVideo.setVid(nVid);
-            XMLGregorianCalendar fPub = null;
-            try {
-                fPub = getXMLGregorianCalendarNow();
-            } catch (DatatypeConfigurationException e) {
-                e.printStackTrace();
-            }
-            portVideo.realizarComentario(usr.getNickname(), fPub, comentario);
+//            XMLGregorianCalendar fPub = null;
+//            try {
+//                fPub = getXMLGregorianCalendarNow();
+//            } catch (DatatypeConfigurationException e) {
+//                e.printStackTrace();
+//            }
+            portVideo.realizarComentario(usr.getNickname(), new DtFecha(), comentario);
             String path = "/module/visualizarVideo.jsp?u=" + uVid +"&v=" + nVid;
             RequestDispatcher rd;
             rd = request.getRequestDispatcher(path);
