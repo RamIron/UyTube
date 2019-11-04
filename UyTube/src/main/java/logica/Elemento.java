@@ -65,9 +65,9 @@ public abstract class Elemento {
 	}
 
 
-//	public void quitarCategoria(Categoria c){
-//		this.categorias.remove(c);
-//	}
+/*	public void quitarCategoria(Categoria c){
+		this.categoria.remove(c);
+	}*/
 	
 	public abstract DtElementoUsuario obtenerElemCategoria();
 

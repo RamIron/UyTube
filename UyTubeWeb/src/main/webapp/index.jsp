@@ -3,6 +3,8 @@
 <%@ page import="publicadores.DtElementoWeb" %>
 <%@ page import="java.util.Random" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="interfaces.IUsuario" %>
+<%@ page import="interfaces.UFactory" %>
 <!--
 
 =========================================================
@@ -167,6 +169,14 @@
           </li>
         </ul>
         <% if (s.getAttribute("usuario") != null){ %>
+        <%
+          IUsuario iU = UFactory.getInstancia().getIUsuario();
+          //iU.eliminarUsuario("pepe2");
+          List<String> todosUsuarios = iU.listarUsuarios();
+          for(String sss:todosUsuarios){
+            System.out.println(sss);
+          }
+        %>
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
@@ -179,7 +189,6 @@
             </a>
           </li>
           <%
-            System.out.println("Tamaño listas: " + portListaRep.listarListasDeUsuario(usr.getNickname()).getItem().size());
             List<String> lista = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
             for(String l: lista){ %>
           <li class="nav-item">

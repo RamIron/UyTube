@@ -18,7 +18,7 @@ public class Comentario {
 	@ManyToOne
 	private Usuario usuario;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Comentario> respuestas = new ArrayList<Comentario>();
 	
 	//Constructores
@@ -83,5 +83,23 @@ public class Comentario {
 			}
 		}
 		return retorno;
-	}	
+	}
+
+	public void eliminarRespuestas(){
+		List<Comentario> respuestas = this.getRespuestas();
+		if(!respuestas.isEmpty()){ //Si tiene respuestas
+			Iterator iterator = respuestas.iterator();
+			while(iterator.hasNext() && respuestas.size()>0) {
+				Comentario r = (Comentario) iterator.next();
+				r.eliminarRespuestas();
+			}
+		} else {
+			this.respuestas.clear();
+		}
+	}
+
+	public void eliminarRespuesta(Comentario c){
+		c.eliminarRespuestas();
+		this.respuestas.remove(c);
+	}
 }

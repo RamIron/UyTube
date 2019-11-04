@@ -30,33 +30,19 @@ public abstract class ListaReproduccion extends Elemento {
 	public List<Video> getVideos() {
 		return videos;
 	}
-	
-	
-	
+
+
 	//Operaciones
 	public void agregarVideo(Video v) {
 		videos.add(v);
 	}
 	
-//	public void eliminarVideo(String nickV, String nomVid) {
-//		for(Video v: videos) {
-//			if(v.getCanal().getUsuario().getNickname() == nickV &&  v.getNombre() == nomVid){
-//				videos.remove(v);
-//				break;
-//			}
-//		}
-//	}
-	
 	public void eliminarVideo(Video v) {
 		videos.remove(v);
 	}
-	
-//	public abstract boolean esParticular();
-//	
+
 	public abstract boolean isPublico();
-//	
-//	public abstract void setPublico(boolean publico);
-	
+
 	public List<DtVideoUsuario> listarVideos() {
 		List<DtVideoUsuario> res = new ArrayList<DtVideoUsuario>();
 		for(Video v: videos) {
@@ -77,32 +63,19 @@ public abstract class ListaReproduccion extends Elemento {
 		return res;
 	}
 
-//	
-//	public Map<Integer, DtComentario> obtenerComentariosVideo(String nickV, String nomVid) {
-//		return null;
-//	}/// ver si se usa jTree
-//	
-//	public DtVideo obtenerInfoVideo(String nickV, String nomVid) {
-//		for(Video v: videos) {
-//			if(v.getCanal().getUsuario().getNickname() == nickV &&  v.getNombre() == nomVid){
-//				return new DtVideo(nomVid, v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico());
-//			}
-//		}
-//		return null;
-//	}
-//	
-//	public List<DtValoracion> obtenerValoracionVideo(String nickV, String nomVid) {
-//		for(Video v: videos) {
-//			if(v.getCanal().getUsuario().getNickname() == nickV &&  v.getNombre() == nomVid){
-//				return v.listarValoraciones();
-//			}
-//		}
-//		return null;
-//	}
-//	
-//	@Override
-//	public DtElementoUsuario obtenerElemCategoria() {
-//		return new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA);
-//	}
+	public void sacarCategoria(){
+		if(this.categoria != null) {
+			this.categoria.quitarElemento(this);
+			this.categoria = null;
+		}
+	}
+
+	public void quitarVideos(){
+		this.videos.clear();
+	}
+
+	public void quitarVideo(Video vid){
+		this.videos.remove(vid);
+	}
 
 }

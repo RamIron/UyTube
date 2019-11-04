@@ -19,12 +19,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 
-<%
-    HttpSession s = request.getSession();
+<% HttpSession s = request.getSession();
     DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+
     /////////////WEB SERVICE/////////////////
-    publicadores.CListaRepPublishService service = new publicadores.CListaRepPublishService();
-    publicadores.CListaRepPublish portLista = service.getCListaRepPublishPort();
+    publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
+    publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
+
+    publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
+    publicadores.CListaRepPublish portListaRep = serviceListaRep.getCListaRepPublishPort();
 
     publicadores.CCategoriaPublishService serviceCategoria = new publicadores.CCategoriaPublishService();
     publicadores.CCategoriaPublish portCategoria = serviceCategoria.getCCategoriaPublishPort();
@@ -171,7 +174,7 @@
                     </a>
                 </li>
                 <%
-                    List<String> lis = portLista.listarListasDeUsuario(usr.getNickname()).getItem();
+                    List<String> lis = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
                     for(String l: lis){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
@@ -187,9 +190,8 @@
             <h6 class="navbar-heading text-muted">Categorias</h6>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <%
-                    List<String> lC = portCategoria.listarCategorias().getItem();
-                    for(String cat: lC){ %>
+                <% List<String> listaCat = portCategoria.listarCategorias().getItem();
+                    for(String cat: listaCat){ %>
                 <li class="nav-item">
                     <a class="nav-link" href="<%= request.getContextPath() %>/module/consultaCategoria.jsp?id=<%=cat%>">
                         <i class="ni ni-books text-blue"></i> <%=cat%>
@@ -232,7 +234,7 @@
                     </a>
                 </li>
             </ul>
-            <% }else {%>
+            <% }else { %>
             <ul class="navbar-nav align-items-center d-none d-md-flex">
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
