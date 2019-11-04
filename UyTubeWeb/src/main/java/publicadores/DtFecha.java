@@ -17,8 +17,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="anio" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="dia" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="mes" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="dia" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -30,14 +30,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dtFecha", propOrder = {
     "anio",
-    "dia",
-    "mes"
+    "mes",
+    "dia"
 })
 public class DtFecha {
 
     protected Integer anio;
-    protected Integer dia;
     protected Integer mes;
+    protected Integer dia;
 
     /**
      * Gets the value of the anio property.
@@ -64,30 +64,6 @@ public class DtFecha {
     }
 
     /**
-     * Gets the value of the dia property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getDia() {
-        return dia;
-    }
-
-    /**
-     * Sets the value of the dia property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setDia(Integer value) {
-        this.dia = value;
-    }
-
-    /**
      * Gets the value of the mes property.
      * 
      * @return
@@ -109,6 +85,30 @@ public class DtFecha {
      */
     public void setMes(Integer value) {
         this.mes = value;
+    }
+
+    /**
+     * Gets the value of the dia property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getDia() {
+        return dia;
+    }
+
+    /**
+     * Sets the value of the dia property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setDia(Integer value) {
+        this.dia = value;
     }
 
 }
