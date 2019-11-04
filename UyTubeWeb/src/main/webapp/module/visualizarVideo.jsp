@@ -31,12 +31,22 @@
     }else {
       for (DtComentario c :comentarios){
 
-        Integer dia = c.getFecha().getDay();
+        /*Integer dia = c.getFecha().getDay();
         Integer mes = c.getFecha().getMonth();
-        Integer ano = c.getFecha().getYear();
+        Integer ano = c.getFecha().getYear();*/
+        String dia = Integer.toString(c.getFecha().getDay());
+        String mes = Integer.toString(c.getFecha().getMonth());
+        String ano = Integer.toString(c.getFecha().getYear());
+        if(c.getFecha().getDay()<10){
+          dia = "0" + dia;
+        }
+        if(c.getFecha().getMonth()<10){
+          mes = "0" + mes;
+        }
+
         res += "<div class=\"bloque-comentario\">\n" +
                 "                      <div>\n" +
-                "                        <h5>@" + c.getNickname() + " · " + dia + "/" + mes + "/" + ano;
+                "                        <h5>@" + c.getNickname() + " · " + mes + "/" + dia + "/" + ano;
         if(request.getSession().getAttribute("usuario") != null) {
           res += " <button type=\"button\" class=\"btn btn-link\" id=\"btn-" + c.getId() + "\">Responder</button>";
         }
@@ -368,7 +378,7 @@
                     </h1>
                     <div class="row row- justify-content-right">
                       <div class="col-sm-6">
-                        <h3><a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=nick%>">@<%=nick%></a> | <%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getYear()%> | <%=infoV.getDuracion()%> seg.</h3>
+                        <h3><a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=nick%>">@<%=nick%></a> | <%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getYear()%> | <%=infoV.getDuracion()%> seg.</h3>
                       </div>
                       <div class="col-sm-6">
                         <div class="float-sm-right d-sm-inline-flex ">
@@ -527,12 +537,12 @@
 
                                   <%--Fecha de Publicacion--%>
                                   <div class="form-group">
-                                    <small>Fecha de Pulicacion</small>
+                                    <small>Fecha de Publicacion</small>
                                     <div class="input-group input-group-alternative">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                       </div>
-                                      <input name="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" value="<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getYear()%>">
+                                      <input name="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" value="<%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getYear()%>">
                                     </div>
                                   </div>
                                   <%--Fin Fecha de Publicacion--%>

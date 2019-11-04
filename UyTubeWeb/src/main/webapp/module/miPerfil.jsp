@@ -382,8 +382,9 @@
                                             <div style="text-align: center">
                                                 <%
                                                     Calendar calendar = usuario.getFNac().toGregorianCalendar();
-                                                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                                    String fechaS = sdf.format(calendar.getTime());%>
+                                                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                                                    String fechaS = sdf.format(calendar.getTime());
+                                                %>
                                                 <h4 class="mb-0">Fecha de Nacimiento: </h4>
                                                 <p style="font-size: 16px " class="font-weight-bold mt--1"><%=fechaS %></p>
                                             </div>
