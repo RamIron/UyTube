@@ -11,7 +11,7 @@ public class DtFecha {
     public DtFecha() {
         Calendar cal = Calendar.getInstance();
         this.anio = cal.get(Calendar.YEAR);
-        this.mes = cal.get(Calendar.MONTH)+1;
+        this.mes = cal.get(Calendar.MONTH);
         this.dia = cal.get(Calendar.DAY_OF_MONTH);
     }
 
