@@ -139,6 +139,13 @@ public class CUsuario implements IUsuario {
 	}
 	
 	@Override 
+	public List<String> listarUsuariosEliminados() {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+	    return mU.listarUsuariosEliminados();
+	}
+
+
+	@Override 
 	public void modificarImagen(String img) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.usr.setImagen(img);
@@ -151,7 +158,6 @@ public class CUsuario implements IUsuario {
 		this.usr.setContrasena(pass);
 		mU.modificaDatosUsuario(this.usr);
 	}
-
 	
 	@Override 
 	public void modificarInfoCanal(String nomC, String descC, boolean publico) {
