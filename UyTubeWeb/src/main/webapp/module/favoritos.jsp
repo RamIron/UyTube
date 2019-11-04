@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
 <%@ page import="publicadores.DtElementoWeb" %>
+<%@ page import="publicadores.DtVisita" %>
 <!--
 
 =========================================================
@@ -70,7 +71,7 @@
       <ul class="nav align-items-center d-md-none">
         <% if (usr == null){ %>
         <li class="nav-item">
-          <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
+          <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/iniciarSesion.jsp">
             <i class="fas fa-sign-in-alt"></i>
             <span class="nav-link-inner--text">Entrar</span>
           </a>
@@ -156,8 +157,8 @@
           </li>
           <% } %>
           <li class="nav-item">
-            <a class="nav-link active" href="<%= request.getContextPath() %>/module/verVideos.jsp">
-              <i class="ni ni-button-play text-blue"></i> <strong>Ver videos</strong>
+            <a class="nav-link" href="<%= request.getContextPath() %>/module/verVideos.jsp">
+              <i class="ni ni-button-play text-blue"></i> Ver videos
             </a>
           </li>
         </ul>
@@ -182,6 +183,11 @@
               </a>
           </li>
           <% } %>
+          <li class="nav-item">
+            <a class="nav-link  active" href="<%= request.getContextPath() %>/module/favoritos.jsp">
+              <i class="fas fa-star text-blue"></i> <strong>Mis Favoritos</strong>
+            </a>
+          </li>
         </ul>
         <% } %>
         <!-- Divider -->
@@ -278,27 +284,29 @@
           <div class="header-body">
               <!-- Contenido aqui -->
               <%
-                  List<DtElementoWeb> listEU = portVideo.listarVideosPublicosWeb().getItem();
+                  List<DtVisita> listEU = portUsr.listarMasVisitados(usr.getNickname()).getItem();
               %>
 
             <div class="container-fluid">
               <div class="col col- justify-content-left">
                 <%
-                  for(DtElementoWeb eu: listEU){
+                  for(DtVisita eu: listEU){
                 %>
 
                 <div class="card mb-3" style="max-width: 630px;">
-                  <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getNickname()%>&v=<%=eu.getNombreE()%>">
+                  <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getUsrVideo()%>&v=<%=eu.getNomVideo()%>">
                     <div class="row no-gutters">
                       <div class="col-md-4">
-                        <img src="http://img.youtube.com/vi/<%=eu.getUrl()%>/0.jpg" class="card-img" alt="...">
+                        <img src="http://img.youtube.com/vi/<%=eu.getUrlVideo()%>/0.jpg" class="card-img" alt="...">
                       </div>
                       <div class="col-md-5">
                         <div class="card-body">
-                          <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
-                          <br>
-                          <br>
-                          <p class="card-text"><small class="text-muted">Por <strong><%=eu.getNickname()%></strong></small></p>
+                          <h5 class="card-title mb-0 text-lg"><%=eu.getNomVideo()%></h5>
+                                                    <p class="card-text">
+                            <small class="text-muted">Por <strong><%=eu.getUsrVideo()%></strong></small><br>
+                            <small class="text-muted">Visto <strong><%=eu.getCantVisitas()%></strong> veces</small><br>
+                            <small class="text-muted">Ultima vez <strong><%=eu.getUltimaVisita().getDay()%>/<%=eu.getUltimaVisita().getMonth()%>/<%=eu.getUltimaVisita().getYear()%></strong></small>
+                          </p>
                         </div>
                       </div>
                     </div>

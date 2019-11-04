@@ -463,6 +463,7 @@ public class CUsuario implements IUsuario {
 		List<DtVisita> res = new ArrayList<DtVisita>();
 		for (Visita v: visitas){
 			DtVisita dtVisita = new DtVisita(v.getVideo().getCanal().getUsuario().getNickname(), v.getVideo().getNombre(), v.getUltimaVisita(), v.getCantVisitas());
+			dtVisita.setUrlVideo(v.getVideo().getUrl());
 			res.add(dtVisita);
 		}
 		return res;
