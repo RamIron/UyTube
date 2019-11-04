@@ -230,8 +230,8 @@ public class ModificarUsuario extends JInternalFrame {
 				nombre.setText(infoU.getNombre());
 				apellido.setText(infoU.getApellido());
 				email.setText(infoU.getCorreoE());
-				fDia.setSelectedIndex(infoU.getfNac().get(Calendar.DAY_OF_MONTH));
-				fMes.setSelectedIndex(infoU.getfNac().get(Calendar.MONTH));
+				fDia.setSelectedItem(infoU.getfNac().get(Calendar.DAY_OF_MONTH));
+				fMes.setSelectedItem(infoU.getfNac().get(Calendar.MONTH)+1);
 				fAnio.setSelectedItem(infoU.getfNac().get(Calendar.YEAR));
 //				try {
 //					mostrarImg(infoU.getImagen());

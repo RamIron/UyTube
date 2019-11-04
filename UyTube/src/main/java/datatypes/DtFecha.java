@@ -1,8 +1,11 @@
 package datatypes;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Calendar;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class DtFecha {
     Integer anio;
     Integer mes;

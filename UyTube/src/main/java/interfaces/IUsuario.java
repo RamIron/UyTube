@@ -64,11 +64,7 @@ public interface IUsuario {
 
 	public void eliminarUsuario(String nick);
 
-	public void borrarTodosSeguidores(Usuario usr);
+    public void agregarVisita(String usrSesion, String usrVid, String nomVid);
 
-	public void borrarTodosSeguidos(Usuario usr);
-
-    void agregarVisita(String usrSesion, String usrVid, String nomVid);
-
-    List<DtVisita> listarMasVisitados(String nick);
+    public List<DtVisita> listarMasVisitados(String nick);
 }

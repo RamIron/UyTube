@@ -10,6 +10,7 @@ import javax.xml.ws.Endpoint;
 import datatypes.*;
 import interfaces.IUsuario;
 import interfaces.UFactory;
+import logica.Usuario;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -192,6 +193,7 @@ public class CUsuarioPublish {
         return ret;
     }
 
+    @WebMethod
     public DtUsuarioWeb[] listarNickFotoWeb(String[] seguidores){
         List<String> listaSeg = new ArrayList<String>();
         for (int i=0; i< seguidores.length; i++){
@@ -217,5 +219,26 @@ public class CUsuarioPublish {
             i++;
         }
         return ret;
+    }
+
+    @WebMethod
+    public void eliminarUsuario(String nick){
+        iUsr.eliminarUsuario(nick);
+    }
+
+    @WebMethod
+    public void agregarVisita(String usrSesion, String usrVid, String nomVid){
+        iUsr.agregarVisita(usrSesion, usrVid, nomVid);
+    }
+
+    @WebMethod
+    public DtVisita[] listarMasVisitados(String nick){
+        List<DtVisita> visitas = iUsr.listarMasVisitados(nick);
+        DtVisita[] res = new DtVisita[visitas.size()];
+        int i = 0;
+        for (DtVisita v: visitas){
+            res[i] = v;
+        }
+        return res;
     }
 }
