@@ -125,7 +125,6 @@ public class ComentarVideo extends JInternalFrame {
 				comentarios.setEnabled(true);
 				btnNuevoComentario.setEnabled(true);
 				btnResponderComentario.setEnabled(true);
-				//TODO
 			}
 		});
 		
@@ -161,8 +160,7 @@ public class ComentarVideo extends JInternalFrame {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);
-		
-		//comentarios.setRootVisible(false);
+
 		JScrollPane scrollComentarios = new JScrollPane();
 		scrollComentarios.setBounds(405, 26, 349, 190);
 		getContentPane().add(scrollComentarios);

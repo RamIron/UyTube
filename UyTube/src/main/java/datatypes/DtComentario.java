@@ -84,7 +84,7 @@ public class DtComentario {
 
 	@Override
 	public String toString() {
-		return nickname + " : " + fecha.get(Calendar.DAY_OF_MONTH) + "/" + fecha.get(Calendar.MONTH) + "/" + fecha.get(Calendar.YEAR) + " > " + texto ;
+		return nickname + " : " + fecha.get(Calendar.DAY_OF_MONTH) + "/" + (fecha.get(Calendar.MONTH)+1) + "/" + fecha.get(Calendar.YEAR) + " > " + texto ;
 	}
 	
 	
