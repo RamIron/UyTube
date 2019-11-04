@@ -30,35 +30,75 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DtElementoUsuarioArray }
+     * Create an instance of {@link DtVisita }
      * 
      */
-    public DtElementoUsuarioArray createDtElementoUsuarioArray() {
-        return new DtElementoUsuarioArray();
+    public DtVisita createDtVisita() {
+        return new DtVisita();
     }
 
     /**
-     * Create an instance of {@link DtElementoUsuario }
+     * Create an instance of {@link DtUsuarioWebArray }
      * 
      */
-    public DtElementoUsuario createDtElementoUsuario() {
-        return new DtElementoUsuario();
+    public DtUsuarioWebArray createDtUsuarioWebArray() {
+        return new DtUsuarioWebArray();
     }
 
     /**
-     * Create an instance of {@link DtElementoWebArray }
+     * Create an instance of {@link DtCanal }
      * 
      */
-    public DtElementoWebArray createDtElementoWebArray() {
-        return new DtElementoWebArray();
+    public DtCanal createDtCanal() {
+        return new DtCanal();
     }
 
     /**
-     * Create an instance of {@link DtElementoWeb }
+     * Create an instance of {@link DtCanalWeb }
      * 
      */
-    public DtElementoWeb createDtElementoWeb() {
-        return new DtElementoWeb();
+    public DtCanalWeb createDtCanalWeb() {
+        return new DtCanalWeb();
+    }
+
+    /**
+     * Create an instance of {@link DtFecha }
+     * 
+     */
+    public DtFecha createDtFecha() {
+        return new DtFecha();
+    }
+
+    /**
+     * Create an instance of {@link DtCanalWebArray }
+     * 
+     */
+    public DtCanalWebArray createDtCanalWebArray() {
+        return new DtCanalWebArray();
+    }
+
+    /**
+     * Create an instance of {@link DtUsuarioWeb }
+     * 
+     */
+    public DtUsuarioWeb createDtUsuarioWeb() {
+        return new DtUsuarioWeb();
+    }
+
+    /**
+     * Create an instance of {@link DtUsuario }
+     * 
+     */
+    public DtUsuario createDtUsuario() {
+        return new DtUsuario();
+    }
+
+    /**
+     * Create an instance of {@link DtVisitaArray }
+     * 
+     */
+    public DtVisitaArray createDtVisitaArray() {
+        return new DtVisitaArray();
     }
 
 }
