@@ -31,14 +31,8 @@ public class ComentarVideo extends HttpServlet {
         if (usr != null && uVid != null && nVid != null && comentario != null && !comentario.isEmpty()){
             portVideo.setUsr(uVid);
             portVideo.setVid(nVid);
-//            XMLGregorianCalendar fPub = null;
-//            try {
-//                fPub = getXMLGregorianCalendarNow();
-//            } catch (DatatypeConfigurationException e) {
-//                e.printStackTrace();
-//            }
             portVideo.realizarComentario(usr.getNickname(), new DtFecha(), comentario);
-            String path = "/module/visualizarVideo.jsp?u=" + uVid +"&v=" + nVid;
+            String path = "/module/visualizarVideo.jsp?u=" + uVid +"&v=" + nVid  + "&h=no";
             RequestDispatcher rd;
             rd = request.getRequestDispatcher(path);
             String message = "Comentario Agregado";

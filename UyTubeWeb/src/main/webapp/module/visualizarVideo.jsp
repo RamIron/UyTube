@@ -142,7 +142,7 @@
       <ul class="nav align-items-center d-md-none">
         <% if (s.getAttribute("usuario") == null){ %>
         <li class="nav-item">
-          <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
+          <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/iniciarSesion.jsp">
             <i class="fas fa-sign-in-alt"></i>
             <span class="nav-link-inner--text">Entrar</span>
           </a>
@@ -255,6 +255,11 @@
               </a>
           </li>
           <% } %>
+          <li class="nav-item">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/favoritos.jsp">
+              <i class="fas fa-star text-blue"></i> Mis Favoritos
+            </a>
+          </li>
         </ul>
         <% } %>
         <!-- Divider -->
@@ -356,7 +361,10 @@
                 String nomVid = request.getParameter("v");
                 portVideo.setUsr(nick);
                 DtVideo infoV = portVideo.obtenerInfoVideo(nomVid);
-
+                Boolean cargarVisita = request.getParameter("h") == null;
+                if(usr != null & cargarVisita){
+                  portUsuario.agregarVisita(usr.getNickname(), nick, nomVid);
+                }
           %>
           <div class="container-fluid">
             <div class="row row- justify-content-right">
@@ -401,17 +409,19 @@
                                     no = !v.isGusta();
                                   }
                                 }
+                                if(usr != null){
                               %>
                               <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=si"><i class="fa<%= si ? "s" : "r" %> fa-thumbs-up"></i> <%=portVideo.cantidadGusta()%></a> | <a href="<%= request.getContextPath() %>/ValorarVideo?u=<%=nick%>&v=<%=infoV.getNombre()%>&g=no"><%=portVideo.cantidadNoGusta()%> <i class="fa<%= no ? "s" : "r" %> fa-thumbs-down"></i></a>
+                              <%}else {%>
+                              <a href="#"><i class="fa<%= si ? "s" : "r" %> fa-thumbs-up"></i> <%=portVideo.cantidadGusta()%></a> | <a href="#"><%=portVideo.cantidadNoGusta()%> <i class="fa<%= no ? "s" : "r" %> fa-thumbs-down"></i></a>
+
+                              <%}%>
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </p>
                           </div>
 
                           <%
                             if (s.getAttribute("usuario") != null){
-                              System.out.println("-" + s.getAttribute("usuario") + "-");
-                              System.out.println("-" + nick + "-");
-
                           %>
                           <div>
                             <div class="dropdown">

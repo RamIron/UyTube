@@ -21,7 +21,7 @@ public class ResponderComentario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idC = request.getParameter("id");
         String comentario = request.getParameter("respuesta");
-        String path = request.getParameter("path");
+        String path = request.getParameter("path")  + "&h=no";
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
         //WEBSERVICES
@@ -30,12 +30,6 @@ public class ResponderComentario extends HttpServlet {
         //FIN WEBSERVICES
         System.out.println(idC + comentario + path + usr);
         if (usr != null && idC != null && comentario != null && !comentario.isEmpty()){
-//            XMLGregorianCalendar fPub = null;
-//            try {
-//                fPub = getXMLGregorianCalendarNow();
-//            } catch (DatatypeConfigurationException e) {
-//                e.printStackTrace();
-//            }
             portVideo.responderComentario(Integer.parseInt(idC), usr.getNickname(), new DtFecha(), comentario);
             RequestDispatcher rd;
             rd = request.getRequestDispatcher(path);

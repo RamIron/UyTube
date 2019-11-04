@@ -67,7 +67,7 @@
       <ul class="nav align-items-center d-md-none">
         <% if (usr == null){ %>
         <li class="nav-item">
-          <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
+          <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/iniciarSesion.jsp">
             <i class="fas fa-sign-in-alt"></i>
             <span class="nav-link-inner--text">Entrar</span>
           </a>
@@ -179,6 +179,11 @@
               </a>
           </li>
           <% } %>
+          <li class="nav-item">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/favoritos.jsp">
+              <i class="fas fa-star text-blue"></i> Mis Favoritos
+            </a>
+          </li>
         </ul>
         <% } %>
         <!-- Divider -->

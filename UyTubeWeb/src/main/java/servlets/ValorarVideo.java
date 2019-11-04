@@ -32,7 +32,7 @@ public class ValorarVideo extends HttpServlet {
             portVideo.setUsr(uVid);
             portVideo.setVid(nVid);
             portVideo.valorarVideo(usr.getNickname(), gustaS.equals("si"));
-            String path = "/module/visualizarVideo.jsp?u=" + uVid +"&v=" + nVid;
+            String path = "/module/visualizarVideo.jsp?u=" + uVid +"&v=" + nVid + "&h=no";
             RequestDispatcher rd;
             rd = request.getRequestDispatcher(path);
             String message;

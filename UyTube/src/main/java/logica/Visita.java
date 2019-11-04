@@ -6,6 +6,7 @@ import java.util.Objects;
 @Entity
 public class Visita {
    @Id
+   @GeneratedValue
     private Integer id;
 
     @ManyToOne
@@ -19,7 +20,6 @@ public class Visita {
         this.video = video;
         this.ultimaVisita = ultimaVisita;
         this.cantVisitas = cantVisitas;
-        this.id = 0;
     }
 
     public Integer getId() {

@@ -74,7 +74,7 @@
       <ul class="nav align-items-center d-md-none">
         <% if (s.getAttribute("usuario") == null){ %>
         <li class="nav-item">
-          <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
+          <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/iniciarSesion.jsp">
             <i class="fas fa-sign-in-alt"></i>
             <span class="nav-link-inner--text">Entrar</span>
           </a>
@@ -96,7 +96,7 @@
             <div class=" dropdown-header noti-title">
               <h6 class="text-overflow m-0">Bienvenido</h6>
             </div>
-            <a href="./module/miPerfil.jsp" class="dropdown-item">
+            <a href="<%= request.getContextPath() %>/module/miPerfil.jsp" class="dropdown-item">
               <i class="ni ni-single-02"></i>
               <span>Mi perfil</span>
             </a>
@@ -128,7 +128,7 @@
           </div>
         </div>
         <!-- Form -->
-        <form class="mt-4 mb-3 d-md-none" action="./module/buscar.jsp" method="get">
+        <form class="mt-4 mb-3 d-md-none" action="<%= request.getContextPath() %>/module/buscar.jsp" method="get">
           <div class="input-group input-group-rounded input-group-merge" >
             <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Buscar..." aria-label="Search" name="q">
             <input type="hidden" name="canales" value="on">
@@ -144,7 +144,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="./module/verUsuarios.jsp">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/verUsuarios.jsp">
               <i class="ni ni-single-02 text-blue"></i> Ver usuarios
             </a>
           </li>
@@ -157,13 +157,13 @@
         <ul class="navbar-nav">
           <% if (s.getAttribute("usuario") != null){ %>
           <li class="nav-item">
-            <a class="nav-link " href="./module/nuevoVideo.jsp">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/nuevoVideo.jsp">
               <i class="ni ni-fat-add text-blue"></i> Subir video
             </a>
           </li>
           <% } %>
           <li class="nav-item">
-            <a class="nav-link " href="./module/verVideos.jsp">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/verVideos.jsp">
               <i class="ni ni-button-play text-blue"></i> Ver videos
             </a>
           </li>
@@ -184,7 +184,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link " href="./module/nuevaLista.jsp">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/nuevaLista.jsp">
               <i class="ni ni-fat-add text-blue"></i> Crear lista
             </a>
           </li>
@@ -197,6 +197,11 @@
               </a>
           </li>
           <% } %>
+          <li class="nav-item">
+            <a class="nav-link " href="<%= request.getContextPath() %>/module/favoritos.jsp">
+              <i class="fas fa-star text-blue"></i> Mis Favoritos
+            </a>
+          </li>
         </ul>
         <% } %>
         <!-- Divider -->
@@ -224,7 +229,7 @@
       <div class="container-fluid">
         
         <!-- Form - Buscador -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"  action="./module/buscar.jsp" method="get">
+        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"  action="<%= request.getContextPath() %>/module/buscar.jsp" method="get">
           <div class="form-group mb-0">
             <div class="input-group input-group-alternative">
               <div class="input-group-prepend">
@@ -238,13 +243,13 @@
         <% if (s.getAttribute("usuario") == null){ %>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="./module/registro.jsp">
+            <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/registro.jsp">
               <i class="ni ni-circle-08"></i>
               <span class="nav-link-inner--text">Registrarse</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="./module/iniciarSesion.jsp">
+            <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/iniciarSesion.jsp">
               <i class="ni ni-key-25"></i>
               <span class="nav-link-inner--text">Iniciar sesion</span>
             </a>
@@ -271,7 +276,7 @@
               <div class=" dropdown-header noti-title">
                 <h6 class="text-overflow m-0">Bienvenido</h6>
               </div>
-              <a href="./module/miPerfil.jsp" class="dropdown-item">
+              <a href="<%= request.getContextPath() %>/module/miPerfil.jsp" class="dropdown-item">
                 <i class="ni ni-single-02"></i>
                 <span>Mi perfil</span>
               </a>
