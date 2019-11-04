@@ -43,33 +43,20 @@ public class CrearVideo extends HttpServlet {
             String fPub = request.getParameter("fPub");
 
             //CODIGO PARA EXTRAER LA FECHA
-            /*SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date date = null;
-            XMLGregorianCalendar cal = null;
+            Calendar cal = Calendar.getInstance();
             try {
-                date = sdf.parse(fPub);
+                date = new SimpleDateFormat("MM/dd/yyyy").parse(fPub);
                 cal.setTime(date);
-            } catch (ParseException e) {
-                System.out.println("Excepcion: error con la fecha");
-            }*/
-            //FIN DE CODIGO PARA EXTRAER LA FECHA
-
-            //CODIGO PARA EXTRAER LA FECHA
-            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-            Date date = null;
-            try {
-                date = sdf.parse(fPub);//TODO nose esta cargando bien la fecha
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             System.out.println("FechaCompleta: " + fPub);
-            System.out.println("Año: " + date.getYear()+1900);
-            System.out.println("Mes: " + date.getMonth());
-            System.out.println("Dia: " + date.getDay());
             DtFecha fecha = new DtFecha();
-            fecha.setAnio(date.getYear()+1900);
-            fecha.setMes(date.getMonth());
-            fecha.setDia(date.getDay());
+            fecha.setAnio(cal.get(Calendar.YEAR));
+            fecha.setMes(cal.get(Calendar.MONTH));
+            fecha.setDia(cal.get(Calendar.DAY_OF_MONTH));
+            System.out.println("FechaCompleta en datatype: " + fecha.getDia() + "/" + fecha.getMes() + "/" + fecha.getAnio());
 
             //FIN DE CODIGO PARA EXTRAER LA FECHA
 
