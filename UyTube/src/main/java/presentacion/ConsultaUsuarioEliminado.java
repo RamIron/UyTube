@@ -222,6 +222,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 				fDia.setSelectedItem(infoU.getfNac().get(Calendar.DAY_OF_MONTH));
 				fMes.setSelectedItem(infoU.getfNac().get(Calendar.MONTH)+1);
 				fAnio.setSelectedItem(infoU.getfNac().get(Calendar.YEAR));
+				System.out.println(infoU.getfNac().get(Calendar.DAY_OF_MONTH) + "/" + infoU.getfNac().get(Calendar.MONTH) + "/" + infoU.getfNac().get(Calendar.YEAR));
 //				String path = "/src/main/resources/" + infoU.getImagen();
 //                System.out.println(path);
 //				try {
@@ -309,39 +310,6 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 			}
 		});
 		scrollListaUsr.setViewportView(listaUsr);
-		
-		JButton btnSelecVideo = new JButton("Seleccionar");
-		btnSelecVideo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int i = listaUsr.getSelectedIndex();
-				String usr = listaUsr.getModel().getElementAt(i).toString();
-				i = listaVid.getSelectedIndex();
-				String vid = listaVid.getModel().getElementAt(i).toString();
-				cvIF.inicializar();
-				cvIF.cargarVideo(usr, vid);
-				ConsultaUsuarioEliminado.this.setVisible(false);
-				cvIF.setVisible(true);
-				
-			}
-		});
-		btnSelecVideo.setBounds(23, 475, 138, 23);
-		getContentPane().add(btnSelecVideo);
-		
-		JButton btnSelecLista = new JButton("Seleccionar");
-		btnSelecLista.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int i = listaUsr.getSelectedIndex();
-				String usr = listaUsr.getModel().getElementAt(i).toString();
-				i = listaLisRep.getSelectedIndex();
-				String lis = listaLisRep.getModel().getElementAt(i).toString();
-				clIF.inicializar();
-				clIF.cargarLista(usr, lis);
-				ConsultaUsuarioEliminado.this.setVisible(false);
-				clIF.setVisible(true);
-			}
-		});
-		btnSelecLista.setBounds(188, 475, 138, 23);
-		getContentPane().add(btnSelecLista);
 		checkBoxPublico.setEnabled(false);
 		
 		

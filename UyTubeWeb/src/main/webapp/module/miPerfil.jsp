@@ -349,8 +349,6 @@
                                             </form>
 
 
-
-
                                             <%--Nickname--%>
                                             <div class="row justify-content-center mb-3">
                                                 <span class="mb-xl-2 font-weight-bold text-xl">@<%=usuario.getNickname() %></span>
@@ -432,9 +430,20 @@
                                         </div>
 
                                         <div class="col text-center">
-                                            <button type="button" class="btn-sm btn-outline-primary" data-toggle="modal" data-target="#editar">
-                                                Modificar Datos
-                                            </button>
+                                            <div>
+                                                <button type="button" class="btn-sm btn-outline-primary" data-toggle="modal" data-target="#editar">
+                                                    Modificar Datos
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <%--Boton eliminar usuario--%>
+                                                <form name="eliminaUsr" role="form" action="<%= request.getContextPath() %>/EliminarUsuario" method="post">
+                                                    <input type="hidden" name="nickname" value="<%=usuario.getNickname()%>">
+                                                    <label class="btn-sm btn-outline-primary">
+                                                        Eliminar Usuario <input type=button name="usuarioEliminar" style="display: none;" data-toggle="modal" data-target="#eliminarUsr">
+                                                    </label>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -702,6 +711,21 @@
                                 </div>
                             </div>
 
+                            <%--Aqui comienza el cartel si desea eliminar el Usuario--%>
+                            <div class="modal fade" id="eliminarUsr" tabindex="-1" role="dialog" aria-labelledby="ModalEliminarUsuario" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            Desea eliminar su usuario de UyTube?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                            <button type="button" class="btn btn-primary" onclick="eliminarUsuario()">Sí, deseo eliminar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -759,6 +783,12 @@
 <script type="text/javascript">
     function eliminarImagen() {
         document.forms["cambioImagen"].submit();
+    }
+</script>
+
+<script type="text/javascript">
+    function eliminarUsuario() {
+        document.forms["eliminaUsr"].submit();
     }
 </script>
 

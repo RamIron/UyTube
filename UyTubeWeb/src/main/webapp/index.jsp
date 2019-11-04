@@ -171,7 +171,7 @@
         <% if (s.getAttribute("usuario") != null){ %>
         <%--<%
           IUsuario iU = UFactory.getInstancia().getIUsuario();
-          iU.eliminarUsuario("lobezno");
+          iU.eliminarUsuario("pepe2");
           List<String> todosUsuarios = iU.listarUsuarios();
           for(String sss:todosUsuarios){
             System.out.println(sss);

@@ -224,6 +224,7 @@ public class ConsultaUsuario extends JInternalFrame {
 				fDia.setSelectedItem(infoU.getfNac().get(Calendar.DAY_OF_MONTH));
 				fMes.setSelectedItem(infoU.getfNac().get(Calendar.MONTH)+1);
 				fAnio.setSelectedItem(infoU.getfNac().get(Calendar.YEAR));
+				System.out.println(infoU.getfNac().get(Calendar.DAY_OF_MONTH) + "/" + infoU.getfNac().get(Calendar.MONTH) + "/" + infoU.getfNac().get(Calendar.YEAR));
 //				String path = "/src/main/resources/" + infoU.getImagen();
 //                System.out.println(path);
 //				try {
