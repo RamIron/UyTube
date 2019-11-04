@@ -373,7 +373,7 @@ public class ModificarUsuario extends JInternalFrame {
 						lblMsgError.setVisible(true);
 					}else {
 						Calendar fNac = Calendar.getInstance();
-				        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
+				        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem()-1, (Integer) fDia.getSelectedItem());
 				        iU.modificarInfoUsuario(nombre.getText(), apellido.getText(), fNac, imgPath);
 				        iU.modificarInfoCanal(nomCanal.getText(), desCanal.getText(), chckbxCanalPublico.isSelected());
 				        String nomCat = null;

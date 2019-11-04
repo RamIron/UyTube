@@ -9,17 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "CerrarSesion", value = "/CerrarSesion")
-public class CerrarSesion extends HttpServlet {
+@WebServlet(name = "EliminarUsuario", value = "/EliminarUsuario")
+public class EliminarUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession s = request.getSession();
-        s.removeAttribute("usuario");
-        /////////////WEB SERVICE/////////////////
         publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
-        //////////FIN WEBSERVICE///////////
+        HttpSession s = request.getSession();
+        String nick = request.getParameter("nick");
+        String pass = request.getParameter("pass");
+        port.
+        s.removeAttribute("usuario");
         RequestDispatcher rd;
         rd = request.getRequestDispatcher("/index.jsp");
+        String message = "El usuario fue eliminado correctamente";
+        request.setAttribute("message", message);
         rd.forward(request, response);
     }
 

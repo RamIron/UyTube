@@ -216,7 +216,7 @@ public class AltaUsuario extends JInternalFrame {
 					lblMsgErrorNick.setVisible(true);
 				}else {
 					Calendar fNac = Calendar.getInstance();
-			        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
+			        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem()-1, (Integer) fDia.getSelectedItem());
 			        iU.agregarUsuario(nick.getText(), nombre.getText(), apellido.getText(), fNac, email.getText());
 					iU.modificarContrasena(password.getText());
 			        if(agregarFoto) {
