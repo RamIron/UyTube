@@ -2,6 +2,7 @@ package servlets;
 
 import interfaces.IUsuario;
 import interfaces.UFactory;
+import publicadores.DtFecha;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -51,26 +52,20 @@ public class AltaUsuario extends HttpServlet {
         //CODIGO PARA EXTRAER LA FECHA
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         Date date = null;
-        XMLGregorianCalendar cal = null;
         try {
             date = sdf.parse(fNac);//TODO nose esta cargando bien la fecha
-            System.out.println("FechaCompleta: " + fNac);
-            System.out.println("Año: " + date.getYear());
-            System.out.println("Mes: " + date.getMonth());
-            System.out.println("Dia: " + date.getDay());
-            cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(1900 + date.getYear(),date.getMonth(),date.getDay(), 0, 0, 0, 0, -3);
-        } catch (DatatypeConfigurationException | ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
-//        try {
-//            date = sdf.parse(fNac);
-//            //cal.setTime(date);
-//            cal.setDay(date.getDay());
-//            cal.setMonth(date.getMonth());
-//            cal.setYear(date.getYear());
-//        } catch (ParseException e) {
-//            System.out.println("Excepcion: error con la fecha");
-//        }
+        System.out.println("FechaCompleta: " + fNac);
+        System.out.println("Año: " + (date.getYear()+1900));
+        System.out.println("Mes: " + date.getMonth());
+        System.out.println("Dia: " + date.getDay());
+        DtFecha fecha = new DtFecha();
+        fecha.setAnio(date.getYear()+1900);
+        fecha.setMes(date.getMonth());
+        fecha.setDia(date.getDay());
+
         //FIN DE CODIGO PARA EXTRAER LA FECHA
 
 
@@ -89,7 +84,7 @@ public class AltaUsuario extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         }else{
-            port.agregarUsuario(nickname, nomU, apellido, cal, email);
+            port.agregarUsuario(nickname, nomU, apellido, fecha, email);
             if(!foto.equals("")) {
                 port.modificarImagen("img/usr/" + foto);
             }else {
