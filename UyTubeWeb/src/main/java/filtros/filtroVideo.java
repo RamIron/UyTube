@@ -1,5 +1,7 @@
 package filtros;
 
+import publicadores.DtElementoWeb;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +16,13 @@ public class filtroVideo implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         String idVideo = ((HttpServletRequest)req).getServletPath().substring(3);
         System.out.println("Id video : " + idVideo);
-
-        if(/* Existe video con ese url*/ false) {
+        publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
+        publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
+        DtElementoWeb video = portVideo.obtenerVideo(Integer.parseInt(idVideo));
+        if(video != null) {
             //redirecciono a el video
+            RequestDispatcher rd = req.getRequestDispatcher("/module/visualizarVideo.jsp?u=" + video.getNickname() + "&v=" + video.getNombreE());
+            rd.forward(req,resp);
         } else {
             //redirecciono a invalido
             RequestDispatcher rd = req.getRequestDispatcher("/module/invalido.jsp");

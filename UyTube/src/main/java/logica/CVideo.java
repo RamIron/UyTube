@@ -259,5 +259,26 @@ public class CVideo implements IVideo {
 		}
 		return res;
 	}
-	
+
+	@Override
+	public Integer obtenerIdVideo(String usuario, String nomVid){
+		setUsr(usuario);
+		setVid(nomVid);
+		return vid.id;
+	}
+
+	@Override
+	public DtElementoWeb obtenerVideo(Integer idVid){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		List<Object[]> resQuery;
+		DtElementoWeb res  = null;
+		Query consulta = em.createNamedQuery("buscarVideoFecha");
+		consulta.setParameter(1, idVid);
+		resQuery = consulta.getResultList();
+		if(resQuery.size() != 0){
+			res = new DtElementoWeb(resQuery.get(0)[0].toString(), resQuery.get(0)[1].toString(), tipoElemento.VIDEO, resQuery.get(0)[2].toString());
+		}
+		return res;
+	}
 }
