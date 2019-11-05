@@ -273,7 +273,7 @@ public class CVideo implements IVideo {
 		EntityManager em = conexion.getEntityManager();
 		List<Object[]> resQuery;
 		DtElementoWeb res  = null;
-		Query consulta = em.createNamedQuery("buscarVideoFecha");
+		Query consulta = em.createNamedQuery("obtenerVideoPorId");
 		consulta.setParameter(1, idVid);
 		resQuery = consulta.getResultList();
 		if(resQuery.size() != 0){

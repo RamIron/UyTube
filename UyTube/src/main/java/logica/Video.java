@@ -25,7 +25,7 @@ import datatypes.*;
 		@NamedNativeQuery(name = "obtenerVideoPorId", query = "SELECT c.usuario_nickname, e.nombre, v.url\n" +
 				"FROM usuarios u INNER JOIN canal c ON u.nickname = c.usuario_nickname\n" +
 				"\t\tINNER JOIN  elemento e ON c.id = e.canal_id INNER JOIN video v ON e.id = v.id\n" +
-				"WHERE c.publico = true AND v.publico = true  AND e.id = ?1")
+				"WHERE c.publico = true AND v.publico = true  AND e.id = (?1)")
 })
 public class Video extends Elemento {
 	//Atributos

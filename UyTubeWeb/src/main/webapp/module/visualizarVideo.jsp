@@ -357,8 +357,11 @@
           <!-- Contenido aqui TODO-->
           <%
             if(request.getParameter("u") != null && request.getParameter("v") != null){
-                String nick = request.getParameter("u");
-                String nomVid = request.getParameter("v");
+              System.out.println("ESTOY DENTRO DEL IF DEL JSP");
+                String nick = (String) request.getParameter("u");
+              System.out.println("Soy el nick: " + nick);
+                String nomVid = (String) request.getParameter("v");
+              System.out.println("Soy el nomvid: " + nomVid);
                 portVideo.setUsr(nick);
                 DtVideo infoV = portVideo.obtenerInfoVideo(nomVid);
                 Boolean cargarVisita = request.getParameter("h") == null;
