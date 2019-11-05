@@ -14,10 +14,8 @@ import java.io.IOException;
 @WebServlet(name = "IniciarSesion", value = "/IniciarSesion")
 public class IniciarSesion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /////////////WEB SERVICE/////////////////
         publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
-        //////////FIN WEBSERVICE///////////
 
         HttpSession s = request.getSession();
         String nick = request.getParameter("nick");
@@ -43,7 +41,6 @@ public class IniciarSesion extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         }
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

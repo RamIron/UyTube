@@ -1,9 +1,6 @@
 package servlets;
 
 import publicadores.DtUsuarioWeb;
-import interfaces.IListaReproduccion;
-import interfaces.LRFactory;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,10 +17,9 @@ public class AgregarALista extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /////////////WEB SERVICE/////////////////
         publicadores.CListaRepPublishService service = new publicadores.CListaRepPublishService();
         publicadores.CListaRepPublish port = service.getCListaRepPublishPort();
-        //////////FIN WEBSERVICE///////////
+
         String nomLis = request.getParameter("l");
         String usrVid = request.getParameter("vu");
         String nomVid = request.getParameter("vn");

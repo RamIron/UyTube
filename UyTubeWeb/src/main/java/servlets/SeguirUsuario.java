@@ -1,9 +1,6 @@
 package servlets;
 
 import publicadores.DtUsuarioWeb;
-import interfaces.IUsuario;
-import interfaces.UFactory;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,13 +21,10 @@ public class SeguirUsuario extends HttpServlet {
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
         if (seguido != null && usr != null){
-            String seguidor = usr.getNickname();
-
-            /////////////WEB SERVICE/////////////////
             publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
             publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
-            //////////FIN WEBSERVICE///////////
 
+            String seguidor = usr.getNickname();
             port.seguirUsuario(seguidor, seguido);
             RequestDispatcher rd;
             String path = "/module/consultaUsuario.jsp?nick=" + seguido;

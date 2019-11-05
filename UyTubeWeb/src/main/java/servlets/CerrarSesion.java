@@ -12,12 +12,11 @@ import java.io.IOException;
 @WebServlet(name = "CerrarSesion", value = "/CerrarSesion")
 public class CerrarSesion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession s = request.getSession();
-        s.removeAttribute("usuario");
-        /////////////WEB SERVICE/////////////////
         publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
-        //////////FIN WEBSERVICE///////////
+
+        HttpSession s = request.getSession();
+        s.removeAttribute("usuario");
         RequestDispatcher rd;
         rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);

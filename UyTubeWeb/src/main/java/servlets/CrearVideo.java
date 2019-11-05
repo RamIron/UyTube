@@ -2,11 +2,6 @@ package servlets;
 
 import publicadores.DtFecha;
 import publicadores.DtUsuarioWeb;
-import interfaces.IUsuario;
-import interfaces.IVideo;
-import interfaces.UFactory;
-import interfaces.VFactory;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,9 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,15 +18,12 @@ import java.util.Date;
 @WebServlet(name = "CrearVideo", value= "/CrearVideo")
 public class CrearVideo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //WEBSERVICES
         publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
         publicadores.CVideoPublish portV = serviceVideo.getCVideoPublishPort();
-        //FIN WEBSERVICES
 
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
         if (usr != null){
-
             String nomVideo = request.getParameter("nomVid");
             int duracion = Integer.parseInt(request.getParameter("dur"));
             String url = request.getParameter("url");
@@ -51,13 +40,10 @@ public class CrearVideo extends HttpServlet {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            System.out.println("FechaCompleta: " + fPub);
             DtFecha fecha = new DtFecha();
             fecha.setAnio(cal.get(Calendar.YEAR));
             fecha.setMes(cal.get(Calendar.MONTH));
             fecha.setDia(cal.get(Calendar.DAY_OF_MONTH));
-            System.out.println("FechaCompleta en datatype: " + fecha.getDia() + "/" + fecha.getMes() + "/" + fecha.getAnio());
-
             //FIN DE CODIGO PARA EXTRAER LA FECHA
 
             if(portV.existeVideo(usr.getNickname(), nomVideo)){

@@ -18,10 +18,8 @@ public class ValorarVideo extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //WEBSERVICES
         publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
         publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
-        //FIN WEBSERVICES
 
         String uVid = request.getParameter("u");
         String nVid = request.getParameter("v");
