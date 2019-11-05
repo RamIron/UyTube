@@ -51,6 +51,9 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 	private JComboBox<Integer> fDia = new JComboBox<Integer>();
 	private JComboBox <Integer>fMes = new JComboBox<Integer>();
 	private JComboBox<Integer> fAnio = new JComboBox<Integer>();
+	private JComboBox<Integer> fDiaElim = new JComboBox<Integer>();
+	private JComboBox <Integer>fMesElim = new JComboBox<Integer>();
+	private JComboBox<Integer> fAnioElim = new JComboBox<Integer>();
 	private JTextPane desCanal = new JTextPane();
 	private final JLabel lblImagen = new JLabel("");
 	private JButton btnSelecFoto = new JButton("Seleccionar");
@@ -80,7 +83,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		this.clIF = clIF;
 		
 		setRootPaneCheckingEnabled(false);
-		setTitle("Consultar usuario");
+		setTitle("Consultar usuario eliminado");
 		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);
 		ConsultaUsuarioEliminado.this.setVisible(false);
@@ -140,30 +143,24 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		email.setBounds(552, 118, 202, 19);
 		getContentPane().add(email);
 		email.setColumns(10);
+		
 		fDia.setEnabled(false);
-
-		
-		
-		
-		
 		fDia.setBounds(552, 142, 49, 24);
 		fDia.addItem(null);
 		for(Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
 		}
 		getContentPane().add(fDia);
+		
 		fMes.setEnabled(false);
-		
-		
 		fMes.setBounds(613, 142, 52, 24);
 		fMes.addItem(null);
 		for(Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
 		}
 		getContentPane().add(fMes);
+		
 		fAnio.setEnabled(false);
-		
-		
 		fAnio.setBounds(677, 142, 77, 24);
 		fAnio.addItem(null);
 		for(Integer i=1920; i<=2019; i++) {
@@ -171,20 +168,44 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		}
 		getContentPane().add(fAnio);
 		
+		fDiaElim.setEnabled(false);
+		fDiaElim.setBounds(552, 177, 49, 24);
+		fDiaElim.addItem(null);
+		for(Integer i=1; i<=31; i++) {
+			fDiaElim.addItem(i);
+		}
+		getContentPane().add(fDiaElim);
+		
+		fMesElim.setEnabled(false);
+		fMesElim.setBounds(613, 177, 52, 24);
+		fMesElim.addItem(null);
+		for(Integer i=1; i<=12; i++) {
+			fMesElim.addItem(i);
+		}
+		getContentPane().add(fMesElim);
+		
+		fAnioElim.setEnabled(false);
+		fAnioElim.setBounds(677, 177, 77, 24);
+		fAnioElim.addItem(null);
+		for(Integer i=1920; i<=2019; i++) {
+			fAnioElim.addItem(i);
+		}
+		getContentPane().add(fAnioElim);
+		
 		JLabel lblNombreDelCanal = new JLabel("Nombre");
-		lblNombreDelCanal.setBounds(391, 236, 148, 15);
+		lblNombreDelCanal.setBounds(391, 254, 148, 15);
 		getContentPane().add(lblNombreDelCanal);
 		
 		nomCanal = new JTextField();
 		nomCanal.setEnabled(false);
-		nomCanal.setBounds(552, 236, 202, 19);
+		nomCanal.setBounds(552, 254, 202, 19);
 		getContentPane().add(nomCanal);
 		nomCanal.setColumns(10);
 		
 		JLabel lblDescripcionDelCanal = new JLabel("Descripcion");
-		lblDescripcionDelCanal.setBounds(391, 338, 200, 15);
+		lblDescripcionDelCanal.setBounds(391, 348, 200, 15);
 		getContentPane().add(lblDescripcionDelCanal);
-		scrollDescCanal.setBounds(391, 364, 363, 57);
+		scrollDescCanal.setBounds(391, 366, 363, 57);
 		
 		getContentPane().add(scrollDescCanal);
 		desCanal.setEnabled(false);
@@ -192,7 +213,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		
 		JLabel lblInfoCanal = new JLabel("Informacion del Canal");
 		lblInfoCanal.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblInfoCanal.setBounds(391, 198, 202, 27);
+		lblInfoCanal.setBounds(391, 216, 202, 27);
 		getContentPane().add(lblInfoCanal);
 		
 		JLabel lblInfoUsuario = new JLabel("Informacion del Usuario");
@@ -201,7 +222,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		getContentPane().add(lblInfoUsuario);
 		
 		JLabel lblPublico = new JLabel("Publico");
-		lblPublico.setBounds(391, 271, 70, 15);
+		lblPublico.setBounds(391, 284, 70, 15);
 		getContentPane().add(lblPublico);
 		
 		JButton btnSeleccionarUsuario = new JButton("Seleccionar");
@@ -211,7 +232,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 				resetearFormulario(iC);
 				int i = listaUsr.getSelectedIndex();
 				String usr = listaUsr.getModel().getElementAt(i).toString();
-				DtUsuario infoU = iU.obtenerInfoUsuario(usr);
+				DtUsuario infoU = iU.obtenerInfoUsuarioEliminado(usr);
 				DtCanal infoC =iU.obtenerInfoCanal();
 				
 				//INFO USUARIO
@@ -222,6 +243,9 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 				fDia.setSelectedItem(infoU.getfNac().get(Calendar.DAY_OF_MONTH));
 				fMes.setSelectedItem(infoU.getfNac().get(Calendar.MONTH)+1);
 				fAnio.setSelectedItem(infoU.getfNac().get(Calendar.YEAR));
+				fDiaElim.setSelectedItem(infoU.getfElim().get(Calendar.DAY_OF_MONTH));
+				fMesElim.setSelectedItem(infoU.getfElim().get(Calendar.MONTH)+1);
+				fAnioElim.setSelectedItem(infoU.getfElim().get(Calendar.YEAR));
 				System.out.println(infoU.getfNac().get(Calendar.DAY_OF_MONTH) + "/" + infoU.getfNac().get(Calendar.MONTH) + "/" + infoU.getfNac().get(Calendar.YEAR));
 //				String path = "/src/main/resources/" + infoU.getImagen();
 //                System.out.println(path);
@@ -313,18 +337,22 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		checkBoxPublico.setEnabled(false);
 		
 		
-		checkBoxPublico.setBounds(730, 271, 97, 23);
+		checkBoxPublico.setBounds(548, 280, 97, 23);
 		getContentPane().add(checkBoxPublico);
 		
 		JLabel lblCategoria = new JLabel("Categoria");
-		lblCategoria.setBounds(391, 305, 122, 14);
+		lblCategoria.setBounds(391, 315, 122, 14);
 		getContentPane().add(lblCategoria);
 		
 
-		categoria.setBounds(552, 299, 202, 20);
+		categoria.setBounds(552, 309, 202, 20);
 		getContentPane().add(categoria);
 		categoria.setEnabled(false);
-
+		
+		JLabel lblFechaDeEliminacion = new JLabel("Fecha de eliminacion");
+		lblFechaDeEliminacion.setBounds(391, 182, 148, 15);
+		getContentPane().add(lblFechaDeEliminacion);
+	
 	}
 	
 	public void cargarElementos(IUsuario iU) {

@@ -201,6 +201,14 @@ public class CUsuario implements IUsuario {
 		return res;
 	}
 	
+	@Override 
+	public DtUsuario obtenerInfoUsuarioEliminado(String nick) {
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		usr = mU.obtenerUsuario(nick);
+		DtUsuario res = new DtUsuario(nick, usr.getNombre(), usr.getApellido(), usr.getfNac(), usr.getImagen(), usr.getCorreoE(), usr.getfEliminado());
+		return res;
+	}
+	
 	public Boolean esCanalPublico(String nick) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.usr = mU.obtenerUsuario(nick);
@@ -411,6 +419,8 @@ public class CUsuario implements IUsuario {
 
 			usr.getCanal().borrarContenidoCanal();
 			usr.setActivo(false);
+			Calendar fElim = Calendar.getInstance();
+			usr.setfEliminado(fElim);
 			mU.quitarUsuario(usr);
 			System.gc();
 		}catch (Exception e){

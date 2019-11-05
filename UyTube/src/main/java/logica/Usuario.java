@@ -53,9 +53,11 @@ public class Usuario {
 	@ManyToMany
 	private List<Usuario> seguidos = new ArrayList<Usuario>();
 
-
 	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
 	private List<Visita> masVisitados = new ArrayList<Visita>();
+
+	@Column(name="FECHA_DE_ELIMINACION")
+	private Calendar fEliminado;
 
 	//Constructores
 	public Usuario() {
@@ -75,6 +77,7 @@ public class Usuario {
 		this.fNac = fNac;
 		this.correoE = correoE;
 		this.activo = true;
+		this.fEliminado = null;
 	}
 
 	//Getters y Setters
@@ -153,6 +156,10 @@ public class Usuario {
 	public boolean isActivo() { return activo; }
 
 	public void setActivo(boolean activo) {	this.activo = activo; }
+
+	public Calendar getfEliminado() { return fEliminado; }
+
+	public void setfEliminado(Calendar fEliminado) { this.fEliminado = fEliminado; }
 
 	//Operaciones
 	public void agregarCanal() {
