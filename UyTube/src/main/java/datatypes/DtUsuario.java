@@ -13,6 +13,7 @@ public class DtUsuario {
 	private Calendar fNac;
 	private String imagen;
 	private String correoE;
+	private Calendar fElim;
 	
 	//Constructor
 	public DtUsuario() {
@@ -27,6 +28,17 @@ public class DtUsuario {
 		this.fNac = fNac;
 		this.imagen = imagen;
 		this.correoE = correoE;
+	}
+	
+	public DtUsuario(String nickname, String nombre, String apellido, Calendar fNac, String imagen, String correoE, Calendar fElim) {
+		super();
+		this.nickname = nickname;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.fNac = fNac;
+		this.imagen = imagen;
+		this.correoE = correoE;
+		this.fElim = fElim;
 	}
 
 	//Getters
@@ -53,6 +65,10 @@ public class DtUsuario {
 	public String getCorreoE() {
 		return correoE;
 	}
+	
+	public Calendar getfElim() {
+		return fElim;
+	}
 
 	//Setters
 	public void setNickname(String nickname) {
@@ -78,13 +94,14 @@ public class DtUsuario {
 	public void setCorreoE(String correoE) {
 		this.correoE = correoE;
 	}
+	
+	public void setfElim(Calendar fElim) {
+		this.fElim = fElim;
+	}
 
 	@Override
 	public String toString() {
 		return "DtUsuario [nickname=" + nickname + ", nombre=" + nombre + ", apellido=" + apellido + ", fNac=" + fNac
 				+ ", imagen=" + imagen + ", correoE=" + correoE + "]";
 	}
-	
-	
-		
 }

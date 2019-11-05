@@ -48,6 +48,8 @@ public interface IUsuario {
 	
 	public DtUsuario obtenerInfoUsuario(String nick);
 	
+	public DtUsuario obtenerInfoUsuarioEliminado(String nick);
+	
 	public void seguirUsuario(String seguidor, String seguido);
 
 	public Integer iniciarSesion(String nick, String pass);
