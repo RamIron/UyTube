@@ -321,7 +321,7 @@
                                         List<DtElementoWeb> listVideos = portV.listarVideosDeUsuarioWeb(usuario.getNickname()).getItem();
                                         List<String> listListasRep = portL.listarListasDeUsuario(usuario.getNickname()).getItem();
                                     %>
-                                    <div class="row">
+                                    <div class="row justify-content-center">
                                         <div class="col-sm-5 mb-4">
                                             <div class="text-muted text-center mt-2 mb-4">
                                                 <h1>Datos del Usuario</h1>
@@ -434,7 +434,7 @@
 
                                         </div>
 
-                                        <div class="col text-center">
+                                        <div class="row">
                                             <div>
                                                 <button type="button" class="btn-sm btn-outline-primary" data-toggle="modal" data-target="#editar">
                                                     Modificar Datos
@@ -443,10 +443,13 @@
                                             <div>
                                                 <%--Boton eliminar usuario--%>
                                                 <form name="eliminaUsr" role="form" action="<%= request.getContextPath() %>/EliminarUsuario" method="post">
-                                                    <input type="hidden" name="nickname" value="<%=usuario.getNickname()%>">
-                                                    <label class="btn-sm btn-outline-primary">
+                                                    <input type="hidden" name="nick" value="<%=usuario.getNickname()%>">
+                                                    <%--<label class="btn-sm btn-outline-primary">
                                                         Eliminar Usuario <input type=button name="usuarioEliminar" style="display: none;" data-toggle="modal" data-target="#eliminarUsr">
-                                                    </label>
+                                                    </label>--%>
+                                                    <button type="button" class="btn-sm btn-outline-primary" data-toggle="modal" data-target="#eliminarUsr">
+                                                        Eliminar Usuario <%--<input type=button name="usuarioEliminar" style="display: none;" data-toggle="modal" data-target="#eliminarUsr">--%>
+                                                    </button>
                                                 </form>
                                             </div>
                                         </div>

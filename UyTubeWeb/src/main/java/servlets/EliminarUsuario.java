@@ -17,7 +17,7 @@ public class EliminarUsuario extends HttpServlet {
         HttpSession s = request.getSession();
         String nick = request.getParameter("nick");
         String pass = request.getParameter("pass");
-        port.
+        port.eliminarUsuario(nick);
         s.removeAttribute("usuario");
         RequestDispatcher rd;
         rd = request.getRequestDispatcher("/index.jsp");
