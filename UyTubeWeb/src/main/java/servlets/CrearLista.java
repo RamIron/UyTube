@@ -1,11 +1,6 @@
 package servlets;
 
 import publicadores.DtUsuarioWeb;
-import interfaces.IUsuario;
-import interfaces.LRFactory;
-import interfaces.IListaReproduccion;
-import interfaces.UFactory;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,15 +13,12 @@ import java.io.IOException;
 @WebServlet(name = "CrearLista", value = "/CrearLista")
 public class CrearLista extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
         if (usr != null){
-            //WEBSERVICES
             publicadores.CListaRepPublishService serviceListaRep = new publicadores.CListaRepPublishService();
             publicadores.CListaRepPublish portListaRep = serviceListaRep.getCListaRepPublishPort();
-            //FIN WEBSERVICES
+
             String nomLista = request.getParameter("nomList");
             String categoria = request.getParameter("categoria");
             Boolean esPublica;
@@ -43,7 +35,6 @@ public class CrearLista extends HttpServlet {
                     request.setAttribute("message", message);
                     rd.forward(request, response);
                 } else {
-
                     if(categoria.equals("")) {
                         portListaRep.agregarListaParticular(nomLista, esPublica);
                     } else {
@@ -64,10 +55,6 @@ public class CrearLista extends HttpServlet {
 
 
     }
-
-
-
-
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");

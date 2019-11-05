@@ -2,7 +2,6 @@ package servlets;
 
 import publicadores.DtFecha;
 import publicadores.DtUsuarioWeb;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,11 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
-import java.util.GregorianCalendar;
 
 @WebServlet(name = "ComentarVideo", value = "/ComentarVideo")
 public class ComentarVideo extends HttpServlet {
@@ -24,11 +19,11 @@ public class ComentarVideo extends HttpServlet {
         String comentario = request.getParameter("comentario");
         HttpSession s = request.getSession();
         DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-        //WEBSERVICES
-        publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
-        publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
-        //FIN WEBSERVICES
+
         if (usr != null && uVid != null && nVid != null && comentario != null && !comentario.isEmpty()){
+            publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
+            publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
+
             portVideo.setUsr(uVid);
             portVideo.setVid(nVid);
             portVideo.realizarComentario(usr.getNickname(), new DtFecha(), comentario);
@@ -45,15 +40,5 @@ public class ComentarVideo extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.getWriter().append("Parametros invalidos");
-    }
-
-    private XMLGregorianCalendar getXMLGregorianCalendarNow()
-            throws DatatypeConfigurationException {
-
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
-        XMLGregorianCalendar now =
-                datatypeFactory.newXMLGregorianCalendar(gregorianCalendar);
-        return now;
     }
 }

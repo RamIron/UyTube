@@ -10,11 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
-import java.util.GregorianCalendar;
 
 @WebServlet(name = "ResponderComentario", value = "/ResponderComentario")
 public class ResponderComentario extends HttpServlet {
@@ -28,7 +24,6 @@ public class ResponderComentario extends HttpServlet {
         publicadores.CVideoPublishService serviceVideo = new publicadores.CVideoPublishService();
         publicadores.CVideoPublish portVideo = serviceVideo.getCVideoPublishPort();
         //FIN WEBSERVICES
-        System.out.println(idC + comentario + path + usr);
         if (usr != null && idC != null && comentario != null && !comentario.isEmpty()){
             portVideo.responderComentario(Integer.parseInt(idC), usr.getNickname(), new DtFecha(), comentario);
             RequestDispatcher rd;
@@ -43,14 +38,5 @@ public class ResponderComentario extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
-    }
-
-    private XMLGregorianCalendar getXMLGregorianCalendarNow()
-            throws DatatypeConfigurationException {
-
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
-        XMLGregorianCalendar now = datatypeFactory.newXMLGregorianCalendar(gregorianCalendar);
-        return now;
     }
 }

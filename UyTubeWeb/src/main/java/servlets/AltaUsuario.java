@@ -46,9 +46,6 @@ public class AltaUsuario extends HttpServlet {
         }
         String categoria = request.getParameter("categoria");
 
-
-
-
         //CODIGO PARA EXTRAER LA FECHA
         Date date = null;
         Calendar cal = Calendar.getInstance();
@@ -58,15 +55,11 @@ public class AltaUsuario extends HttpServlet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println("FechaCompleta: " + fNac);
         DtFecha fecha = new DtFecha();
         fecha.setAnio(cal.get(Calendar.YEAR));
         fecha.setMes(cal.get(Calendar.MONTH));
         fecha.setDia(cal.get(Calendar.DAY_OF_MONTH));
-        System.out.println("FechaCompleta en datatype: " + fecha.getDia() + "/" + fecha.getMes() + "/" + fecha.getAnio());
-
         //FIN DE CODIGO PARA EXTRAER LA FECHA
-
 
         if(port.existeNickname(nickname)){
             // existe nickname
@@ -105,7 +98,6 @@ public class AltaUsuario extends HttpServlet {
             request.setAttribute("message", message);
             rd.forward(request, response);
         }
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

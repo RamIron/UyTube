@@ -1,7 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="publicadores.DtUsuarioWeb" %>
-<%@ page import="interfaces.*" %>
-<%@ page import="publicadores.DtUsuarioWebArray" %>
+
 <!--
 
 =========================================================
