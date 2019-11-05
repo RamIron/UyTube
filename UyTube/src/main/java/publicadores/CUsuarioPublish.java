@@ -234,11 +234,7 @@ public class CUsuarioPublish {
     @WebMethod
     public DtVisita[] listarMasVisitados(String nick){
         List<DtVisita> visitas = iUsr.listarMasVisitados(nick);
-        DtVisita[] res = new DtVisita[visitas.size()];
-        int i = 0;
-        for (DtVisita v: visitas){
-            res[i] = v;
-        }
-        return res;
+        DtVisita[] array = visitas.toArray(new DtVisita[visitas.size()]);
+        return array;
     }
 }
