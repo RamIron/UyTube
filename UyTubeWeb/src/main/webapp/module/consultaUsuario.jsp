@@ -471,7 +471,11 @@
                                                         <div class="col-sm-3">
                                                             <div class="card shadow-sm p-3 mb-4 bg-white rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3">
-                                                                    <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                    <% if(!usr.getNickname().contentEquals(u.getNickname())) { %>
+                                                                        <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                    <% } else { %>
+                                                                        <a class="" href="<%= request.getContextPath() %>/module/miPerfil.jsp">
+                                                                    <% } %>
                                                                         <div class="media align-items-center">
                                                                             <span class="avatar avatar-lg rounded-circle">
                                                                               <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
@@ -501,7 +505,11 @@
                                                         <div class="col-sm-3">
                                                             <div class="card shadow-sm p-3 mb-4 bg-white rounded">
                                                                 <div class="card-body px-lg-3 py-lg-3">
-                                                                    <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                    <% if(!usr.getNickname().contentEquals(u.getNickname())) { %>
+                                                                        <a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=u.getNickname()%>">
+                                                                    <% } else { %>
+                                                                        <a class="" href="<%= request.getContextPath() %>/module/miPerfil.jsp">
+                                                                    <% } %>
                                                                         <div class="media align-items-center">
                                                                             <span class="avatar avatar-lg rounded-circle">
                                                                               <% if (u.getFoto().equals("src/main/resources/img/default.png")) {%>
