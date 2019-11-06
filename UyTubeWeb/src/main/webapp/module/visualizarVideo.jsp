@@ -424,9 +424,41 @@
                           </div>
                           <%if(infoV.isPublico()) {%>
                             <div class="col text-left">
-                              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" aria-haspopup="true" aria-expanded="false" data-target="#exampleModal">
+                              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalShare">
                                 <i class="fas fa-share-alt"></i>
                               </button>
+
+                            <!-- Modal de share -->
+                            <div class="modal fade" id="modalShare" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-primary modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h2 class="modal-title" id="tituloShare">Compartir video</h2>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                    <div class="container">
+                                      <div class="row">
+                                        <div class="col-sm-2">
+                                          <button class="btn btn-icon btn-3 btn-secondary text-left" type="button" onclick="copiarUrl()">
+                                            <span class="btn-inner--icon"><i class="far fa-clipboard"></i></span>
+                                          </button>
+                                        </div>
+                                        <div class="col-sm-10">
+<%--                                          FALTA VER COMO PONER EL LINK ACORTADO--%>
+                                          <input type="text" id="imputUrl" value="http://localhost:8080/UyTubeWeb_war_exploded/<%=nick%>/<%=nomVid%>" class="form-control" aria-label="Sizing example input" readonly aria-describedby="inputGroup-sizing-sm">
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
                             </div>
                             &nbsp;
                           <%}%>
@@ -689,6 +721,13 @@
           alert("Url incorrecta, debe ser de youtube");
         }
       }
+    }
+
+    function copiarUrl(){
+      let url = document.getElementById("imputUrl");
+      url.select();
+      url.setSelectionRange(0, 99999); /*Para mobile*/
+      document.execCommand("copy");
     }
 
     function youtube_parser(url){
