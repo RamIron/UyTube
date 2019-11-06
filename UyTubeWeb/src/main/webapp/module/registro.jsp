@@ -132,9 +132,9 @@
             <form name="registro" role="form" action="<%= request.getContextPath() %>/AltaUsuario" method="post">
               <div class="row">
                 <div class="col">
-                  <div class="form-group mb-3">
-                    <div class="input-group input-group-alternative">
-                      <div class="input-group-prepend">
+                  <div id="grupo-nick" class="form-group mb-3">
+                    <div class="input-group">
+                      <div id="icono-nick" class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                       </div>
                       <input name="nickname" id="nickname" class="form-control" placeholder="Nickname" type="text" value="<%=nickname%>" autocomplete="off" onkeyup="validarNick()">
@@ -142,12 +142,12 @@
                   </div>
                 </div>
                 <div class="col">
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative">
+                  <div id="grupo-email" class="form-group">
+                    <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                       </div>
-                      <input name="email" class="form-control" placeholder="ejemplo@email.com" type="email" value="<%=email%>">
+                      <input name="email" id="email" class="form-control" placeholder="ejemplo@email.com" type="email" value="<%=email%>"  autocomplete="off" onkeyup="validarEmail()">
                     </div>
                   </div>
                 </div>
@@ -293,6 +293,9 @@
 </script>
 
 <script type="text/javascript">
+
+    var nickValido = false;
+    var emailValido = false;
     function continuar() {
         var nick = document.forms["registro"]["nickname"].value;
         var email = document.forms["registro"]["email"].value;
@@ -306,66 +309,77 @@
             alert("Falta completar campos");
 
         } else if (pass != pass2) {
-            alert("las contraseñas no coinciden");
+          alert("las contraseñas no coinciden");
+        }else if (!nickValido){
+          alert("nick invalido");
+        }else if (!emailValido){
+          alert("email invalido");
         }else {
             document.forms[0].submit();
         }
 
     }
 
-    function AJAXInteraction(url, callback) {
 
-      var req = init();
-      req.onreadystatechange = processRequest;
-
-      function init() {
-        if (window.XMLHttpRequest) {
-          return new XMLHttpRequest();
-        } else if (window.ActiveXObject) {
-          return new ActiveXObject("Microsoft.XMLHTTP");
-        }
-      }
-
-      function processRequest () {
-        // readyState of 4 signifies request is complete
-        if (req.readyState == 4) {
-          // status of 200 signifies sucessful HTTP call
-          if (req.status == 200) {
-            if (callback) callback(req.responseXML);
-          }
-        }
-      }
-
-      this.doGet = function() {
-        // make a HTTP GET request to the URL asynchronously
-        req.open("GET", url, true);
-        req.send(null);
-      }
-    }
 
     function validarNick() {
       var target = document.getElementById("nickname");
-      var url = "<%= request.getContextPath() %>/VerificarNick?nickname=" + encodeURIComponent(target.value);
-      var ajax = new AJAXInteraction(url, validateCallback);
-      ajax.doGet();
+      if(target.value != ""){
+        var url = "<%= request.getContextPath() %>/VerificarNick?nickname=" + encodeURIComponent(target.value);
+        $.get(url, function (res) {
+          if (res == "false") {
+            nickValido = true;
+            $("#nickname").removeClass("is-invalid");
+            $("#nickname").addClass("is-valid");
+            // $("#grupo-nick").removeClass("has-danger");
+            // $("#grupo-nick").addClass("has-success");
+          } else {
+            nickValido = false;
+            $("#nickname").removeClass("is-valid");
+            $("#nickname").addClass("is-invalid");
+            // $("#grupo-nick").removeClass("has-success");
+            // $("#grupo-nick").addClass("has-danger");
+          }
+        });
+      } else {
+        //aca se tiene que poner en rojo
+        nickValido = false;
+        $("#nickname").removeClass("is-valid");
+        $("#nickname").addClass("is-invalid");
+        // $("#grupo-nick").removeClass("has-success");
+        // $("#grupo-nick").addClass("has-danger");
+      }
+
     }
 
-    function validateCallback(responseXML) {
-      var msg = responseXML.getElementsByTagName("valid")[0].firstChild.nodeValue;
-      // var msg = responseXML;
-      console.log("valor = " + msg);
-      if (msg == "false") {
-
-        //var mdiv = document.getElementById("userIdMessage");
-        console.log("es false");
-
-
+    function validarEmail() {
+      var target = document.getElementById("email");
+      if(target.value != ""){
+        var url = "<%= request.getContextPath() %>/VerificarEmail?email=" + encodeURIComponent(target.value);
+        $.get(url, function (res) {
+          if (res == "false") {
+            emailValido = true;
+            $("#email").removeClass("is-invalid");
+            $("#email").addClass("is-valid");
+            // $("#grupo-email").removeClass("has-danger");
+            // $("#grupo-email").addClass("has-success");
+          } else {
+            emailValido = false;
+            $("#email").removeClass("is-valid");
+            $("#email").addClass("is-invalid");
+            // $("#grupo-email").removeClass("has-success");
+            // $("#grupo-email").addClass("has-danger");
+          }
+        });
       } else {
-
-        // var mdiv = document.getElementById("userIdMessage");
-        console.log("es true");
-
+        //aca se tiene que poner en rojo
+        emailValido = false;
+        $("#email").removeClass("is-valid");
+        $("#email").addClass("is-invalid");
+        // $("#grupo-email").removeClass("has-success");
+        // $("#grupo-email").addClass("has-danger");
       }
+
     }
 </script>
 </body>

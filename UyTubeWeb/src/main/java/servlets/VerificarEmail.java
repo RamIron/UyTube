@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "VerificarNick", value = "/VerificarNick")
-public class VerificarNick extends HttpServlet {
+@WebServlet(name = "VerificarEmail", value = "/VerificarEmail")
+public class VerificarEmail extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -18,8 +18,10 @@ public class VerificarNick extends HttpServlet {
         publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
         //////////FIN WEBSERVICE///////////
-        String targetId = request.getParameter("nickname");
-        if ((targetId != null) && !port.existeNickname(targetId)) {
+        System.out.println("entro al serlet");
+        String targetId = request.getParameter("email");
+        System.out.println(targetId);
+        if ((targetId != null) && !port.existeEmail(targetId)) {
 //            response.setContentType("text/xml");
 //            response.setHeader("Cache-Control", "no-cache");
             response.setContentType("text/plain");
