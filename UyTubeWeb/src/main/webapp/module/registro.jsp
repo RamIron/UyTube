@@ -137,7 +137,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                       </div>
-                      <input name="nickname" class="form-control" placeholder="Nickname" type="text" value="<%=nickname%>">
+                      <input name="nickname" id="nickname" class="form-control" placeholder="Nickname" type="text" value="<%=nickname%>" autocomplete="off" onkeyup="validarNick()">
                     </div>
                   </div>
                 </div>
@@ -311,6 +311,61 @@
             document.forms[0].submit();
         }
 
+    }
+
+    function AJAXInteraction(url, callback) {
+
+      var req = init();
+      req.onreadystatechange = processRequest;
+
+      function init() {
+        if (window.XMLHttpRequest) {
+          return new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+          return new ActiveXObject("Microsoft.XMLHTTP");
+        }
+      }
+
+      function processRequest () {
+        // readyState of 4 signifies request is complete
+        if (req.readyState == 4) {
+          // status of 200 signifies sucessful HTTP call
+          if (req.status == 200) {
+            if (callback) callback(req.responseXML);
+          }
+        }
+      }
+
+      this.doGet = function() {
+        // make a HTTP GET request to the URL asynchronously
+        req.open("GET", url, true);
+        req.send(null);
+      }
+    }
+
+    function validarNick() {
+      var target = document.getElementById("nickname");
+      var url = "<%= request.getContextPath() %>/VerificarNick?nickname=" + encodeURIComponent(target.value);
+      var ajax = new AJAXInteraction(url, validateCallback);
+      ajax.doGet();
+    }
+
+    function validateCallback(responseXML) {
+      var msg = responseXML.getElementsByTagName("valid")[0].firstChild.nodeValue;
+      // var msg = responseXML;
+      console.log("valor = " + msg);
+      if (msg == "false") {
+
+        //var mdiv = document.getElementById("userIdMessage");
+        console.log("es false");
+
+
+      } else {
+
+        // var mdiv = document.getElementById("userIdMessage");
+        console.log("es true");
+
+      }
     }
 </script>
 </body>
