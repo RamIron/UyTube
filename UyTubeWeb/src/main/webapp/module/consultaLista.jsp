@@ -315,10 +315,12 @@
                                         <i class="fas fa-user-lock"></i><small> Privado</small>
                                     <%}%>
                                     <%--PARA MOSTRAR LA CATEGORIA--%>
-                                    <% if (infoLista.getCategoria().isEmpty()){%>
-                                        <span class="badge badge-pill badge-primary">Sin categoria</span>
-                                    <%}else{%>
-                                        <span class="badge badge-pill badge-primary"><%=infoLista.getCategoria()%></span>
+                                    <% if(infoLista.isEsParticular()){ %>
+                                        <% if (infoLista.getCategoria().isEmpty()){%>
+                                            <span class="badge badge-pill badge-primary">Sin categoria</span>
+                                        <%}else{%>
+                                            <span class="badge badge-pill badge-primary"><%=infoLista.getCategoria()%></span>
+                                        <%}%>
                                     <%}%>
                                 </div>
                                 <%if(usr != null && usuario.equals(usr.getNickname())){%>
