@@ -22,9 +22,9 @@ public class CVideo implements IVideo {
 	@Override 
 	public void agregarCategoria(String nomC) {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
-		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		if(mC.existeCategoria(nomC)) {
 			Categoria cat = mC.obtenerCategoria(nomC);
+			this.vid.sacarCategoria();
 			cat.agregarElemento(this.vid);
 			mC.modificarCategoria(cat);
 		}
