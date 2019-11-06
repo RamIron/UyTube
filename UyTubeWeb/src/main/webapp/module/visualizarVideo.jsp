@@ -1,8 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="publicadores.DtUsuarioWeb" %>
-<%@ page import="publicadores.DtVideo" %>
-<%@ page import="publicadores.DtComentario" %>
-<%@ page import="publicadores.DtValoracion" %>
+<%@ page import="publicadores.*" %>
 <!--
 
 =========================================================
@@ -449,7 +446,10 @@
                                         </div>
                                         <div class="col-sm-10">
 <%--                                          FALTA VER COMO PONER EL LINK ACORTADO--%>
-                                          <input type="text" id="imputUrl" value="http://localhost:8080/UyTubeWeb_war_exploded/<%=nick%>/<%=nomVid%>" class="form-control" aria-label="Sizing example input" readonly aria-describedby="inputGroup-sizing-sm">
+                                            <%
+                                                Integer idVideo = portVideo.obtenerIdVideo(nick, nomVid);
+                                            %>
+                                          <input type="text" id="imputUrl" value="http://localhost:8080/UyTubeWeb_war_exploded/v/<%=idVideo%>" class="form-control" aria-label="Sizing example input" readonly aria-describedby="inputGroup-sizing-sm">
                                         </div>
                                       </div>
                                     </div>
