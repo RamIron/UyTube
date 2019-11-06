@@ -419,10 +419,17 @@
                               <a href="#"><i class="fa<%= si ? "s" : "r" %> fa-thumbs-up"></i> <%=portVideo.cantidadGusta()%></a> | <a href="#"><%=portVideo.cantidadNoGusta()%> <i class="fa<%= no ? "s" : "r" %> fa-thumbs-down"></i></a>
 
                               <%}%>
-                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              &nbsp;
                             </p>
                           </div>
-
+                          <%if(infoV.isPublico()) {%>
+                            <div class="col text-left">
+                              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" aria-haspopup="true" aria-expanded="false" data-target="#exampleModal">
+                                <i class="fas fa-share-alt"></i>
+                              </button>
+                            </div>
+                            &nbsp;
+                          <%}%>
                           <%
                             if (s.getAttribute("usuario") != null){
                           %>
