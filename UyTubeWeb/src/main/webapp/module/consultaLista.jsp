@@ -296,7 +296,6 @@
                         if(usuario == null){
                             response.sendRedirect(request.getContextPath() + "/module/invalido.jsp");
                         } else {
-                            System.out.println("usuario: " + usuario);
                             portListaRep.setuList(usuario);
                             List<DtElementoWeb> videoLista = portListaRep.listarVideosListaWeb(lista).getItem();
                             DtListaRep infoLista = portListaRep.obtenerListaDeUsuario(lista);

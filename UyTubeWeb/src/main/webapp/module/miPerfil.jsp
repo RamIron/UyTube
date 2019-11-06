@@ -430,12 +430,12 @@
                                         </div>
 
                                         <div class="row">
-                                            <div>
+                                            <div class="m-3">
                                                 <button type="button" class="btn-sm btn-outline-primary" data-toggle="modal" data-target="#editar">
                                                     Modificar Datos
                                                 </button>
                                             </div>
-                                            <div>
+                                            <div class="m-3">
                                                 <%--Boton eliminar usuario--%>
                                                 <form name="eliminaUsr" role="form" action="<%= request.getContextPath() %>/EliminarUsuario" method="post">
                                                     <input type="hidden" name="nick" value="<%=usuario.getNickname()%>">
