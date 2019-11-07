@@ -478,4 +478,29 @@ public class CUsuario implements IUsuario {
 		}
 		return res;
 	}
+
+	@Override
+	public void crearToken(String selector, String validador, String usuario){
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		this.usr = mU.obtenerUsuario(usuario);
+		TokenUsuario token = new TokenUsuario(selector, validador, this.usr);
+		this.usr.getTokens().add(token);
+		mU.modificaDatosUsuario(this.usr);
+	}
+
+	@Override
+	public DtUsuarioWeb obtenerUsuarioConToken(String selector, String validador){
+		DtUsuarioWeb res = null;
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		TypedQuery<TokenUsuario> consulta = em.createNamedQuery("buscarToken", TokenUsuario.class);
+		consulta.setParameter("selector", selector);
+		List<TokenUsuario> tokens = consulta.getResultList();
+		for (TokenUsuario t: tokens){
+			if(t.getValidador().equals(validador)){
+				res = obtenerUsuarioWebNick(t.getUsuario().getNickname());
+			}
+		}
+		return res;
+	}
 }

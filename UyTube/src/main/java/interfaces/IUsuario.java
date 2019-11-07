@@ -69,4 +69,8 @@ public interface IUsuario {
     public void agregarVisita(String usrSesion, String usrVid, String nomVid);
 
     public List<DtVisita> listarMasVisitados(String nick);
+
+	public void crearToken(String selector, String validador, String usuario);
+
+	public DtUsuarioWeb obtenerUsuarioConToken(String selector, String validador);
 }
