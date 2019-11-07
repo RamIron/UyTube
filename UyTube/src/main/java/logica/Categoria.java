@@ -52,11 +52,11 @@ public class Categoria {
 			return res;
 		}
 
-		public List<DtElementoWeb> obtenerVideosWeb(){
+		public List<DtElementoWeb> obtenerVideosPublicosWeb(){
 			List<DtElementoWeb> res = new LinkedList<DtElementoWeb>();
 			DtElementoWeb infoVid;
 			for(Elemento e: elementos) {
-				if(e instanceof Video) {
+				if(e instanceof Video && ((Video) e).isPublico()) {
 					Video video = (Video) e;
 					infoVid = new DtElementoWeb(video.getCanal().getUsuario().getNickname(), video.getNombre(), tipoElemento.VIDEO, video.getUrl());
 					res.add(infoVid);
@@ -64,6 +64,19 @@ public class Categoria {
 			}
 			return res;
 		}
+
+	public List<DtElementoWeb> obtenerListasPublicasWeb(){
+		List<DtElementoWeb> res = new LinkedList<DtElementoWeb>();
+		DtElementoWeb infoVid;
+		for(Elemento e: elementos) {
+			if(e instanceof Particular && ((Particular) e).isPublico()) {
+				Particular part = (Particular) e;
+				infoVid = new DtElementoWeb(part.getCanal().getUsuario().getNickname(), part.getNombre(), tipoElemento.LISTA, null);
+				res.add(infoVid);
+			}
+		}
+		return res;
+	}
 		
 		public void agregarElemento(Elemento e) {
 			e.setCategoria(this);

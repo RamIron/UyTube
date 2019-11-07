@@ -306,45 +306,46 @@
                             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
 <%--            empieza contenido de la tab de videos--%>
                                 <%
-                                    List<DtElementoWeb> videosCat = portCategoria.listarVideosCategoria(categoria).getItem();
-
-                                    List<DtElementoUsuario> listListsU = portCategoria.listarElemCategoria(categoria).getItem();
-
+                                    List<DtElementoWeb> videosCat = portCategoria.listarVideosPublicosCategoria(categoria).getItem();
+                                    //List<DtElementoUsuario> listListsU = portCategoria.listarElemCategoria(categoria).getItem();
+                                    List<DtElementoWeb> listListsU = portCategoria.listarListasPublicasCategoria(categoria).getItem();
+                                    for(DtElementoWeb eu:listListsU){
+                                        System.out.println(eu.getNombreE());
+                                    }
                                 %>
 
                                 <div class="container-fluid">
                                     <div class="col col- justify-content-left">
-                                        <%if(videosCat.isEmpty()){%>
-                                        <div class="alert alert-warning col col- justify-content-left" role="alert">
-                                            <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
-                                            <span class="alert-inner--text">No existen videos con la categoria <strong><%=categoria%></strong></span>
-                                        </div>
-                                        <%}%>
-                                        <%
-                                            for(DtElementoWeb vc: videosCat){
-                                        %>
-                                        <div class="card mb-3" style="max-width: 630px;">
-                                            <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=vc.getNickname()%>&v=<%=vc.getNombreE()%>">
-                                            <div class="row no-gutters">
-                                                <div class="col-md-4">
-                                                    <img src="http://img.youtube.com/vi/<%=vc.getUrl()%>/0.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=vc.getNombreE()%>">
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-0 text-lg"><%=vc.getNombreE()%></h5>
-                                                        <br>
-                                                        <br>
-                                                        <p class="card-text"><small class="text-muted">Por <strong><%=vc.getNickname()%></strong></small></p>
-                                                    </div>
-                                                </div>
+                                        <%if(videosCat.isEmpty()){ %>
+                                            <div class="alert alert-warning col col- justify-content-left" role="alert">
+                                                <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
+                                                <span class="alert-inner--text">No existen videos con la categoria <strong><%=categoria%></strong></span>
                                             </div>
-                                            </a>
-                                        </div>
-                                    <% } %>
+                                        <%} else { %>
+                                            <% for(DtElementoWeb vc: videosCat){ %>
+                                                <div class="card mb-3" style="max-width: 630px;">
+                                                    <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=vc.getNickname()%>&v=<%=vc.getNombreE()%>">
+                                                        <div class="row no-gutters">
+                                                            <div class="col-md-4">
+                                                                <img src="http://img.youtube.com/vi/<%=vc.getUrl()%>/0.jpg" class="card-img" alt="..." href="<%= request.getContextPath() %>/module/consultaVideo.jsp?nomvVid=<%=vc.getNombreE()%>">
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title mb-0 text-lg"><%=vc.getNombreE()%></h5>
+                                                                    <br><br>
+                                                                    <p class="card-text"><small class="text-muted">Por <strong><%=vc.getNickname()%></strong></small></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            <% } %>
+                                        <% } %>
+                                    </div>
                                 </div>
-                            </div>
 <%--      termina contenido de la tab de videos--%>
                             </div>
+
                             <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
 <%--      empieza contenido de la tab de listas--%>
                                 <div class="container-fluid">
@@ -354,37 +355,36 @@
                                                 <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
                                                 <span class="alert-inner--text">No existen listas con la categoria <strong><%=categoria%></strong></span>
                                             </div>
-                                        <%} else if(!videosCat.isEmpty() || listListsU.isEmpty()){%>
+                                        <% }else{ %>
+
+                                        <%-- if(!videosCat.isEmpty() || listListsU.isEmpty()){%>
                                             <div class="alert alert-warning col col- justify-content-left" role="alert">
                                                 <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
                                                 <span class="alert-inner--text">No existen listas con la categoria <strong><%=categoria%></strong></span>
                                             </div>
-                                        <%}%>
+                                        <%}%>--%>
 
-                                        <%
-                                            for(DtElementoUsuario eu: listListsU){
-                                                if (eu.getTipo().equals(TipoElemento.LISTA)){
-                                        %>
-                                        <div class="card mb-3" style="max-width: 630px;">
-                                            <a href="<%= request.getContextPath() %>/module/consultaLista.jsp?u=<%=eu.getNickname()%>&id=<%=eu.getNombreE()%>">
-                                                <div class="row no-gutters">
-                                                    <div class="col-md-4">
-                                                        <img src="http://img.youtube.com/vi/a/0.jpg" class="card-img" alt="...">
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
-                                                            <br>
-                                                            <br>
-                                                            <p class="card-text"><small class="text-muted">Por <strong><%=eu.getNickname()%></strong></small></p>
+                                            <% for(DtElementoWeb eu: listListsU){
+                                                    if (eu.getTipo().equals(TipoElemento.LISTA)){ %>
+                                                        <div class="card mb-3" style="max-width: 630px;">
+                                                            <a href="<%= request.getContextPath() %>/module/consultaLista.jsp?u=<%=eu.getNickname()%>&id=<%=eu.getNombreE()%>">
+                                                                <div class="row no-gutters">
+                                                                    <div class="col-md-4">
+                                                                        <img src="http://img.youtube.com/vi/a/0.jpg" class="card-img" alt="...">
+                                                                    </div>
+                                                                    <div class="col-md-5">
+                                                                        <div class="card-body">
+                                                                            <h5 class="card-title mb-0 text-lg"><%=eu.getNombreE()%></h5>
+                                                                            <br><br>
+                                                                            <p class="card-text"><small class="text-muted">Por <strong><%=eu.getNickname()%></strong></small></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
+                                                <% } %>
                                             <% } %>
                                         <% } %>
-
                                     </div>
                                 </div>
 

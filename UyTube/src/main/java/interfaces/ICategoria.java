@@ -12,7 +12,9 @@ public interface ICategoria {
 	
 	public List<DtElementoUsuario> listarElemCategoria(String nomC);
 
-	public List<DtElementoWeb> listarVideosCategoria(String nomC);
+	public List<DtElementoWeb> listarVideosPublicosCategoria(String nomC);
+
+	public List<DtElementoWeb> listarListasPublicasCategoria(String nomC);
 	
 	public List<String> listarCategorias();
 	
