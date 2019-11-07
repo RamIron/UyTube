@@ -18,17 +18,11 @@ public class VerificarEmail extends HttpServlet {
         publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
         //////////FIN WEBSERVICE///////////
-        System.out.println("entro al serlet");
         String targetId = request.getParameter("email");
-        System.out.println(targetId);
         if ((targetId != null) && !port.existeEmail(targetId)) {
-//            response.setContentType("text/xml");
-//            response.setHeader("Cache-Control", "no-cache");
             response.setContentType("text/plain");
             response.getWriter().write("false");
         } else {
-//            response.setContentType("text/xml");
-//            response.setHeader("Cache-Control", "no-cache");
             response.setContentType("text/plain");
             response.getWriter().write("true");
         }

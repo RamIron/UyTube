@@ -133,73 +133,43 @@
               <div class="row">
                 <div class="col">
                   <div id="grupo-nick" class="form-group mb-3">
+                    <input name="nickname" id="nickname" class="form-control" placeholder="Nickname" type="text" value="<%=nickname%>" autocomplete="off" onkeyup="validarNick()">
+                  </div>
+                </div>
+                <div class="col">
+                  <div id="grupo-email" class="form-group ">
+                    <input name="email" id="email" class="form-control" placeholder="ejemplo@email.com" type="email" value="<%=email%>"  autocomplete="off" onkeyup="validarEmail()">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <input name="nomU" class="form-control" placeholder="Nombre" type="text" value="<%=nomU%>">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <input name="apellido" class="form-control" placeholder="Apellido" type="text" value="<%=apellido%>">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div id="grupopass" class="form-group">
+                    <input id="pass" name="pass" class="form-control" placeholder="Contrasena" type="password" onkeyup="coincidenPass()">
+                  </div>
+                </div>
+                <div class="col">
+                  <div id="grupopass2" class="form-group">
+                    <input id="pass2" name="pass2" class="form-control" placeholder="Repetir contrasena" type="password" onkeyup="coincidenPass()">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
                     <div class="input-group">
-                      <div id="icono-nick" class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
-                      </div>
-                      <input name="nickname" id="nickname" class="form-control" placeholder="Nickname" type="text" value="<%=nickname%>" autocomplete="off" onkeyup="validarNick()">
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div id="grupo-email" class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                      </div>
-                      <input name="email" id="email" class="form-control" placeholder="ejemplo@email.com" type="email" value="<%=email%>"  autocomplete="off" onkeyup="validarEmail()">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                      </div>
-                      <input name="nomU" class="form-control" placeholder="Nombre" type="text" value="<%=nomU%>">
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                      </div>
-                      <input name="apellido" class="form-control" placeholder="Apellido" type="text" value="<%=apellido%>">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                      </div>
-                      <input name="pass" class="form-control" placeholder="Contrasena" type="password">
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                      </div>
-                      <input name="pass2" class="form-control" placeholder="Repetir contrasena" type="password">
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="form-group">
-                    <div class="input-group input-group-alternative">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                       </div>
@@ -209,7 +179,7 @@
                 </div>
                 <div class="col">
                   <div class="form-group">
-                    <div class="input-group input-group-alternative">
+                    <div class="input-group">
                       <input type="file" class="custom-file-input" id="inputGroupFile01" name="foto" value="<%=foto%>">
                       <label class="custom-file-label" for="inputGroupFile01">Foto de perfil (opcional)</label>
                     </div>
@@ -225,12 +195,7 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <div class="input-group input-group-alternative">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="ni ni-bold-right"></i></span>
-                      </div>
-                      <input class="form-control" placeholder="Nombre (opcional)" type="text" name="nomC" value="<%=nomC%>">
-                    </div>
+                    <input class="form-control" placeholder="Nombre (opcional)" type="text" name="nomC" value="<%=nomC%>">
                   </div>
                 </div>
                 <div class="col">
@@ -248,7 +213,7 @@
               </div>
 
               <div class="form-group">
-                <div class="input-group input-group-alternative">
+                <div class="input-group">
                   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripcion..." name="descripcion"><%=descripcion%></textarea>
                 </div>
               </div>
@@ -258,10 +223,11 @@
                   <label class="custom-control-label" for="customCheck5">Canal publico</label>
                 </div>
               </div>
-
-
+              <div id="mensaje-error" class="alert alert-danger d-none" role="alert">
+                <!-- El texto del mensaje se genera en un script -->
+              </div>
               <div class="text-center">
-                <button type="button" class="btn btn-primary my-4" onclick="continuar()">Continuar registro</button>
+                <button type="button" class="btn btn-primary my-4" onclick="continuar()">Registrarse</button>
               </div>
             </form>
           </div>
@@ -297,6 +263,7 @@
     var nickValido = false;
     var emailValido = false;
     function continuar() {
+        $("#mensaje-error").addClass("d-none");
         var nick = document.forms["registro"]["nickname"].value;
         var email = document.forms["registro"]["email"].value;
         var nomU = document.forms["registro"]["nomU"].value;
@@ -306,14 +273,17 @@
         var pass2 = document.forms["registro"]["pass2"].value;
         var descripcion = document.forms["registro"]["descripcion"].value;
         if(nick == "" || email == "" || nomU == "" || apellido == "" || fNac == "" || pass == "" || pass2 == "" || descripcion == "" ){
-            alert("Falta completar campos");
-
+          $("#mensaje-error").html('<strong>Error!</strong> Falta completar algun campo');
+          $("#mensaje-error").removeClass("d-none");
         } else if (pass != pass2) {
-          alert("las contraseñas no coinciden");
+          $("#mensaje-error").html('<strong>Error!</strong> Las contraseñas no coinciden');
+          $("#mensaje-error").removeClass("d-none");
         }else if (!nickValido){
-          alert("nick invalido");
+          $("#mensaje-error").html('<strong>Error!</strong> El nickname ingresado no es valido');
+          $("#mensaje-error").removeClass("d-none");
         }else if (!emailValido){
-          alert("email invalido");
+          $("#mensaje-error").html('<strong>Error!</strong> El email ingresado no es valido');
+          $("#mensaje-error").removeClass("d-none");
         }else {
             document.forms[0].submit();
         }
@@ -331,14 +301,14 @@
             nickValido = true;
             $("#nickname").removeClass("is-invalid");
             $("#nickname").addClass("is-valid");
-            // $("#grupo-nick").removeClass("has-danger");
-            // $("#grupo-nick").addClass("has-success");
+            $("#grupo-nick").removeClass("has-danger");
+            $("#grupo-nick").addClass("has-success");
           } else {
             nickValido = false;
             $("#nickname").removeClass("is-valid");
             $("#nickname").addClass("is-invalid");
-            // $("#grupo-nick").removeClass("has-success");
-            // $("#grupo-nick").addClass("has-danger");
+            $("#grupo-nick").removeClass("has-success");
+            $("#grupo-nick").addClass("has-danger");
           }
         });
       } else {
@@ -346,10 +316,9 @@
         nickValido = false;
         $("#nickname").removeClass("is-valid");
         $("#nickname").addClass("is-invalid");
-        // $("#grupo-nick").removeClass("has-success");
-        // $("#grupo-nick").addClass("has-danger");
+        $("#grupo-nick").removeClass("has-success");
+        $("#grupo-nick").addClass("has-danger");
       }
-
     }
 
     function validarEmail() {
@@ -361,25 +330,41 @@
             emailValido = true;
             $("#email").removeClass("is-invalid");
             $("#email").addClass("is-valid");
-            // $("#grupo-email").removeClass("has-danger");
-            // $("#grupo-email").addClass("has-success");
+            $("#grupo-email").removeClass("has-danger");
+            $("#grupo-email").addClass("has-success");
           } else {
             emailValido = false;
             $("#email").removeClass("is-valid");
             $("#email").addClass("is-invalid");
-            // $("#grupo-email").removeClass("has-success");
-            // $("#grupo-email").addClass("has-danger");
+            $("#grupo-email").removeClass("has-success");
+            $("#grupo-email").addClass("has-danger");
           }
         });
       } else {
-        //aca se tiene que poner en rojo
+        //si el campo esta vacio
         emailValido = false;
         $("#email").removeClass("is-valid");
         $("#email").addClass("is-invalid");
-        // $("#grupo-email").removeClass("has-success");
-        // $("#grupo-email").addClass("has-danger");
+        $("#grupo-email").removeClass("has-success");
+        $("#grupo-email").addClass("has-danger");
       }
 
+    }
+
+    function coincidenPass() {
+      var pass1 = document.getElementById("pass").value;
+      var pass2 = document.getElementById("pass2").value;
+      if (pass1 != pass2 || pass2 == "") {
+        $("#pass2").removeClass("is-valid");
+        $("#pass2").addClass("is-invalid");
+        $("#grupo-pass2").removeClass("has-success");
+        $("#grupo-pass2").addClass("has-danger");
+      }else {
+        $("#pass2").removeClass("is-invalid");
+        $("#pass2").addClass("is-valid");
+        $("#grupo-pass2").removeClass("has-danger");
+        $("#grupo-pass2").addClass("has-success");
+      }
     }
 </script>
 </body>

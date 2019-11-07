@@ -20,13 +20,9 @@ public class VerificarNick extends HttpServlet {
         //////////FIN WEBSERVICE///////////
         String targetId = request.getParameter("nickname");
         if ((targetId != null) && !port.existeNickname(targetId)) {
-//            response.setContentType("text/xml");
-//            response.setHeader("Cache-Control", "no-cache");
             response.setContentType("text/plain");
             response.getWriter().write("false");
         } else {
-//            response.setContentType("text/xml");
-//            response.setHeader("Cache-Control", "no-cache");
             response.setContentType("text/plain");
             response.getWriter().write("true");
         }
