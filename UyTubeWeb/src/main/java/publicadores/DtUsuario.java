@@ -24,6 +24,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="fNac" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="imagen" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="correoE" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="fElim" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,7 +40,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "apellido",
     "fNac",
     "imagen",
-    "correoE"
+    "correoE",
+    "fElim"
 })
 public class DtUsuario {
 
@@ -50,6 +52,8 @@ public class DtUsuario {
     protected XMLGregorianCalendar fNac;
     protected String imagen;
     protected String correoE;
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar fElim;
 
     /**
      * Gets the value of the nickname property.
@@ -193,6 +197,30 @@ public class DtUsuario {
      */
     public void setCorreoE(String value) {
         this.correoE = value;
+    }
+
+    /**
+     * Gets the value of the fElim property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public XMLGregorianCalendar getFElim() {
+        return fElim;
+    }
+
+    /**
+     * Sets the value of the fElim property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public void setFElim(XMLGregorianCalendar value) {
+        this.fElim = value;
     }
 
 }
