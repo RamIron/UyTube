@@ -222,5 +222,15 @@ public class CVideoPublish {
         }
         return ret;
     }
-    
+
+    @WebMethod
+    public Integer obtenerIdVideo(String usuario, String nomVid){
+        return iVid.obtenerIdVideo(usuario, nomVid);
+    }
+
+    @WebMethod
+    public DtElementoWeb obtenerVideo(Integer idVid){
+        return iVid.obtenerVideo(idVid);
+
+    }
 }

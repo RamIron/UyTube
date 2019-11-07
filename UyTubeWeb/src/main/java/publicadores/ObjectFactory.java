@@ -30,35 +30,51 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DtVisita }
+     * Create an instance of {@link DtElementoUsuarioArray }
      * 
      */
-    public DtVisita createDtVisita() {
-        return new DtVisita();
+    public DtElementoUsuarioArray createDtElementoUsuarioArray() {
+        return new DtElementoUsuarioArray();
     }
 
     /**
-     * Create an instance of {@link DtUsuarioWebArray }
+     * Create an instance of {@link DtValoracion }
      * 
      */
-    public DtUsuarioWebArray createDtUsuarioWebArray() {
-        return new DtUsuarioWebArray();
+    public DtValoracion createDtValoracion() {
+        return new DtValoracion();
     }
 
     /**
-     * Create an instance of {@link DtCanal }
+     * Create an instance of {@link DtElementoUsuario }
      * 
      */
-    public DtCanal createDtCanal() {
-        return new DtCanal();
+    public DtElementoUsuario createDtElementoUsuario() {
+        return new DtElementoUsuario();
     }
 
     /**
-     * Create an instance of {@link DtCanalWeb }
+     * Create an instance of {@link DtComentario }
      * 
      */
-    public DtCanalWeb createDtCanalWeb() {
-        return new DtCanalWeb();
+    public DtComentario createDtComentario() {
+        return new DtComentario();
+    }
+
+    /**
+     * Create an instance of {@link DtComentarioArray }
+     * 
+     */
+    public DtComentarioArray createDtComentarioArray() {
+        return new DtComentarioArray();
+    }
+
+    /**
+     * Create an instance of {@link DtVideo }
+     * 
+     */
+    public DtVideo createDtVideo() {
+        return new DtVideo();
     }
 
     /**
@@ -70,35 +86,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DtCanalWebArray }
+     * Create an instance of {@link DtElementoWebArray }
      * 
      */
-    public DtCanalWebArray createDtCanalWebArray() {
-        return new DtCanalWebArray();
+    public DtElementoWebArray createDtElementoWebArray() {
+        return new DtElementoWebArray();
     }
 
     /**
-     * Create an instance of {@link DtUsuarioWeb }
+     * Create an instance of {@link DtValoracionArray }
      * 
      */
-    public DtUsuarioWeb createDtUsuarioWeb() {
-        return new DtUsuarioWeb();
+    public DtValoracionArray createDtValoracionArray() {
+        return new DtValoracionArray();
     }
 
     /**
-     * Create an instance of {@link DtUsuario }
+     * Create an instance of {@link DtElementoWeb }
      * 
      */
-    public DtUsuario createDtUsuario() {
-        return new DtUsuario();
-    }
-
-    /**
-     * Create an instance of {@link DtVisitaArray }
-     * 
-     */
-    public DtVisitaArray createDtVisitaArray() {
-        return new DtVisitaArray();
+    public DtElementoWeb createDtElementoWeb() {
+        return new DtElementoWeb();
     }
 
 }

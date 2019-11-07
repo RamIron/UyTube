@@ -52,5 +52,8 @@ public interface IVideo {
 	 /*si ordFecha es true se debe devolver la busqueda en ordenada del mas nuevo al mas viejo, de lo contario alfabeticamente
 	 	en caso de que la busqueda no obtenga ningun resultado, debe devolverse una lista vacia (nunca null)	  */
 	 public List<DtElementoWeb> busqueda(String query, Boolean ordFecha);
-	
+
+    public Integer obtenerIdVideo(String usuario, String nomVid);
+
+    public DtElementoWeb obtenerVideo(Integer idVid);
 }
