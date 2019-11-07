@@ -3,10 +3,7 @@ package servlets;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet(name = "CerrarSesion", value = "/CerrarSesion")
@@ -17,6 +14,15 @@ public class CerrarSesion extends HttpServlet {
 
         HttpSession s = request.getSession();
         s.removeAttribute("usuario");
+
+
+        Cookie cookieSelector = new Cookie("selector", "");
+        cookieSelector.setMaxAge(0);
+        Cookie cookieValidator = new Cookie("validator", "");
+        cookieValidator.setMaxAge(0);
+        response.addCookie(cookieSelector);
+        response.addCookie(cookieValidator);
+
         RequestDispatcher rd;
         rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);

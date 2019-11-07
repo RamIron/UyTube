@@ -126,6 +126,15 @@
                                     <input class="form-control" placeholder="Contrasena" type="password" name="pass">
                                 </div>
                             </div>
+                            <div class="text-muted text-center mt-2 mb-3">
+                                <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                    <input class="custom-control-input" id="customCheck5" type="checkbox" name="recordar" >
+                                    <label class="custom-control-label" for="customCheck5">Recordarme</label>
+                                </div>
+                            </div>
+                            <div id="mensaje-error" class="alert alert-danger d-none" role="alert">
+                                <!-- El texto del mensaje se genera en un script -->
+                            </div>
                             <div class="d-sm-none" style="width: 100%">
                                 <p>¿No tenes usuario? <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/registro.jsp">Registrate</a></p>
                             </div>
