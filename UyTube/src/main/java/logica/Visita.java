@@ -2,7 +2,7 @@ package logica;
 
 import javax.persistence.*;
 import java.util.Calendar;
-import java.util.Objects;
+
 @Entity
 public class Visita {
    @Id
@@ -52,9 +52,5 @@ public class Visita {
 
     public void setCantVisitas(Integer cantVisitas) {
         this.cantVisitas = cantVisitas;
-    }
-
-    public boolean tieneMasVisitas(Visita menor){
-        return this.cantVisitas > menor.cantVisitas;
     }
 }

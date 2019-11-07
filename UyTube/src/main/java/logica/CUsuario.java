@@ -1,15 +1,12 @@
 package logica;
 
 import java.util.*;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
-
-import Manejadores.ManejadorCategoria;
-import Manejadores.ManejadorPorDefecto;
-import Manejadores.ManejadorUsuario;
+import manejadores.ManejadorCategoria;
+import manejadores.ManejadorPorDefecto;
+import manejadores.ManejadorUsuario;
 import datatypes.*;
 import interfaces.IUsuario;
 

@@ -1,14 +1,12 @@
 package tests;
 
-import Manejadores.ManejadorCategoria;
-import Manejadores.ManejadorUsuario;
+import manejadores.ManejadorCategoria;
+import manejadores.ManejadorUsuario;
 import interfaces.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.Calendar;
-
 import static org.junit.Assert.*;
 
 public class CListaReproduccionTest {

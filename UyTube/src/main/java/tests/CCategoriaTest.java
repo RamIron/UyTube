@@ -1,19 +1,14 @@
 package tests;
 
-import Manejadores.ManejadorCategoria;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import manejadores.ManejadorCategoria;
 import datatypes.DtElementoUsuario;
 import datatypes.DtElementoWeb;
 import interfaces.CFactory;
 import interfaces.ICategoria;
 import logica.Categoria;
-import logica.Elemento;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.transaction.RollbackException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;

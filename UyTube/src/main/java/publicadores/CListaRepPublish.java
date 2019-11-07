@@ -5,7 +5,6 @@ import datatypes.DtListaRep;
 import datatypes.DtVideoUsuario;
 import interfaces.IListaReproduccion;
 import interfaces.LRFactory;
-
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -20,17 +19,11 @@ import java.util.List;
 public class CListaRepPublish {
     private LRFactory lisRepFactory;
     private IListaReproduccion iLisRep;
-//    private WebServiceConfiguracion configuracion;
     private Endpoint endpoint;
 
     public CListaRepPublish() {
         this.lisRepFactory = LRFactory.getInstancia();
         this.iLisRep = this.lisRepFactory.getIListaReproduccion();
-//        try {
-//            configuracion = new WebServiceConfiguracion();
-//        } catch (Exception ex) {
-//
-//        }
     }
 
     @WebMethod(exclude = true)

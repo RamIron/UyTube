@@ -1,10 +1,7 @@
 package logica;
 
 import datatypes.*;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -39,6 +36,7 @@ public abstract class Elemento {
 		this.nombre = nombre;
 	}
 
+	//Getters & Setters
 	public String getNombre() {
 		return nombre;
 	}
@@ -59,18 +57,9 @@ public abstract class Elemento {
 		return categoria;
 	}
 
-
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-
-
-/*	public void quitarCategoria(Categoria c){
-		this.categoria.remove(c);
-	}*/
 	
 	public abstract DtElementoUsuario obtenerElemCategoria();
-
-	//public abstract DtElementoWeb obtenerVideosCategoria();
-	
 }

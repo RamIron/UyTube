@@ -1,11 +1,9 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,15 +12,11 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import datatypes.*;
 import interfaces.ICategoria;
 import interfaces.IUsuario;
 import interfaces.IVideo;
-
 import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.JCheckBox;
@@ -34,7 +28,6 @@ public class ConsultaVideo extends JInternalFrame {
 	private JTextField duracion = new JTextField();
 	private JTextField url = new JTextField();
 	private JButton btnSeleccionarUsuario = new JButton("Seleccionar");
-	private JScrollPane scrollPane = new JScrollPane();
 	private JTextArea descripcion = new JTextArea();
 	private JComboBox<Integer> fDia = new JComboBox<Integer>();
 	private JComboBox<Integer> fMes = new JComboBox<Integer>();
@@ -51,11 +44,8 @@ public class ConsultaVideo extends JInternalFrame {
 	private IUsuario iU;
 	private ICategoria iC;
 
-	/**
-	 * Create the frame.
-	 */
+
 	public ConsultaVideo(IUsuario iU, IVideo iV, ICategoria iC) {
-		
 		this.iV = iV;
 		this.iU = iU;
 		this.iC = iC;
@@ -147,8 +137,7 @@ public class ConsultaVideo extends JInternalFrame {
 				cargarLeGusta(iV, vid);
 				cargarNoGusta(iV, vid);
 				listaLeGusta.setEnabled(true);
-				listaNoGusta.setEnabled(true);	
-				//TODO
+				listaNoGusta.setEnabled(true);
 			}
 		});
 		
@@ -263,9 +252,7 @@ public class ConsultaVideo extends JInternalFrame {
 		getContentPane().add(scrollComentarios);
 		
 		comentarios.setModel(new DefaultTreeModel(raiz));
-		
-		
-		//comentarios.setRootVisible(false);
+
 		scrollComentarios.setViewportView(comentarios);
 		
 		JLabel lblVideoPublico = new JLabel("Video publico");
@@ -336,12 +323,6 @@ public class ConsultaVideo extends JInternalFrame {
 	}
 	
 	public void limpiarLista() {
-//		((DefaultListModel) listaLeGusta.getModel()).clear();
-//		listaLeGusta.setEnabled(false);
-//		((DefaultListModel) listaNoGusta.getModel()).clear();
-//		listaNoGusta.setEnabled(false);		
-//		((DefaultListModel) listaVid.getModel()).clear();
-//		listaVid.setEnabled(false);
 	    raiz.removeAllChildren();
 		((DefaultTreeModel) comentarios.getModel()).reload();
 		comentarios.setEnabled(true);

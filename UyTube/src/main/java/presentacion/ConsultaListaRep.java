@@ -1,35 +1,22 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.*;
-
-import datatypes.DtComentario;
 import datatypes.DtListaRep;
-import datatypes.DtValoracion;
-import datatypes.DtVideo;
 import datatypes.DtVideoUsuario;
-import interfaces.ICategoria;
 import interfaces.IListaReproduccion;
 import interfaces.IUsuario;
-import interfaces.IVideo;
 import javax.swing.JTable;
 
 public class ConsultaListaRep extends JInternalFrame {
@@ -37,7 +24,6 @@ public class ConsultaListaRep extends JInternalFrame {
 	private JList listaUsr = new JList();
 	private JTextField nomVid = new JTextField();
 	private JButton btnSeleccionarUsuario = new JButton("Seleccionar");
-	private JScrollPane scrollPane = new JScrollPane();
 	private JList listaLis = new JList();
 	private JButton btnSelecLis = new JButton("Seleccionar");
 	private JCheckBox publico = new JCheckBox("");
@@ -87,8 +73,7 @@ public class ConsultaListaRep extends JInternalFrame {
 						((DefaultListModel) listaLis.getModel()).addElement(l);
 					}
 				}
-				
-				
+
 				listaUsr.setEnabled(false);
 				btnSeleccionarUsuario.setEnabled(false);
 				
@@ -186,8 +171,6 @@ public class ConsultaListaRep extends JInternalFrame {
 		JButton btnSelecVid = new JButton("Seleccionar");
 		btnSelecVid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				TableModel modelo = (DefaultTableModel) tablaVid.getModel();
-//				Object[] selec = ((DefaultTableModel) modelo).get
 				int i = tablaVid.getSelectedRow();
 				String vid = tablaVid.getValueAt(i, 0).toString();
 				String usr = tablaVid.getValueAt(i, 1).toString();

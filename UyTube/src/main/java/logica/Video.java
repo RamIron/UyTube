@@ -2,7 +2,6 @@ package logica;
 
 import java.util.*;
 import javax.persistence.*;
-
 import datatypes.*;
 
 @Entity
@@ -94,15 +93,6 @@ public class Video extends Elemento {
 		this.publico = publico;
 	}
 
-	public List<Valoracion> getValoraciones() {
-		return valoraciones;
-	}
-
-	public List<Comentario> getComentarios() {
-		return comentarios;
-	}
-
-	
 	
 	//Operaciones
 	

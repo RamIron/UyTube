@@ -1,23 +1,20 @@
 package tests;
 
-import Manejadores.ManejadorCategoria;
-import Manejadores.ManejadorUsuario;
+import manejadores.ManejadorCategoria;
+import manejadores.ManejadorUsuario;
 import datatypes.*;
 import interfaces.IUsuario;
 import interfaces.IVideo;
 import interfaces.UFactory;
 import interfaces.VFactory;
-import logica.CUsuario;
 import logica.Canal;
 import logica.Categoria;
 import logica.Usuario;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.Calendar;
 import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class CUsuarioTest {

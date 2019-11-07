@@ -1,16 +1,12 @@
 package presentacion;
 
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -20,25 +16,17 @@ import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-
 import interfaces.*;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.JPanel;
 import java.awt.Font;
 import javax.swing.event.ListSelectionListener;
-
 import datatypes.*;
-
 import javax.swing.event.ListSelectionEvent;
 
 public class ConsultaUsuario extends JInternalFrame {
-
 	private JList listaUsr;
 	private JTextField nick;
 	private JTextField nombre;
@@ -62,19 +50,11 @@ public class ConsultaUsuario extends JInternalFrame {
 	private JList listaLisRep = new JList();
 	private JCheckBox checkBoxPublico = new JCheckBox("");
 	private JComboBox categoria = new JComboBox();
-	
-	
 	private ConsultaVideo cvIF;
 	private ConsultaListaRep clIF;
 
-	/**
-	 * Create the frame.
-	 */
-	public ConsultaUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ConsultaVideo cvIF, ConsultaListaRep clIF) {
-		
-//		limpiarLista();
-//		resetearFormulario();
 
+	public ConsultaUsuario(IUsuario iU, IVideo iV, IListaReproduccion iL, ConsultaVideo cvIF, ConsultaListaRep clIF) {
 		CFactory f = CFactory.getInstancia();
 		ICategoria iC = f.getICategoria();
 		
@@ -144,10 +124,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		email.setColumns(10);
 		fDia.setEnabled(false);
 
-		
-		
-		
-		
+
 		fDia.setBounds(552, 142, 49, 24);
 		fDia.addItem(null);
 		for(Integer i=1; i<=31; i++) {
@@ -224,20 +201,10 @@ public class ConsultaUsuario extends JInternalFrame {
 				fDia.setSelectedItem(infoU.getfNac().get(Calendar.DAY_OF_MONTH));
 				fMes.setSelectedItem(infoU.getfNac().get(Calendar.MONTH)+1);
 				fAnio.setSelectedItem(infoU.getfNac().get(Calendar.YEAR));
-				System.out.println(infoU.getfNac().get(Calendar.DAY_OF_MONTH) + "/" + infoU.getfNac().get(Calendar.MONTH) + "/" + infoU.getfNac().get(Calendar.YEAR));
-//				String path = "/src/main/resources/" + infoU.getImagen();
-//                System.out.println(path);
-//				try {
-//					mostrarImg(path);                           //TODO, no funciona la imagen
-//				} catch (Exception e1) {
-//					e1.printStackTrace();
-//				}
-
 				
 				//INFO CANAL
 				nomCanal.setText(infoC.getNombre());
 				desCanal.setText(infoC.getDescripcion());
-				System.out.println(infoC.getPublico());
 				checkBoxPublico.setSelected((boolean)infoC.getPublico());
 				if(infoC.getCategoria() != null){
 				    categoria.setSelectedItem(infoC.getCategoria());
@@ -303,18 +270,6 @@ public class ConsultaUsuario extends JInternalFrame {
 		JLabel lblSeguidores = new JLabel("Seguidores");
 		lblSeguidores.setBounds(629, 190, 98, 15);
 		getContentPane().add(lblSeguidores);
-		
-		
-//		try {
-//		mostrarImg("src/main/resources/img/default.png");
-//		img.setBounds(230, 51, 120, 120);
-//		} catch (IOException e1) {
-//
-//			e1.printStackTrace();
-//		} catch (Exception e1) {
-//
-//			e1.printStackTrace();
-//		}
 		getContentPane().add(img);
 		
 		JScrollPane scrollVid = new JScrollPane();
@@ -449,31 +404,4 @@ public class ConsultaUsuario extends JInternalFrame {
 		((DefaultListModel) listaLisRep.getModel()).clear();
 		cargarCategorias(iC);
 	}
-	
-	
-	
-	public void mostrarImg(final String filename) throws Exception
-	  {
-	    SwingUtilities.invokeLater(new Runnable()
-	    {
-	      public void run()
-	      {
-	                
-	        BufferedImage image = null;
-	        try
-	        {
-	          image = ImageIO.read(new File(filename));
-	        }
-	        catch (Exception e)
-	        {
-	          e.printStackTrace();
-	          System.exit(1);
-	        }
-	        ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(120, 120, Image.SCALE_FAST));
-	        img.setIcon(imageIcon);
-
-
-	      }
-	    });
-	  }
 }

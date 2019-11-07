@@ -1,28 +1,14 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
-import datatypes.DtComentario;
-import datatypes.DtValoracion;
-import datatypes.DtVideo;
 import interfaces.IListaReproduccion;
 import interfaces.IUsuario;
 import interfaces.IVideo;
@@ -36,10 +22,8 @@ public class AgregarVideoLista extends JInternalFrame {
 	private JButton btnSelecUsrL = new JButton("Seleccionar");
 	private JButton btnSelecLista = new JButton("Seleccionar");
 	private JButton btnAgregar = new JButton("Agregar");
-	private JScrollPane scrollPane = new JScrollPane();
 	private JList listaVid = new JList();
 	private JButton btnSelecVid = new JButton("Seleccionar");
-	private DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios");
 	private IVideo iV;
 	private IUsuario iU;
 	private IListaReproduccion iL;
@@ -194,7 +178,6 @@ public class AgregarVideoLista extends JInternalFrame {
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(seleccionoVideo == true && seleccionoLista == true) {
-					System.out.println(usuarioLista + nomVid + nomLista);
 					if(!iL.existeListaParticular(usuarioLista, nomLista)) {
 						iL.agregarVideoListaPorDefecto(usuarioVideo, nomVid, nomLista);
 					} else {

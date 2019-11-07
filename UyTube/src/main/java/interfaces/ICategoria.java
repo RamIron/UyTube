@@ -1,8 +1,6 @@
 package interfaces;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import datatypes.DtElementoUsuario;
 import datatypes.DtElementoWeb;
 

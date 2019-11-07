@@ -1,14 +1,11 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -16,10 +13,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
-
 import datatypes.DtComentario;
-import datatypes.DtVideo;
-import interfaces.ICategoria;
 import interfaces.IUsuario;
 import interfaces.IVideo;
 import javax.swing.JTextArea;
@@ -28,7 +22,6 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class ComentarVideo extends JInternalFrame {
-	
 	private JList listaUsrV;
 	private JList listaVid = new JList();
 	private JButton btnSelecVid = new JButton("Seleccionar");
@@ -51,8 +44,6 @@ public class ComentarVideo extends JInternalFrame {
 	
 	
 	public ComentarVideo(IUsuario iU, IVideo iV) {
-		
-		
 		setTitle("Comentar video");
 		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);

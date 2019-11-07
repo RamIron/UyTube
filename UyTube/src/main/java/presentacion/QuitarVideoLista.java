@@ -4,15 +4,12 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import datatypes.DtVideoUsuario;
 import interfaces.IListaReproduccion;
 import interfaces.IUsuario;
@@ -28,7 +25,6 @@ public class QuitarVideoLista extends JInternalFrame {
 	private JButton btnSelecVid = new JButton("Seleccionar");
 	private JButton btnQuitar = new JButton("Quitar Video");
 	private JButton btnSalir = new JButton("Salir");
-	//private JScrollPane scrollPane = new JScrollPane();
 	private JScrollPane scrollListaVid = new JScrollPane();
 	private JScrollPane scrollListaUsrL = new JScrollPane();
 	private JScrollPane scrollListaLis = new JScrollPane();
@@ -37,8 +33,6 @@ public class QuitarVideoLista extends JInternalFrame {
 	private JLabel lblVideos = new JLabel("Videos");
 	private JLabel label = new JLabel("Usuarios");
 	private JLabel lblListasDeReproduccion = new JLabel("Listas de Reproduccion");
-	
-	private DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios");
 	private IVideo iV;
 	private IUsuario iU;
 	private IListaReproduccion iL;
@@ -183,13 +177,11 @@ public class QuitarVideoLista extends JInternalFrame {
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(seleccionoVideo == true && seleccionoLista == true) {
-					System.out.println(nomVid);
 					String[] tokens = nomVid.split(" - ");
 					int i = 0;
 					String datos[] = new String[2];
 					for (String t : tokens) {
 						datos[i] = t;
-						System.out.println(datos[i]);
 						i++;
 					}
 					

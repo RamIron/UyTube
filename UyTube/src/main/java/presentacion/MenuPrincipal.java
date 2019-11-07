@@ -1,39 +1,25 @@
 package presentacion;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Graphics;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JInternalFrame;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.awt.event.ActionEvent;
-
 import interfaces.*;
-import logica.CCategoria;
 import publicadores.CCategoriaPublish;
 import publicadores.CListaRepPublish;
 import publicadores.CUsuarioPublish;
 import publicadores.CVideoPublish;
-
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 import javax.swing.JLabel;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
 public class MenuPrincipal extends JFrame {
-
 	private JPanel contentPane;
 	//MENU
 	private JMenuBar menuBar = new JMenuBar();	
@@ -458,12 +444,6 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(modificarListaIF);
 		contentPane.add(quitarVideoListaIF);
 
-		
-//		logo.setBounds(140, 300, 616, 225);
-//		contentPane.add(logo);
-//		logo.setIcon(new ImageIcon("src/main/resources/img/logo.png"));
-//		fondo.setIcon(new ImageIcon("src/main/resources/img/fondo.jpg"));
-//		fondo.setBounds(0, 0, 800, 550);
 
 		ImageIcon imgLogo = new ImageIcon("src/main/resources/img/logo.png");
 		logo.setBounds(153, 80, 493, 180);
@@ -490,7 +470,5 @@ public class MenuPrincipal extends JFrame {
 
 		CCategoriaPublish pC = new CCategoriaPublish();
 		pC.publicar();
-
-
 	}
 }

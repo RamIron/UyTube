@@ -1,8 +1,6 @@
 package datatypes;
 
 import java.util.*;
-import logica.*;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 

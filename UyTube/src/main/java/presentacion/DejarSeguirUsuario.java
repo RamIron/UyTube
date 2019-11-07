@@ -1,22 +1,18 @@
 package presentacion;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-
 import interfaces.IUsuario;
 
 public class DejarSeguirUsuario extends JInternalFrame {
-
 	private JList listaSeguidores;
 	private JList listaSeguidos = new JList();
 	private JButton btnConfirmar = new JButton("Dejar de seguir");
@@ -49,8 +45,7 @@ public class DejarSeguirUsuario extends JInternalFrame {
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		listaSeguidores.setModel(listaU);
 		scrollListaSeguidores.setViewportView(listaSeguidores);
-		
-		
+
 		btnSelecSeguidor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = listaSeguidores.getSelectedIndex();

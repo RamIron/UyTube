@@ -6,12 +6,9 @@ import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.ParameterStyle;
 import javax.jws.soap.SOAPBinding.Style;
 import javax.xml.ws.Endpoint;
-
 import datatypes.*;
 import interfaces.IUsuario;
 import interfaces.UFactory;
-import logica.Usuario;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -21,17 +18,11 @@ import java.util.List;
 public class CUsuarioPublish {
     private UFactory usrFactory;
     private IUsuario iUsr;
-//    private WebServiceConfiguracion configuracion;
     private Endpoint endpoint;
 
     public CUsuarioPublish() {
         this.usrFactory = UFactory.getInstancia();
         this.iUsr = this.usrFactory.getIUsuario();
-//        try {
-//            configuracion = new WebServiceConfiguracion();
-//        } catch (Exception ex) {
-//
-//        }
     }
 
     @WebMethod(exclude = true)

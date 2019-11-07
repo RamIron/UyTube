@@ -1,11 +1,8 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,20 +13,13 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import datatypes.DtListaRep;
-import datatypes.DtVideo;
-import datatypes.DtVideoUsuario;
 import interfaces.ICategoria;
 import interfaces.IListaReproduccion;
 import interfaces.IUsuario;
 import java.awt.Color;
 
 public class ModificarLista extends JInternalFrame {
-	
-	
 	private JComboBox categoria = new JComboBox();
 	private JList listaUsr = new JList();
 	private JList listaList = new JList();
@@ -143,7 +133,6 @@ public class ModificarLista extends JInternalFrame {
 				btnSelectList.setEnabled(false);
 				publica.setEnabled(true);
 				DtListaRep infoL = iL.obtenerListaDeUsuario(nomLista);
-				System.out.println(infoL);
 				if(infoL.getCategoria() == null) {
 					esVacia = true;
 					categoria.setSelectedIndex(0);
@@ -169,7 +158,6 @@ public class ModificarLista extends JInternalFrame {
 		getContentPane().add(lblListasParticulares);
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(categoria.getSelectedItem());
 				if(categoria.getSelectedIndex() == 0) {
 					if(!esVacia) {
 						iL.eliminarCategoria();						
