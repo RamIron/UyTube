@@ -1,7 +1,6 @@
 package logica;
 
 import java.util.*;
-
 import datatypes.DtComentario;
 import javax.persistence.*;
 
@@ -47,9 +46,6 @@ public class Comentario {
 	}
 	public String getTexto() {
 		return texto;
-	}
-	public void setTexto(String texto) {
-		this.texto = texto;
 	}
 	public Usuario getUsuario() {
 		return usuario;

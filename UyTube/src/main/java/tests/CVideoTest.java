@@ -1,17 +1,14 @@
 package tests;
 
-import Manejadores.ManejadorCategoria;
-import Manejadores.ManejadorUsuario;
+import manejadores.ManejadorCategoria;
+import manejadores.ManejadorUsuario;
 import datatypes.DtComentario;
 import interfaces.*;
-import logica.Categoria;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.Calendar;
 import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class CVideoTest {

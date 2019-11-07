@@ -1,20 +1,12 @@
-
 package logica;
 
 import java.util.*;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.RollbackException;
-import javax.persistence.TypedQuery;
-
 import datatypes.*;
-import org.hibernate.SessionFactory;
-
-import Manejadores.ManejadorCategoria;
-import Manejadores.ManejadorPorDefecto;
-//import Manejadores.ManejadorListaParticular;
-import Manejadores.ManejadorUsuario;
+import manejadores.ManejadorCategoria;
+import manejadores.ManejadorPorDefecto;
+import manejadores.ManejadorUsuario;
 import interfaces.IListaReproduccion;
 
 public class CListaReproduccion implements IListaReproduccion {
@@ -27,11 +19,12 @@ public class CListaReproduccion implements IListaReproduccion {
 	@Override 
 	public void agregarCategoriaALista(String nomC) {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		if(mC.existeCategoria(nomC)) {
 			Categoria cat = mC.obtenerCategoria(nomC);
 			cat.agregarElemento(this.lista);
 			mC.modificarCategoria(cat);
-			System.out.println("Soy la categoria: " + nomC + "y la lista: " + this.lista.getNombre());
+			mU.modificaDatosUsuario(this.uList);
 		}
 	}
 
@@ -169,7 +162,6 @@ public class CListaReproduccion implements IListaReproduccion {
 	
 	@Override 
 	public void modificarCategoria(String nomC) {
-		System.out.println("sa");
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		if(mC.existeCategoria(nomC)) {
@@ -185,7 +177,6 @@ public class CListaReproduccion implements IListaReproduccion {
 			cat.agregarElemento(this.lista);
 			mC.modificarCategoria(cat);
 			mU.modificaDatosUsuario(uList);
-			System.out.println("categoria--> " + part.getCategoria().getNombre());
 		}
 	}
 
@@ -234,6 +225,7 @@ public class CListaReproduccion implements IListaReproduccion {
 		Categoria cat = part.getCategoria();
 		if(cat != null ){
 			cat.quitarElemento(part);
+			mC.modificarCategoria(cat);
 		}
 	}
 
@@ -252,7 +244,6 @@ public class CListaReproduccion implements IListaReproduccion {
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		}
-//		Integer size = resQuery.size();
 		for(Object[] o : resQuery){
 			DtElementoWeb lis = new DtElementoWeb(o[1].toString(), o[0].toString(), tipoElemento.LISTA, "");
 			res.add(lis);

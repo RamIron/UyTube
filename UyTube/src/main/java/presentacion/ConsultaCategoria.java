@@ -2,17 +2,12 @@ package presentacion;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JList;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-
 import datatypes.DtElementoUsuario;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-
 import interfaces.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -20,16 +15,12 @@ import javax.swing.JLabel;
 import java.awt.Color;
 
 public class ConsultaCategoria extends JInternalFrame{
-
 	JList listCategoria;
 	JList listElementos;
-	
 	JLabel lblMsgErrorCat = new JLabel("Debe seleccionar una categoria");
 	String nomCat = "";
 
-	/**
-	 * Create the frame.
-	 */
+
 	public ConsultaCategoria(ICategoria iC) {
 		setTitle("Consulta de categoria");
 		setBounds(100, 100, 800, 542);
@@ -126,9 +117,5 @@ public class ConsultaCategoria extends JInternalFrame{
 		limpiarListaCategorias();
 		limpiarListaElementos();
 		cargarCategorias(iC);
-	}
-	
-	public void reiniciarMsg() {
-		lblMsgErrorCat.setVisible(false);
 	}
 }

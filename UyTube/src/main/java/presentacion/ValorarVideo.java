@@ -1,36 +1,23 @@
 package presentacion;
 
 import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
-import datatypes.DtComentario;
 import interfaces.IUsuario;
 import interfaces.IVideo;
 
 public class ValorarVideo extends JInternalFrame {
-
 	private JList listaUsrVid;
 	private JList listaVid = new JList();
 	private JButton btnSelecVid = new JButton("Seleccionar");
-	private DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("Comentarios");
-	private Boolean nuevoComentario = false;
 	private JList listaUsrVal = new JList();
 	private JButton btnSeleccionarUVal = new JButton("Seleccionar");
 	private final JLabel lblMsgExito = new JLabel("Se valoro el video");
@@ -109,7 +96,6 @@ public class ValorarVideo extends JInternalFrame {
 
 				listaUsrVal.setEnabled(true);
 				btnSeleccionarUVal.setEnabled(true);
-				//TODO
 			}
 		});
 		
@@ -136,7 +122,6 @@ public class ValorarVideo extends JInternalFrame {
 				btnSeleccionarUVal.setEnabled(false);
 				btnMeGusta.setEnabled(true);
 				btnNoMeGusta.setEnabled(true);
-				//TODO
 			}
 		});
 		
@@ -184,26 +169,7 @@ public class ValorarVideo extends JInternalFrame {
 		getContentPane().add(btnNoMeGusta);
 		
 	}
-	
-	
-	public void cargarComentarios(IVideo iV, String nomVid) {
-		List<DtComentario> listaCom = iV.obtenerComentariosVideo(nomVid);
-		for(DtComentario c: listaCom) {
-			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
-			cargarRespuestas(nodo, c.getRespuestas());
-			raiz.add(nodo);
-		}
-	}
-	
-	public void cargarRespuestas(DefaultMutableTreeNode padre, List<DtComentario> com) {
-		for(DtComentario c: com) {
-			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
-				cargarRespuestas(nodo, c.getRespuestas());	
-			padre.add(nodo);
-		}
 
-	}
-	
 
 	public void cargarElementos(IUsuario iU) {
 		List<String> usuarios = iU.listarUsuarios();
@@ -216,8 +182,7 @@ public class ValorarVideo extends JInternalFrame {
 		listaUsrVal.setModel(listaU);
 	}
 	
-	
-	
+
 	public void limpiarLista() {
 		((DefaultListModel) listaUsrVid.getModel()).clear();
 		listaUsrVid.setEnabled(true);

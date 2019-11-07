@@ -1,4 +1,4 @@
-package Manejadores;
+package manejadores;
 
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;

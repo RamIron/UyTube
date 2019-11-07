@@ -1,9 +1,7 @@
 package logica;
 
 import javax.persistence.*;
-
 import datatypes.DtElementoUsuario;
-import datatypes.DtElementoWeb;
 import datatypes.tipoElemento;
 
 @Entity
@@ -52,11 +50,6 @@ public class Particular extends ListaReproduccion{
 	public Particular() {
 		super();
 	}
-	
-	public Particular(String nombre, boolean publico) {
-		super(nombre);
-		this.publico = publico;
-	}
 
 	public Particular(String nombre, Canal canal, boolean publico) {
 		super(nombre, canal);
@@ -70,7 +63,6 @@ public class Particular extends ListaReproduccion{
 	}
 
 	//Getters & Setters
-	
 	@Override
 	public boolean isPublico() {
 		return publico;
@@ -83,36 +75,11 @@ public class Particular extends ListaReproduccion{
 	public Categoria getCategoria() {
 		return categoria;
 	}
-//
-//	public void setCategoria(Categoria categoria) {
-//		this.categoria = categoria;
-//	}
+
 	
-//	//Operaciones
-//
-//	
+	//Operaciones
 	public DtElementoUsuario obtenerElemCategoria() {
 		DtElementoUsuario particular = new DtElementoUsuario(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA);
 		return particular;
 	}
-
-	//Esta funcion se llama asi porque la necesito para traer los videos de una categoria, no deberia ser usada para traer las listas de una categoria
-//	public DtElementoWeb obtenerVideosCategoria() {
-//		DtElementoWeb particular = new DtElementoWeb(this.getCanal().getUsuario().getNickname(), this.getNombre(), tipoElemento.LISTA, null);
-//		return particular;
-//	}
-//	
-//	
-//
-//	@Override
-//	public boolean esParticular() {
-//		return true;
-//	}
-//	
-//	public void modificarCategoria(String nomC) {
-//		Conexion conexion = Conexion.getInstancia();
-//		EntityManager em = conexion.getEntityManager();
-//		Categoria c = em.find(Categoria.class, nomC);
-//		this.categoria = c;
-//	}
 }

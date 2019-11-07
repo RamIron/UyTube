@@ -1,52 +1,35 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JList;
-
 import interfaces.ICategoria;
 import interfaces.IUsuario;
 import interfaces.IVideo;
-
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
 import datatypes.DtComentario;
-import datatypes.DtValoracion;
 import datatypes.DtVideo;
-
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JTree;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JDesktopPane;
 import java.awt.Color;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
 public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta video, faltan cosas
-
 	private JList listaUsr = new JList();
 	private JTextField nomVid = new JTextField();
 	private JTextField duracion = new JTextField();
 	private JTextField url = new JTextField();
 	private JButton btnSeleccionarUsuario = new JButton("Seleccionar");
-	private JScrollPane scrollPane = new JScrollPane();
 	private JTextArea descripcion = new JTextArea();
 	private JComboBox<Integer> fDia = new JComboBox<Integer>();
 	private JComboBox<Integer> fMes = new JComboBox<Integer>();
@@ -64,7 +47,6 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 	private JLabel lblMsgErrorNum = new JLabel("Deben ser numeros");
 	private final JLabel lblMsgErrorVid = new JLabel("Debe seleccionar un video");
 	private String vid = "";
-	
 	private IVideo iV;
 	private IUsuario iU;
 	private ICategoria iC;
@@ -108,7 +90,6 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 			public void actionPerformed(ActionEvent arg0) {
 				reiniciarMsg();
 				int i = listaUsr.getSelectedIndex();
-				System.out.println(i);
 				if(i < 0) {
 					lblMsgErrorUsr.setVisible(true);
 				}else {
@@ -342,32 +323,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 			raiz.add(nodo);
 		}
 	}
-	
-	public void cargarLeGusta(IVideo iV, String nomVid) {
-		List<DtValoracion> listaVal = iV.obtenerValoracionVideo();
-		DefaultListModel<String> listaU = new DefaultListModel<String>();
-		int i = 0;
-		for(DtValoracion v: listaVal) {
-			if(!listaVal.isEmpty()) {
-				if(v.getGusta()) {
-					listaU.add(i++, v.getNickname());
-				}
-			}
-		}	
-	}
-	
-	public void cargarNoGusta(IVideo iV, String nomVid) {
-		List<DtValoracion> listaVal = iV.obtenerValoracionVideo();
-		DefaultListModel<String> listaU = new DefaultListModel<String>();
-		int i = 0;
-		for(DtValoracion v: listaVal) {
-			if(!listaVal.isEmpty()) {
-				if(!v.getGusta()) {
-					listaU.add(i++, v.getNickname());
-				}
-			}
-		}
-	}
+
 	
 	public void cargarRespuestas(DefaultMutableTreeNode padre, List<DtComentario> com) {
 		for(DtComentario c: com) {
@@ -438,18 +394,6 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		}
 		publico.setSelected(infoV.getPublico());
 		cargarComentarios(vid);
-	}
-	
-	public static boolean esNumero(String str) { 
-		for (char c : str.toCharArray()){
-	        if (!Character.isDigit(c)) {
-	        	System.out.print("false");
-	        	return false;
-	        }
-	    }
-		System.out.print("true");
-	    return true;
-
 	}
 	
 	public void reiniciarMsg() {

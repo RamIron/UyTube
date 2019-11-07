@@ -2,8 +2,6 @@ package logica;
 
 import java.util.*;
 import javax.persistence.*;
-
-
 import datatypes.*;
 
 @Entity
@@ -21,10 +19,6 @@ public abstract class ListaReproduccion extends Elemento {
 
 	public ListaReproduccion(String nombre, Canal canal) {
 		super(nombre, canal);
-	}
-
-	public ListaReproduccion(String nombre) {
-		super(nombre);
 	}
 
 	public List<Video> getVideos() {
