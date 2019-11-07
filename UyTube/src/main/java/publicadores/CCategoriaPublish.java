@@ -63,8 +63,20 @@ public class CCategoriaPublish {
     }
 
     @WebMethod
-    public DtElementoWeb[] listarVideosCategoria(String nomC) {
-        List<DtElementoWeb> dtElem = iCat.listarVideosCategoria(nomC);
+    public DtElementoWeb[] listarVideosPublicosCategoria(String nomC) {
+        List<DtElementoWeb> dtElem = iCat.listarVideosPublicosCategoria(nomC);
+        int i = 0;
+        DtElementoWeb[] ret = new DtElementoWeb[dtElem.size()];
+        for(DtElementoWeb e : dtElem) {
+            ret[i]=e;
+            i++;
+        }
+        return ret;
+    }
+
+    @WebMethod
+    public DtElementoWeb[] listarListasPublicasCategoria(String nomC) {
+        List<DtElementoWeb> dtElem = iCat.listarListasPublicasCategoria(nomC);
         int i = 0;
         DtElementoWeb[] ret = new DtElementoWeb[dtElem.size()];
         for(DtElementoWeb e : dtElem) {

@@ -387,10 +387,8 @@
                     <div class="row row- justify-content-right">
                       <div class="col-sm-6">
                         <% if(!usr.getNickname().contentEquals(nick)) { %>
-                          <% System.out.println(nick + " VS " + usr.getNickname()); %>
                           <h3><a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=nick%>">@<%=nick%></a> | <%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getYear()%> | <%=infoV.getDuracion()%> seg.</h3>
                         <% }else{ %>
-                          <% System.out.println(nick + " VS " + usr.getNickname() + " en mi perfil"); %>
                           <h3><a class="" href="<%= request.getContextPath() %>/module/miPerfil.jsp">@<%=usr.getNickname()%></a> | <%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getYear()%> | <%=infoV.getDuracion()%> seg.</h3>
                         <% } %>
                       </div>

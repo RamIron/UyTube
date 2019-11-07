@@ -49,15 +49,15 @@ public class CCategoriaTest {
     }
 
     @Test
-    public void listarVideosCategoria() {
+    public void listarVideosPublicosCategoria() {
         iC.altaCategoria("Deportes");
-        List<DtElementoWeb> vidsObtenidos = iC.listarVideosCategoria("Deportes");
+        List<DtElementoWeb> vidsObtenidos = iC.listarVideosPublicosCategoria("Deportes");
         assertEquals(0, vidsObtenidos.size());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void listarVideosException() {
-        List<DtElementoWeb> vidsObtenidos = iC.listarVideosCategoria("Deportes");
+        List<DtElementoWeb> vidsObtenidos = iC.listarVideosPublicosCategoria("Deportes");
     }
 
     @Test

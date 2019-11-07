@@ -326,7 +326,7 @@
             List<String> todasCategorias = portCategoria.listarCategorias().getItem();
             List<String> nomCats3 = new ArrayList<String>();
             for(String c : todasCategorias){
-              List<DtElementoWeb> vidsCat = portCategoria.listarVideosCategoria(c).getItem();
+              List<DtElementoWeb> vidsCat = portCategoria.listarVideosPublicosCategoria(c).getItem();
               if(vidsCat.size() >= 3){
                 nomCats3.add(c);
               }
@@ -380,7 +380,7 @@
               while (0 < nomCats3.size() && vidsCategoria.size() < 3){
                 int randomIndex = rand2.nextInt(nomCats3.size());
                 nomCat3 = nomCats3.get(randomIndex);
-                vidsCategoria = portCategoria.listarVideosCategoria(nomCat3).getItem();
+                vidsCategoria = portCategoria.listarVideosPublicosCategoria(nomCat3).getItem();
                 nomCats3.remove(randomIndex);
               }
               if(!(vidsCategoria.size() < 3)){

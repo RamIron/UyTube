@@ -45,11 +45,24 @@ public class CCategoria implements ICategoria {
 		}
 	}
 
-	public List<DtElementoWeb> listarVideosCategoria(String nomC) {
+	@Override
+	public List<DtElementoWeb> listarVideosPublicosCategoria(String nomC) {
 		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
 		if(mc.existeCategoria(nomC)) { //si existe la categoria
 			this.cat = mc.obtenerCategoria(nomC);
-			List<DtElementoWeb> elementos = this.cat.obtenerVideosWeb();
+			List<DtElementoWeb> elementos = this.cat.obtenerVideosPublicosWeb();
+			return elementos;
+		} else {
+			throw new IllegalArgumentException("No se encontro una categoria con ese nombre");
+		}
+	}
+
+	@Override
+	public List<DtElementoWeb> listarListasPublicasCategoria(String nomC) {
+		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
+		if(mc.existeCategoria(nomC)) { //si existe la categoria
+			this.cat = mc.obtenerCategoria(nomC);
+			List<DtElementoWeb> elementos = this.cat.obtenerListasPublicasWeb();
 			return elementos;
 		} else {
 			throw new IllegalArgumentException("No se encontro una categoria con ese nombre");
