@@ -386,9 +386,10 @@
                     </h1>
                     <div class="row row- justify-content-right">
                       <div class="col-sm-6">
-                        <% if(!usr.getNickname().contentEquals(nick)) { %>
+
+                        <% if(usr == null) { %>
                           <h3><a class="" href="<%= request.getContextPath() %>/module/consultaUsuario.jsp?nick=<%=nick%>">@<%=nick%></a> | <%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getYear()%> | <%=infoV.getDuracion()%> seg.</h3>
-                        <% }else{ %>
+                        <% } else if(usr.getNickname().contentEquals(nick)){ %>
                           <h3><a class="" href="<%= request.getContextPath() %>/module/miPerfil.jsp">@<%=usr.getNickname()%></a> | <%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getYear()%> | <%=infoV.getDuracion()%> seg.</h3>
                         <% } %>
                       </div>
