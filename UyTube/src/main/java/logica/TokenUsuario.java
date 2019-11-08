@@ -10,8 +10,8 @@ import java.io.Serializable;
 })
 public class TokenUsuario implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Integer id;
     private String selector;
     private String validador;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -27,13 +27,13 @@ public class TokenUsuario implements Serializable {
         this.usuario = usuario;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     public String getSelector() {
         return selector;

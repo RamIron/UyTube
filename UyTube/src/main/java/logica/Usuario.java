@@ -60,7 +60,7 @@ public class Usuario {
 	private Calendar fEliminado;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-	private Set<TokenUsuario> tokens = new HashSet<>(0);
+	private List<TokenUsuario> tokens = new ArrayList<TokenUsuario>();
 
 	//Constructores
 	public Usuario() {
@@ -164,11 +164,11 @@ public class Usuario {
 
 	public void setfEliminado(Calendar fEliminado) { this.fEliminado = fEliminado; }
 
-	public Set<TokenUsuario> getTokens() {
+	public List<TokenUsuario> getTokens() {
 		return tokens;
 	}
 
-	public void setTokens(Set<TokenUsuario> tokens) {
+	public void setTokens(List<TokenUsuario> tokens) {
 		this.tokens = tokens;
 	}
 

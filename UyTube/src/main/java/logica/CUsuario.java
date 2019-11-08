@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import Manejadores.ManejadorCategoria;
 import Manejadores.ManejadorPorDefecto;
+import Manejadores.ManejadorToken;
 import Manejadores.ManejadorUsuario;
 import datatypes.*;
 import interfaces.IUsuario;
@@ -30,6 +31,7 @@ public class CUsuario implements IUsuario {
 				this.can.agregarListaDefecto(nomPD);
 			}
 			mU.modificaDatosUsuario(this.usr);
+
 		} catch (Exception e){
 			throw e;
 		}	
@@ -482,10 +484,12 @@ public class CUsuario implements IUsuario {
 	@Override
 	public void crearToken(String selector, String validador, String usuario){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ManejadorToken mT = ManejadorToken.getInstancia();
 		this.usr = mU.obtenerUsuario(usuario);
 		TokenUsuario token = new TokenUsuario(selector, validador, this.usr);
 		this.usr.getTokens().add(token);
 		mU.modificaDatosUsuario(this.usr);
+		mT.agregarToken(token);
 	}
 
 	@Override
@@ -493,13 +497,10 @@ public class CUsuario implements IUsuario {
 		DtUsuarioWeb res = null;
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		TypedQuery<TokenUsuario> consulta = em.createNamedQuery("buscarToken", TokenUsuario.class);
-		consulta.setParameter("selector", selector);
-		List<TokenUsuario> tokens = consulta.getResultList();
-		for (TokenUsuario t: tokens){
-			if(t.getValidador().equals(validador)){
-				res = obtenerUsuarioWebNick(t.getUsuario().getNickname());
-			}
+		ManejadorToken mT = ManejadorToken.getInstancia();
+		TokenUsuario token = mT.obtenerToken(selector);
+		if(token != null && token.getValidador().equals(validador)){
+			res = obtenerUsuarioWebNick(token.getUsuario().getNickname());
 		}
 		return res;
 	}
