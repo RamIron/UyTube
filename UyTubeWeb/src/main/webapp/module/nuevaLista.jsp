@@ -281,7 +281,7 @@
                         <div class="col-xl-10 order-xl-1">
                             <div class="card bg-secondary shadow ">
                                 <div class="card-body px-lg-5 py-lg-5">
-                                <form name="nuevaLista" action="<%= request.getContextPath() %>/CrearLista" method="post">
+                                <form name="nuevaLista" id="nuevaLista" action="<%= request.getContextPath() %>/CrearLista" method="post">
                                     <div class="text-muted text-center mt-2 mb-3">
                                         <h1>Crear Lista de Reproduccion</h1>
                                     </div>
@@ -290,12 +290,12 @@
                                             String message = (String) request.getAttribute("message");
                                             if(message != null){
                                                 %>
-                                                <div class="alert alert-danger" role="alert">
-                                                    <strong>Error</strong> Nombre de Lista repetido
-                                                </div>
+<%--                                                <div class="alert alert-danger" role="alert">--%>
+<%--                                                    <strong>Error</strong> Nombre de Lista repetido--%>
+<%--                                                </div>--%>
                                             <%}%>
-                                            <div class="form-group">
-                                                <input type="text" name="nomList" class="form-control" placeholder="Nombre de Lista">
+                                            <div id="grupo-nombre" class="form-group">
+                                                <input type="text" name="nomList" id="nomList" class="form-control" placeholder="Nombre de Lista" autocomplete="off" onkeyup="validarNom()">
                                             </div>
                                         <div class="form-group">
                                             <select class="custom-select" id="inputGroupSelect01" name="categoria" >
@@ -313,7 +313,10 @@
                                                 Lista publica
                                             </label>
                                         </div>
-
+                                        <br>
+                                        <div id="mensaje-error" class="alert alert-danger d-none" role="alert">
+                                            <!-- El texto del mensaje se genera en un script -->
+                                        </div>
                                         <div class="text-center">
                                             <button type="button" class="btn btn-primary my-4" onclick="continuar()">Crear Lista</button>
                                         </div>
@@ -348,9 +351,48 @@
     });
 </script>
 <script type="text/javascript">
-    function continuar(){
-        document.forms["nuevaLista"].submit();
+    var nomValido = null;
+
+    function continuar() {
+        $("#mensaje-error").addClass("d-none");
+        let nomList = document.forms["nuevaLista"]["nomList"].value;
+        if(nomList == ""){
+            $("#mensaje-error").html('<strong>Error!</strong> La lista debe tener un nombre');
+            $("#mensaje-error").removeClass("d-none");
+        }else {
+            document.forms["nuevaLista"].submit();
+        }
     }
+
+    function validarNom() {
+        let target = document.getElementById("nomList");
+        if(target.value != ""){
+            var url = "<%= request.getContextPath() %>/VerificarLista?nomList=" + encodeURIComponent(target.value);
+            $.get(url, function (res) {
+                if (res == "false") {
+                    nomValido = true;
+                    $("#nomList").removeClass("is-invalid");
+                    $("#nomList").addClass("is-valid");
+                    $("#grupo-nombre").removeClass("has-danger");
+                    $("#grupo-nombre").addClass("has-success");
+                } else {
+                    nomValido = false;
+                    $("#nomList").removeClass("is-valid");
+                    $("#nomList").addClass("is-invalid");
+                    $("#grupo-nombre").removeClass("has-success");
+                    $("#grupo-nombre").addClass("has-danger");
+                }
+            });
+        } else {
+            //aca se tiene que poner en rojo
+            nomValido = false;
+            $("#nomList").removeClass("is-valid");
+            $("#nomList").addClass("is-invalid");
+            $("#grupo-nombre").removeClass("has-success");
+            $("#grupo-nombre").addClass("has-danger");
+        }
+    }
+
 </script>
 </body>
 
