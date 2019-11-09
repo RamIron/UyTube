@@ -12,7 +12,8 @@
     <modelVersion>4.0.0</modelVersion>
         
    <modules>   
-        <module>UyTube</module>
-	<module>UyTubeWeb</module>
+      <module>UyTube</module>
+	   <module>UyTubeWeb</module>
+      <module>UyTubeMovil</module>
    </modules>
 </project>
