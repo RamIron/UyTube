@@ -303,26 +303,26 @@
 
                                         <%--Nombre de Video--%>
                                         <div class="form-group">
-                                            <input type="text" name="nomVid" id="nomVid" class="form-control" onselect="removeInvalid(nomVid)" placeholder="Nombre de Video">
+                                            <input type="text" name="nomVid" id="nomVid" class="form-control" onkeyup="quitarInvalido(this)" placeholder="Nombre de Video">
                                         </div>
                                         <%--Fin Nombre de Video--%>
 
                                         <%--Duracion--%>
                                         <div class="form-group">
-                                            <input type="text" name="dur" id="dur" class="form-control" placeholder="Duración (en segundos)">
+                                            <input type="text" name="dur" id="dur" class="form-control" placeholder="Duración (en segundos)" onkeyup="quitarInvalido(this)">
                                         </div>
                                         <%--Fin Duracion--%>
 
                                         <%--URL--%>
                                         <div class="form-group">
-                                            <input type="text" name="url" id="url" class="form-control" placeholder="URL (YouTube)">
+                                            <input type="text" name="url" id="url" class="form-control" placeholder="URL (YouTube)" onkeyup="quitarInvalido(this)">
                                         </div>
                                         <%--Fin URL--%>
 
                                         <%--Descripcion--%>
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <textarea class="form-control" id="desc" rows="3" placeholder="Descripción..." name="desc"></textarea>
+                                                <textarea class="form-control" id="desc" rows="3" placeholder="Descripción..." name="desc" onkeyup="quitarInvalido(this)"></textarea>
                                             </div>
                                         </div>
                                         <%--Fin Descripcion--%>
@@ -333,7 +333,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                                 </div>
-                                                <input name="fPub" id="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text">
+                                                <input name="fPub" id="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" onkeyup="quitarInvalido(this)">
                                             </div>
                                         </div>
                                         <%--Fin Fecha de Publicacion--%>
@@ -418,6 +418,14 @@
             }else{
                 alert("Url incorrecta, debe ser de youtube");
             }
+        }
+    }
+
+    function quitarInvalido(arg){
+        if(arg.value == ""){
+            $(arg).addClass("is-invalid");
+        }else {
+            $(arg).removeClass("is-invalid");
         }
     }
 

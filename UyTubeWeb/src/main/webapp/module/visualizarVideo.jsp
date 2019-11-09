@@ -565,21 +565,21 @@
                                   <%--Nombre de Video--%>
                                   <div class="form-group">
                                     <small>Nombre</small>
-                                    <input type="text" name="nomVid" id="nomVid" class="form-control" placeholder="Nombre de Video" value="<%=infoV.getNombre()%>">
+                                    <input type="text" name="nomVid" id="nomVid" class="form-control" placeholder="Nombre de Video" onkeyup="quitarInvalido(this)" value="<%=infoV.getNombre()%>">
                                   </div>
                                   <%--Fin Nombre de Video--%>
 
                                   <%--Duracion--%>
                                   <div class="form-group">
                                     <small>Duracion</small>
-                                    <input type="text" name="dur" id="dur" class="form-control" placeholder="Duración (en segundos)" value="<%=infoV.getDuracion()%>">
+                                    <input type="text" name="dur" id="dur" class="form-control" placeholder="Duración (en segundos)" onkeyup="quitarInvalido(this)" value="<%=infoV.getDuracion()%>">
                                   </div>
                                   <%--Fin Duracion--%>
 
                                   <%--URL--%>
                                   <div class="form-group">
                                     <small>URL</small>
-                                    <input type="text" name="url" id="url" class="form-control" placeholder="URL (YouTube)" value="https://www.youtube.com/watch?v=<%=infoV.getUrl()%>">
+                                    <input type="text" name="url" id="url" class="form-control" placeholder="URL (YouTube)" onkeyup="quitarInvalido(this)" value="https://www.youtube.com/watch?v=<%=infoV.getUrl()%>">
                                   </div>
                                   <%--Fin URL--%>
 
@@ -587,7 +587,7 @@
                                   <div class="form-group">
                                     <small>Descripcion</small>
                                     <div class="input-group">
-                                      <textarea class="form-control" id="desc" rows="3" placeholder="Descripción..." name="desc"><%=infoV.getDescripcion()%></textarea>
+                                      <textarea class="form-control" id="desc" rows="3" placeholder="Descripción..." onkeyup="quitarInvalido(this)" name="desc"><%=infoV.getDescripcion()%></textarea>
                                     </div>
                                   </div>
                                   <%--Fin Descripcion--%>
@@ -599,7 +599,7 @@
                                       <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                       </div>
-                                      <input name="fPub" id="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" value="<%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getYear()%>">
+                                      <input name="fPub" id="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" onkeyup="quitarInvalido(this)" value="<%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getYear()%>">
                                     </div>
                                   </div>
                                   <%--Fin Fecha de Publicacion--%>
@@ -733,6 +733,14 @@
         }else{
           alert("Url incorrecta, debe ser de youtube");
         }
+      }
+    }
+
+    function quitarInvalido(arg){
+      if(arg.value == ""){
+        $(arg).addClass("is-invalid");
+      }else {
+        $(arg).removeClass("is-invalid");
       }
     }
 
