@@ -1,53 +1,32 @@
 package presentacion;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-
 import interfaces.*;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.JPanel;
 import java.awt.Font;
 import javax.swing.event.ListSelectionListener;
-
 import datatypes.*;
-
 import javax.swing.event.ListSelectionEvent;
 
 public class ConsultaUsuarioEliminado extends JInternalFrame {
-
 	private JList listaUsr;
 	private JTextField nick;
 	private JTextField nombre;
 	private JTextField apellido;
 	private JTextField email;
 	private JTextField nomCanal;
-	private Boolean agregarFoto = false;
-	private Boolean agregarNomCanal = false;
-	private Boolean publico = false;
 	private JComboBox<Integer> fDia = new JComboBox<Integer>();
 	private JComboBox <Integer>fMes = new JComboBox<Integer>();
 	private JComboBox<Integer> fAnio = new JComboBox<Integer>();
@@ -56,7 +35,6 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 	private JComboBox<Integer> fAnioElim = new JComboBox<Integer>();
 	private JTextPane desCanal = new JTextPane();
 	private final JLabel lblImagen = new JLabel("");
-	private JButton btnSelecFoto = new JButton("Seleccionar");
 	private final JScrollPane scrollDescCanal = new JScrollPane();
 	private JLabel img = new JLabel("");
 	private JList listaVid = new JList();
@@ -72,10 +50,6 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ConsultaUsuarioEliminado(IUsuario iU, IVideo iV, IListaReproduccion iL, ConsultaVideo cvIF, ConsultaListaRep clIF) {
-		
-//		limpiarLista();
-//		resetearFormulario();
-
 		CFactory f = CFactory.getInstancia();
 		ICategoria iC = f.getICategoria();
 		
@@ -246,20 +220,11 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 				fDiaElim.setSelectedItem(infoU.getfElim().get(Calendar.DAY_OF_MONTH));
 				fMesElim.setSelectedItem(infoU.getfElim().get(Calendar.MONTH)+1);
 				fAnioElim.setSelectedItem(infoU.getfElim().get(Calendar.YEAR));
-				System.out.println(infoU.getfNac().get(Calendar.DAY_OF_MONTH) + "/" + infoU.getfNac().get(Calendar.MONTH) + "/" + infoU.getfNac().get(Calendar.YEAR));
-//				String path = "/src/main/resources/" + infoU.getImagen();
-//                System.out.println(path);
-//				try {
-//					mostrarImg(path);                           //TODO, no funciona la imagen
-//				} catch (Exception e1) {
-//					e1.printStackTrace();
-//				}
 
 				
 				//INFO CANAL
 				nomCanal.setText(infoC.getNombre());
 				desCanal.setText(infoC.getDescripcion());
-				System.out.println(infoC.getPublico());
 				checkBoxPublico.setSelected((boolean)infoC.getPublico());
 				if(infoC.getCategoria() != null){
 				    categoria.setSelectedItem(infoC.getCategoria());
@@ -285,18 +250,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		});
 		btnSeleccionarUsuario.setBounds(23, 209, 168, 25);
 		getContentPane().add(btnSeleccionarUsuario);
-				
-		
-//		try {
-//		mostrarImg("src/main/resources/img/default.png");
-//		img.setBounds(230, 51, 120, 120);
-//		} catch (IOException e1) {
-//
-//			e1.printStackTrace();
-//		} catch (Exception e1) {
-//
-//			e1.printStackTrace();
-//		}
+
 		getContentPane().add(img);
 		
 		JScrollPane scrollVid = new JScrollPane();
@@ -390,9 +344,6 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		fMes.setSelectedIndex(0);
 		fAnio.setSelectedIndex(0);
 		desCanal.setText("");
-		agregarFoto = false;
-		agregarNomCanal = false;
-		publico = false;
 		checkBoxPublico.setSelected(false);
 		nomCanal.setEnabled(false);
 		lblImagen.setIcon(null);
@@ -400,31 +351,4 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		((DefaultListModel) listaLisRep.getModel()).clear();
 		cargarCategorias(iC);
 	}
-	
-	
-	
-	public void mostrarImg(final String filename) throws Exception
-	  {
-	    SwingUtilities.invokeLater(new Runnable()
-	    {
-	      public void run()
-	      {
-	                
-	        BufferedImage image = null;
-	        try
-	        {
-	          image = ImageIO.read(new File(filename));
-	        }
-	        catch (Exception e)
-	        {
-	          e.printStackTrace();
-	          System.exit(1);
-	        }
-	        ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(120, 120, Image.SCALE_FAST));
-	        img.setIcon(imageIcon);
-
-
-	      }
-	    });
-	  }
 }

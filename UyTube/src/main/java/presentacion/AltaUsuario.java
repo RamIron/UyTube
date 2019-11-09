@@ -1,16 +1,10 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.awt.Image;
-
 import javax.swing.*;
-
 import interfaces.ICategoria;
 import interfaces.IUsuario;
-
 import javax.imageio.ImageIO;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -55,9 +49,6 @@ public class AltaUsuario extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public AltaUsuario(IUsuario iU, ICategoria iC) {
-		
-
-		
 		setTitle("Agregar usuario");
 		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);
@@ -102,10 +93,7 @@ public class AltaUsuario extends JInternalFrame {
 		getContentPane().add(email);
 		email.setColumns(10);
 
-		
-		
-		
-		
+
 		fDia.setBounds(184, 220, 49, 24);
 		fDia.addItem(null);
 		for(Integer i=1; i<=31; i++) {
@@ -128,9 +116,6 @@ public class AltaUsuario extends JInternalFrame {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);
-		
-		
-		
 		
 		lblMsgErrorNick.setForeground(Color.RED);
 		lblMsgErrorNick.setBounds(184, 45, 190, 15);

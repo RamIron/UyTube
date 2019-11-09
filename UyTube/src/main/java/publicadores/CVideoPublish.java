@@ -6,11 +6,9 @@ import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.ParameterStyle;
 import javax.jws.soap.SOAPBinding.Style;
 import javax.xml.ws.Endpoint;
-
 import datatypes.*;
 import interfaces.IVideo;
 import interfaces.VFactory;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -19,17 +17,11 @@ import java.util.List;
 public class CVideoPublish {
     private VFactory vidFactory;
     private IVideo iVid;
-//    private WebServiceConfiguracion configuracion;
     private Endpoint endpoint;
 
     public CVideoPublish() {
         this.vidFactory = VFactory.getInstancia();
         this.iVid = this.vidFactory.getIVideo();
-//        try {
-//            configuracion = new WebServiceConfiguracion();
-//        } catch (Exception ex) {
-//
-//        }
     }
 
     @WebMethod(exclude = true)
@@ -230,5 +222,15 @@ public class CVideoPublish {
         }
         return ret;
     }
-    
+
+    @WebMethod
+    public Integer obtenerIdVideo(String usuario, String nomVid){
+        return iVid.obtenerIdVideo(usuario, nomVid);
+    }
+
+    @WebMethod
+    public DtElementoWeb obtenerVideo(Integer idVid){
+        return iVid.obtenerVideo(idVid);
+
+    }
 }

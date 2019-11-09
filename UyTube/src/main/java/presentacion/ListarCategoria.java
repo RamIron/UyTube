@@ -1,34 +1,23 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.util.List;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JList;
-import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-
 import interfaces.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ListarCategoria extends JInternalFrame {
-	
-	
 	JList list;
 
-	/**
-	 * Create the frame.
-	 */
 	public ListarCategoria(ICategoria iC) {
 		setTitle("Listado de categorias");
 		setBounds(100, 100, 800, 542);
 		getContentPane().setLayout(null);
-		
 		list = new JList();
-		
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setBounds(12, 10, 400, 451);
 		getContentPane().add(list);
@@ -55,7 +44,6 @@ public class ListarCategoria extends JInternalFrame {
 			listaCat.add(i++, c);
 		}
 		list.setModel(listaCat);
-		//list = new JList(listaCat);
 	}
 	
 	public void limpiarLista() {

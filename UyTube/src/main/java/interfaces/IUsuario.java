@@ -1,11 +1,8 @@
 package interfaces;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Calendar;
-
 import datatypes.*;
-import logica.Usuario;
 
 public interface IUsuario {
 	

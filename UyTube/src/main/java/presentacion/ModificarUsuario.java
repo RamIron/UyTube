@@ -1,6 +1,5 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -10,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -29,17 +27,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
 import interfaces.*;
-
 import java.awt.Color;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 public class ModificarUsuario extends JInternalFrame {
-
 	private JList listaUsr;
 	private JTextField nick;
 	private JTextField nombre;
@@ -55,7 +48,6 @@ public class ModificarUsuario extends JInternalFrame {
 	private JTextPane desCanal = new JTextPane();
 	private JCheckBox chckbxCanalPublico = new JCheckBox("");
 	private final JLabel lblImagen = new JLabel("");
-	private JButton btnSelecFoto = new JButton("Seleccionar");
 	private final JScrollPane scrollDescCanal = new JScrollPane();
 	private JLabel img = new JLabel("");
 	private JList listaVid = new JList();
@@ -149,10 +141,7 @@ public class ModificarUsuario extends JInternalFrame {
 		email.setColumns(10);
 		fDia.setEnabled(false);
 
-		
-		
-		
-		
+
 		fDia.setBounds(552, 142, 49, 24);
 		fDia.addItem(null);
 		for(Integer i=1; i<=31; i++) {
@@ -233,11 +222,6 @@ public class ModificarUsuario extends JInternalFrame {
 				fDia.setSelectedItem(infoU.getfNac().get(Calendar.DAY_OF_MONTH));
 				fMes.setSelectedItem(infoU.getfNac().get(Calendar.MONTH)+1);
 				fAnio.setSelectedItem(infoU.getfNac().get(Calendar.YEAR));
-//				try {
-//					mostrarImg(infoU.getImagen());
-//				} catch (Exception e1) {				//TODO, no funciona la imagen
-//					e1.printStackTrace();
-//				}
 				imgPath = infoU.getImagen();
 				
 				//INFO CANAL
@@ -273,18 +257,7 @@ public class ModificarUsuario extends JInternalFrame {
 		DefaultListModel<String> listaS1 = new DefaultListModel<String>();
 		
 		DefaultListModel<String> listaS2 = new DefaultListModel<String>();
-		
-		
-//		try {
-//		mostrarImg("src/main/resources/img/default.png");
-//		img.setBounds(230, 17, 120, 120);
-//		} catch (IOException e1) {
-//
-//			e1.printStackTrace();
-//		} catch (Exception e1) {
-//
-//			e1.printStackTrace();
-//		}
+
 		getContentPane().add(img);
 		
 		JScrollPane scrollVid = new JScrollPane();
@@ -497,11 +470,6 @@ public class ModificarUsuario extends JInternalFrame {
 		((DefaultListModel) listaVid.getModel()).clear();
 		((DefaultListModel) listaLisRep.getModel()).clear();
 		insiste = false;
-//		try {
-//			mostrarImg("src/main/resources/img/default.png");
-//		} catch (Exception e1) {
-//			e1.printStackTrace();
-//		}
 		cargarCategorias(iC);
 	}
 	
@@ -559,8 +527,6 @@ public class ModificarUsuario extends JInternalFrame {
 	        }
 	        ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(120, 120, Image.SCALE_FAST));
 	        img.setIcon(imageIcon);
-
-
 	      }
 	    });
 	  }

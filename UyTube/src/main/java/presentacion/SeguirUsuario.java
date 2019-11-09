@@ -1,31 +1,18 @@
 package presentacion;
 
 import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-
-import datatypes.DtComentario;
 import interfaces.IUsuario;
-import interfaces.IVideo;
 
 public class SeguirUsuario extends JInternalFrame {
-
 	private JList listaSeguidores;
 	private JList listaSeguidos = new JList();
 	private JButton btnConfirmar = new JButton("Seguir");

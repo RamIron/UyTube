@@ -1,45 +1,27 @@
-
-
 package presentacion;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JList;
-
 import interfaces.ICategoria;
 import interfaces.IUsuario;
 import interfaces.IVideo;
-
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
-
-import org.dom4j.util.StringUtils;
-
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JDesktopPane;
 import java.awt.Color;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class AltaVideo extends JInternalFrame {
-
 	private JList listaUsr;
 	private String usr = "";
 	private JTextField nomVid;
@@ -64,9 +46,6 @@ public class AltaVideo extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public AltaVideo(IUsuario iU, ICategoria iC, IVideo iV) {
-		
-//		inicializar(iU, iC);
-		
 		setTitle("Agregar un video");
 		setBounds(0, 0, 800, 542);
 		AltaVideo.this.setVisible(false);
@@ -107,7 +86,6 @@ public class AltaVideo extends JInternalFrame {
 		listaUsr.addListSelectionListener(new ListSelectionListener() {
 		public void valueChanged(ListSelectionEvent e) {
 			int i = listaUsr.getSelectedIndex();
-			System.out.println("Soy i: " + i);
 			if(i > 0) {
 				usr = listaUsr.getModel().getElementAt(i).toString();
 			}
@@ -187,7 +165,6 @@ public class AltaVideo extends JInternalFrame {
 		getContentPane().add(lblCategoria);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)  {
-				//Hay que ver errores anotados en cuadernola mateo
 				reiniciarMsg();
 				if(nomVid.getText().isEmpty() || duracion.getText().isEmpty() || url.getText().isEmpty() ||
 					descripcion.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null)) {
@@ -312,17 +289,5 @@ public class AltaVideo extends JInternalFrame {
 		habilitarFormVid(false);
 		reiniciarVal();
 		reiniciarMsg();
-	}
-
-	public static boolean esNumero(String str) { 
-		for (char c : str.toCharArray()){
-	        if (!Character.isDigit(c)) {
-	        	System.out.print("false");
-	        	return false;
-	        }
-	    }
-		System.out.print("true");
-	    return true;
-
 	}
 }

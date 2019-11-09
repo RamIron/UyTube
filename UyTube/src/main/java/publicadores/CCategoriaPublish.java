@@ -4,7 +4,6 @@ import datatypes.DtElementoUsuario;
 import datatypes.DtElementoWeb;
 import interfaces.CFactory;
 import interfaces.ICategoria;
-
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -20,17 +19,11 @@ import java.util.List;
 public class CCategoriaPublish {
     private CFactory catFactory;
     private ICategoria iCat;
-//    private WebServiceConfiguracion configuracion;
     private Endpoint endpoint;
 
     public CCategoriaPublish() {
         this.catFactory = CFactory.getInstancia();
         this.iCat = this.catFactory.getICategoria();
-//        try {
-//            configuracion = new WebServiceConfiguracion();
-//        } catch (Exception ex) {
-//
-//        }
     }
 
     @WebMethod(exclude = true)

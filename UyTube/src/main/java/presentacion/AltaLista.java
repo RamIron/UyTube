@@ -1,12 +1,9 @@
 package presentacion;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,12 +11,10 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import interfaces.ICategoria;
 import interfaces.IListaReproduccion;
 import interfaces.IUsuario;
@@ -37,7 +32,7 @@ public class AltaLista extends JInternalFrame {
 	private JButton btnAgregar = new JButton("Agregar");
 	private JLabel lblMsgExiste = new JLabel("Ya existe una lista con este nombre en el canal.");
 	private JLabel lblMsgError = new JLabel("Error: falta completar algun campo.");
-	private JLabel lblMsgExito = new JLabel("El video fue agregado con exito.");
+	private JLabel lblMsgExito = new JLabel("La lista fue agregada con exito.");
 	private JLabel lblMsgErrorUsr = new JLabel("Debe seleccionar un usuario");
 	private final JLabel lblListaDeUsuarios = new JLabel("Lista de Usuarios");
 	private JButton btnParticular = new JButton("Particular");
@@ -90,7 +85,6 @@ public class AltaLista extends JInternalFrame {
 		listaUsr.addListSelectionListener(new ListSelectionListener() {
 		public void valueChanged(ListSelectionEvent e) {
 			int i = listaUsr.getSelectedIndex();
-			System.out.println("Soy i: " + i);
 			if(i > 0) {
 				usr = listaUsr.getModel().getElementAt(i).toString();
 			}
@@ -127,12 +121,12 @@ public class AltaLista extends JInternalFrame {
 						if(iL.existeListaParticular(usr, nomLis.getText())) {
 							lblMsgExiste.setVisible(true);
 						}else {
-							iL.agregarListaParticular(nomLis.getText(), listaPublica);
-							System.out.println("Categoria: " + categoria.getSelectedItem().toString());
 							if(categoria.getSelectedIndex() != 0) {
-								
-								iL.agregarCategoriaALista(categoria.getSelectedItem().toString());
+								iL.agregarListaParticularCategoria(nomLis.getText(), listaPublica, categoria.getSelectedItem().toString());
+							} else {
+								iL.agregarListaParticular(nomLis.getText(), listaPublica);
 							}
+
 						}
 					}else {
 						if(iL.existeListaDefecto(nomLis.getText())) {
@@ -270,16 +264,5 @@ public class AltaLista extends JInternalFrame {
 		habilitarFormVid(false);
 		reiniciarVal();
 		reiniciarMsg();
-	}
-
-	public static boolean esNumero(String str) { 
-		for (char c : str.toCharArray()){
-	        if (!Character.isDigit(c)) {
-	        	System.out.print("false");
-	        	return false;
-	        }
-	    }
-		System.out.print("true");
-	    return true;
 	}
 }

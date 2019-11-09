@@ -30,6 +30,19 @@ public interface CVideoPublish {
      * 
      * @param arg0
      * @return
+     *     returns publicadores.DtElementoWeb
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CVideoPublish/obtenerVideoRequest", output = "http://publicadores/CVideoPublish/obtenerVideoResponse")
+    public DtElementoWeb obtenerVideo(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
      *     returns net.java.dev.jaxb.array.StringArray
      */
     @WebMethod
@@ -64,6 +77,55 @@ public interface CVideoPublish {
     public StringArray listarVideosPublicosDeUsuario(
         @WebParam(name = "arg0", partName = "arg0")
         String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns publicadores.DtElementoWebArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CVideoPublish/listarVideosPublicosDeUsuarioWebRequest", output = "http://publicadores/CVideoPublish/listarVideosPublicosDeUsuarioWebResponse")
+    public DtElementoWebArray listarVideosPublicosDeUsuarioWeb(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @return
+     *     returns publicadores.DtElementoUsuarioArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CVideoPublish/listarVideosPublicosRequest", output = "http://publicadores/CVideoPublish/listarVideosPublicosResponse")
+    public DtElementoUsuarioArray listarVideosPublicos();
+
+    /**
+     * 
+     * @return
+     *     returns publicadores.DtElementoWebArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CVideoPublish/listarVideosPublicosWebRequest", output = "http://publicadores/CVideoPublish/listarVideosPublicosWebResponse")
+    public DtElementoWebArray listarVideosPublicosWeb();
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CVideoPublish/existeVideoRequest", output = "http://publicadores/CVideoPublish/existeVideoResponse")
+    public boolean existeVideo(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
 
     /**
      * 
@@ -112,39 +174,6 @@ public interface CVideoPublish {
         int arg4,
         @WebParam(name = "arg5", partName = "arg5")
         String arg5);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns publicadores.DtElementoWebArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CVideoPublish/listarVideosPublicosDeUsuarioWebRequest", output = "http://publicadores/CVideoPublish/listarVideosPublicosDeUsuarioWebResponse")
-    public DtElementoWebArray listarVideosPublicosDeUsuarioWeb(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @return
-     *     returns publicadores.DtElementoUsuarioArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CVideoPublish/listarVideosPublicosRequest", output = "http://publicadores/CVideoPublish/listarVideosPublicosResponse")
-    public DtElementoUsuarioArray listarVideosPublicos();
-
-    /**
-     * 
-     * @return
-     *     returns publicadores.DtElementoWebArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CVideoPublish/listarVideosPublicosWebRequest", output = "http://publicadores/CVideoPublish/listarVideosPublicosWebResponse")
-    public DtElementoWebArray listarVideosPublicosWeb();
 
     /**
      * 
@@ -208,22 +237,6 @@ public interface CVideoPublish {
 
     /**
      * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CVideoPublish/existeVideoRequest", output = "http://publicadores/CVideoPublish/existeVideoResponse")
-    public boolean existeVideo(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
-
-    /**
-     * 
      * @return
      *     returns int
      */
@@ -267,6 +280,22 @@ public interface CVideoPublish {
         String arg0,
         @WebParam(name = "arg1", partName = "arg1")
         boolean arg1);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns int
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CVideoPublish/obtenerIdVideoRequest", output = "http://publicadores/CVideoPublish/obtenerIdVideoResponse")
+    public int obtenerIdVideo(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
 
     /**
      * 

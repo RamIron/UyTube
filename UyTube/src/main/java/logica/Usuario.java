@@ -1,14 +1,8 @@
 package logica;
 
 import java.util.*;
-//import datatypes.DtVideo;
-
 import javax.persistence.*;
-
 import datatypes.DtCanal;
-import datatypes.DtComentario;
-import datatypes.DtListaRep;
-import datatypes.DtVideo;
 
 @NamedQueries( {
 	@NamedQuery(name = "existeMail", query = "select u.correoE from Usuario u where u.correoE = :correoE"),
@@ -126,10 +120,6 @@ public class Usuario {
 
 	public String getCorreoE() {
 		return correoE;
-	}
-
-	public void setCorreoE(String correoE) {
-		this.correoE = correoE;
 	}
 	
 	public List<Usuario> getSeguidos() {

@@ -2,9 +2,7 @@ package logica;
 
 import java.util.*;
 import javax.persistence.*;
-
 import datatypes.*;
-
 
 @Entity
 @NamedNativeQueries({
@@ -69,7 +67,6 @@ public class Canal {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-		System.out.println(descripcion);
 	}
 
 	public Usuario getUsuario() {
@@ -106,7 +103,7 @@ public class Canal {
 
 	
 	public Particular agregarListaParticular(String nomL, boolean publico) {
-		Particular lisPar = new Particular(nomL, this, publico);
+		Particular lisPar = new Particular(nomL, this, publico, null);
 		this.listas.add(lisPar);
 		return lisPar;
 	}
@@ -150,7 +147,6 @@ public class Canal {
 	}
 	
 	public void eliminarVideoDeLista(Video v, String nomList) {
-		System.out.println("Video buscado: " + v.getNombre());
 		for(ListaReproduccion lr: this.listas) {
 			if(nomList.contentEquals(lr.getNombre())) {
 				lr.eliminarVideo(v);	

@@ -1,26 +1,17 @@
 package presentacion;
 
-import java.awt.EventQueue;
 import java.util.List;
-
 import javax.swing.JInternalFrame;
 import javax.swing.JList;
-
-import interfaces.ICategoria;
 import interfaces.IUsuario;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ListarUsuario extends JInternalFrame {
-
 	private JList list;
 
-	/**
-	 * Create the frame.
-	 */
 	public ListarUsuario(IUsuario iU) {
 		setTitle("Lista de Usuarios");
 		setBounds(100, 100, 800, 542);

@@ -3,14 +3,10 @@ package logica;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
-
 import javax.persistence.*;
-
-import Manejadores.ManejadorCategoria;
-import Manejadores.ManejadorComentario;
-import Manejadores.ManejadorUsuario;
-//import Manejadores.ManejadorVideo;
+import manejadores.ManejadorCategoria;
+import manejadores.ManejadorComentario;
+import manejadores.ManejadorUsuario;
 import datatypes.*;
 import interfaces.IVideo;
 
@@ -55,7 +51,6 @@ public class CVideo implements IVideo {
 	public List<DtElementoWeb> listarVideosDeUsuarioWeb(String nick){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		this.usr = mU.obtenerUsuario(nick);
-
 		List<DtElementoWeb> dtElems  = new ArrayList<DtElementoWeb>();
 		List<String> videos = listarVideosDeUsuario(nick);
 
@@ -181,15 +176,12 @@ public class CVideo implements IVideo {
 	@Override 
 	public void valorarVideo(String nickVal, boolean val) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		//ManejadorVideo mV = ManejadorVideo.getInstancia();
 		
 		if(mU.existeUsuario(nickVal)) {
 			Usuario usrVal = mU.obtenerUsuario(nickVal);
 			this.vid.valorarVideo(val, usrVal);
 			
 			mU.modificaDatosUsuario(this.usr);
-			//mU.modificaDatosUsuario(usrVal);
-			//mV.agregarVideo(this.vid);
 		}else {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 		}
@@ -259,5 +251,26 @@ public class CVideo implements IVideo {
 		}
 		return res;
 	}
-	
+
+	@Override
+	public Integer obtenerIdVideo(String usuario, String nomVid){
+		setUsr(usuario);
+		setVid(nomVid);
+		return vid.id;
+	}
+
+	@Override
+	public DtElementoWeb obtenerVideo(Integer idVid){
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		List<Object[]> resQuery;
+		DtElementoWeb res  = null;
+		Query consulta = em.createNamedQuery("obtenerVideoPorId");
+		consulta.setParameter(1, idVid);
+		resQuery = consulta.getResultList();
+		if(resQuery.size() != 0){
+			res = new DtElementoWeb(resQuery.get(0)[0].toString(), resQuery.get(0)[1].toString(), tipoElemento.VIDEO, resQuery.get(0)[2].toString());
+		}
+		return res;
+	}
 }

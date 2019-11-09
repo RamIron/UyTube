@@ -1,10 +1,8 @@
 package logica;
 
 import java.util.*;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 
 import Manejadores.ManejadorCategoria;

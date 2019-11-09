@@ -1,12 +1,9 @@
 package logica;
 
 import java.util.*;
-
-import Manejadores.ManejadorCategoria;
 import datatypes.DtElementoUsuario;
 import datatypes.DtElementoWeb;
 import datatypes.tipoElemento;
-
 import javax.persistence.*;
 
 @Entity
@@ -20,8 +17,7 @@ public class Categoria {
 		private List<Elemento> elementos = new ArrayList <Elemento>();
 		
 		
-		//METODOS
-		
+		//CONSTRUCTORES
 		public Categoria() {
 		}
 		
@@ -30,16 +26,13 @@ public class Categoria {
 			this.nombre = nombre;
 		}
 
+		//GETTERS & SETTERS
 		public String getNombre() {
 			return nombre;
 		}
 
 		public void setNombre(String nombre) {
 			this.nombre = nombre;
-		}
-			
-		public List<Elemento> getElementos() {
-			return elementos;
 		}
 
 		public List<DtElementoUsuario> obtenerElemCategoria(){
@@ -83,15 +76,8 @@ public class Categoria {
 			elementos.add(e);
 		}
 		
-		public void agregarLista(Particular p) {
-			elementos.add(p);
-		}
-		
 		public void quitarElemento(Elemento e) {
-			ManejadorCategoria mc = ManejadorCategoria.getInstancia();
 			e.setCategoria(null);
-            //e.quitarCategoria(this);
 			elementos.remove(e);
-			//mc.modificarCategoria(this);
 		}
 }

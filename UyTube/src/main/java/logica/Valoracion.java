@@ -1,8 +1,6 @@
 package logica;
 
 import javax.persistence.*;
-//import javax.persistence.JoinColumn;
-
 
 @NamedNativeQueries( {
 		@NamedNativeQuery(name = "obtenerValoracionesDeUsuario", query = "select v.id from Valoracion v where v.usuario_nickname = :nick")
@@ -19,7 +17,7 @@ public class Valoracion {
 	@ManyToOne
 	private Usuario usuario;
 
-	
+
 	//Constructores
 	public Valoracion() {
 		super();
