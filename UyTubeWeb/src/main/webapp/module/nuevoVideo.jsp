@@ -303,37 +303,37 @@
 
                                         <%--Nombre de Video--%>
                                         <div class="form-group">
-                                            <input type="text" name="nomVid" class="form-control" placeholder="Nombre de Video">
+                                            <input type="text" name="nomVid" id="nomVid" class="form-control" onselect="removeInvalid(nomVid)" placeholder="Nombre de Video">
                                         </div>
                                         <%--Fin Nombre de Video--%>
 
                                         <%--Duracion--%>
                                         <div class="form-group">
-                                            <input type="text" name="dur" class="form-control" placeholder="Duración (en segundos)">
+                                            <input type="text" name="dur" id="dur" class="form-control" placeholder="Duración (en segundos)">
                                         </div>
                                         <%--Fin Duracion--%>
 
                                         <%--URL--%>
                                         <div class="form-group">
-                                            <input type="text" name="url" class="form-control" placeholder="URL (YouTube)">
+                                            <input type="text" name="url" id="url" class="form-control" placeholder="URL (YouTube)">
                                         </div>
                                         <%--Fin URL--%>
 
                                         <%--Descripcion--%>
                                         <div class="form-group">
-                                            <div class="input-group input-group-alternative">
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripción..." name="desc"></textarea>
+                                            <div class="input-group">
+                                                <textarea class="form-control" id="desc" rows="3" placeholder="Descripción..." name="desc"></textarea>
                                             </div>
                                         </div>
                                         <%--Fin Descripcion--%>
 
                                         <%--Fecha de Publicacion--%>
                                         <div class="form-group">
-                                            <div class="input-group input-group-alternative">
+                                            <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                                 </div>
-                                                <input name="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" >
+                                                <input name="fPub" id="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text">
                                             </div>
                                         </div>
                                         <%--Fin Fecha de Publicacion--%>
@@ -351,6 +351,12 @@
                                             </select>
                                         </div>
                                         <%--Fin Categoria de video--%>
+
+                                        <%--Mostrar mensaje de falta de datos para crear video--%>
+                                        <div id="mensaje-error" class="alert alert-danger d-none" role="alert">
+                                            <!-- El texto del mensaje se genera en un script -->
+                                        </div>
+                                        <%--Fin mostrar mensaje de falta de datos para crear video--%>
 
                                         <%--Boton crear video--%>
                                         <div class="text-center">
@@ -392,13 +398,16 @@
 
 <script type="text/javascript">
     function continuar(){
+        $("#mensaje-error").addClass("d-none");
         var nomVid = document.forms["nuevoVideo"]["nomVid"].value;
         var dur = document.forms["nuevoVideo"]["dur"].value;
         var url = document.forms["nuevoVideo"]["url"].value;
         var desc = document.forms["nuevoVideo"]["desc"].value;
         var fPub = document.forms["nuevoVideo"]["fPub"].value;
         if (nomVid == "" || dur == "" || url == "" || desc == "" || fPub == "" ){
-            alert("Falta completar campos");
+            $("#mensaje-error").html('<strong>Error!</strong> Falta completar algun campo obligatorio');
+            $("#mensaje-error").removeClass("d-none");
+            marcarCamposVacios(nomVid, dur, url, desc, fPub);
         } else{
             var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
             var match = url.match(regExp);
@@ -411,6 +420,25 @@
             }
         }
     }
+
+    function marcarCamposVacios(nomVid, dur, url, desc, fPub){
+        if(nomVid == "") {
+            $("#nomVid").addClass("is-invalid");
+        }
+        if(dur == "") {
+            $("#dur").addClass("is-invalid");
+        }
+        if(url == "") {
+            $("#url").addClass("is-invalid");
+        }
+        if(desc == "") {
+            $("#desc").addClass("is-invalid");
+        }
+        if(fPub == "") {
+            $("#fPub").addClass("is-invalid");
+        }
+    }
+
 
     function youtube_parser(url){
         var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;

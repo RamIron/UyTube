@@ -295,7 +295,7 @@
                                                 </div>
                                             <%}%>
                                             <div class="form-group">
-                                                <input type="text" name="nomList" class="form-control" placeholder="Nombre de Lista">
+                                                <input type="text" name="nomList" id="nomList" class="form-control" placeholder="Nombre de Lista">
                                             </div>
                                         <div class="form-group">
                                             <select class="custom-select" id="inputGroupSelect01" name="categoria" >
@@ -313,6 +313,12 @@
                                                 Lista publica
                                             </label>
                                         </div>
+
+                                        <%--Mostrar mensaje de falta de datos para crear video--%>
+                                        <div id="mensaje-error" class="alert alert-danger d-none mt-3" role="alert">
+                                            <!-- El texto del mensaje se genera en un script -->
+                                        </div>
+                                        <%--Fin mostrar mensaje de falta de datos para crear video--%>
 
                                         <div class="text-center">
                                             <button type="button" class="btn btn-primary my-4" onclick="continuar()">Crear Lista</button>
@@ -349,7 +355,21 @@
 </script>
 <script type="text/javascript">
     function continuar(){
-        document.forms["nuevaLista"].submit();
+        $("#mensaje-error").addClass("d-none");
+        var nomList = document.forms["nuevaLista"]["nomList"].value;
+        if (nomList == ""){
+            $("#mensaje-error").html('<strong>Error!</strong> Falta completar algun campo obligatorio');
+            $("#mensaje-error").removeClass("d-none");
+            marcarCamposVacios(nomList);
+        } else{
+            document.forms["nuevaLista"].submit();
+        }
+    }
+
+    function marcarCamposVacios(nomList) {
+        if (nomList == "") {
+            $("#nomList").addClass("is-invalid");
+        }
     }
 </script>
 </body>
