@@ -9,8 +9,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+
 @WebServlet(name = "IniciarSesion", value = "/IniciarSesion")
 public class IniciarSesion extends HttpServlet {
+
+    static final int SESION_CORTA = 100;
+    static final int SESION_LARGA = 604800;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
@@ -31,12 +36,31 @@ public class IniciarSesion extends HttpServlet {
                 port.crearToken(selector, validador, nick);
 
                 Cookie cookieSelector = new Cookie("selector", selector);
-                cookieSelector.setMaxAge(604800);
+                cookieSelector.setMaxAge(SESION_LARGA);
                 Cookie cookieValidator = new Cookie("validator", validador);
-                cookieValidator.setMaxAge(604800);
+                cookieValidator.setMaxAge(SESION_LARGA);
+                Cookie cookieTipo = new Cookie("tipo", "long");
+                cookieTipo.setMaxAge(SESION_LARGA);
 
                 response.addCookie(cookieSelector);
                 response.addCookie(cookieValidator);
+                response.addCookie(cookieTipo);
+            } else {
+                String selector = RandomStringUtils.randomAlphanumeric(12);
+                String validador =  RandomStringUtils.randomAlphanumeric(64);
+
+                port.crearToken(selector, validador, nick);
+
+                Cookie cookieSelector = new Cookie("selector", selector);
+                cookieSelector.setMaxAge(SESION_CORTA);
+                Cookie cookieValidator = new Cookie("validator", validador);
+                cookieValidator.setMaxAge(SESION_CORTA);
+                Cookie cookieTipo = new Cookie("tipo", "short");
+                cookieTipo.setMaxAge(SESION_CORTA);
+
+                response.addCookie(cookieSelector);
+                response.addCookie(cookieValidator);
+                response.addCookie(cookieTipo);
             }
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/index.jsp");
@@ -48,15 +72,34 @@ public class IniciarSesion extends HttpServlet {
                 String selector = RandomStringUtils.randomAlphanumeric(12);
                 String validador =  RandomStringUtils.randomAlphanumeric(64);
 
-                port.crearToken(selector, validador, usr.getNickname());
+                port.crearToken(selector, validador, nick);
 
                 Cookie cookieSelector = new Cookie("selector", selector);
-                cookieSelector.setMaxAge(604800);
+                cookieSelector.setMaxAge(SESION_LARGA);
                 Cookie cookieValidator = new Cookie("validator", validador);
-                cookieValidator.setMaxAge(604800);
+                cookieValidator.setMaxAge(SESION_LARGA);
+                Cookie cookieTipo = new Cookie("tipo", "long");
+                cookieTipo.setMaxAge(SESION_LARGA);
 
                 response.addCookie(cookieSelector);
                 response.addCookie(cookieValidator);
+                response.addCookie(cookieTipo);
+            } else {
+                String selector = RandomStringUtils.randomAlphanumeric(12);
+                String validador =  RandomStringUtils.randomAlphanumeric(64);
+
+                port.crearToken(selector, validador, nick);
+
+                Cookie cookieSelector = new Cookie("selector", selector);
+                cookieSelector.setMaxAge(SESION_CORTA);
+                Cookie cookieValidator = new Cookie("validator", validador);
+                cookieValidator.setMaxAge(SESION_CORTA);
+                Cookie cookieTipo = new Cookie("tipo", "short");
+                cookieTipo.setMaxAge(SESION_CORTA);
+
+                response.addCookie(cookieSelector);
+                response.addCookie(cookieValidator);
+                response.addCookie(cookieTipo);
             }
             RequestDispatcher rd;
             rd = request.getRequestDispatcher("/index.jsp");
