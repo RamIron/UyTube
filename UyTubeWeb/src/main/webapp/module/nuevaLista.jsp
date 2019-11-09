@@ -313,10 +313,13 @@
                                                 Lista publica
                                             </label>
                                         </div>
-                                        <br>
-                                        <div id="mensaje-error" class="alert alert-danger d-none" role="alert">
+
+                                        <%--Mostrar mensaje de falta de datos para crear video--%>
+                                        <div id="mensaje-error" class="alert alert-danger d-none mt-3" role="alert">
                                             <!-- El texto del mensaje se genera en un script -->
                                         </div>
+                                        <%--Fin mostrar mensaje de falta de datos para crear video--%>
+
                                         <div class="text-center">
                                             <button type="button" class="btn btn-primary my-4" onclick="continuar()">Crear Lista</button>
                                         </div>
