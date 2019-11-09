@@ -4,9 +4,11 @@ import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import manejadores.ManejadorCategoria;
-import manejadores.ManejadorPorDefecto;
-import manejadores.ManejadorUsuario;
+
+import Manejadores.ManejadorCategoria;
+import Manejadores.ManejadorPorDefecto;
+import Manejadores.ManejadorToken;
+import Manejadores.ManejadorUsuario;
 import datatypes.*;
 import interfaces.IUsuario;
 
@@ -27,6 +29,7 @@ public class CUsuario implements IUsuario {
 				this.can.agregarListaDefecto(nomPD);
 			}
 			mU.modificaDatosUsuario(this.usr);
+
 		} catch (Exception e){
 			throw e;
 		}	
@@ -472,6 +475,30 @@ public class CUsuario implements IUsuario {
 			DtVisita dtVisita = new DtVisita(v.getVideo().getCanal().getUsuario().getNickname(), v.getVideo().getNombre(), v.getUltimaVisita(), v.getCantVisitas());
 			dtVisita.setUrlVideo(v.getVideo().getUrl());
 			res.add(dtVisita);
+		}
+		return res;
+	}
+
+	@Override
+	public void crearToken(String selector, String validador, String usuario){
+		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
+		ManejadorToken mT = ManejadorToken.getInstancia();
+		this.usr = mU.obtenerUsuario(usuario);
+		TokenUsuario token = new TokenUsuario(selector, validador, this.usr);
+		this.usr.getTokens().add(token);
+		mU.modificaDatosUsuario(this.usr);
+		mT.agregarToken(token);
+	}
+
+	@Override
+	public DtUsuarioWeb obtenerUsuarioConToken(String selector, String validador){
+		DtUsuarioWeb res = null;
+		Conexion conexion = Conexion.getInstancia();
+		EntityManager em = conexion.getEntityManager();
+		ManejadorToken mT = ManejadorToken.getInstancia();
+		TokenUsuario token = mT.obtenerToken(selector);
+		if(token != null && token.getValidador().equals(validador)){
+			res = obtenerUsuarioWebNick(token.getUsuario().getNickname());
 		}
 		return res;
 	}

@@ -53,6 +53,9 @@ public class Usuario {
 	@Column(name="FECHA_DE_ELIMINACION")
 	private Calendar fEliminado;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	private List<TokenUsuario> tokens = new ArrayList<TokenUsuario>();
+
 	//Constructores
 	public Usuario() {
 		super();
@@ -150,6 +153,14 @@ public class Usuario {
 	public Calendar getfEliminado() { return fEliminado; }
 
 	public void setfEliminado(Calendar fEliminado) { this.fEliminado = fEliminado; }
+
+	public List<TokenUsuario> getTokens() {
+		return tokens;
+	}
+
+	public void setTokens(List<TokenUsuario> tokens) {
+		this.tokens = tokens;
+	}
 
 	//Operaciones
 	public void agregarCanal() {
