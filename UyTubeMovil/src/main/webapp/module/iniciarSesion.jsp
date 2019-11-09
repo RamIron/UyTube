@@ -46,7 +46,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
         <div class="container px-4">
-            <a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp">
+            <a class="navbar-brand" href="#">
                 <img src="<%= request.getContextPath() %>/assets/img/brand/logo.png" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,9 +135,6 @@
                             <div id="mensaje-error" class="alert alert-danger d-none" role="alert">
                                 <!-- El texto del mensaje se genera en un script -->
                             </div>
-                            <div class="d-sm-none" style="width: 100%">
-                                <p>¿No tenes usuario? <a class="nav-link nav-link-icon" href="<%= request.getContextPath() %>/module/registro.jsp">Registrate</a></p>
-                            </div>
                             <div class="text-center">
                                 <button type="button" class="btn btn-primary my-4" onclick="continuar()">Iniciar Sesion</button>
                             </div>
@@ -170,10 +167,12 @@
 
 <script type="text/javascript">
     function continuar() {
+        $("#mensaje-error").addClass("d-none");
         var nick = document.forms["login"]["nick"].value;
         var pass = document.forms["login"]["pass"].value;
         if(nick == "" || pass == ""){
-            alert("Falta completar campos");
+            $("#mensaje-error").html('<strong>Error!</strong> Falta completar algun campo');
+            $("#mensaje-error").removeClass("d-none");
         }else {
             document.forms[0].submit();
         }

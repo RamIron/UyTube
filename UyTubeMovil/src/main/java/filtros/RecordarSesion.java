@@ -22,53 +22,58 @@ public class RecordarSesion implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
-
-        HttpSession s = ((HttpServletRequest)req).getSession();
-        //DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
-        DtUsuarioWeb usr = null;
-        Cookie[] cookies = ((HttpServletRequest)req).getCookies();
-        if (usr == null && cookies != null){
-            Cookie selector = null;
-            Cookie rawValidator = null;
-            Cookie tipo = null;
-            String selectorValue = "";
-            String validatorValue = "";
-            Boolean recordar = false;
-            for (Cookie aCookie : cookies) {
-                if (aCookie.getName().equals("selector")) {
-                    selector = aCookie;
-                    selectorValue = selector.getValue();
-                } else if (aCookie.getName().equals("validator")) {
-                    rawValidator = aCookie;
-                    validatorValue = rawValidator.getValue();
-                }else if (aCookie.getName().equals("tipo")){
-                    recordar = aCookie.getValue().equals("long");
-                    tipo = aCookie;
+        String path = ((HttpServletRequest)req).getServletPath();
+        if (!path.equals("/module/iniciarSesion.jsp") && !path.equals("/IniciarSesion") && !path.equals("/CerrarSesion")) {
+            HttpSession s = ((HttpServletRequest) req).getSession();
+            //DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
+            DtUsuarioWeb usr = null;
+            Cookie[] cookies = ((HttpServletRequest) req).getCookies();
+            if (usr == null && cookies != null) {
+                Cookie selector = null;
+                Cookie rawValidator = null;
+                Cookie tipo = null;
+                String selectorValue = "";
+                String validatorValue = "";
+                Boolean recordar = false;
+                for (Cookie aCookie : cookies) {
+                    if (aCookie.getName().equals("selector")) {
+                        selector = aCookie;
+                        selectorValue = selector.getValue();
+                    } else if (aCookie.getName().equals("validator")) {
+                        rawValidator = aCookie;
+                        validatorValue = rawValidator.getValue();
+                    } else if (aCookie.getName().equals("tipo")) {
+                        recordar = aCookie.getValue().equals("long");
+                        tipo = aCookie;
+                    }
                 }
-            }
-            if (!"".equals(selectorValue) && !"".equals(rawValidator)) {
-                usr = port.obtenerUsuarioConToken(selector.getValue(), rawValidator.getValue());
-                s.setAttribute("usuario", usr);
-                if(recordar){
-                    selector.setMaxAge(SESION_LARGA);
-                    rawValidator.setMaxAge(SESION_LARGA);
-                    tipo.setMaxAge(SESION_LARGA);
+                if (!"".equals(selectorValue) && !"".equals(rawValidator)) {
+                    usr = port.obtenerUsuarioConToken(selector.getValue(), rawValidator.getValue());
+                    s.setAttribute("usuario", usr);
+                    if (recordar) {
+                        selector.setMaxAge(SESION_LARGA);
+                        rawValidator.setMaxAge(SESION_LARGA);
+                        tipo.setMaxAge(SESION_LARGA);
 
-                    ((HttpServletResponse) resp).addCookie(selector);
-                    ((HttpServletResponse) resp).addCookie(rawValidator);
-                    ((HttpServletResponse) resp).addCookie(tipo);
+                        ((HttpServletResponse) resp).addCookie(selector);
+                        ((HttpServletResponse) resp).addCookie(rawValidator);
+                        ((HttpServletResponse) resp).addCookie(tipo);
+                    } else {
+
+                        selector.setMaxAge(SESION_CORTA);
+                        rawValidator.setMaxAge(SESION_CORTA);
+                        tipo.setMaxAge(SESION_CORTA);
+
+                        ((HttpServletResponse) resp).addCookie(selector);
+                        ((HttpServletResponse) resp).addCookie(rawValidator);
+                        ((HttpServletResponse) resp).addCookie(tipo);
+                    }
                 } else {
-
-                    selector.setMaxAge(SESION_CORTA);
-                    rawValidator.setMaxAge(SESION_CORTA);
-                    tipo.setMaxAge(SESION_CORTA);
-
-                    ((HttpServletResponse) resp).addCookie(selector);
-                    ((HttpServletResponse) resp).addCookie(rawValidator);
-                    ((HttpServletResponse) resp).addCookie(tipo);
+                    s.removeAttribute("usuario");
+                    ((HttpServletResponse) resp).sendRedirect(((HttpServletRequest) req).getContextPath() + "/module/iniciarSesion.jsp");
                 }
-            }else {
-                s.removeAttribute("usuario");
+            } else {
+                ((HttpServletResponse) resp).sendRedirect(((HttpServletRequest) req).getContextPath() + "/module/iniciarSesion.jsp");
             }
         }
         chain.doFilter(req, resp);

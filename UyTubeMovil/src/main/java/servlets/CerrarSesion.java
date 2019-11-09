@@ -33,7 +33,7 @@ public class CerrarSesion extends HttpServlet {
         response.addCookie(cookieTipo);
 
         RequestDispatcher rd;
-        rd = request.getRequestDispatcher("/index.jsp");
+        rd = request.getRequestDispatcher("/module/iniciarSesion.jsp");
         rd.forward(request, response);
     }
 }
