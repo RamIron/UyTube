@@ -603,14 +603,14 @@
                                                 <%--Nombre--%>
                                                 <div class="form-group">
                                                     <small>Nombre</small>
-                                                    <input name="nomU" class="form-control form-control-sm" placeholder="Nombre" id="nomU" type="text" value="<%=usuario.getNombre()%>">
+                                                    <input name="nomU" class="form-control form-control-sm" placeholder="Nombre" id="nomU" type="text" onkeyup="quitarInvalido(this)" value="<%=usuario.getNombre()%>">
                                                 </div>
                                                 <%--Fin Nombre--%>
 
                                                 <%--Apellido--%>
                                                 <div class="form-group">
                                                     <small>Apellido</small>
-                                                    <input name="apellido" class="form-control form-control-sm" placeholder="Apellido" id="apellido" type="text" value="<%=usuario.getApellido()%>">
+                                                    <input name="apellido" class="form-control form-control-sm" placeholder="Apellido" id="apellido" type="text" onkeyup="quitarInvalido(this)" value="<%=usuario.getApellido()%>">
                                                 </div>
                                                 <%--Fin Apellido--%>
 
@@ -621,7 +621,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text form-control-sm"><i class="ni ni-calendar-grid-58"></i></span>
                                                         </div>
-                                                        <input name="fNac" class="form-control datepicker form-control-sm" placeholder="Fecha de nacimiento" id="fNac" type="text" value="<%=fechaS%>">
+                                                        <input name="fNac" class="form-control datepicker form-control-sm" placeholder="Fecha de nacimiento" id="fNac" type="text" onkeyup="quitarInvalido(this)" value="<%=fechaS%>">
                                                     </div>
                                                 </div>
                                                 <%--Fin Fecha Nacimiento--%>
@@ -635,7 +635,7 @@
                                                 <%--Nombre Canal--%>
                                                 <div class="form-group">
                                                     <small>Nombre de Canal</small>
-                                                    <input name="nomCan" class="form-control form-control-sm" placeholder="Nombre (opcional)" id="nomCan" type="text" value="<%=canal.getNombre()%>">
+                                                    <input name="nomCan" class="form-control form-control-sm" placeholder="Nombre (opcional)" id="nomCan" type="text" onkeyup="quitarInvalido(this)" value="<%=canal.getNombre()%>">
                                                 </div>
                                                 <%--Fin Nombre Canal--%>
 
@@ -670,7 +670,7 @@
                                                 <div class="form-group">
                                                     <small>Descripción de Canal</small>
                                                     <div class="input-group">
-                                                        <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripcion..." name="descripcion"><%=canal.getDescripcion()%></textarea>
+                                                        <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripcion..." name="descripcion" onkeyup="quitarInvalido(this)"><%=canal.getDescripcion()%></textarea>
                                                     </div>
                                                 </div>
                                                 <%--Fin Descripcion Canal--%>
@@ -780,6 +780,14 @@
             marcarCamposVacios(nomU, apellido, fNac, nomCan, descripcion);
         }else {
             document.forms["consultaPerfil"].submit();
+        }
+    }
+
+    function quitarInvalido(arg){
+        if(arg.value == ""){
+            $(arg).addClass("is-invalid");
+        }else {
+            $(arg).removeClass("is-invalid");
         }
     }
 
