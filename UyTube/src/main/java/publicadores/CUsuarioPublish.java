@@ -228,4 +228,14 @@ public class CUsuarioPublish {
         DtVisita[] array = visitas.toArray(new DtVisita[visitas.size()]);
         return array;
     }
+
+    @WebMethod
+    public void crearToken(String selector, String validador, String usuario){
+        iUsr.crearToken(selector, validador, usuario);
+    }
+
+    @WebMethod
+    public DtUsuarioWeb obtenerUsuarioConToken(String selector, String validador){
+        return iUsr.obtenerUsuarioConToken(selector, validador);
+    }
 }
