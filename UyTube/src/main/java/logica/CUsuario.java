@@ -5,10 +5,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import Manejadores.ManejadorCategoria;
-import Manejadores.ManejadorPorDefecto;
-import Manejadores.ManejadorToken;
-import Manejadores.ManejadorUsuario;
+import manejadores.ManejadorCategoria;
+import manejadores.ManejadorPorDefecto;
+import manejadores.ManejadorToken;
+import manejadores.ManejadorUsuario;
 import datatypes.*;
 import interfaces.IUsuario;
 

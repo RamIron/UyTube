@@ -1,4 +1,4 @@
-package Manejadores;
+package manejadores;
 
 import logica.Conexion;
 import logica.TokenUsuario;
