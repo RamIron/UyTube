@@ -3,6 +3,7 @@ package interfaces;
 import java.util.List;
 import java.util.Calendar;
 import datatypes.*;
+import logica.Usuario;
 
 public interface IUsuario {
 	
@@ -63,7 +64,11 @@ public interface IUsuario {
 
 	public void eliminarUsuario(String nick);
 
-    public void agregarVisita(String usrSesion, String usrVid, String nomVid);
+    public void borrarTodosSeguidores(Usuario usr);
+
+	public void borrarTodosSeguidos(Usuario usr);
+
+	public void agregarVisita(String usrSesion, String usrVid, String nomVid);
 
     public List<DtVisita> listarMasVisitados(String nick);
 }

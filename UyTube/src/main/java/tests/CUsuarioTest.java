@@ -294,6 +294,32 @@ public class CUsuarioTest {
         assertEquals(1, iU.listarMasVisitados("usrSesion").size());
     }
 
+    @Test
+    public void borrarTodosSeguidores(){ //El usuario 1 sigue al 2
+        Calendar fecha = Calendar.getInstance();
+        iU.agregarUsuario("usr1", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        iU.agregarUsuario("usr2", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        iU.seguirUsuario("usr1", "usr2");
+        Usuario usr2 = mU.obtenerUsuario("usr2");
+        iU.borrarTodosSeguidores(usr2);
+        assertEquals(0, usr2.getSeguidores().size());
+    }
+
+    @Test
+    public void borrarTodosSeguidos(){ //El usuario 1 sigue al 2
+        Calendar fecha = Calendar.getInstance();
+        iU.agregarUsuario("usr1", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        iU.agregarUsuario("usr2", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        iU.seguirUsuario("usr1", "usr2");
+        Usuario usr1 = mU.obtenerUsuario("usr1");
+        iU.borrarTodosSeguidos(usr1);
+        assertEquals(0, usr1.getSeguidos().size());
+    }
+
     @After
     public void terminarCaso(){
         mU.cerrarConexion();
