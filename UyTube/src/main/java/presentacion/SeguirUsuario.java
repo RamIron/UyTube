@@ -50,9 +50,9 @@ public class SeguirUsuario extends JInternalFrame {
 		btnSelecSeguidor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int i = listaSeguidores.getSelectedIndex();
-				if(i < 0) {
+				if (i < 0) {
 					lblMsgError1.setVisible(true);
-				}else {					
+				} else {
 					seguidor = listaSeguidores.getModel().getElementAt(i).toString();
 					listaSeguidores.setEnabled(false);
 					btnSelecSeguidor.setEnabled(false);
@@ -83,9 +83,9 @@ public class SeguirUsuario extends JInternalFrame {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = listaSeguidos.getSelectedIndex();
-				if(i < 0) {
+				if (i < 0) {
 					lblMsgError2.setVisible(true);
-				}else {					
+				} else {
 					String seguido = listaSeguidores.getModel().getElementAt(i).toString();
 					iU.seguirUsuario(seguidor, seguido);
 					iU.limpiarControlador();
@@ -119,7 +119,7 @@ public class SeguirUsuario extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaSeguidores.setModel(listaU);
@@ -134,7 +134,7 @@ public class SeguirUsuario extends JInternalFrame {
 		
 	}
 	
-	public void LimpiarForm() {
+	public void limpiarForm() {
 		btnSelecSeguidor.setEnabled(true);
 		btnConfirmar.setEnabled(false);
 	}
@@ -147,7 +147,7 @@ public class SeguirUsuario extends JInternalFrame {
 	
 	public void inicializar(IUsuario iU) {
 		limpiarLista();
-		LimpiarForm();
+		limpiarForm();
 		cargarElementos(iU);
 		resetearMensajes();
 	}

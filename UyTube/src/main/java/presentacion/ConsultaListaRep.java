@@ -68,8 +68,8 @@ public class ConsultaListaRep extends JInternalFrame {
 				String usr = listaUsr.getModel().getElementAt(i).toString();
 				((DefaultListModel) listaLis.getModel()).clear();
 				List<String> listas = iL.listarListasDeUsuario(usr);
-				if(!listas.isEmpty()) {
-					for(String l: listas) {
+				if (!listas.isEmpty()) {
+					for (String l: listas) {
 						((DefaultListModel) listaLis.getModel()).addElement(l);
 					}
 				}
@@ -112,9 +112,9 @@ public class ConsultaListaRep extends JInternalFrame {
 				publico.setSelected(infoL.getPublico());
 				chkboxPorDefecto.setSelected(!infoL.getEsParticular());
 				List<DtVideoUsuario> videos = iL.listarVideosdeLista(lis);
-				if(!videos.isEmpty()) {
+				if (!videos.isEmpty()) {
 					TableModel modelo = (DefaultTableModel) tablaVid.getModel();
-					for(DtVideoUsuario v: videos) {
+					for (DtVideoUsuario v: videos) {
 						((DefaultTableModel) modelo).addRow(new Object[]{v.getNombreE(), v.getNickname()});
 					}
 				}
@@ -190,7 +190,7 @@ public class ConsultaListaRep extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaUsr.setModel(listaU);
@@ -205,9 +205,8 @@ public class ConsultaListaRep extends JInternalFrame {
 		listaLis.setEnabled(false);
 		((DefaultListModel) listaLis.getModel()).clear();
 		TableModel modelo = (DefaultTableModel) tablaVid.getModel();
-		while(modelo.getRowCount() > 0)
-		{
-		    ((DefaultTableModel)modelo).removeRow(0);
+		while (modelo.getRowCount() > 0) {
+		    ((DefaultTableModel) modelo).removeRow(0);
 		}
 		
 	}
@@ -238,9 +237,9 @@ public class ConsultaListaRep extends JInternalFrame {
 		publico.setSelected(infoL.getPublico());
 		chkboxPorDefecto.setSelected(!infoL.getEsParticular());
 		List<DtVideoUsuario> videos = iL.listarVideosdeLista(lis);
-		if(!videos.isEmpty()) {
+		if (!videos.isEmpty()) {
 			TableModel modelo = (DefaultTableModel) tablaVid.getModel();
-			for(DtVideoUsuario v: videos) {
+			for (DtVideoUsuario v: videos) {
 				((DefaultTableModel) modelo).addRow(new Object[]{v.getNombreE(), v.getNickname()});
 			}
 		}

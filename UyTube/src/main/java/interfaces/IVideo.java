@@ -1,9 +1,13 @@
 package interfaces;
 
+import datatypes.DtComentario;
+import datatypes.DtElementoUsuario;
+import datatypes.DtElementoWeb;
+import datatypes.DtVideo;
+import datatypes.DtValoracion;
 import java.util.Calendar;
 import java.util.List;
 
-import datatypes.*;
 
 public interface IVideo {
 

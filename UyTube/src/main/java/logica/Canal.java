@@ -1,8 +1,13 @@
 package logica;
 
-import java.util.*;
+import datatypes.DtElementoWeb;
+import datatypes.DtListaRep;
+import datatypes.DtVideo;
+import datatypes.DtVideoUsuario;
 import javax.persistence.*;
-import datatypes.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @NamedNativeQueries({
@@ -33,11 +38,11 @@ public class Canal {
     @OneToOne
     private Categoria categoria;
 	
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
-	private List <Video> videos = new ArrayList<Video>();
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<Video> videos = new ArrayList<Video>();
 	
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
-	private List <ListaReproduccion> listas = new ArrayList<ListaReproduccion>();
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<ListaReproduccion> listas = new ArrayList<ListaReproduccion>();
 	
 	
 	//Constructores
@@ -127,9 +132,9 @@ public class Canal {
 	}
 
 	public void agregarVideoListaParticular(Video v, String nomList) {
-		for(ListaReproduccion lr:this.listas) {
+		for (ListaReproduccion lr:this.listas) {
 			if (lr instanceof Particular) {
-				if(lr.getNombre().contentEquals(nomList)) {
+				if (lr.getNombre().contentEquals(nomList)) {
 					lr.agregarVideo(v);
 				}
 			}
@@ -137,9 +142,9 @@ public class Canal {
 	}
 	
 	public void agregarVideoListaPorDefecto(Video v, String nomList) {
-		for(ListaReproduccion lr:this.listas) {
+		for (ListaReproduccion lr:this.listas) {
 			if (lr instanceof PorDefecto) {
-				if(lr.getNombre().contentEquals(nomList)) {
+				if (lr.getNombre().contentEquals(nomList)) {
 					lr.agregarVideo(v);
 				}
 			}
@@ -147,16 +152,16 @@ public class Canal {
 	}
 	
 	public void eliminarVideoDeLista(Video v, String nomList) {
-		for(ListaReproduccion lr: this.listas) {
-			if(nomList.contentEquals(lr.getNombre())) {
+		for (ListaReproduccion lr: this.listas) {
+			if (nomList.contentEquals(lr.getNombre())) {
 				lr.eliminarVideo(v);	
 			}
 		}
 	}
 
 	public boolean existeLista(String nomL) {
-		for(ListaReproduccion lr:this.listas) {
-			if(nomL.contentEquals(lr.getNombre())) {
+		for (ListaReproduccion lr:this.listas) {
+			if (nomL.contentEquals(lr.getNombre())) {
 				return true;
 			}
 		}
@@ -164,9 +169,9 @@ public class Canal {
 	}
 	
 	public boolean existeListaParticular(String nomL) {
-		for(ListaReproduccion lr:this.listas) {
+		for (ListaReproduccion lr:this.listas) {
 			if (lr instanceof Particular) {
-				if(lr.getNombre().contentEquals(nomL)) {
+				if (lr.getNombre().contentEquals(nomL)) {
 					return true;
 				}
 			}
@@ -176,7 +181,7 @@ public class Canal {
 	
 	public List<String> listarListasDeUsuario() {
 		List<String> nomListas = new ArrayList<String>();
-		for(ListaReproduccion lr:this.listas) {
+		for (ListaReproduccion lr:this.listas) {
 			nomListas.add(lr.getNombre());
 		}
 		return nomListas;
@@ -184,8 +189,8 @@ public class Canal {
 	
 	public List<String> listarListasPorDefecto() {
 		List<String> listasDefectoU = new ArrayList<String>();
-		for(ListaReproduccion lr:this.listas) {
-			if(lr instanceof PorDefecto) {
+		for (ListaReproduccion lr:this.listas) {
+			if (lr instanceof PorDefecto) {
 				listasDefectoU.add(lr.getNombre());
 			}
 		}
@@ -194,8 +199,8 @@ public class Canal {
 	
 	public List<String> listarListasParticulares() {
 		List<String> listasPartU = new ArrayList<String>();
-		for(ListaReproduccion lr:this.listas) {
-			if(lr instanceof Particular) {
+		for (ListaReproduccion lr:this.listas) {
+			if (lr instanceof Particular) {
 				listasPartU.add(lr.getNombre());
 			}
 		}
@@ -204,8 +209,8 @@ public class Canal {
 
 	public List<String> listarListasParticularesPublicas() {
 		List<String> listasPartU = new ArrayList<String>();
-		for(ListaReproduccion lr:this.listas) {
-			if(lr instanceof Particular && lr.isPublico()) {
+		for (ListaReproduccion lr:this.listas) {
+			if (lr instanceof Particular && lr.isPublico()) {
 				listasPartU.add(lr.getNombre());
 			}
 		}
@@ -213,8 +218,8 @@ public class Canal {
 	}
 	
 	public List<DtVideoUsuario> listarVideosdeLista(String nomList) {
-		for(ListaReproduccion lr:this.listas) {
-			if(nomList.contentEquals(lr.getNombre())) {
+		for (ListaReproduccion lr:this.listas) {
+			if (nomList.contentEquals(lr.getNombre())) {
 				return lr.listarVideos();
 			}
 		}
@@ -222,8 +227,8 @@ public class Canal {
 	}
 
 	public List<DtElementoWeb> listarVideosListaWeb(String nomList) {
-		for(ListaReproduccion lr:this.listas) {
-			if(nomList.contentEquals(lr.getNombre())) {
+		for (ListaReproduccion lr:this.listas) {
+			if (nomList.contentEquals(lr.getNombre())) {
 				return lr.listarVideosWeb();
 			}
 		}
@@ -231,17 +236,17 @@ public class Canal {
 	}
 
 	public DtListaRep obtenerListaDeUsuario(String nomList) {
-		for(ListaReproduccion lr:this.listas) {
-			if(nomList.contentEquals(lr.getNombre())) {
-				if(lr instanceof Particular) {
+		for (ListaReproduccion lr:this.listas) {
+			if (nomList.contentEquals(lr.getNombre())) {
+				if (lr instanceof Particular) {
 					DtListaRep dtLisRep;
-					if(lr.categoria == null) {
+					if (lr.categoria == null) {
 						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, "");
-					}else {
+					} else {
 						dtLisRep = new DtListaRep(lr.getNombre(), lr.isPublico(), true, lr.categoria.getNombre());
 					}
 					return dtLisRep;
-				}else if(lr instanceof PorDefecto) {
+				} else if (lr instanceof PorDefecto) {
 					DtListaRep dtLisRep = new DtListaRep(lr.getNombre(), false, false);
 					return dtLisRep;
 				}
@@ -252,12 +257,12 @@ public class Canal {
 
 	
 	public DtVideo obtenerInfoVideo(String nomVid) {
-		for(Video v:this.videos) {
-			if(v.getNombre().equals(nomVid)) {
+		for (Video v:this.videos) {
+			if (v.getNombre().equals(nomVid)) {
 				DtVideo dtVid;
-				if(v.getCategoria() == null){
+				if (v.getCategoria() == null){
 					dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), null);
-				}else {
+				} else {
 					dtVid = new DtVideo(v.getNombre(), v.getDescripcion(), v.getfPublicacion(), v.getDuracion(), v.getUrl(), v.isPublico(), v.getCategoria().getNombre());
 				}
 				return dtVid;
@@ -269,10 +274,10 @@ public class Canal {
 	public ListaReproduccion obtenerLista(String nomLis) {
 		boolean encontre = false;
 		int i=0;
-		while(!encontre && i<this.listas.size()-1) {
-			if(nomLis.contentEquals(this.listas.get(i).getNombre())){
+		while (!encontre && i<this.listas.size()-1) {
+			if (nomLis.contentEquals(this.listas.get(i).getNombre())){
 				encontre = true;
-			}else {
+			} else {
 				i++;
 			}
 		}
@@ -281,8 +286,8 @@ public class Canal {
 	
 	public List<String> obtenerNombreVideosPublicos(){
 		List<String> videosU = new ArrayList<String>();
-		for(Video v:this.videos) {
-			if(v.isPublico()) {
+		for (Video v:this.videos) {
+			if (v.isPublico()) {
 				videosU.add(v.getNombre());
 			}
 		}
@@ -291,7 +296,7 @@ public class Canal {
 	
 	public List<String> obtenerNombreVideos(){
 		List<String> videosU = new ArrayList<String>();
-		for(Video v:this.videos) {
+		for (Video v:this.videos) {
 			videosU.add(v.getNombre());
 		}
 		return videosU;
@@ -301,10 +306,10 @@ public class Canal {
 	public Video obtenerVideo(String nomVid) {
 		boolean encontre = false;
 		int i=0;
-		while(!encontre && i<this.videos.size()-1) {
-			if(nomVid.contentEquals(this.videos.get(i).getNombre())){
+		while (!encontre && i<this.videos.size()-1) {
+			if (nomVid.contentEquals(this.videos.get(i).getNombre())){
 				encontre = true;
-			}else {
+			} else {
 				i++;
 			}
 		}
@@ -314,10 +319,10 @@ public class Canal {
 	public boolean existeVideo(String nomVid) {
 		boolean existe = false;
 		int i=0;
-		while(!existe && i<this.videos.size()) {
-			if(nomVid.contentEquals(this.videos.get(i).getNombre())) {
+		while (!existe && i<this.videos.size()) {
+			if (nomVid.contentEquals(this.videos.get(i).getNombre())) {
 				existe = true;
-			}else {
+			} else {
 				i++;
 			}
 		}

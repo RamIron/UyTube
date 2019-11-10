@@ -6,9 +6,9 @@ import java.util.Calendar;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DtFecha {
-    Integer anio;
-    Integer mes;
-    Integer dia;
+    private Integer anio;
+    private Integer mes;
+    private Integer dia;
 
     public DtFecha() {
         Calendar cal = Calendar.getInstance();

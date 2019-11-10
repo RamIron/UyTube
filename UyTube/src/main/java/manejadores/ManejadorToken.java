@@ -2,8 +2,6 @@ package manejadores;
 
 import logica.Conexion;
 import logica.TokenUsuario;
-import logica.Usuario;
-
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
 
@@ -27,8 +25,8 @@ public class ManejadorToken {
             em.persist(token);
             em.getTransaction().commit();
         } catch (Exception e){
-            if(e instanceof RollbackException)
-                if(em.getTransaction().isActive())
+            if (e instanceof RollbackException)
+                if (em.getTransaction().isActive())
                     em.getTransaction().rollback();
             throw new IllegalArgumentException("Hubo un error inesperado");
         }

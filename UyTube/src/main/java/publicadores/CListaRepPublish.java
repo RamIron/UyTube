@@ -95,7 +95,7 @@ public class CListaRepPublish {
         List<String> lists = iLisRep.listarListasDeUsuario(nick);
         int i = 0;
         String[] ret = new String[lists.size()];
-        for(String l : lists) {
+        for (String l : lists) {
             ret[i]=l;
             i++;
         }
@@ -107,7 +107,7 @@ public class CListaRepPublish {
         List<String> lists = iLisRep.listarListasParticulares(nick);
         int i = 0;
         String[] ret = new String[lists.size()];
-        for(String l : lists) {
+        for (String l : lists) {
             ret[i]=l;
             i++;
         }
@@ -119,7 +119,7 @@ public class CListaRepPublish {
         List<String> lists = iLisRep.listarListasParticulares(nick);
         int i = 0;
         String[] ret = new String[lists.size()];
-        for(String l : lists) {
+        for (String l : lists) {
             ret[i]=l;
             i++;
         }
@@ -131,7 +131,7 @@ public class CListaRepPublish {
         List<String> lists = iLisRep.listarListasPorDefecto(nick);
         int i = 0;
         String[] ret = new String[lists.size()];
-        for(String l : lists) {
+        for (String l : lists) {
             ret[i]=l;
             i++;
         }
@@ -143,7 +143,7 @@ public class CListaRepPublish {
         List<DtVideoUsuario> dtVid = iLisRep.listarVideosdeLista(nomList);
         int i = 0;
         DtVideoUsuario[] ret = new DtVideoUsuario[dtVid.size()];
-        for(DtVideoUsuario v : dtVid) {
+        for (DtVideoUsuario v : dtVid) {
             ret[i]=v;
             i++;
         }
@@ -155,7 +155,7 @@ public class CListaRepPublish {
         List<DtElementoWeb> dtElem = iLisRep.listarVideosListaWeb(nomList);
         int i = 0;
         DtElementoWeb[] ret = new DtElementoWeb[dtElem.size()];
-        for(DtElementoWeb e : dtElem) {
+        for (DtElementoWeb e : dtElem) {
             ret[i]=e;
             i++;
         }
@@ -210,7 +210,7 @@ public class CListaRepPublish {
         List<DtElementoWeb> dtElem = iLisRep.busqueda(query, ordFecha);
         int i = 0;
         DtElementoWeb[] ret = new DtElementoWeb[dtElem.size()];
-        for(DtElementoWeb e : dtElem) {
+        for (DtElementoWeb e : dtElem) {
             ret[i]=e;
             i++;
         }

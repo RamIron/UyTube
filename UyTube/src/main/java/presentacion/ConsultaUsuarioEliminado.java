@@ -11,13 +11,14 @@ import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import datatypes.DtCanal;
+import datatypes.DtUsuario;
 import interfaces.*;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.event.ListSelectionListener;
-import datatypes.*;
 import javax.swing.event.ListSelectionEvent;
 
 public class ConsultaUsuarioEliminado extends JInternalFrame {
@@ -28,10 +29,10 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 	private JTextField email;
 	private JTextField nomCanal;
 	private JComboBox<Integer> fDia = new JComboBox<Integer>();
-	private JComboBox <Integer>fMes = new JComboBox<Integer>();
+	private JComboBox<Integer> fMes = new JComboBox<Integer>();
 	private JComboBox<Integer> fAnio = new JComboBox<Integer>();
 	private JComboBox<Integer> fDiaElim = new JComboBox<Integer>();
-	private JComboBox <Integer>fMesElim = new JComboBox<Integer>();
+	private JComboBox<Integer> fMesElim = new JComboBox<Integer>();
 	private JComboBox<Integer> fAnioElim = new JComboBox<Integer>();
 	private JTextPane desCanal = new JTextPane();
 	private final JLabel lblImagen = new JLabel("");
@@ -121,7 +122,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		fDia.setEnabled(false);
 		fDia.setBounds(552, 142, 49, 24);
 		fDia.addItem(null);
-		for(Integer i=1; i<=31; i++) {
+		for (Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
 		}
 		getContentPane().add(fDia);
@@ -129,7 +130,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		fMes.setEnabled(false);
 		fMes.setBounds(613, 142, 52, 24);
 		fMes.addItem(null);
-		for(Integer i=1; i<=12; i++) {
+		for (Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
 		}
 		getContentPane().add(fMes);
@@ -137,7 +138,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		fAnio.setEnabled(false);
 		fAnio.setBounds(677, 142, 77, 24);
 		fAnio.addItem(null);
-		for(Integer i=1920; i<=2019; i++) {
+		for (Integer i=1920; i<=2019; i++) {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);
@@ -145,7 +146,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		fDiaElim.setEnabled(false);
 		fDiaElim.setBounds(552, 177, 49, 24);
 		fDiaElim.addItem(null);
-		for(Integer i=1; i<=31; i++) {
+		for (Integer i=1; i<=31; i++) {
 			fDiaElim.addItem(i);
 		}
 		getContentPane().add(fDiaElim);
@@ -153,7 +154,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		fMesElim.setEnabled(false);
 		fMesElim.setBounds(613, 177, 52, 24);
 		fMesElim.addItem(null);
-		for(Integer i=1; i<=12; i++) {
+		for (Integer i=1; i<=12; i++) {
 			fMesElim.addItem(i);
 		}
 		getContentPane().add(fMesElim);
@@ -161,7 +162,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		fAnioElim.setEnabled(false);
 		fAnioElim.setBounds(677, 177, 77, 24);
 		fAnioElim.addItem(null);
-		for(Integer i=1920; i<=2019; i++) {
+		for (Integer i=1920; i<=2019; i++) {
 			fAnioElim.addItem(i);
 		}
 		getContentPane().add(fAnioElim);
@@ -225,24 +226,24 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 				//INFO CANAL
 				nomCanal.setText(infoC.getNombre());
 				desCanal.setText(infoC.getDescripcion());
-				checkBoxPublico.setSelected((boolean)infoC.getPublico());
-				if(infoC.getCategoria() != null){
+				checkBoxPublico.setSelected((boolean) infoC.getPublico());
+				if (infoC.getCategoria() != null){
 				    categoria.setSelectedItem(infoC.getCategoria());
                 }
 
 				
 				//VIDEOS
 				List<String> videos = iV.listarVideosDeUsuario(usr);
-				if(!videos.isEmpty()) {
-					for(String v: videos) {
+				if (!videos.isEmpty()) {
+					for (String v: videos) {
 						((DefaultListModel) listaVid.getModel()).addElement(v);
 					}
 				}
 				
 				//LISTAS DE REPRODUCCION
 				List<String> listasRep = iL.listarListasDeUsuario(usr);
-				if(!listasRep.isEmpty()) {
-					for(String lP: listasRep) {
+				if (!listasRep.isEmpty()) {
+					for (String lP: listasRep) {
 						((DefaultListModel) listaLisRep.getModel()).addElement(lP);
 					}
 				}
@@ -313,7 +314,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuariosEliminados();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaUsr.setModel(listaU);
@@ -323,7 +324,7 @@ public class ConsultaUsuarioEliminado extends JInternalFrame {
 		List<String> categorias = iC.listarCategorias();
 		categoria.removeAllItems();
 		categoria.addItem("<Sin categoria>");
-		for(String c: categorias) {
+		for (String c: categorias) {
 			categoria.addItem(c);
 		}
 		categoria.setSelectedIndex(0);

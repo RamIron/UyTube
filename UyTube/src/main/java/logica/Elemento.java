@@ -1,6 +1,7 @@
 package logica;
 
-import datatypes.*;
+import datatypes.DtElementoUsuario;
+
 import javax.persistence.*;
 
 @Entity

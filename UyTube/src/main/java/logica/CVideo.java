@@ -4,21 +4,26 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.*;
+import datatypes.DtElementoUsuario;
+import datatypes.DtElementoWeb;
+import datatypes.DtVideo;
+import datatypes.DtComentario;
+import datatypes.DtValoracion;
+import datatypes.tipoElemento;
 import manejadores.ManejadorCategoria;
 import manejadores.ManejadorComentario;
 import manejadores.ManejadorUsuario;
-import datatypes.*;
 import interfaces.IVideo;
 
 public class CVideo implements IVideo {
-	public Usuario usr;
-	public Video vid;
+	private Usuario usr;
+	private Video vid;
 	
 	//Operaciones
 	@Override 
 	public void agregarCategoria(String nomC) {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
-		if(mC.existeCategoria(nomC)) {
+		if (mC.existeCategoria(nomC)) {
 			Categoria cat = mC.obtenerCategoria(nomC);
 			this.vid.sacarCategoria();
 			cat.agregarElemento(this.vid);
@@ -90,7 +95,7 @@ public class CVideo implements IVideo {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		List<String> usuarios = mU.listarUsuarios();
 		List<DtElementoUsuario> res  = new ArrayList<DtElementoUsuario>();
-		for(String nick: usuarios){
+		for (String nick: usuarios){
 			List<String> videos = listarVideosPublicosDeUsuario(nick);
 			for (String vid : videos){
 				DtElementoUsuario v = new DtElementoUsuario(nick, vid, tipoElemento.VIDEO);
@@ -105,7 +110,7 @@ public class CVideo implements IVideo {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		List<String> usuarios = mU.listarUsuarios();
 		List<DtElementoWeb> res  = new ArrayList<DtElementoWeb>();
-		for(String nick: usuarios){
+		for (String nick: usuarios){
 			List<String> videos = listarVideosPublicosDeUsuario(nick);
 			for (String nomVid : videos){
 				DtVideo vid = obtenerInfoVideo(nomVid);
@@ -149,9 +154,9 @@ public class CVideo implements IVideo {
 	public void responderComentario(int idCom, String nick, Calendar fcom, String texto) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		ManejadorComentario mC = ManejadorComentario.getInstancia();
-		if(mU.existeUsuario(nick)) {
+		if (mU.existeUsuario(nick)) {
 			Usuario usrRes = mU.obtenerUsuario(nick);
-			if(mC.existeComentario(idCom)) {
+			if (mC.existeComentario(idCom)) {
 				Comentario c = mC.obtenerComentario(idCom);
 				c.crearRespuesta(usrRes, fcom, texto);
 			} else {
@@ -165,7 +170,7 @@ public class CVideo implements IVideo {
 	@Override 
 	public void realizarComentario(String nick, Calendar fCom, String texto) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(mU.existeUsuario(nick)) {
+		if (mU.existeUsuario(nick)) {
 			Usuario usrCom = mU.obtenerUsuario(nick);
 			this.vid.crearComentario(usrCom, fCom, texto);
 			mU.modificaDatosUsuario(this.usr);
@@ -177,12 +182,12 @@ public class CVideo implements IVideo {
 	public void valorarVideo(String nickVal, boolean val) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		
-		if(mU.existeUsuario(nickVal)) {
+		if (mU.existeUsuario(nickVal)) {
 			Usuario usrVal = mU.obtenerUsuario(nickVal);
 			this.vid.valorarVideo(val, usrVal);
 			
 			mU.modificaDatosUsuario(this.usr);
-		}else {
+		} else {
 			throw new java.lang.RuntimeException("No existe un usuario con ese nick");
 		}
 	}
@@ -199,8 +204,8 @@ public class CVideo implements IVideo {
 	public Integer cantidadGusta(){
 		Integer i = 0;
 		List<DtValoracion> listaVal = obtenerValoracionVideo();
-		for(DtValoracion v: listaVal){
-			if(v.getGusta()){
+		for (DtValoracion v: listaVal){
+			if (v.getGusta()){
 				i++;
 			}
 		}
@@ -211,8 +216,8 @@ public class CVideo implements IVideo {
 	public Integer cantidadNoGusta(){
 		Integer i = 0;
 		List<DtValoracion> listaVal = obtenerValoracionVideo();
-		for(DtValoracion v: listaVal){
-			if(!v.getGusta()){
+		for (DtValoracion v: listaVal){
+			if (!v.getGusta()){
 				i++;
 			}
 		}
@@ -236,7 +241,7 @@ public class CVideo implements IVideo {
 		EntityManager em = conexion.getEntityManager();
 		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
 		List<Object[]> resQuery;
-		if(ordFecha){
+		if (ordFecha){
 			Query consulta = em.createNamedQuery("buscarVideoFecha");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
@@ -245,7 +250,7 @@ public class CVideo implements IVideo {
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		}
-		for(Object[] o : resQuery){
+		for (Object[] o : resQuery){
 			DtElementoWeb lis = new DtElementoWeb(o[0].toString(), o[1].toString(), tipoElemento.VIDEO, o[2].toString());
 			res.add(lis);
 		}
@@ -268,7 +273,7 @@ public class CVideo implements IVideo {
 		Query consulta = em.createNamedQuery("obtenerVideoPorId");
 		consulta.setParameter(1, idVid);
 		resQuery = consulta.getResultList();
-		if(resQuery.size() != 0){
+		if (resQuery.size() != 0){
 			res = new DtElementoWeb(resQuery.get(0)[0].toString(), resQuery.get(0)[1].toString(), tipoElemento.VIDEO, resQuery.get(0)[2].toString());
 		}
 		return res;

@@ -43,7 +43,7 @@ public class ModificarUsuario extends JInternalFrame {
 	private Boolean agregarNomCanal = false;
 	private Boolean publico = false;
 	private JComboBox<Integer> fDia = new JComboBox<Integer>();
-	private JComboBox <Integer>fMes = new JComboBox<Integer>();
+	private JComboBox<Integer> fMes = new JComboBox<Integer>();
 	private JComboBox<Integer> fAnio = new JComboBox<Integer>();
 	private JTextPane desCanal = new JTextPane();
 	private JCheckBox chckbxCanalPublico = new JCheckBox("");
@@ -144,7 +144,7 @@ public class ModificarUsuario extends JInternalFrame {
 
 		fDia.setBounds(552, 142, 49, 24);
 		fDia.addItem(null);
-		for(Integer i=1; i<=31; i++) {
+		for (Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
 		}
 		getContentPane().add(fDia);
@@ -153,7 +153,7 @@ public class ModificarUsuario extends JInternalFrame {
 		
 		fMes.setBounds(613, 142, 52, 24);
 		fMes.addItem(null);
-		for(Integer i=1; i<=12; i++) {
+		for (Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
 		}
 		getContentPane().add(fMes);
@@ -162,7 +162,7 @@ public class ModificarUsuario extends JInternalFrame {
 		
 		fAnio.setBounds(677, 142, 77, 24);
 		fAnio.addItem(null);
-		for(Integer i=1920; i<=2019; i++) {
+		for (Integer i=1920; i<=2019; i++) {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);
@@ -229,22 +229,22 @@ public class ModificarUsuario extends JInternalFrame {
 				desCanal.setText(infoC.getDescripcion());
 				chckbxCanalPublico.setSelected(infoC.getPublico());
 				publico = infoC.getPublico();
-				if(infoC.getCategoria() != null){
+				if (infoC.getCategoria() != null){
 					categoria.setSelectedItem(infoC.getCategoria());
 				}
 				
 				//VIDEOS
 				List<String> videos = iV.listarVideosDeUsuario(usr);
-				if(!videos.isEmpty()) {
-					for(String v: videos) {
+				if (!videos.isEmpty()) {
+					for (String v: videos) {
 						((DefaultListModel) listaVid.getModel()).addElement(v);
 					}
 				}
 				
 				//LISTAS DE REPRODUCCION
 				List<String> listasRep = iL.listarListasParticulares(usr);
-				if(!listasRep.isEmpty()) {
-					for(String lP: listasRep) {
+				if (!listasRep.isEmpty()) {
+					for (String lP: listasRep) {
 						((DefaultListModel) listaLisRep.getModel()).addElement(lP);
 					}
 				}
@@ -298,10 +298,10 @@ public class ModificarUsuario extends JInternalFrame {
 		btnSelecVideo.setEnabled(false);
 		btnSelecVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(!insiste) {
+				if (!insiste) {
 					lblMsgAdvert.setVisible(true);
 					insiste = true;
-				}else {
+				} else {
 					int i = listaUsr.getSelectedIndex();
 					String usr = listaUsr.getModel().getElementAt(i).toString();
 					i = listaVid.getSelectedIndex();
@@ -320,10 +320,10 @@ public class ModificarUsuario extends JInternalFrame {
 		btnSelecLista.setEnabled(false);
 		btnSelecLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(!insiste) {
+				if (!insiste) {
 					lblMsgAdvert.setVisible(true);
 					insiste = true;
-				}else {
+				} else {
 					int i = listaUsr.getSelectedIndex();
 					String usr = listaUsr.getModel().getElementAt(i).toString();
 					i = listaLisRep.getSelectedIndex();
@@ -340,17 +340,17 @@ public class ModificarUsuario extends JInternalFrame {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				borrarMsg();
-				if(nick.getText().isEmpty() || nombre.getText().isEmpty() || apellido.getText().isEmpty() ||
+				if (nick.getText().isEmpty() || nombre.getText().isEmpty() || apellido.getText().isEmpty() ||
 						email.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null) 
 						|| nomCanal.getText().isEmpty()	|| desCanal.getText().isEmpty()) {
 						lblMsgError.setVisible(true);
-					}else {
+					} else {
 						Calendar fNac = Calendar.getInstance();
 				        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem()-1, (Integer) fDia.getSelectedItem());
 				        iU.modificarInfoUsuario(nombre.getText(), apellido.getText(), fNac, imgPath);
 				        iU.modificarInfoCanal(nomCanal.getText(), desCanal.getText(), chckbxCanalPublico.isSelected());
 				        String nomCat = null;
-				        if(categoria.getSelectedIndex() != 0){
+				        if (categoria.getSelectedIndex() != 0){
 							nomCat = categoria.getSelectedItem().toString();
 						}
 						iU.modificarCatCanal(nick.getText(), nomCat);
@@ -429,7 +429,7 @@ public class ModificarUsuario extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaUsr.setModel(listaU);
@@ -443,7 +443,7 @@ public class ModificarUsuario extends JInternalFrame {
 		List<String> categorias = iC.listarCategorias();
 		categoria.removeAllItems();
 		categoria.addItem("<Sin categoria>");
-		for(String c: categorias) {
+		for (String c: categorias) {
 			categoria.addItem(c);
 		}
 		categoria.setSelectedIndex(0);
@@ -508,20 +508,15 @@ public class ModificarUsuario extends JInternalFrame {
 		lblMsgAdvert.setVisible(false);
 	}
 	
-	public void mostrarImg(final String filename) throws Exception
-	  {
-	    SwingUtilities.invokeLater(new Runnable()
-	    {
-	      public void run()
-	      {
+	public void mostrarImg(final String filename) throws Exception {
+	    SwingUtilities.invokeLater(new Runnable() {
+	      public void run() {
 	                
 	        BufferedImage image = null;
-	        try
-	        {
+	        try {
 	          image = ImageIO.read(new File(filename));
 	        }
-	        catch (Exception e)
-	        {
+	        catch (Exception e) {
 	          e.printStackTrace();
 	          System.exit(1);
 	        }

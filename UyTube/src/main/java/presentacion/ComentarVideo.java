@@ -74,8 +74,8 @@ public class ComentarVideo extends JInternalFrame {
 				String usr = listaUsrV.getModel().getElementAt(i).toString();
 				((DefaultListModel) listaVid.getModel()).clear();
 				List<String> videos = iV.listarVideosDeUsuario(usr);
-				if(!videos.isEmpty()) {
-					for(String v: videos) {
+				if (!videos.isEmpty()) {
+					for (String v: videos) {
 						((DefaultListModel) listaVid.getModel()).addElement(v);
 					}
 				}
@@ -129,7 +129,7 @@ public class ComentarVideo extends JInternalFrame {
 		
 		fDia.setBounds(405, 304, 49, 24);
 		fDia.addItem(null);
-		for(Integer i=1; i<=31; i++) {
+		for (Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
 		}
 		getContentPane().add(fDia);
@@ -138,7 +138,7 @@ public class ComentarVideo extends JInternalFrame {
 		
 		fMes.setBounds(466, 304, 52, 24);
 		fMes.addItem(null);
-		for(Integer i=1; i<=12; i++) {
+		for (Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
 		}
 		getContentPane().add(fMes);
@@ -147,7 +147,7 @@ public class ComentarVideo extends JInternalFrame {
 		
 		fAnio.setBounds(528, 304, 77, 24);
 		fAnio.addItem(null);
-		for(Integer i=2019; i>=2000; i--) {
+		for (Integer i=2019; i>=2000; i--) {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);
@@ -181,9 +181,9 @@ public class ComentarVideo extends JInternalFrame {
 		btnResponderComentario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetearMensajes();
-				if(comentarios.getLastSelectedPathComponent() == null) {
+				if (comentarios.getLastSelectedPathComponent() == null) {
 					lblMsgErrorSelec.setVisible(true);
-				}else {
+				} else {
 					btnNuevoComentario.setEnabled(false);
 					btnResponderComentario.setEnabled(false);
 					nuevoComentario = false;
@@ -244,16 +244,16 @@ public class ComentarVideo extends JInternalFrame {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				resetearMensajes();
-				if(comentario.getText().isEmpty() || fDia.getSelectedIndex() == 0 || fMes.getSelectedIndex() == 0 || fAnio.getSelectedIndex() == 0) {
+				if (comentario.getText().isEmpty() || fDia.getSelectedIndex() == 0 || fMes.getSelectedIndex() == 0 || fAnio.getSelectedIndex() == 0) {
 					lblMsgError.setVisible(true);
 				} else {
 					int i = listaUsrC.getSelectedIndex();
 					String usr = listaUsrC.getModel().getElementAt(i).toString();
 					Calendar fPub = Calendar.getInstance();
 					fPub.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
-					if(nuevoComentario) {
+					if (nuevoComentario) {
 						iV.realizarComentario(usr, fPub, comentario.getText());
-					}else {
+					} else {
 						DefaultMutableTreeNode com = (DefaultMutableTreeNode) comentarios.getLastSelectedPathComponent();
 						int idCom = ((DtComentario) com.getUserObject()).getId();
 						iV.responderComentario(idCom, usr, fPub, comentario.getText());
@@ -286,7 +286,7 @@ public class ComentarVideo extends JInternalFrame {
 	
 	public void cargarComentarios(IVideo iV, String nomVid) {
 		List<DtComentario> listaCom = iV.obtenerComentariosVideo(nomVid);
-		for(DtComentario c: listaCom) {
+		for (DtComentario c: listaCom) {
 			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
 			cargarRespuestas(nodo, c.getRespuestas());
 			raiz.add(nodo);
@@ -294,7 +294,7 @@ public class ComentarVideo extends JInternalFrame {
 	}
 	
 	public void cargarRespuestas(DefaultMutableTreeNode padre, List<DtComentario> com) {
-		for(DtComentario c: com) {
+		for (DtComentario c: com) {
 			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
 				cargarRespuestas(nodo, c.getRespuestas());	
 			padre.add(nodo);
@@ -306,7 +306,7 @@ public class ComentarVideo extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaUsrV.setModel(listaU);
@@ -325,7 +325,7 @@ public class ComentarVideo extends JInternalFrame {
 		comentarios.setEnabled(false);
 	}
 	
-	public void LimpiarForm() {
+	public void limpiarForm() {
 		btnSeleccionarUsuario.setEnabled(true);
 		btnSelecVid.setEnabled(false);
 		fDia.setSelectedIndex(0);
@@ -347,7 +347,7 @@ public class ComentarVideo extends JInternalFrame {
 	
 	public void inicializar(IUsuario iU) {
 		limpiarLista();
-		LimpiarForm();
+		limpiarForm();
 		cargarElementos(iU);
 		resetearMensajes();
 	}

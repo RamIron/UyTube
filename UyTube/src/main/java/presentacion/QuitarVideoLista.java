@@ -118,18 +118,18 @@ public class QuitarVideoLista extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				lblFaltanSeleccionarDatos.setVisible(false);
 				int i = listUsrL.getSelectedIndex();
-				if(i >= 0) {
+				if (i >= 0) {
 					listList.setEnabled(true);
 					usuarioLista = listUsrL.getModel().getElementAt(i).toString();
 					((DefaultListModel) listList.getModel()).clear();
 					List<String> listas = iL.listarListasDeUsuario(usuarioLista);
-					if(!listas.isEmpty()) {
+					if (!listas.isEmpty()) {
 						btnSelecLista.setEnabled(true);
-						for(String l: listas) {
+						for (String l: listas) {
 							((DefaultListModel) listList.getModel()).addElement(l);
 						}
 					}
-				}else {
+				} else {
 					lblFaltanSeleccionarDatos.setVisible(true);
 				}
 			}
@@ -140,20 +140,20 @@ public class QuitarVideoLista extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				lblFaltanSeleccionarDatos.setVisible(false);
 				int i = listList.getSelectedIndex();
-				if(i >= 0) {
+				if (i >= 0) {
 					seleccionoLista = true;
 					listVid.setEnabled(true);
 					nomLista = listList.getModel().getElementAt(i).toString();
 					((DefaultListModel) listVid.getModel()).clear();
 					List<DtVideoUsuario> videos = iL.listarVideosdeLista(nomLista);
-					if(!videos.isEmpty()) {
+					if (!videos.isEmpty()) {
 						btnSelecVid.setEnabled(true);
-						for(DtVideoUsuario v: videos) {
+						for (DtVideoUsuario v: videos) {
 							String dataVid = v.getNombreE() + " - " + v.getNickname();
 							((DefaultListModel) listVid.getModel()).addElement(dataVid);
 						}
 					}
-				}else {
+				} else {
 					lblFaltanSeleccionarDatos.setVisible(true);
 				}
 			}
@@ -163,11 +163,11 @@ public class QuitarVideoLista extends JInternalFrame {
 		btnSelecVid.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				int i = listVid.getSelectedIndex();
-				if(i >= 0) {
+				if (i >= 0) {
 					seleccionoVideo = true;
 					btnQuitar.setEnabled(true);
 					nomVid = listVid.getModel().getElementAt(i).toString();
-				}else {
+				} else {
 					lblFaltanSeleccionarDatos.setVisible(true);
 				}
 			}
@@ -176,7 +176,7 @@ public class QuitarVideoLista extends JInternalFrame {
 		//BOTON QUITAR VIDEO DE LISTA///////////////////////////////
 		btnQuitar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(seleccionoVideo == true && seleccionoLista == true) {
+				if (seleccionoVideo == true && seleccionoLista == true) {
 					String[] tokens = nomVid.split(" - ");
 					int i = 0;
 					String datos[] = new String[2];
@@ -218,7 +218,7 @@ public class QuitarVideoLista extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listUsrL.setModel(listaU);
@@ -230,7 +230,7 @@ public class QuitarVideoLista extends JInternalFrame {
 		((DefaultListModel) listList.getModel()).clear();
 	}
 	
-	public void LimpiarForm() {
+	public void limpiarForm() {
 		lblSeHaQuitado.setVisible(false);
 		lblFaltanSeleccionarDatos.setVisible(false);
 		nomVid = "";
@@ -243,7 +243,7 @@ public class QuitarVideoLista extends JInternalFrame {
 	
 	public void inicializar() {
 		limpiarLista();
-		LimpiarForm();
+		limpiarForm();
 		cargarElementos();
 	}
 }

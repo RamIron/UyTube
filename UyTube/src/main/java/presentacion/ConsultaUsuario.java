@@ -1,15 +1,10 @@
 package presentacion;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.Calendar;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -20,7 +15,6 @@ import interfaces.*;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 import java.awt.Font;
 import javax.swing.event.ListSelectionListener;
 import datatypes.*;
@@ -37,7 +31,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	private Boolean agregarNomCanal = false;
 	private Boolean publico = false;
 	private JComboBox<Integer> fDia = new JComboBox<Integer>();
-	private JComboBox <Integer>fMes = new JComboBox<Integer>();
+	private JComboBox<Integer> fMes = new JComboBox<Integer>();
 	private JComboBox<Integer> fAnio = new JComboBox<Integer>();
 	private JTextPane desCanal = new JTextPane();
 	private final JLabel lblImagen = new JLabel("");
@@ -127,7 +121,7 @@ public class ConsultaUsuario extends JInternalFrame {
 
 		fDia.setBounds(552, 142, 49, 24);
 		fDia.addItem(null);
-		for(Integer i=1; i<=31; i++) {
+		for (Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
 		}
 		getContentPane().add(fDia);
@@ -136,7 +130,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		
 		fMes.setBounds(613, 142, 52, 24);
 		fMes.addItem(null);
-		for(Integer i=1; i<=12; i++) {
+		for (Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
 		}
 		getContentPane().add(fMes);
@@ -145,7 +139,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		
 		fAnio.setBounds(677, 142, 77, 24);
 		fAnio.addItem(null);
-		for(Integer i=1920; i<=2019; i++) {
+		for (Integer i=1920; i<=2019; i++) {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);
@@ -206,39 +200,39 @@ public class ConsultaUsuario extends JInternalFrame {
 				nomCanal.setText(infoC.getNombre());
 				desCanal.setText(infoC.getDescripcion());
 				checkBoxPublico.setSelected((boolean)infoC.getPublico());
-				if(infoC.getCategoria() != null){
+				if (infoC.getCategoria() != null){
 				    categoria.setSelectedItem(infoC.getCategoria());
                 }
 
 				
 				//SEGUIDORES
 				List<String> seguidores = iU.listarSeguidores();
-				if(!seguidores.isEmpty()) {
-					for(String u: seguidores) {
+				if (!seguidores.isEmpty()) {
+					for (String u: seguidores) {
 						((DefaultListModel) listaSeguidores.getModel()).addElement(u);
 					}					
 				}
 				
 				//SEGUIDOS
 				List<String> seguidos = iU.listarSeguidos();
-				if(!seguidos.isEmpty()) {
-					for(String u: seguidos) {
+				if (!seguidos.isEmpty()) {
+					for (String u: seguidos) {
 						((DefaultListModel) listaSeguidos.getModel()).addElement(u);
 					}					
 				}
 				
 				//VIDEOS
 				List<String> videos = iV.listarVideosDeUsuario(usr);
-				if(!videos.isEmpty()) {
-					for(String v: videos) {
+				if (!videos.isEmpty()) {
+					for (String v: videos) {
 						((DefaultListModel) listaVid.getModel()).addElement(v);
 					}
 				}
 				
 				//LISTAS DE REPRODUCCION
 				List<String> listasRep = iL.listarListasDeUsuario(usr);
-				if(!listasRep.isEmpty()) {
-					for(String lP: listasRep) {
+				if (!listasRep.isEmpty()) {
+					for (String lP: listasRep) {
 						((DefaultListModel) listaLisRep.getModel()).addElement(lP);
 					}
 				}
@@ -361,7 +355,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaUsr.setModel(listaU);
@@ -371,7 +365,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		List<String> categorias = iC.listarCategorias();
 		categoria.removeAllItems();
 		categoria.addItem("<Sin categoria>");
-		for(String c: categorias) {
+		for (String c: categorias) {
 			categoria.addItem(c);
 		}
 		categoria.setSelectedIndex(0);
