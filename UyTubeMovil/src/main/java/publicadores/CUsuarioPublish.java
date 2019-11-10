@@ -28,28 +28,6 @@ public interface CUsuarioPublish {
 
     /**
      * 
-     * @param arg3
-     * @param arg2
-     * @param arg4
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CUsuarioPublish/agregarUsuarioRequest", output = "http://publicadores/CUsuarioPublish/agregarUsuarioResponse")
-    public void agregarUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        DtFecha arg3,
-        @WebParam(name = "arg4", partName = "arg4")
-        String arg4);
-
-    /**
-     * 
      * @param arg1
      * @param arg0
      */
@@ -73,19 +51,6 @@ public interface CUsuarioPublish {
         String arg0,
         @WebParam(name = "arg1", partName = "arg1")
         String arg1);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CUsuarioPublish/esCanalPublicoRequest", output = "http://publicadores/CUsuarioPublish/esCanalPublicoResponse")
-    public boolean esCanalPublico(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
 
     /**
      * 
@@ -135,6 +100,113 @@ public interface CUsuarioPublish {
     @WebResult(partName = "return")
     @Action(input = "http://publicadores/CUsuarioPublish/listarSeguidoresRequest", output = "http://publicadores/CUsuarioPublish/listarSeguidoresResponse")
     public StringArray listarSeguidores();
+
+    /**
+     * 
+     * @return
+     *     returns net.java.dev.jaxb.array.StringArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CUsuarioPublish/listarSeguidosRequest", output = "http://publicadores/CUsuarioPublish/listarSeguidosResponse")
+    public StringArray listarSeguidos();
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CUsuarioPublish/modificarImagenRequest", output = "http://publicadores/CUsuarioPublish/modificarImagenResponse")
+    public void modificarImagen(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CUsuarioPublish/modificarContrasenaRequest", output = "http://publicadores/CUsuarioPublish/modificarContrasenaResponse")
+    public void modificarContrasena(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
+
+    /**
+     * 
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CUsuarioPublish/modificarInfoCanalRequest", output = "http://publicadores/CUsuarioPublish/modificarInfoCanalResponse")
+    public void modificarInfoCanal(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        boolean arg2);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CUsuarioPublish/modificarInfoUsuarioRequest", output = "http://publicadores/CUsuarioPublish/modificarInfoUsuarioResponse")
+    public void modificarInfoUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        DtFecha arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        String arg3);
+
+    /**
+     * 
+     * @param arg3
+     * @param arg2
+     * @param arg4
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CUsuarioPublish/agregarUsuarioRequest", output = "http://publicadores/CUsuarioPublish/agregarUsuarioResponse")
+    public void agregarUsuario(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        DtFecha arg3,
+        @WebParam(name = "arg4", partName = "arg4")
+        String arg4);
+
+    /**
+     * 
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CUsuarioPublish/agregarCanalRequest", output = "http://publicadores/CUsuarioPublish/agregarCanalResponse")
+    public void agregarCanal();
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CUsuarioPublish/esCanalPublicoRequest", output = "http://publicadores/CUsuarioPublish/esCanalPublicoResponse")
+    public boolean esCanalPublico(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
 
     /**
      * 
@@ -310,78 +382,6 @@ public interface CUsuarioPublish {
         String arg0,
         @WebParam(name = "arg1", partName = "arg1")
         boolean arg1);
-
-    /**
-     * 
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CUsuarioPublish/agregarCanalRequest", output = "http://publicadores/CUsuarioPublish/agregarCanalResponse")
-    public void agregarCanal();
-
-    /**
-     * 
-     * @return
-     *     returns net.java.dev.jaxb.array.StringArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CUsuarioPublish/listarSeguidosRequest", output = "http://publicadores/CUsuarioPublish/listarSeguidosResponse")
-    public StringArray listarSeguidos();
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CUsuarioPublish/modificarImagenRequest", output = "http://publicadores/CUsuarioPublish/modificarImagenResponse")
-    public void modificarImagen(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CUsuarioPublish/modificarContrasenaRequest", output = "http://publicadores/CUsuarioPublish/modificarContrasenaResponse")
-    public void modificarContrasena(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CUsuarioPublish/modificarInfoCanalRequest", output = "http://publicadores/CUsuarioPublish/modificarInfoCanalResponse")
-    public void modificarInfoCanal(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        boolean arg2);
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CUsuarioPublish/modificarInfoUsuarioRequest", output = "http://publicadores/CUsuarioPublish/modificarInfoUsuarioResponse")
-    public void modificarInfoUsuario(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        DtFecha arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        String arg3);
 
     /**
      * 
