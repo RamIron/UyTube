@@ -29,7 +29,7 @@ public class filtroVideo implements Filter {
             RequestDispatcher rd = req.getRequestDispatcher("/module/invalido.jsp");
             rd.forward(req,resp);
         }
-        chain.doFilter(req, resp);
+        //chain.doFilter(req, resp);
     }
 
     public void init(FilterConfig config) throws ServletException {

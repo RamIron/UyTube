@@ -198,7 +198,7 @@
       <hr class="my-3">
       <ul  class="navbar-nav">
         <li class="nav-item">
-          <a href="<%= request.getContextPath() %>CerrarSesion" class="nav-link ">
+          <a href="<%= request.getContextPath() %>/CerrarSesion" class="nav-link ">
             <i class="ni ni-user-run text-blue"></i> Cerrar sesion
           </a>
         </li>
@@ -264,7 +264,7 @@
               <span>Mi perfil</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="<%= request.getContextPath() %>CerrarSesion" class="dropdown-item">
+            <a href="<%= request.getContextPath() %>/CerrarSesion" class="dropdown-item">
               <i class="ni ni-user-run"></i>
               <span>Cerrar sesion</span>
             </a>
@@ -379,7 +379,7 @@
                                         <%
                                           Integer idVideo = portVideo.obtenerIdVideo(nick, nomVid);
                                         %>
-                                        <input type="text" id="imputUrl" value="http://localhost:8080/UyTubeWeb_war_exploded/v/<%=idVideo%>" class="form-control" aria-label="Sizing example input" readonly aria-describedby="inputGroup-sizing-sm">
+                                        <input type="text" id="imputUrl" value="<%= request.getContextPath() %>/v/<%=idVideo%>" class="form-control" aria-label="Sizing example input" readonly aria-describedby="inputGroup-sizing-sm">
                                       </div>
                                     </div>
                                   </div>
