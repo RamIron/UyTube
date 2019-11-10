@@ -2,6 +2,8 @@ package tests;
 
 import datatypes.DtElementoWeb;
 import datatypes.tipoElemento;
+import logica.Usuario;
+import logica.Video;
 import manejadores.ManejadorCategoria;
 import manejadores.ManejadorUsuario;
 import datatypes.DtComentario;
@@ -248,18 +250,23 @@ public class CVideoTest {
         iV.modificarInfoVideo("vid", "desc", cal, 10, "url", true);
         assertEquals(1, iV.busqueda("vid", false).size());
     }
-    // Ver como hago para obtener el usuario actual del controlador
+
     @Test
     public void setUsr(){
         Calendar cal = Calendar.getInstance();
         iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
 
     }
-    // Ver como hago para obtener el usuario actual del controlador
+
     @Test
     public void setVid(){
         Calendar cal = Calendar.getInstance();
         iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iV.agregarVideo("usr", "vid", "desc", cal, 10, "url");
+        Usuario usr = mU.obtenerUsuario("usr");
+        Video vid = usr.getCanal().obtenerVideo("vid");
+        iV.setVid("vid");
+        assertEquals("vid", vid.getNombre());
     }
 
     @Test
