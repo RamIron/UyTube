@@ -5,8 +5,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="interfaces.IUsuario" %>
 <%@ page import="interfaces.UFactory" %>
-<%@ page import="publicadores.DtVisita" %>
-<%@ page import="publicadores.CUsuarioPublish" %>
 <!--
 
 =========================================================
@@ -214,38 +212,59 @@
     <div class="container-fluid">
       <div class="header-body">
         <!-- Contenido aqui -------------------------------------------------------------------------------------------------------------------------------->
-        <div class="container-fluid">
-          <div class="col col- justify-content-left">
-            <%
-              publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
-              publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
-              List<DtVisita> listEU = port.listarMasVisitados(usr.getNickname()).getItem();
-              for(DtVisita eu: listEU){
-            %>
+          <%
+              String query = request.getParameter("q");
+              Integer cantRes = 0;
 
-            <div class="card mb-3" style="max-width: 630px;">
-              <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=eu.getUsrVideo()%>&v=<%=eu.getNomVideo()%>">
-                <div class="row no-gutters">
-                  <div class="col-md-4">
-                    <img src="http://img.youtube.com/vi/<%=eu.getUrlVideo()%>/0.jpg" class="card-img" alt="...">
+              List<DtElementoWeb> listaV = new ArrayList<DtElementoWeb>();
+
+              if (query == null){
+                  query = "";
+              }
+              listaV = portVideo.busqueda(query,false).getItem();
+              cantRes =listaV.size();
+          %>
+
+              <div class="row justify-content-center">
+                  <div class="col-xl-10 order-xl-1">
+                      <!-- inicio de filtrado -->
+                      <div class="card bg-secondary shadow ">
+                          <div class="card-body px-lg-5 py-lg-5">
+                              <h3>Listas de Reproduccion</h3>
+                              <br>
+                              <!-- inicio de resultados -->
+                              <div class="d-sm-inline-flex row" style="width: 100%">
+                                  <div class="container-fluid">
+                                      <div class="col col- justify-content-left">
+                                          <!-- Listado de Videos -->
+                                          <%
+                                              List<String> lista = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
+                                              for(String l: lista){ %>
+                                          <div class="card mb-3" style="max-width: 630px;">
+                                              <a  href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">
+                                                  <div class="row no-gutters">
+                                                      <div class="col-md-5">
+                                                          <div class="card-body">
+                                                              <h5 class="card-title mb-0 text-lg"><%=l%></h5>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </a>
+                                          </div>
+                                          <%}%>
+                                          <!-- Fin listado de Videos -->
+                                      </div>
+                                  </div>
+                              </div>
+                              <!-- fin de resultados -->
+                          </div>
+                      </div>
                   </div>
-                  <div class="col-md-5">
-                    <div class="card-body">
-                      <h5 class="card-title mb-0 text-lg"><%=eu.getNomVideo()%></h5>
-                      <p class="card-text">
-                        <small class="text-muted">Por <strong><%=eu.getUsrVideo()%></strong></small><br>
-                        <small class="text-muted">Visto <strong><%=eu.getCantVisitas()%></strong> veces</small><br>
-                        <small class="text-muted">Ultima vez <strong><%=eu.getUltimaVisita().getDay()%>/<%=eu.getUltimaVisita().getMonth()%>/<%=eu.getUltimaVisita().getYear()%></strong></small>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <% } %>
-          </div>
-        </div>
-        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+              </div>
+          </form>
+
+
+          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         <!-- Fin contenido -------------------------------------------------------------------------------------------------------------------------------->
       </div>
     </div>
