@@ -1,6 +1,9 @@
 package tests;
 
-import datatypes.*;
+import datatypes.DtCanal;
+import datatypes.DtCanalWeb;
+import datatypes.DtElementoUsuario;
+import datatypes.tipoElemento;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

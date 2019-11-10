@@ -35,7 +35,7 @@ public class ModificarLista extends JInternalFrame {
 	private String usuarioLista = "";
 	private String nomLista = "";
 	private Boolean seleccionoLista = false;
-	JButton btnConfirmar = new JButton("Confirmar");
+	private JButton btnConfirmar = new JButton("Confirmar");
 	private final JLabel lblMsgOK = new JLabel("Se han modificado los datos");
 	private Boolean esVacia = false;
 	
@@ -108,8 +108,8 @@ public class ModificarLista extends JInternalFrame {
 				usuarioLista = listaUsr.getModel().getElementAt(i).toString();
 				((DefaultListModel) listaList.getModel()).clear();
 				List<String> listas = iL.listarListasParticulares(usuarioLista);
-				if(!listas.isEmpty()) {
-					for(String l: listas) {
+				if (!listas.isEmpty()) {
+					for (String l: listas) {
 						((DefaultListModel) listaList.getModel()).addElement(l);
 					}
 				}
@@ -133,10 +133,10 @@ public class ModificarLista extends JInternalFrame {
 				btnSelectList.setEnabled(false);
 				publica.setEnabled(true);
 				DtListaRep infoL = iL.obtenerListaDeUsuario(nomLista);
-				if(infoL.getCategoria() == null) {
+				if (infoL.getCategoria() == null) {
 					esVacia = true;
 					categoria.setSelectedIndex(0);
-				}else {
+				} else {
 					categoria.setSelectedItem(infoL.getCategoria());
 					esVacia = false;
 				}
@@ -158,11 +158,11 @@ public class ModificarLista extends JInternalFrame {
 		getContentPane().add(lblListasParticulares);
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(categoria.getSelectedIndex() == 0) {
-					if(!esVacia) {
+				if (categoria.getSelectedIndex() == 0) {
+					if (!esVacia) {
 						iL.eliminarCategoria();						
 					}
-				}else {
+				} else {
 					iL.modificarCategoria(categoria.getSelectedItem().toString());					
 				}
 				iL.modificarInfoLista(nomLista, publica.isSelected());
@@ -203,7 +203,7 @@ public class ModificarLista extends JInternalFrame {
 		categoria.removeAllItems();
 		categoria.addItem("<Sin categoria>");
 		List<String> categorias = iC.listarCategorias();
-		for(String c: categorias) {
+		for (String c: categorias) {
 			categoria.addItem(c);
 		}
 	}
@@ -212,7 +212,7 @@ public class ModificarLista extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for( String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaUsr.setModel(listaU);
@@ -229,10 +229,10 @@ public class ModificarLista extends JInternalFrame {
 		listaUsr.setEnabled(false);
 		btnSelectList.setEnabled(false);
 		publica.setEnabled(true);
-		if(infoL.getCategoria().isEmpty()) {
+		if (infoL.getCategoria().isEmpty()) {
 			esVacia = true;
 			categoria.setSelectedIndex(0);
-		}else {
+		} else {
 			categoria.setSelectedItem(infoL.getCategoria());
 			esVacia = false;
 		}

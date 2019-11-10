@@ -1,8 +1,6 @@
 package manejadores;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
@@ -24,9 +22,9 @@ public class ManejadorUsuario {
 	public boolean existeUsuario(String nick) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		if(em.find(Usuario.class, nick) == null){//Si no existe el nickname en la base
+		if (em.find(Usuario.class, nick) == null){//Si no existe el nickname en la base
 			return false;
-		}else {
+		} else {
 			return true;
 		}
 	}
@@ -39,8 +37,8 @@ public class ManejadorUsuario {
 			em.persist(usuario);
 			em.getTransaction().commit();
 		} catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
+			if (e instanceof RollbackException)
+				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}
@@ -95,8 +93,8 @@ public class ManejadorUsuario {
 			em.persist(usuario);
 			em.getTransaction().commit();
 		}catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
+			if (e instanceof RollbackException)
+				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 			throw e;
 		}
@@ -111,8 +109,8 @@ public class ManejadorUsuario {
 			em.persist(usuario);
 			em.getTransaction().commit();
 		}catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
+			if (e instanceof RollbackException)
+				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}

@@ -78,7 +78,7 @@ public class CUsuarioPublish {
         List<String> seguidores = iUsr.listarSeguidores();
         int i = 0;
         String[] ret = new String[seguidores.size()];
-        for(String s : seguidores) {
+        for (String s : seguidores) {
             ret[i]=s;
             i++;
         }
@@ -90,7 +90,7 @@ public class CUsuarioPublish {
         List<String> seguidos = iUsr.listarSeguidos();
         int i = 0;
         String[] ret = new String[seguidos.size()];
-        for(String s : seguidos) {
+        for (String s : seguidos) {
             ret[i]=s;
             i++;
         }
@@ -102,7 +102,7 @@ public class CUsuarioPublish {
         List<String> usrs = iUsr.listarUsuarios();
         int i = 0;
         String[] ret = new String[usrs.size()];
-        for(String u : usrs) {
+        for (String u : usrs) {
             ret[i]=u;
             i++;
         }
@@ -177,7 +177,7 @@ public class CUsuarioPublish {
         List<DtUsuarioWeb> dtUsr = iUsr.listarUsuariosWeb();
         int i = 0;
         DtUsuarioWeb[] ret = new DtUsuarioWeb[dtUsr.size()];
-        for(DtUsuarioWeb u : dtUsr) {
+        for (DtUsuarioWeb u : dtUsr) {
             ret[i]=u;
             i++;
         }
@@ -193,7 +193,7 @@ public class CUsuarioPublish {
         List<DtUsuarioWeb> dtUsr = iUsr.listarNickFotoWeb(listaSeg);
         int i = 0;
         DtUsuarioWeb[] ret = new DtUsuarioWeb[dtUsr.size()];
-        for(DtUsuarioWeb u : dtUsr) {
+        for (DtUsuarioWeb u : dtUsr) {
             ret[i]=u;
             i++;
         }
@@ -205,7 +205,7 @@ public class CUsuarioPublish {
         List<DtCanalWeb> dtCan = iUsr.busqueda(query, ordFecha);
         int i = 0;
         DtCanalWeb[] ret = new DtCanalWeb[dtCan.size()];
-        for(DtCanalWeb c : dtCan) {
+        for (DtCanalWeb c : dtCan) {
             ret[i]=c;
             i++;
         }

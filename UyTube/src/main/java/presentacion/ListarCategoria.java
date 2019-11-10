@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ListarCategoria extends JInternalFrame {
-	JList list;
+	private JList list;
 
 	public ListarCategoria(ICategoria iC) {
 		setTitle("Listado de categorias");
@@ -40,7 +40,7 @@ public class ListarCategoria extends JInternalFrame {
 		List<String> categorias = iC.listarCategorias();
 		DefaultListModel<String> listaCat = new DefaultListModel<String>();
 		int i = 0;
-		for(String c: categorias) {
+		for (String c: categorias) {
 			listaCat.add(i++, c);
 		}
 		list.setModel(listaCat);

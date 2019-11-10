@@ -1,16 +1,21 @@
 package logica;
 
-import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import datatypes.*;
+
+import datatypes.DtElementoWeb;
+import datatypes.DtListaRep;
+import datatypes.DtVideoUsuario;
+import datatypes.tipoElemento;
 import manejadores.ManejadorCategoria;
 import manejadores.ManejadorPorDefecto;
 import manejadores.ManejadorUsuario;
 import interfaces.IListaReproduccion;
 
-public class CListaReproduccion implements IListaReproduccion {
+import java.util.ArrayList;
+import java.util.List;
 
+public class CListaReproduccion implements IListaReproduccion {
 	private Usuario uVid;
 	private Usuario uList;
 	private Video video;
@@ -20,7 +25,7 @@ public class CListaReproduccion implements IListaReproduccion {
 	public void agregarCategoriaALista(String nomC) {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(mC.existeCategoria(nomC)) {
+		if (mC.existeCategoria(nomC)) {
 			Categoria cat = mC.obtenerCategoria(nomC);
 			cat.agregarElemento(this.lista);
 			mC.modificarCategoria(cat);
@@ -35,11 +40,10 @@ public class CListaReproduccion implements IListaReproduccion {
 		ManejadorPorDefecto mPD = ManejadorPorDefecto.getInstancia();
 		List<Usuario> usuarios = mU.obtenerUsuarios();
 		
-	    for(Usuario u:usuarios) {
+	    for (Usuario u:usuarios) {
 			u.getCanal().agregarListaDefecto(nomL);
 	    	mU.modificaDatosUsuario(u);
 		}
-		
 	    NombrePorDefecto nomPD = new NombrePorDefecto(nomL);
 		mPD.agregarPorDefecto(nomPD);
 	}
@@ -86,7 +90,7 @@ public class CListaReproduccion implements IListaReproduccion {
 	@Override 
 	public void eliminarVideoDeLista(String nickVid, String nomVid, String nomList) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(mU.existeUsuario(nickVid)) {
+		if (mU.existeUsuario(nickVid)) {
 			this.uVid = mU.obtenerUsuario(nickVid);
 			this.video = this.uVid.getCanal().obtenerVideo(nomVid);	
 			this.uList.getCanal().eliminarVideoDeLista(this.video, nomList);
@@ -164,12 +168,12 @@ public class CListaReproduccion implements IListaReproduccion {
 	public void modificarCategoria(String nomC) {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(mC.existeCategoria(nomC)) {
+		if (mC.existeCategoria(nomC)) {
 			//Debo obtener la categoria de la lista, para esa categoria sacar la lista
 			Particular part = (Particular) this.lista;
 
 			Categoria catPart = part.getCategoria();
-			if(!(catPart == null)) {
+			if (!(catPart == null)) {
 				catPart.quitarElemento(part);
 				mC.modificarCategoria(catPart);
 			}
@@ -223,7 +227,7 @@ public class CListaReproduccion implements IListaReproduccion {
 		ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 		Particular part = (Particular) this.lista;
 		Categoria cat = part.getCategoria();
-		if(cat != null ){
+		if (cat != null ){
 			cat.quitarElemento(part);
 			mC.modificarCategoria(cat);
 		}
@@ -235,7 +239,7 @@ public class CListaReproduccion implements IListaReproduccion {
 		EntityManager em = conexion.getEntityManager();
 		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
 		List<Object[]> resQuery;
-		if(ordFecha){
+		if (ordFecha){
 			Query consulta = em.createNamedQuery("buscarListasFecha");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
@@ -244,7 +248,7 @@ public class CListaReproduccion implements IListaReproduccion {
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		}
-		for(Object[] o : resQuery){
+		for (Object[] o : resQuery){
 			DtElementoWeb lis = new DtElementoWeb(o[1].toString(), o[0].toString(), tipoElemento.LISTA, "");
 			res.add(lis);
 		}

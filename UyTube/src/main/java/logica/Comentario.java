@@ -1,8 +1,11 @@
 package logica;
 
-import java.util.*;
 import datatypes.DtComentario;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 
 @Entity
 public class Comentario {
@@ -17,7 +20,7 @@ public class Comentario {
 	@ManyToOne
 	private Usuario usuario;
 	
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<Comentario> respuestas = new ArrayList<Comentario>();
 	
 	//Constructores
@@ -63,7 +66,7 @@ public class Comentario {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		em.getTransaction().begin();
-		Comentario c = new Comentario(fCom,texto,uC);
+		Comentario c = new Comentario(fCom, texto, uC);
 		respuestas.add(c);
 		em.persist(c);
 		em.persist(this);
@@ -72,8 +75,8 @@ public class Comentario {
 	
 	public List<DtComentario> listarRespuestas(){
 		List<DtComentario> retorno = new ArrayList<DtComentario>();
-		if(!this.getRespuestas().isEmpty()) {
-			for(Comentario c : respuestas) {
+		if (!this.getRespuestas().isEmpty()) {
+			for (Comentario c : respuestas) {
 				DtComentario res = new DtComentario(c.getId(), c.getUsuario().getNickname(), c.getFecha(), c.getTexto(), c.listarRespuestas());
 				retorno.add(res);
 			}
@@ -83,9 +86,9 @@ public class Comentario {
 
 	public void eliminarRespuestas(){
 		List<Comentario> respuestas = this.getRespuestas();
-		if(!respuestas.isEmpty()){ //Si tiene respuestas
+		if (!respuestas.isEmpty()){ //Si tiene respuestas
 			Iterator iterator = respuestas.iterator();
-			while(iterator.hasNext() && respuestas.size()>0) {
+			while (iterator.hasNext() && respuestas.size()>0) {
 				Comentario r = (Comentario) iterator.next();
 				r.eliminarRespuestas();
 			}

@@ -29,8 +29,8 @@ import logica.Categoria;
 			em.persist(categoria);
 			em.getTransaction().commit();
 		} catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
+			if (e instanceof RollbackException)
+				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}
@@ -44,8 +44,8 @@ import logica.Categoria;
 			em.persist(categoria);
 			em.getTransaction().commit();
 		} catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
+			if (e instanceof RollbackException)
+				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}
@@ -70,11 +70,9 @@ import logica.Categoria;
 	public boolean existeCategoria(String nomC) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		if(em.find(Categoria.class, nomC) != null) {
-			//em.close();
+		if (em.find(Categoria.class, nomC) != null) {
 			return true;
 		} else {
-			//em.close();
 			return false;
 		}
 	}

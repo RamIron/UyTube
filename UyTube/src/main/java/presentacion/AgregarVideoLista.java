@@ -35,8 +35,8 @@ public class AgregarVideoLista extends JInternalFrame {
 	private String nomLista = "";
 	
 	
-	JLabel lblFaltanSeleccionarDatos = new JLabel("Faltan seleccionar datos");
-	JLabel lblSeHaAgregado = new JLabel("Se ha agregado video");
+	private JLabel lblFaltanSeleccionarDatos = new JLabel("Faltan seleccionar datos");
+	private JLabel lblSeHaAgregado = new JLabel("Se ha agregado video");
 	
 	public AgregarVideoLista(IVideo iV, IUsuario iU, IListaReproduccion iL) {
 		this.iV = iV;
@@ -71,8 +71,8 @@ public class AgregarVideoLista extends JInternalFrame {
 				usuarioVideo = listaUsrV.getModel().getElementAt(u).toString();
 				((DefaultListModel) listaVid.getModel()).clear();
 				List<String> videos = iV.listarVideosDeUsuario(usuarioVideo);
-				if(!videos.isEmpty()) {
-					for(String v: videos) {
+				if (!videos.isEmpty()) {
+					for (String v: videos) {
 						((DefaultListModel) listaVid.getModel()).addElement(v);
 					}
 				}
@@ -150,8 +150,8 @@ public class AgregarVideoLista extends JInternalFrame {
 				usuarioLista = listUsrL.getModel().getElementAt(i).toString();
 				((DefaultListModel) listList.getModel()).clear();
 				List<String> listas = iL.listarListasDeUsuario(usuarioLista);
-				if(!listas.isEmpty()) {
-					for(String l: listas) {
+				if (!listas.isEmpty()) {
+					for (String l: listas) {
 						((DefaultListModel) listList.getModel()).addElement(l);
 					}
 				}
@@ -177,8 +177,8 @@ public class AgregarVideoLista extends JInternalFrame {
 		getContentPane().add(btnSelecLista);
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(seleccionoVideo == true && seleccionoLista == true) {
-					if(!iL.existeListaParticular(usuarioLista, nomLista)) {
+				if (seleccionoVideo == true && seleccionoLista == true) {
+					if (!iL.existeListaParticular(usuarioLista, nomLista)) {
 						iL.agregarVideoListaPorDefecto(usuarioVideo, nomVid, nomLista);
 					} else {
 						iL.agregarVideoListaParticular(usuarioVideo, nomVid, nomLista);
@@ -218,7 +218,7 @@ public class AgregarVideoLista extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaUsrV.setModel(listaU);
@@ -231,7 +231,7 @@ public class AgregarVideoLista extends JInternalFrame {
 		((DefaultListModel) listList.getModel()).clear();
 	}
 	
-	public void LimpiarForm() {
+	public void limpiarForm() {
 		lblSeHaAgregado.setVisible(false);
 		lblFaltanSeleccionarDatos.setVisible(false);
 		usuarioVideo = "";
@@ -243,7 +243,7 @@ public class AgregarVideoLista extends JInternalFrame {
 	
 	public void inicializar() {
 		limpiarLista();
-		LimpiarForm();
+		limpiarForm();
 		cargarElementos();
 	}
 }

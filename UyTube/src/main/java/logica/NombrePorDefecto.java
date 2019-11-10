@@ -6,7 +6,7 @@ import javax.persistence.Id;
 @Entity
 public class NombrePorDefecto {
 	@Id
-	String nombre;
+	private String nombre;
 
 	public NombrePorDefecto() {
 		super();

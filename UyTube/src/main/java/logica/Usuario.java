@@ -1,8 +1,13 @@
 package logica;
 
-import java.util.*;
 import javax.persistence.*;
 import datatypes.DtCanal;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
+import java.util.Comparator;
 
 @NamedQueries( {
 	@NamedQuery(name = "existeMail", query = "select u.correoE from Usuario u where u.correoE = :correoE"),
@@ -47,7 +52,7 @@ public class Usuario {
 	@ManyToMany
 	private List<Usuario> seguidos = new ArrayList<Usuario>();
 
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<Visita> masVisitados = new ArrayList<Visita>();
 
 	@Column(name="FECHA_DE_ELIMINACION")
@@ -171,7 +176,7 @@ public class Usuario {
 
 	
 	public void agregarSeguidor(Usuario u) {
-		if(!this.seguidores.contains(u)) {
+		if (!this.seguidores.contains(u)) {
 			this.seguidores.add(u);			
 		}
 	}
@@ -184,7 +189,7 @@ public class Usuario {
 	
 	public DtCanal obtenerInfoCanal() {
 		DtCanal dtCan;
-		if(canal.getCategoria() != null){
+		if (canal.getCategoria() != null){
 			dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.getPublico(), canal.getCategoria().getNombre());
 		} else {
 			dtCan = new DtCanal(canal.getNombre(), canal.getDescripcion(), canal.getPublico(), null);
@@ -196,7 +201,7 @@ public class Usuario {
 		List<String> dtSeguidores = new ArrayList<String>();
 		Collection<Usuario> seguidores = this.getSeguidores();
 		
-		for(Usuario u:seguidores) {
+		for (Usuario u:seguidores) {
 			dtSeguidores.add(u.getNickname());
 		}
 		
@@ -207,7 +212,7 @@ public class Usuario {
 		List<String> dtSeguidos = new ArrayList<String>();
 		Collection<Usuario> seguidos = this.getSeguidos();
 		
-		for(Usuario u:seguidos) {
+		for (Usuario u:seguidos) {
 			dtSeguidos.add(u.getNickname());
 		}
 		
@@ -220,7 +225,7 @@ public class Usuario {
 	}
 	
 	public void seguirUsuario(Usuario u2) {
-		if(!this.seguidos.contains(u2)) {
+		if (!this.seguidos.contains(u2)) {
 			this.seguidos.add(u2);			
 		}
 	}
@@ -228,16 +233,16 @@ public class Usuario {
 	public void agregarVisita(Video video){
 		Visita nuevaV = null;
 		for (Visita v: masVisitados){
-			if(v.getVideo().equals(video)){
+			if (v.getVideo().equals(video)){
 				nuevaV = v;
 				break;
 			}
 		}
 		Calendar fecha = Calendar.getInstance();
-		if(nuevaV == null){
+		if (nuevaV == null){
 			nuevaV = new Visita(video, fecha, 1);
 			masVisitados.add(nuevaV);
-		}else {
+		} else {
 			nuevaV.setUltimaVisita(fecha);
 			nuevaV.setCantVisitas(nuevaV.getCantVisitas()+1);
 		}

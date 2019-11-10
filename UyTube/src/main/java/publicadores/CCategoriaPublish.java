@@ -48,7 +48,7 @@ public class CCategoriaPublish {
         List<DtElementoUsuario> dtUsr = iCat.listarElemCategoria(nomC);
         int i = 0;
         DtElementoUsuario[] ret = new DtElementoUsuario[dtUsr.size()];
-        for(DtElementoUsuario u : dtUsr) {
+        for (DtElementoUsuario u : dtUsr) {
             ret[i]=u;
             i++;
         }
@@ -60,7 +60,7 @@ public class CCategoriaPublish {
         List<DtElementoWeb> dtElem = iCat.listarVideosPublicosCategoria(nomC);
         int i = 0;
         DtElementoWeb[] ret = new DtElementoWeb[dtElem.size()];
-        for(DtElementoWeb e : dtElem) {
+        for (DtElementoWeb e : dtElem) {
             ret[i]=e;
             i++;
         }
@@ -72,7 +72,7 @@ public class CCategoriaPublish {
         List<DtElementoWeb> dtElem = iCat.listarListasPublicasCategoria(nomC);
         int i = 0;
         DtElementoWeb[] ret = new DtElementoWeb[dtElem.size()];
-        for(DtElementoWeb e : dtElem) {
+        for (DtElementoWeb e : dtElem) {
             ret[i]=e;
             i++;
         }
@@ -84,7 +84,7 @@ public class CCategoriaPublish {
         List<String> cats = iCat.listarCategorias();
         int i = 0;
         String[] ret = new String[cats.size()];
-        for(String c : cats) {
+        for (String c : cats) {
             ret[i]=c;
             i++;
         }

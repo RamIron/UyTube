@@ -1,8 +1,13 @@
 package logica;
 
-import java.util.*;
+import datatypes.DtComentario;
+import datatypes.DtElementoUsuario;
+import datatypes.DtValoracion;
+import datatypes.tipoElemento;
 import javax.persistence.*;
-import datatypes.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @DiscriminatorValue("V")
@@ -35,10 +40,10 @@ public class Video extends Elemento {
 	
 	private boolean publico;
 		
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+	@OneToMany(cascade=CascadeType.ALL , orphanRemoval=true)
 	private List<Valoracion> valoraciones = new ArrayList<Valoracion>();
 	
-	@OneToMany(cascade=CascadeType.ALL,orphanRemoval=true)
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<Comentario> comentarios = new ArrayList<Comentario>();
 	
 	
@@ -108,7 +113,7 @@ public class Video extends Elemento {
 		
 	public List<DtValoracion> listarValoraciones() {
 		List<DtValoracion> res = new ArrayList<DtValoracion>();
-		for(Valoracion val: valoraciones) {
+		for (Valoracion val: valoraciones) {
 			DtValoracion v = new DtValoracion(val.getUsuario().getNickname(), val.isGusta());
 			res.add(v);
 		}
@@ -117,12 +122,12 @@ public class Video extends Elemento {
 	
 	public List<DtComentario> obtenerComentariosVideo() {
 		List<DtComentario> dtComs = new ArrayList<DtComentario>();
-		for(Comentario c : this.comentarios) {	
-			if(!c.getRespuestas().isEmpty()) {
-				DtComentario dtC = new DtComentario(c.getId(), c.getUsuario().getNickname(), c.getFecha(),c.getTexto(), c.listarRespuestas());	
+		for (Comentario c : this.comentarios) {
+			if (!c.getRespuestas().isEmpty()) {
+				DtComentario dtC = new DtComentario(c.getId(), c.getUsuario().getNickname(), c.getFecha(), c.getTexto(), c.listarRespuestas());
 				dtComs.add(dtC);
 			} else {
-				DtComentario dtC = new DtComentario(c.getId(), c.getUsuario().getNickname(), c.getFecha(),c.getTexto());
+				DtComentario dtC = new DtComentario(c.getId(), c.getUsuario().getNickname(), c.getFecha(), c.getTexto());
 				dtComs.add(dtC);
 			}
 		}
@@ -137,35 +142,35 @@ public class Video extends Elemento {
 	
 	public void valorarVideo(boolean gusta, Usuario usrVal) {
 		boolean existe = false;
-		for(Valoracion vals : this.valoraciones) {
-			if(usrVal.equals(vals.getUsuario())) {
+		for (Valoracion vals : this.valoraciones) {
+			if (usrVal.equals(vals.getUsuario())) {
 				existe = true;
 				vals.setGusta(gusta);
 				vals.setUsuario(usrVal);
 			}
 		}
-		if(!existe) {
+		if (!existe) {
 			Valoracion val = new Valoracion(gusta, usrVal);
 			this.valoraciones.add(val);
 		}
 	}
 
 	public void eliminarValoraciones(){
-		for(Valoracion v: this.valoraciones){
+		for (Valoracion v: this.valoraciones){
 			v.setUsuario(null);
 		}
 		this.valoraciones.clear();
 	}
 
 	public void sacarCategoria(){
-		if(this.categoria != null) {
+		if (this.categoria != null) {
 			this.categoria.quitarElemento(this);
 			this.categoria = null;
 		}
 	}
 
 	public void eliminarComentarios(){
-		for(Comentario c: this.comentarios){
+		for (Comentario c: this.comentarios){
 			c.eliminarRespuestas();
 		}
 		this.comentarios.clear();

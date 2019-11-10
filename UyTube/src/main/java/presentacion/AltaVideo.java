@@ -63,9 +63,9 @@ public class AltaVideo extends JInternalFrame {
 		btnSelecUsr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reiniciarMsg();
-				if(usr.isEmpty()) {
+				if (usr.isEmpty()) {
 					lblMsgErrorUsr.setVisible(true);
-				}else {
+				} else {
 					habilitarFormUsr(false);
 					habilitarFormVid(true);
 				}
@@ -86,7 +86,7 @@ public class AltaVideo extends JInternalFrame {
 		listaUsr.addListSelectionListener(new ListSelectionListener() {
 		public void valueChanged(ListSelectionEvent e) {
 			int i = listaUsr.getSelectedIndex();
-			if(i > 0) {
+			if (i > 0) {
 				usr = listaUsr.getModel().getElementAt(i).toString();
 			}
 		}	
@@ -122,7 +122,7 @@ public class AltaVideo extends JInternalFrame {
 		
 		fDia.setBounds(449, 302, 49, 24);
 		fDia.addItem(null);
-		for(Integer i=1; i<=31; i++) {
+		for (Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
 		}
 		getContentPane().add(fDia);
@@ -130,7 +130,7 @@ public class AltaVideo extends JInternalFrame {
 		
 		fMes.setBounds(510, 302, 52, 24);
 		fMes.addItem(null);
-		for(Integer i=1; i<=12; i++) {
+		for (Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
 		}
 		getContentPane().add(fMes);
@@ -138,7 +138,7 @@ public class AltaVideo extends JInternalFrame {
 		
 		fAnio.setBounds(574, 302, 77, 24);
 		fAnio.addItem(null);
-		for(Integer i=2019; i>=2000; i--) {
+		for (Integer i=2019; i>=2000; i--) {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);
@@ -166,17 +166,17 @@ public class AltaVideo extends JInternalFrame {
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)  {
 				reiniciarMsg();
-				if(nomVid.getText().isEmpty() || duracion.getText().isEmpty() || url.getText().isEmpty() ||
+				if (nomVid.getText().isEmpty() || duracion.getText().isEmpty() || url.getText().isEmpty() ||
 					descripcion.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null)) {
 					lblMsgError.setVisible(true);
 					lblMsgExiste.setVisible(true);
-				}else if(!duracion.getText().chars().allMatch(Character::isDigit)){
+				} else if (!duracion.getText().chars().allMatch(Character::isDigit)){
 					lblMsgErrorNum.setVisible(true);
-				}else {
+				} else {
 					Calendar fPub = Calendar.getInstance();
 			        fPub.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
 					iV.agregarVideo(usr, nomVid.getText(), descripcion.getText(), fPub, Integer.parseInt(duracion.getText()), url.getText());
-					if(categoria.getSelectedIndex() != 0) {
+					if (categoria.getSelectedIndex() != 0) {
 						iV.agregarCategoria(categoria.getSelectedItem().toString());
 					}
 					inicializar(iU, iC);
@@ -222,7 +222,7 @@ public class AltaVideo extends JInternalFrame {
 	public void cargarUsuarios(IUsuario iU) {
 		List<String> usuarios = iU.listarUsuarios();
 		((DefaultListModel) listaUsr.getModel()).addElement("");
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			((DefaultListModel) listaUsr.getModel()).addElement(u);
 		}
 	}
@@ -230,7 +230,7 @@ public class AltaVideo extends JInternalFrame {
 	public void cargarCategorias(ICategoria iC) {
 		List<String> categorias = iC.listarCategorias();
 		categoria.addItem("<Sin categoria>");
-		for(String c: categorias) {
+		for (String c: categorias) {
 			categoria.addItem(c);
 		}
 	}

@@ -10,7 +10,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.tree.DefaultMutableTreeNode;
 import interfaces.IUsuario;
 import interfaces.IVideo;
 
@@ -57,8 +56,8 @@ public class ValorarVideo extends JInternalFrame {
 				String usr = listaUsrVid.getModel().getElementAt(i).toString();
 				((DefaultListModel) listaVid.getModel()).clear();
 				List<String> videos = iV.listarVideosDeUsuario(usr);
-				if(!videos.isEmpty()) {
-					for(String v: videos) {
+				if (!videos.isEmpty()) {
+					for (String v: videos) {
 						((DefaultListModel) listaVid.getModel()).addElement(v);
 					}
 				}
@@ -175,7 +174,7 @@ public class ValorarVideo extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaUsrVid.setModel(listaU);
@@ -192,7 +191,7 @@ public class ValorarVideo extends JInternalFrame {
 		listaUsrVal.setEnabled(false);
 	}
 	
-	public void LimpiarForm() {
+	public void limpiarForm() {
 		btnSelecUVid.setEnabled(true);
 		btnSelecVid.setEnabled(false);
 		btnSeleccionarUVal.setEnabled(false);
@@ -207,7 +206,7 @@ public class ValorarVideo extends JInternalFrame {
 	
 	public void inicializar(IUsuario iU) {
 		limpiarLista();
-		LimpiarForm();
+		limpiarForm();
 		cargarElementos(iU);
 		resetearMensajes();
 	}

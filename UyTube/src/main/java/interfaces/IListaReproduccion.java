@@ -1,7 +1,10 @@
 package interfaces;
 
+import datatypes.DtElementoWeb;
+import datatypes.DtListaRep;
+import datatypes.DtVideoUsuario;
+
 import java.util.List;
-import datatypes.*;
 
 public interface IListaReproduccion {
 

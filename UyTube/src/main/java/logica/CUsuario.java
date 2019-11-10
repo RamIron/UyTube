@@ -1,20 +1,26 @@
 package logica;
 
-import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-
+import datatypes.DtCanal;
+import datatypes.DtCanalWeb;
+import datatypes.DtUsuario;
+import datatypes.DtUsuarioWeb;
+import datatypes.DtVisita;
 import manejadores.ManejadorCategoria;
 import manejadores.ManejadorPorDefecto;
 import manejadores.ManejadorToken;
 import manejadores.ManejadorUsuario;
-import datatypes.*;
 import interfaces.IUsuario;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 public class CUsuario implements IUsuario {
-	public Usuario usr;
-	public Canal can;
+	private Usuario usr;
+	private Canal can;
 	
 	//Operaciones
 	@Override 
@@ -25,7 +31,7 @@ public class CUsuario implements IUsuario {
 			usr.agregarCanal();
 			this.can = this.usr.getCanal();
 			List<String> listasPorDefecto = mPD.getNombresPorDefecto();
-			for(String nomPD:listasPorDefecto) {
+			for (String nomPD:listasPorDefecto) {
 				this.can.agregarListaDefecto(nomPD);
 			}
 			mU.modificaDatosUsuario(this.usr);
@@ -44,7 +50,7 @@ public class CUsuario implements IUsuario {
 			ManejadorCategoria mC = ManejadorCategoria.getInstancia();
 			Usuario user = mU.obtenerUsuario(nick);
 			Categoria cat = null;
-			if(nomCat != null){
+			if (nomCat != null){
 				cat = mC.obtenerCategoria(nomCat);
 			}
 			user.getCanal().setCategoria(cat);
@@ -71,8 +77,8 @@ public class CUsuario implements IUsuario {
 	public void dejarDeSeguirUsuario(String seguidor, String seguido) {		
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		
-		if(mU.existeUsuario(seguidor)) { //Si el usuario existe
-			if(mU.existeUsuario(seguido)) { //Si el segundo usuario existe
+		if (mU.existeUsuario(seguidor)) { //Si el usuario existe
+			if (mU.existeUsuario(seguido)) { //Si el segundo usuario existe
 				try {
 					Usuario USeguidor = mU.obtenerUsuario(seguidor);
 					Usuario USeguido = mU.obtenerUsuario(seguido);
@@ -98,7 +104,7 @@ public class CUsuario implements IUsuario {
 		TypedQuery<String> consulta = em.createNamedQuery("existeMail", String.class);
 		consulta.setParameter("correoE", email);
 		List<String> mails = consulta.getResultList();	
-		if(mails.contains(email))
+		if (mails.contains(email))
 			return true;
 		else
 			return false;
@@ -107,10 +113,10 @@ public class CUsuario implements IUsuario {
 	@Override 
 	public boolean existeNickname(String nick) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(mU.existeUsuario(nick)) {
+		if (mU.existeUsuario(nick)) {
 			this.usr = mU.obtenerUsuario(nick);
 			return true;
-		}else
+		} else
 			return false;
 	}
 	
@@ -218,8 +224,8 @@ public class CUsuario implements IUsuario {
 	@Override 
 	public void seguirUsuario(String seguidor, String seguido) {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(mU.existeUsuario(seguidor)) { //Si el usuario existe
-			if(mU.existeUsuario(seguido)) { //Si el segundo usuario existe
+		if (mU.existeUsuario(seguidor)) { //Si el usuario existe
+			if (mU.existeUsuario(seguido)) { //Si el segundo usuario existe
 				try {
 					Usuario USeguidor = mU.obtenerUsuario(seguidor);
 					Usuario USeguido = mU.obtenerUsuario(seguido);
@@ -230,10 +236,10 @@ public class CUsuario implements IUsuario {
 				} catch (Exception e){
 					throw e;
 				}
-			}else {
+			} else {
 				throw new java.lang.RuntimeException("No existe un usuario con nick: " + seguido);
 			}
-		}else {
+		} else {
 			throw new java.lang.RuntimeException("No existe un usuario con nick: " + seguidor);
 		}
 	}
@@ -245,11 +251,11 @@ public class CUsuario implements IUsuario {
 	//		   2-> si coincide con email
 	public Integer iniciarSesion(String nick, String pass){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
-		if(existeNickname(nick) && mU.obtenerUsuario(nick).getContrasena().equals(pass) && mU.obtenerUsuario(nick).isActivo()) {
+		if (existeNickname(nick) && mU.obtenerUsuario(nick).getContrasena().equals(pass) && mU.obtenerUsuario(nick).isActivo()) {
 			return 1;
-		}else if(existeEmail(nick) && mU.obtenerUsuarioMail(nick).getContrasena().equals(pass) && mU.obtenerUsuarioMail(nick).isActivo()){
+		} else if (existeEmail(nick) && mU.obtenerUsuarioMail(nick).getContrasena().equals(pass) && mU.obtenerUsuarioMail(nick).isActivo()){
 			return 2;
-		}else{
+		} else {
 			return 0;
 		}
 	}
@@ -259,7 +265,7 @@ public class CUsuario implements IUsuario {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.obtenerUsuario(nickname);
 		List<String> lis = u.getCanal().listarListasDeUsuario();
-		DtUsuarioWeb res = new DtUsuarioWeb(u.getNickname(), u.getImagen(),lis);
+		DtUsuarioWeb res = new DtUsuarioWeb(u.getNickname(), u.getImagen(), lis);
 		return res;
 	}
 
@@ -268,7 +274,7 @@ public class CUsuario implements IUsuario {
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario u = mU.obtenerUsuarioMail(email);
 		List<String> lis = u.getCanal().listarListasDeUsuario();
-		DtUsuarioWeb res = new DtUsuarioWeb(u.getNickname(), u.getImagen(),lis);
+		DtUsuarioWeb res = new DtUsuarioWeb(u.getNickname(), u.getImagen(), lis);
 		return res;
 	}
 
@@ -284,15 +290,15 @@ public class CUsuario implements IUsuario {
 		return res;
 	}
 
-	public List<DtUsuarioWeb> listarNickFotoWeb(List <String> seguidores){
+	public List<DtUsuarioWeb> listarNickFotoWeb(List<String> seguidores){
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		List<Usuario> usrs = new LinkedList<Usuario>();
 		List<DtUsuarioWeb> dtUsrs = new ArrayList<DtUsuarioWeb>();
-		for(String s: seguidores) {
+		for (String s: seguidores) {
 			usrs.add(mU.obtenerUsuario(s));
 		}
 
-		for(Usuario u:usrs){
+		for (Usuario u:usrs){
 			dtUsrs.add(new DtUsuarioWeb(u.getNickname(), u.getImagen()));
 		}
 		return dtUsrs;
@@ -304,7 +310,7 @@ public class CUsuario implements IUsuario {
 		EntityManager em = conexion.getEntityManager();
 		List<DtCanalWeb> res = new ArrayList<DtCanalWeb>();
 		List<Object[]> resQuery;
-		if(ordFecha){
+		if (ordFecha){
 			Query consulta = em.createNamedQuery("buscarCanalFecha");
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
@@ -313,7 +319,7 @@ public class CUsuario implements IUsuario {
 			consulta.setParameter(1, "%" + query + "%");
 			resQuery = consulta.getResultList();
 		}
-		for(Object[] o : resQuery){
+		for (Object[] o : resQuery){
 			DtCanalWeb canal = new DtCanalWeb(o[0].toString(), o[1].toString(), o[2].toString());
 			res.add(canal);
 		}
@@ -429,7 +435,7 @@ public class CUsuario implements IUsuario {
 	}
 
 	private void borrarTodosSeguidores(Usuario usr){
-		if(!usr.getSeguidores().isEmpty()) {
+		if (!usr.getSeguidores().isEmpty()) {
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			List<String> seguidores = usr.listarSeguidores();
 			for (String u : seguidores) {
@@ -441,7 +447,7 @@ public class CUsuario implements IUsuario {
 	}
 
 	private void borrarTodosSeguidos(Usuario usr){
-		if(!usr.getSeguidos().isEmpty()) {
+		if (!usr.getSeguidos().isEmpty()) {
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			List<String> seguidos = usr.listarSeguidos();
 			for (String u : seguidos) {
@@ -497,7 +503,7 @@ public class CUsuario implements IUsuario {
 		EntityManager em = conexion.getEntityManager();
 		ManejadorToken mT = ManejadorToken.getInstancia();
 		TokenUsuario token = mT.obtenerToken(selector);
-		if(token != null && token.getValidador().equals(validador)){
+		if (token != null && token.getValidador().equals(validador)){
 			res = obtenerUsuarioWebNick(token.getUsuario().getNickname());
 		}
 		return res;

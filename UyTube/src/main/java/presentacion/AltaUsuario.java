@@ -29,7 +29,7 @@ public class AltaUsuario extends JInternalFrame {
 	private Boolean agregarNomCanal = false;
 	private Boolean publico = false;
 	private JComboBox<Integer> fDia = new JComboBox<Integer>();
-	private JComboBox <Integer>fMes = new JComboBox<Integer>();
+	private JComboBox<Integer> fMes = new JComboBox<Integer>();
 	private JComboBox<Integer> fAnio = new JComboBox<Integer>();
 	private JLabel lblMsgErrorNick = new JLabel("Ya existe el nickname");
 	private JLabel lblMsgErrorEmail = new JLabel("Ya existe el email.");
@@ -96,7 +96,7 @@ public class AltaUsuario extends JInternalFrame {
 
 		fDia.setBounds(184, 220, 49, 24);
 		fDia.addItem(null);
-		for(Integer i=1; i<=31; i++) {
+		for (Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
 		}
 		getContentPane().add(fDia);
@@ -104,7 +104,7 @@ public class AltaUsuario extends JInternalFrame {
 		
 		fMes.setBounds(245, 220, 52, 24);
 		fMes.addItem(null);
-		for(Integer i=1; i<=12; i++) {
+		for (Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
 		}
 		getContentPane().add(fMes);
@@ -112,7 +112,7 @@ public class AltaUsuario extends JInternalFrame {
 		
 		fAnio.setBounds(309, 220, 77, 24);
 		fAnio.addItem(null);
-		for(Integer i=2019; i>=1900; i--) {
+		for (Integer i=2019; i>=1900; i--) {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);
@@ -187,35 +187,35 @@ public class AltaUsuario extends JInternalFrame {
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(nick.getText().isEmpty() || nombre.getText().isEmpty() || apellido.getText().isEmpty() ||
+				if (nick.getText().isEmpty() || nombre.getText().isEmpty() || apellido.getText().isEmpty() ||
 					email.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null) 
 					|| (img.getText().isEmpty() && agregarFoto) || (nomCanal.getText().isEmpty() && agregarNomCanal) 
 					|| desCanal.getText().isEmpty() || password.getText().isEmpty()) {
 					borrarMsg();
 					lblMsgError.setVisible(true);
-				}else if(iU.existeEmail(email.getText())){
+				} else if (iU.existeEmail(email.getText())){
 					borrarMsg();
 					lblMsgErrorEmail.setVisible(true);
-				}else if(iU.existeNickname(nick.getText())) {
+				} else if (iU.existeNickname(nick.getText())) {
 					borrarMsg();
 					lblMsgErrorNick.setVisible(true);
-				}else {
+				} else {
 					Calendar fNac = Calendar.getInstance();
 			        fNac.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem()-1, (Integer) fDia.getSelectedItem());
 			        iU.agregarUsuario(nick.getText(), nombre.getText(), apellido.getText(), fNac, email.getText());
 					iU.modificarContrasena(password.getText());
-			        if(agregarFoto) {
+			        if (agregarFoto) {
 			        	iU.modificarImagen(img.getText());
-			        }else {
+			        } else {
 			        	iU.modificarImagen("src/main/resources/img/default.png");
 			        }
 			        iU.agregarCanal();
-			        if(agregarNomCanal) {
+			        if (agregarNomCanal) {
 			        	iU.modificarInfoCanal(nomCanal.getText(), desCanal.getText(), publico);
-			        }else {
+			        } else {
 			        	iU.modificarInfoCanal(nick.getText(), desCanal.getText(), publico);
 			        }
-					if(categoria.getSelectedIndex() != 0){
+					if (categoria.getSelectedIndex() != 0){
 						iU.modificarCatCanal(nick.getText(), categoria.getSelectedItem().toString());
 					}
 			        resetearFormulario(iC);
@@ -328,7 +328,7 @@ public class AltaUsuario extends JInternalFrame {
 		List<String> categorias = iC.listarCategorias();
 		categoria.removeAllItems();
 		categoria.addItem("<Sin categoria>");
-		for(String c: categorias) {
+		for (String c: categorias) {
 			categoria.addItem(c);
 		}
 		categoria.setSelectedIndex(0);
@@ -341,27 +341,19 @@ public class AltaUsuario extends JInternalFrame {
 		lblMsgErrorEmail.setVisible(false);
 	}
 	
-	public void mostrarImg(final String filename) throws Exception
-	  {
-	    SwingUtilities.invokeLater(new Runnable()
-	    {
-	      public void run()
-	      {
+	public void mostrarImg(final String filename) throws Exception {
+	    SwingUtilities.invokeLater(new Runnable() {
+	      public void run() {
 	                
 	        BufferedImage image = null;
-	        try
-	        {
+	        try {
 	          image = ImageIO.read(new File(filename));
-	        }
-	        catch (Exception e)
-	        {
+	        } catch (Exception e) {
 	          e.printStackTrace();
 	          System.exit(1);
 	        }
 	        ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(100, 70, Image.SCALE_FAST));
 	        lblImagen.setIcon(imageIcon);
-
-
 	      }
 	    });
 	  }

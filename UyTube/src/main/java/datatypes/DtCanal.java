@@ -36,7 +36,7 @@ public class DtCanal {
 		return publico;
 	}
 
-	public String getCategoria() { return categoria;}
+	public String getCategoria() { return categoria; }
 
 	//Setters
 	public void setNombre(String nombre) {

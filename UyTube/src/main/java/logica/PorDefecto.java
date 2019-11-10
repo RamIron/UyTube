@@ -1,7 +1,10 @@
 package logica;
 
+import datatypes.DtElementoUsuario;
+import datatypes.tipoElemento;
+
 import javax.persistence.*;
-import datatypes.*;
+
 
 @Entity
 @DiscriminatorValue("LD")
