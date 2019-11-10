@@ -23,7 +23,7 @@ public class RecordarSesion implements Filter {
         publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
         String path = ((HttpServletRequest)req).getServletPath();
-        if (!path.equals("/module/iniciarSesion.jsp") && !path.equals("/IniciarSesion") && !path.equals("/CerrarSesion")) {
+        if (!path.equals("/module/iniciarSesion.jsp") && !path.equals("/IniciarSesion") && !path.equals("/CerrarSesion") && !path.substring(0,7).equals("/assets") && !path.substring(0,4).equals("/img")) {
             HttpSession s = ((HttpServletRequest) req).getSession();
             //DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
             DtUsuarioWeb usr = null;

@@ -46,7 +46,7 @@ public class RecordarSesion implements Filter {
                     tipo = aCookie;
                 }
             }
-            if (!"".equals(selectorValue) && !"".equals(rawValidator)) {
+            if (!"".equals(selectorValue) && !"".equals(validatorValue)) {
                 usr = port.obtenerUsuarioConToken(selector.getValue(), rawValidator.getValue());
                 s.setAttribute("usuario", usr);
                 if(recordar){
