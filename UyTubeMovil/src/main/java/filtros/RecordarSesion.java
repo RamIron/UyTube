@@ -1,5 +1,6 @@
 package filtros;
 
+import publicadores.DtElementoWeb;
 import publicadores.DtUsuarioWeb;
 
 import javax.servlet.*;
@@ -23,10 +24,13 @@ public class RecordarSesion implements Filter {
         publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
         String path = ((HttpServletRequest)req).getServletPath();
-        Boolean pathValido = false;
+        Boolean pathValido = true;
         if(path.length() > 7){
             //pathValido = !path.substring(0,7).equals("/assets") && !path.substring(0,4).equals("/img") && !path.substring(0,3).equals("/v/");
-            pathValido = !path.substring(0,7).equals("/assets") && !path.substring(0,4).equals("/img");
+            pathValido = !path.substring(0,7).equals("/assets");
+        }
+        if(path.length() > 4) {
+            pathValido = !path.substring(0,4).equals("/img");
         }
         if (!path.equals("/module/iniciarSesion.jsp") && !path.equals("/IniciarSesion") && !path.equals("/CerrarSesion") && pathValido) {
             HttpSession s = ((HttpServletRequest) req).getSession();
@@ -57,8 +61,11 @@ public class RecordarSesion implements Filter {
                     s.setAttribute("usuario", usr);
                     if (recordar) {
                         selector.setMaxAge(SESION_LARGA);
+                        selector.setPath("/");
                         rawValidator.setMaxAge(SESION_LARGA);
+                        rawValidator.setPath("/");
                         tipo.setMaxAge(SESION_LARGA);
+                        tipo.setPath("/");
 
                         ((HttpServletResponse) resp).addCookie(selector);
                         ((HttpServletResponse) resp).addCookie(rawValidator);

@@ -252,7 +252,16 @@
                     <div class="container-fluid">
                       <div class="col col- justify-content-left">
                         <!-- Listado de Videos -->
-                        <% for (DtElementoWeb v: listaV){%>
+                        <%
+                          if ( listaV.size() == 0 ){
+                        %>
+                        <div class="alert alert-info" role="alert">
+                          No hay videos
+                        </div>
+                        <%
+                          }
+                          for (DtElementoWeb v: listaV){
+                        %>
                         <div class="card mb-3" style="max-width: 630px;">
                           <a href="<%= request.getContextPath() %>/module/visualizarVideo.jsp?u=<%=v.getNickname()%>&v=<%=v.getNombreE()%>">
                             <div class="row no-gutters">

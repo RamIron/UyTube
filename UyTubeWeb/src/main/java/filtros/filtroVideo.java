@@ -5,8 +5,8 @@ import publicadores.DtElementoWeb;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
 
 @WebFilter(filterName = "filtroVideo", value = "/v/*")
 public class filtroVideo implements Filter {
@@ -20,14 +20,13 @@ public class filtroVideo implements Filter {
         DtElementoWeb video = portVideo.obtenerVideo(Integer.parseInt(idVideo));
         if(!video.getNickname().equals("")) {
             //redirecciono a el video
-            RequestDispatcher rd = req.getRequestDispatcher("/module/visualizarVideo.jsp?u=" + video.getNickname() + "&v=" + video.getNombreE());
-            rd.forward(req,resp);
+            ((HttpServletResponse) resp).sendRedirect(((HttpServletRequest) req).getContextPath() + "/module/visualizarVideo.jsp?u=" + video.getNickname() + "&v=" + video.getNombreE());
         } else {
             //redirecciono a invalido
             RequestDispatcher rd = req.getRequestDispatcher("/module/invalido.jsp");
             rd.forward(req,resp);
         }
-        chain.doFilter(req, resp);
+        //chain.doFilter(req, resp);
     }
 
     public void init(FilterConfig config) throws ServletException {

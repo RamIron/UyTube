@@ -37,10 +37,13 @@ public class IniciarSesion extends HttpServlet {
 
                 Cookie cookieSelector = new Cookie("selector", selector);
                 cookieSelector.setMaxAge(SESION_LARGA);
+                cookieSelector.setPath("/");
                 Cookie cookieValidator = new Cookie("validator", validador);
                 cookieValidator.setMaxAge(SESION_LARGA);
+                cookieValidator.setPath("/");
                 Cookie cookieTipo = new Cookie("tipo", "long");
                 cookieTipo.setMaxAge(SESION_LARGA);
+                cookieTipo.setPath("/");
 
                 response.addCookie(cookieSelector);
                 response.addCookie(cookieValidator);
@@ -53,10 +56,13 @@ public class IniciarSesion extends HttpServlet {
 
                 Cookie cookieSelector = new Cookie("selector", selector);
                 cookieSelector.setMaxAge(SESION_CORTA);
+                cookieSelector.setPath("/");
                 Cookie cookieValidator = new Cookie("validator", validador);
                 cookieValidator.setMaxAge(SESION_CORTA);
+                cookieValidator.setPath("/");
                 Cookie cookieTipo = new Cookie("tipo", "short");
                 cookieTipo.setMaxAge(SESION_CORTA);
+                cookieTipo.setPath("/");
 
                 response.addCookie(cookieSelector);
                 response.addCookie(cookieValidator);
@@ -76,10 +82,13 @@ public class IniciarSesion extends HttpServlet {
 
                 Cookie cookieSelector = new Cookie("selector", selector);
                 cookieSelector.setMaxAge(SESION_LARGA);
+                cookieSelector.setPath("/");
                 Cookie cookieValidator = new Cookie("validator", validador);
                 cookieValidator.setMaxAge(SESION_LARGA);
+                cookieValidator.setPath("/");
                 Cookie cookieTipo = new Cookie("tipo", "long");
                 cookieTipo.setMaxAge(SESION_LARGA);
+                cookieTipo.setPath("/");
 
                 response.addCookie(cookieSelector);
                 response.addCookie(cookieValidator);
@@ -92,10 +101,13 @@ public class IniciarSesion extends HttpServlet {
 
                 Cookie cookieSelector = new Cookie("selector", selector);
                 cookieSelector.setMaxAge(SESION_CORTA);
+                cookieSelector.setPath("/");
                 Cookie cookieValidator = new Cookie("validator", validador);
                 cookieValidator.setMaxAge(SESION_CORTA);
+                cookieValidator.setPath("/");
                 Cookie cookieTipo = new Cookie("tipo", "short");
                 cookieTipo.setMaxAge(SESION_CORTA);
+                cookieTipo.setPath("/");
 
                 response.addCookie(cookieSelector);
                 response.addCookie(cookieValidator);
