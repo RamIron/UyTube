@@ -500,7 +500,7 @@ public class CUsuario implements IUsuario {
 
 	@Override
 	public DtUsuarioWeb obtenerUsuarioConToken(String selector, String validador){
-		DtUsuarioWeb res = null;
+		DtUsuarioWeb res = new DtUsuarioWeb("","");
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		ManejadorToken mT = ManejadorToken.getInstancia();
