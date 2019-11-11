@@ -1,5 +1,9 @@
 package tests;
 
+import datatypes.DtElementoWeb;
+import datatypes.tipoElemento;
+import logica.Usuario;
+import logica.Video;
 import manejadores.ManejadorCategoria;
 import manejadores.ManejadorUsuario;
 import datatypes.DtComentario;
@@ -245,6 +249,50 @@ public class CVideoTest {
         iV.agregarVideo("usr", "vid", "desc", cal, 10, "url");
         iV.modificarInfoVideo("vid", "desc", cal, 10, "url", true);
         assertEquals(1, iV.busqueda("vid", false).size());
+    }
+
+    @Test
+    public void setUsr(){
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+
+    }
+
+    @Test
+    public void setVid(){
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iV.agregarVideo("usr", "vid", "desc", cal, 10, "url");
+        Usuario usr = mU.obtenerUsuario("usr");
+        Video vid = usr.getCanal().obtenerVideo("vid");
+        iV.setVid("vid");
+        assertEquals("vid", vid.getNombre());
+    }
+
+    @Test
+    public void obtenerIdVideo(){
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iU.agregarCanal();
+        iV.setUsr("usr");
+        iV.agregarVideo("m", "vid", "desc", cal, 10, "url");
+        iV.setVid("vid");
+        Integer idEsperado = 1; //aca hay que poner el id del video que agregas
+        Integer idObtenido = iV.obtenerIdVideo("usr", "vid");
+        assertEquals(idEsperado, idObtenido);
+    }
+
+    @Test
+    public void obtenerVideo(){
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iU.agregarCanal();
+        iV.setUsr("usr");
+        iV.agregarVideo("usr", "vid", "desc", cal, 10, "url");
+        iV.setVid("vid");
+        DtElementoWeb videoEsperado = new DtElementoWeb("usr", "vid", tipoElemento.VIDEO, "url");
+        DtElementoWeb videoObtenido = iV.obtenerVideo(2); //aca hay que poner el id del video que agregas
+        assertEquals(videoEsperado.getNombreE(), videoObtenido.getNombreE());
     }
 
     @After

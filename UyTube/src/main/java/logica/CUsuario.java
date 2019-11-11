@@ -434,8 +434,9 @@ public class CUsuario implements IUsuario {
 		}
 	}
 
-	private void borrarTodosSeguidores(Usuario usr){
-		if (!usr.getSeguidores().isEmpty()) {
+	@Override
+	public void borrarTodosSeguidores(Usuario usr){
+		if(!usr.getSeguidores().isEmpty()) {
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			List<String> seguidores = usr.listarSeguidores();
 			for (String u : seguidores) {
@@ -446,8 +447,9 @@ public class CUsuario implements IUsuario {
 		}
 	}
 
-	private void borrarTodosSeguidos(Usuario usr){
-		if (!usr.getSeguidos().isEmpty()) {
+	@Override
+	public void borrarTodosSeguidos(Usuario usr){
+		if(!usr.getSeguidos().isEmpty()) {
 			ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 			List<String> seguidos = usr.listarSeguidos();
 			for (String u : seguidos) {
