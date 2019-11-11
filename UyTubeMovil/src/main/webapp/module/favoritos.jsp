@@ -220,6 +220,13 @@
               publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
               publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
               List<DtVisita> listEU = port.listarMasVisitados(usr.getNickname()).getItem();
+              if ( listEU.size() == 0 ){
+            %>
+            <div class="alert alert-info" role="alert">
+              No hay Listas de Reproduccion
+            </div>
+            <%
+              }
               for(DtVisita eu: listEU){
             %>
 

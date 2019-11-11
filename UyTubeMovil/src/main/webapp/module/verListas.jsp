@@ -239,6 +239,13 @@
                                           <!-- Listado de Videos -->
                                           <%
                                               List<String> lista = portListaRep.listarListasDeUsuario(usr.getNickname()).getItem();
+                                              if ( lista.size() == 0 ){
+                                          %>
+                                          <div class="alert alert-info" role="alert">
+                                              No hay Listas de Reproduccion
+                                          </div>
+                                          <%
+                                              }
                                               for(String l: lista){ %>
                                           <div class="card mb-3" style="max-width: 630px;">
                                               <a  href="<%= request.getContextPath() %>/module/consultaLista.jsp?id=<%=l%>">

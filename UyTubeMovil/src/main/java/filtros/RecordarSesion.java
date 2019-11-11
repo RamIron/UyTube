@@ -23,10 +23,10 @@ public class RecordarSesion implements Filter {
         publicadores.CUsuarioPublishService service = new publicadores.CUsuarioPublishService();
         publicadores.CUsuarioPublish port = service.getCUsuarioPublishPort();
         String path = ((HttpServletRequest)req).getServletPath();
-        Boolean pathValido = false;
+        Boolean pathValido = true;
         if(path.length() > 7){
-            //pathValido = !path.substring(0,7).equals("/assets") && !path.substring(0,4).equals("/img") && !path.substring(0,3).equals("/v/");
-            pathValido = !path.substring(0,7).equals("/assets") && !path.substring(0,4).equals("/img");
+            pathValido = !path.substring(0,7).equals("/assets") && !path.substring(0,4).equals("/img") && !path.substring(0,3).equals("/v/");
+            //pathValido = !path.substring(0,7).equals("/assets") && !path.substring(0,4).equals("/img");
         }
         if (!path.equals("/module/iniciarSesion.jsp") && !path.equals("/IniciarSesion") && !path.equals("/CerrarSesion") && pathValido) {
             HttpSession s = ((HttpServletRequest) req).getSession();

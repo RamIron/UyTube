@@ -1,9 +1,6 @@
 package tests;
 
-import datatypes.DtCanal;
-import datatypes.DtCanalWeb;
-import datatypes.DtElementoUsuario;
-import datatypes.tipoElemento;
+import datatypes.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
