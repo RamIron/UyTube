@@ -376,10 +376,13 @@
                                       </div>
                                       <div class="col-10">
                                         <%--                                          FALTA VER COMO PONER EL LINK ACORTADO--%>
-                                        <%
-                                          Integer idVideo = portVideo.obtenerIdVideo(nick, nomVid);
-                                        %>
-                                        <input type="text" id="imputUrl" value="<%= request.getContextPath() %>/v/<%=idVideo%>" class="form-control" aria-label="Sizing example input" readonly aria-describedby="inputGroup-sizing-sm">
+                                          <input type="text" id="inputUrl" value="" class="form-control" aria-label="Sizing example input" readonly aria-describedby="inputGroup-sizing-sm">
+                                          <script>
+                                            <% Integer idVideo = portVideo.obtenerIdVideo(nick, nomVid);  %>
+                                            var urlVid = "http://" + window.location.host + "/" + "<%= request.getContextPath() %>/v/<%=idVideo%>";
+                                            console.log(urlVid);
+                                            document.getElementById("inputUrl").setAttribute("value", urlVid);
+                                          </script>
                                       </div>
                                     </div>
                                   </div>
@@ -470,7 +473,16 @@
     token: "ee6fab19c5a04ac1a32a645abde4613a",
     application: "argon-dashboard-free"
   });
+
+  function copiarUrl(){
+    let url = document.getElementById("inputUrl");
+    url.select();
+    url.setSelectionRange(0, 99999); /*Para mobile*/
+    document.execCommand("copy");
+  }
 </script>
+
+
 </body>
 
 </html>
