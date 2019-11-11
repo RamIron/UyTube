@@ -63,7 +63,7 @@ public interface CCategoriaPublish {
         String arg0);
 
     /**
-     *
+     * 
      * @param arg0
      * @return
      *     returns publicadores.DtElementoWebArray
@@ -72,8 +72,8 @@ public interface CCategoriaPublish {
     @WebResult(partName = "return")
     @Action(input = "http://publicadores/CCategoriaPublish/listarListasPublicasCategoriaRequest", output = "http://publicadores/CCategoriaPublish/listarListasPublicasCategoriaResponse")
     public DtElementoWebArray listarListasPublicasCategoria(
-            @WebParam(name = "arg0", partName = "arg0")
-                    String arg0);
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
 
     /**
      * 

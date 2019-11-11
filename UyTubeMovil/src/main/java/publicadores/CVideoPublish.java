@@ -30,19 +30,6 @@ public interface CVideoPublish {
      * 
      * @param arg0
      * @return
-     *     returns publicadores.DtElementoWeb
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://publicadores/CVideoPublish/obtenerVideoRequest", output = "http://publicadores/CVideoPublish/obtenerVideoResponse")
-    public DtElementoWeb obtenerVideo(
-        @WebParam(name = "arg0", partName = "arg0")
-        int arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
      *     returns net.java.dev.jaxb.array.StringArray
      */
     @WebMethod
@@ -113,6 +100,31 @@ public interface CVideoPublish {
 
     /**
      * 
+     * @param arg3
+     * @param arg2
+     * @param arg5
+     * @param arg4
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @Action(input = "http://publicadores/CVideoPublish/modificarInfoVideoRequest", output = "http://publicadores/CVideoPublish/modificarInfoVideoResponse")
+    public void modificarInfoVideo(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        DtFecha arg2,
+        @WebParam(name = "arg3", partName = "arg3")
+        int arg3,
+        @WebParam(name = "arg4", partName = "arg4")
+        String arg4,
+        @WebParam(name = "arg5", partName = "arg5")
+        boolean arg5);
+
+    /**
+     * 
      * @param arg1
      * @param arg0
      * @return
@@ -174,31 +186,6 @@ public interface CVideoPublish {
         int arg4,
         @WebParam(name = "arg5", partName = "arg5")
         String arg5);
-
-    /**
-     * 
-     * @param arg3
-     * @param arg2
-     * @param arg5
-     * @param arg4
-     * @param arg1
-     * @param arg0
-     */
-    @WebMethod
-    @Action(input = "http://publicadores/CVideoPublish/modificarInfoVideoRequest", output = "http://publicadores/CVideoPublish/modificarInfoVideoResponse")
-    public void modificarInfoVideo(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        DtFecha arg2,
-        @WebParam(name = "arg3", partName = "arg3")
-        int arg3,
-        @WebParam(name = "arg4", partName = "arg4")
-        String arg4,
-        @WebParam(name = "arg5", partName = "arg5")
-        boolean arg5);
 
     /**
      * 
@@ -296,6 +283,19 @@ public interface CVideoPublish {
         String arg0,
         @WebParam(name = "arg1", partName = "arg1")
         String arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns publicadores.DtElementoWeb
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://publicadores/CVideoPublish/obtenerVideoRequest", output = "http://publicadores/CVideoPublish/obtenerVideoResponse")
+    public DtElementoWeb obtenerVideo(
+        @WebParam(name = "arg0", partName = "arg0")
+        int arg0);
 
     /**
      * 

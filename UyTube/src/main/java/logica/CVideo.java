@@ -269,7 +269,7 @@ public class CVideo implements IVideo {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		List<Object[]> resQuery;
-		DtElementoWeb res  = null;
+		DtElementoWeb res  = new DtElementoWeb("", "", tipoElemento.VIDEO, "");;
 		Query consulta = em.createNamedQuery("obtenerVideoPorId");
 		consulta.setParameter(1, idVid);
 		resQuery = consulta.getResultList();
