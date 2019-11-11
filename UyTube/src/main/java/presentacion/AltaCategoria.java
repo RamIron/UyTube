@@ -32,11 +32,11 @@ public class AltaCategoria extends JInternalFrame {
 				lblMsgErrorExiste.setVisible(false);
 				lblMsgExito.setVisible(false);
 				
-				if(nomCat.getText().isEmpty()) {
+				if (nomCat.getText().isEmpty()) {
 					lblMsgErrorVacio.setVisible(true);
-				}else if(iC.existeCategoria(nomCat.getText())){
+				} else if (iC.existeCategoria(nomCat.getText())){
 					lblMsgErrorExiste.setVisible(true);
-				}else {
+				} else {
 					iC.altaCategoria(nomCat.getText());
 					resetearFormulario();
 					lblMsgExito.setVisible(true);

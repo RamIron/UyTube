@@ -313,10 +313,13 @@
                                                 Lista publica
                                             </label>
                                         </div>
-                                        <br>
-                                        <div id="mensaje-error" class="alert alert-danger d-none" role="alert">
+
+                                        <%--Mostrar mensaje de falta de datos para crear video--%>
+                                        <div id="mensaje-error" class="alert alert-danger d-none mt-3" role="alert">
                                             <!-- El texto del mensaje se genera en un script -->
                                         </div>
+                                        <%--Fin mostrar mensaje de falta de datos para crear video--%>
+
                                         <div class="text-center">
                                             <button type="button" class="btn btn-primary my-4" onclick="continuar()">Crear Lista</button>
                                         </div>
@@ -351,16 +354,35 @@
     });
 </script>
 <script type="text/javascript">
-    var nomValido = null;
+    var nomValido = false;
 
     function continuar() {
         $("#mensaje-error").addClass("d-none");
         let nomList = document.forms["nuevaLista"]["nomList"].value;
-        if(nomList == ""){
+        if (nomList == "") {
             $("#mensaje-error").html('<strong>Error!</strong> La lista debe tener un nombre');
             $("#mensaje-error").removeClass("d-none");
+            marcarCamposVacios(nomList);
+        } else if (!nomValido) {
+            $("#mensaje-error").html('<strong>Error!</strong> Ese nombre de lista ya existe');
+            $("#mensaje-error").removeClass("d-none");
+            marcarCamposVacios(nomList);
         }else {
             document.forms["nuevaLista"].submit();
+        }
+    }
+
+    function quitarInvalido(arg){
+        if(arg.value == ""){
+            $(arg).addClass("is-invalid");
+        }else {
+            $(arg).removeClass("is-invalid");
+        }
+    }
+
+    function marcarCamposVacios(nomList) {
+        if (nomList == "") {
+            $("#nomList").addClass("is-invalid");
         }
     }
 

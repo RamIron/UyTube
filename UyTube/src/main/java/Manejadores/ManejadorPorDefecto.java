@@ -15,7 +15,7 @@ public class ManejadorPorDefecto {
 	private ManejadorPorDefecto(){}
 	
 	public static ManejadorPorDefecto getInstancia() {
-		if(instancia == null) {
+		if (instancia == null) {
 			instancia = new ManejadorPorDefecto();
 		}
 		return instancia;
@@ -24,9 +24,9 @@ public class ManejadorPorDefecto {
 	public boolean existePorDefecto(String nombre) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		if(em.find(NombrePorDefecto.class, nombre) == null){
+		if (em.find(NombrePorDefecto.class, nombre) == null){
 			return false;
-		}else {
+		} else {
 			return true;
 		}
 	}
@@ -39,8 +39,8 @@ public class ManejadorPorDefecto {
 			em.persist(nombre);
 			em.getTransaction().commit();
 		} catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
+			if (e instanceof RollbackException)
+				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}

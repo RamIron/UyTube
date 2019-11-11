@@ -1,8 +1,10 @@
 package datatypes;
 
-import java.util.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DtComentario {

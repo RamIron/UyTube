@@ -603,14 +603,14 @@
                                                 <%--Nombre--%>
                                                 <div class="form-group">
                                                     <small>Nombre</small>
-                                                    <input name="nomU" class="form-control form-control-sm" placeholder="Nombre" id="nombreID" type="text" value="<%=usuario.getNombre()%>">
+                                                    <input name="nomU" class="form-control form-control-sm" placeholder="Nombre" id="nomU" type="text" onkeyup="quitarInvalido(this)" value="<%=usuario.getNombre()%>">
                                                 </div>
                                                 <%--Fin Nombre--%>
 
                                                 <%--Apellido--%>
                                                 <div class="form-group">
                                                     <small>Apellido</small>
-                                                    <input name="apellido" class="form-control form-control-sm" placeholder="Apellido" id="apellidoID" type="text" value="<%=usuario.getApellido()%>">
+                                                    <input name="apellido" class="form-control form-control-sm" placeholder="Apellido" id="apellido" type="text" onkeyup="quitarInvalido(this)" value="<%=usuario.getApellido()%>">
                                                 </div>
                                                 <%--Fin Apellido--%>
 
@@ -621,7 +621,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text form-control-sm"><i class="ni ni-calendar-grid-58"></i></span>
                                                         </div>
-                                                        <input name="fNac" class="form-control datepicker form-control-sm" placeholder="Fecha de nacimiento" id="fNacID" type="text" value="<%=fechaS%>">
+                                                        <input name="fNac" class="form-control datepicker form-control-sm" placeholder="Fecha de nacimiento" id="fNac" type="text" onkeyup="quitarInvalido(this)" value="<%=fechaS%>">
                                                     </div>
                                                 </div>
                                                 <%--Fin Fecha Nacimiento--%>
@@ -635,7 +635,7 @@
                                                 <%--Nombre Canal--%>
                                                 <div class="form-group">
                                                     <small>Nombre de Canal</small>
-                                                    <input name="nomCan" class="form-control form-control-sm" placeholder="Nombre (opcional)" id="nomCanalID" type="text" value="<%=canal.getNombre()%>">
+                                                    <input name="nomCan" class="form-control form-control-sm" placeholder="Nombre (opcional)" id="nomCan" type="text" onkeyup="quitarInvalido(this)" value="<%=canal.getNombre()%>">
                                                 </div>
                                                 <%--Fin Nombre Canal--%>
 
@@ -670,7 +670,7 @@
                                                 <div class="form-group">
                                                     <small>Descripción de Canal</small>
                                                     <div class="input-group">
-                                                        <textarea class="form-control" id="descripCanID" rows="3" placeholder="Descripcion..." name="descripcion"><%=canal.getDescripcion()%></textarea>
+                                                        <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripcion..." name="descripcion" onkeyup="quitarInvalido(this)"><%=canal.getDescripcion()%></textarea>
                                                     </div>
                                                 </div>
                                                 <%--Fin Descripcion Canal--%>
@@ -685,6 +685,12 @@
                                                 <%--Fin Canal publico--%>
 
                                                 <input type="hidden" name="nickname" value="<%=usuario.getNickname()%>">
+
+                                                <%--Mostrar mensaje de falta de datos para crear video--%>
+                                                <div id="mensaje-error" class="alert alert-danger d-none" role="alert">
+                                                    <!-- El texto del mensaje se genera en un script -->
+                                                </div>
+                                                <%--Fin mostrar mensaje de falta de datos para crear video--%>
 
                                                 <%--Boton guardar cambios--%>
                                                 <div class="text-center">
@@ -769,27 +775,48 @@
         var nomCan = document.forms["consultaPerfil"]["nomCan"].value;
         var descripcion = document.forms["consultaPerfil"]["descripcion"].value;
         if(nomU == "" || apellido == "" || fNac == "" || nomCan =="" || descripcion == "" ){
-            alert("Falta completar campos");
+            $("#mensaje-error").html('<strong>Error!</strong> Falta completar algun campo obligatorio');
+            $("#mensaje-error").removeClass("d-none");
+            marcarCamposVacios(nomU, apellido, fNac, nomCan, descripcion);
         }else {
             document.forms["consultaPerfil"].submit();
         }
     }
-</script>
 
-<script type="text/javascript">
+    function quitarInvalido(arg){
+        if(arg.value == ""){
+            $(arg).addClass("is-invalid");
+        }else {
+            $(arg).removeClass("is-invalid");
+        }
+    }
+
+    function marcarCamposVacios(nomU, apellido, fNac, nomCan, descripcion){
+        if(nomU == "") {
+            $("#nomU").addClass("is-invalid");
+        }
+        if(apellido == "") {
+            $("#apellido").addClass("is-invalid");
+        }
+        if(fNac == "") {
+            $("#fNac").addClass("is-invalid");
+        }
+        if(nomCan == "") {
+            $("#nomCan").addClass("is-invalid");
+        }
+        if(descripcion == "") {
+            $("#descripcion").addClass("is-invalid");
+        }
+    }
+
     function cambiarImagen() {
         document.forms["cambioImagen"].submit();
     }
-</script>
 
-
-<script type="text/javascript">
     function eliminarImagen() {
         document.forms["cambioImagen"].submit();
     }
-</script>
 
-<script type="text/javascript">
     function eliminarUsuario() {
         document.forms["eliminaUsr"].submit();
     }

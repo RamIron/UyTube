@@ -13,7 +13,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.tree.DefaultMutableTreeNode;
-import datatypes.*;
+import datatypes.DtComentario;
+import datatypes.DtValoracion;
+import datatypes.DtVideo;
 import interfaces.ICategoria;
 import interfaces.IUsuario;
 import interfaces.IVideo;
@@ -85,8 +87,8 @@ public class ConsultaVideo extends JInternalFrame {
 				String usr = listaUsr.getModel().getElementAt(i).toString();
 				((DefaultListModel) listaVid.getModel()).clear();
 				List<String> videos = iV.listarVideosDeUsuario(usr);
-				if(!videos.isEmpty()) {
-					for(String v: videos) {
+				if (!videos.isEmpty()) {
+					for (String v: videos) {
 						((DefaultListModel) listaVid.getModel()).addElement(v);
 					}
 				}
@@ -179,7 +181,7 @@ public class ConsultaVideo extends JInternalFrame {
 		
 		fDia.setBounds(572, 175, 49, 24);
 		fDia.addItem(null);
-		for(Integer i=1; i<=31; i++) {
+		for (Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
 		}
 		getContentPane().add(fDia);
@@ -188,7 +190,7 @@ public class ConsultaVideo extends JInternalFrame {
 		
 		fMes.setBounds(633, 175, 52, 24);
 		fMes.addItem(null);
-		for(Integer i=1; i<=12; i++) {
+		for (Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
 		}
 		getContentPane().add(fMes);
@@ -197,7 +199,7 @@ public class ConsultaVideo extends JInternalFrame {
 		
 		fAnio.setBounds(697, 175, 77, 24);
 		fAnio.addItem(null);
-		for(Integer i=1920; i<=2019; i++) {
+		for (Integer i=1920; i<=2019; i++) {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);
@@ -269,7 +271,7 @@ public class ConsultaVideo extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaUsr.setModel(listaU);
@@ -278,7 +280,7 @@ public class ConsultaVideo extends JInternalFrame {
 	
 	public void cargarComentarios(String nomVid) {
 		List<DtComentario> listaCom = iV.obtenerComentariosVideo(nomVid);
-		for(DtComentario c: listaCom) {
+		for (DtComentario c: listaCom) {
 			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
 			cargarRespuestas(nodo, c.getRespuestas());
 			raiz.add(nodo);
@@ -289,9 +291,9 @@ public class ConsultaVideo extends JInternalFrame {
 		List<DtValoracion> listaVal = iV.obtenerValoracionVideo();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(DtValoracion v: listaVal) {
-			if(!listaVal.isEmpty()) {
-				if(v.getGusta()) {
+		for (DtValoracion v: listaVal) {
+			if (!listaVal.isEmpty()) {
+				if (v.getGusta()) {
 					listaU.add(i++, v.getNickname());
 				}
 			}
@@ -303,9 +305,9 @@ public class ConsultaVideo extends JInternalFrame {
 		List<DtValoracion> listaVal = iV.obtenerValoracionVideo();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(DtValoracion v: listaVal) {
-			if(!listaVal.isEmpty()) {
-				if(!v.getGusta()) {
+		for (DtValoracion v: listaVal) {
+			if (!listaVal.isEmpty()) {
+				if (!v.getGusta()) {
 					listaU.add(i++, v.getNickname());
 				}
 			}
@@ -314,7 +316,7 @@ public class ConsultaVideo extends JInternalFrame {
 	}
 	
 	public void cargarRespuestas(DefaultMutableTreeNode padre, List<DtComentario> com) {
-		for(DtComentario c: com) {
+		for (DtComentario c: com) {
 			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
 				cargarRespuestas(nodo, c.getRespuestas());	
 			padre.add(nodo);
@@ -346,7 +348,7 @@ public class ConsultaVideo extends JInternalFrame {
 	public void cargarCategorias() {
 		List<String> categorias = iC.listarCategorias();
 		categoria.addItem("<Sin categoria>");
-		for(String c: categorias) {
+		for (String c: categorias) {
 			categoria.addItem(c);
 		}
 	}
@@ -372,9 +374,9 @@ public class ConsultaVideo extends JInternalFrame {
 		fDia.setSelectedIndex(infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH));
 		fMes.setSelectedIndex(infoV.getfPublicacion().get(Calendar.MONTH));
 		fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
-		if(infoV.getCategoria() == null) {
+		if (infoV.getCategoria() == null) {
 			categoria.setSelectedIndex(0);
-		}else {
+		} else {
 			categoria.setSelectedItem(infoV.getCategoria());			
 		}
 		publico.setSelected(infoV.getPublico());

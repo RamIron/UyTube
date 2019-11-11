@@ -451,10 +451,14 @@
                                         </div>
                                         <div class="col-sm-10">
 <%--                                          FALTA VER COMO PONER EL LINK ACORTADO--%>
-                                            <%
-                                                Integer idVideo = portVideo.obtenerIdVideo(nick, nomVid);
-                                            %>
-                                          <input type="text" id="imputUrl" value="http://localhost:8080/UyTubeWeb_war_exploded/v/<%=idVideo%>" class="form-control" aria-label="Sizing example input" readonly aria-describedby="inputGroup-sizing-sm">
+
+                                          <input type="text" id="inputUrl" value="" class="form-control" aria-label="Sizing example input" readonly aria-describedby="inputGroup-sizing-sm">
+                                          <script>
+                                            <% Integer idVideo = portVideo.obtenerIdVideo(nick, nomVid);  %>
+                                            var urlVid = "http://" + window.location.host + "/" + "<%= request.getContextPath() %>/v/<%=idVideo%>";
+                                            console.log(urlVid);
+                                            document.getElementById("inputUrl").setAttribute("value", urlVid);
+                                          </script>
                                         </div>
                                       </div>
                                     </div>
@@ -565,29 +569,29 @@
                                   <%--Nombre de Video--%>
                                   <div class="form-group">
                                     <small>Nombre</small>
-                                    <input type="text" name="nomVid" class="form-control" placeholder="Nombre de Video" value="<%=infoV.getNombre()%>">
+                                    <input type="text" name="nomVid" id="nomVid" class="form-control" placeholder="Nombre de Video" onkeyup="quitarInvalido(this)" value="<%=infoV.getNombre()%>">
                                   </div>
                                   <%--Fin Nombre de Video--%>
 
                                   <%--Duracion--%>
                                   <div class="form-group">
                                     <small>Duracion</small>
-                                    <input type="text" name="dur" class="form-control" placeholder="Duración (en segundos)" value="<%=infoV.getDuracion()%>">
+                                    <input type="text" name="dur" id="dur" class="form-control" placeholder="Duración (en segundos)" onkeyup="quitarInvalido(this)" value="<%=infoV.getDuracion()%>">
                                   </div>
                                   <%--Fin Duracion--%>
 
                                   <%--URL--%>
                                   <div class="form-group">
                                     <small>URL</small>
-                                    <input type="text" name="url" class="form-control" placeholder="URL (YouTube)" value="https://www.youtube.com/watch?v=<%=infoV.getUrl()%>">
+                                    <input type="text" name="url" id="url" class="form-control" placeholder="URL (YouTube)" onkeyup="quitarInvalido(this)" value="https://www.youtube.com/watch?v=<%=infoV.getUrl()%>">
                                   </div>
                                   <%--Fin URL--%>
 
                                   <%--Descripcion--%>
                                   <div class="form-group">
                                     <small>Descripcion</small>
-                                    <div class="input-group input-group-alternative">
-                                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripción..." name="desc"><%=infoV.getDescripcion()%></textarea>
+                                    <div class="input-group">
+                                      <textarea class="form-control" id="desc" rows="3" placeholder="Descripción..." onkeyup="quitarInvalido(this)" name="desc"><%=infoV.getDescripcion()%></textarea>
                                     </div>
                                   </div>
                                   <%--Fin Descripcion--%>
@@ -595,11 +599,11 @@
                                   <%--Fecha de Publicacion--%>
                                   <div class="form-group">
                                     <small>Fecha de Publicacion</small>
-                                    <div class="input-group input-group-alternative">
+                                    <div class="input-group">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                       </div>
-                                      <input name="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" value="<%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getYear()%>">
+                                      <input name="fPub" id="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" onkeyup="quitarInvalido(this)" value="<%=infoV.getFPublicacion().getMonth()%>/<%=infoV.getFPublicacion().getDay()%>/<%=infoV.getFPublicacion().getYear()%>">
                                     </div>
                                   </div>
                                   <%--Fin Fecha de Publicacion--%>
@@ -631,6 +635,12 @@
                                   </div>
 
                                   <input type="hidden" name="nomOriginal" value="<%=infoV.getNombre()%>">
+
+                                  <%--Mostrar mensaje de falta de datos para crear video--%>
+                                  <div id="mensaje-error" class="alert alert-danger d-none" role="alert">
+                                    <!-- El texto del mensaje se genera en un script -->
+                                  </div>
+                                  <%--Fin mostrar mensaje de falta de datos para crear video--%>
 
                                   <%--Boton crear video--%>
                                   <div class="text-center">
@@ -714,7 +724,9 @@
       var desc = document.forms["modificarVideo"]["desc"].value;
       var fPub = document.forms["modificarVideo"]["fPub"].value;
       if (nomVid == "" || dur == "" || url == "" || desc == "" || fPub == "" ){
-        alert("Falta completar campos");
+        $("#mensaje-error").html('<strong>Error!</strong> Falta completar algun campo obligatorio');
+        $("#mensaje-error").removeClass("d-none");
+        marcarCamposVacios(nomVid, dur, url, desc, fPub);
       } else{
         var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
         var match = url.match(regExp);
@@ -728,8 +740,34 @@
       }
     }
 
+    function quitarInvalido(arg){
+      if(arg.value == ""){
+        $(arg).addClass("is-invalid");
+      }else {
+        $(arg).removeClass("is-invalid");
+      }
+    }
+
+    function marcarCamposVacios(nomVid, dur, url, desc, fPub){
+      if(nomVid == "") {
+        $("#nomVid").addClass("is-invalid");
+      }
+      if(dur == "") {
+        $("#dur").addClass("is-invalid");
+      }
+      if(url == "") {
+        $("#url").addClass("is-invalid");
+      }
+      if(desc == "") {
+        $("#desc").addClass("is-invalid");
+      }
+      if(fPub == "") {
+        $("#fPub").addClass("is-invalid");
+      }
+    }
+
     function copiarUrl(){
-      let url = document.getElementById("imputUrl");
+      let url = document.getElementById("inputUrl");
       url.select();
       url.setSelectionRange(0, 99999); /*Para mobile*/
       document.execCommand("copy");
@@ -746,6 +784,7 @@
       }
     }
   </script>
+
 </body>
 
 </html>

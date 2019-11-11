@@ -1,15 +1,18 @@
 package logica;
 
-import java.util.*;
+import datatypes.DtElementoWeb;
+import datatypes.DtVideoUsuario;
+import datatypes.tipoElemento;
 import javax.persistence.*;
-import datatypes.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class ListaReproduccion extends Elemento {
 	
 	//Atributos
-	@ManyToMany(cascade= {CascadeType.PERSIST,CascadeType.MERGE})
+	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Video> videos = new ArrayList<Video>();
 	
 	//Constructores
@@ -39,7 +42,7 @@ public abstract class ListaReproduccion extends Elemento {
 
 	public List<DtVideoUsuario> listarVideos() {
 		List<DtVideoUsuario> res = new ArrayList<DtVideoUsuario>();
-		for(Video v: videos) {
+		for (Video v: videos) {
 			DtVideoUsuario vid = new DtVideoUsuario(v.getCanal().getUsuario().getNickname(), v.getNombre());
 			res.add(vid);
 		}
@@ -48,8 +51,8 @@ public abstract class ListaReproduccion extends Elemento {
 
 	public List<DtElementoWeb> listarVideosWeb() {
 		List<DtElementoWeb> res = new ArrayList<DtElementoWeb>();
-		for(Video v: videos) {
-			if(!videos.isEmpty()) {
+		for (Video v: videos) {
+			if (!videos.isEmpty()) {
 				DtElementoWeb vid = new DtElementoWeb(v.getCanal().getUsuario().getNickname(), v.getNombre(), tipoElemento.VIDEO, v.getUrl());
 				res.add(vid);
 			}
@@ -58,7 +61,7 @@ public abstract class ListaReproduccion extends Elemento {
 	}
 
 	public void sacarCategoria(){
-		if(this.categoria != null) {
+		if (this.categoria != null) {
 			this.categoria.quitarElemento(this);
 			this.categoria = null;
 		}

@@ -90,14 +90,14 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 			public void actionPerformed(ActionEvent arg0) {
 				reiniciarMsg();
 				int i = listaUsr.getSelectedIndex();
-				if(i < 0) {
+				if (i < 0) {
 					lblMsgErrorUsr.setVisible(true);
-				}else {
+				} else {
 					String usr = listaUsr.getModel().getElementAt(i).toString();
 					((DefaultListModel) listaVid.getModel()).clear();
 					List<String> videos = iV.listarVideosDeUsuario(usr);
-					if(!videos.isEmpty()) {
-						for(String v: videos) {
+					if (!videos.isEmpty()) {
+						for (String v: videos) {
 							((DefaultListModel) listaVid.getModel()).addElement(v);
 						}
 					}
@@ -133,9 +133,9 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 			public void actionPerformed(ActionEvent e) {
 				int i = listaVid.getSelectedIndex();
 				reiniciarMsg();
-				if(i < 0) {
+				if (i < 0) {
 					lblMsgErrorVid.setVisible(true);
-				}else {
+				} else {
 					listaVid.setEnabled(false);
 					btnSelecVid.setEnabled(false);
 					String vid = listaVid.getModel().getElementAt(i).toString();
@@ -147,7 +147,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 					fDia.setSelectedItem(infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH));
 					fMes.setSelectedItem(infoV.getfPublicacion().get(Calendar.MONTH)+1);
 					fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
-					if(infoV.getCategoria() == null) {
+					if (infoV.getCategoria() == null) {
 						categoria.setSelectedIndex(0);
 					} else {
 						categoria.setSelectedItem(infoV.getCategoria());					
@@ -195,7 +195,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		
 		fDia.setBounds(572, 214, 49, 24);
 		fDia.addItem(null);
-		for(Integer i=1; i<=31; i++) {
+		for (Integer i=1; i<=31; i++) {
 			fDia.addItem(i);
 		}
 		getContentPane().add(fDia);
@@ -203,7 +203,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		
 		fMes.setBounds(633, 214, 52, 24);
 		fMes.addItem(null);
-		for(Integer i=1; i<=12; i++) {
+		for (Integer i=1; i<=12; i++) {
 			fMes.addItem(i);
 		}
 		getContentPane().add(fMes);
@@ -211,7 +211,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		
 		fAnio.setBounds(697, 214, 77, 24);
 		fAnio.addItem(null);
-		for(Integer i=1920; i<=2019; i++) {
+		for (Integer i=1920; i<=2019; i++) {
 			fAnio.addItem(i);
 		}
 		getContentPane().add(fAnio);
@@ -254,17 +254,17 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				reiniciarMsg();
-				if(nomVid.getText().isEmpty() || duracion.getText().isEmpty() || url.getText().isEmpty() ||
+				if (nomVid.getText().isEmpty() || duracion.getText().isEmpty() || url.getText().isEmpty() ||
 					descripcion.getText().isEmpty() || fDia.equals(null) || fMes.equals(null) || fAnio.equals(null)) {
 					lblMsgError.setVisible(true);
 					lblMsgExiste.setVisible(true);
-				}else if(!duracion.getText().chars().allMatch(Character::isDigit)){
+				} else if(!duracion.getText().chars().allMatch(Character::isDigit)){
 					lblMsgErrorNum.setVisible(true);
-				}else{
+				} else {
 					Calendar fPub = Calendar.getInstance();
 			        fPub.set((Integer) fAnio.getSelectedItem(), (Integer) fMes.getSelectedItem(), (Integer) fDia.getSelectedItem());
 					iV.modificarInfoVideo(nomVid.getText(), descripcion.getText(), fPub, Integer.parseInt(duracion.getText()), url.getText(), publico.isSelected());
-					if(categoria.getSelectedIndex() != 0) {
+					if (categoria.getSelectedIndex() != 0) {
 						iV.agregarCategoria(categoria.getSelectedItem().toString());
 					}
 					inicializar();
@@ -308,7 +308,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaU = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaU.add(i++, u);
 		}
 		listaUsr.setModel(listaU);
@@ -317,7 +317,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 	
 	public void cargarComentarios(String nomVid) {
 		List<DtComentario> listaCom = iV.obtenerComentariosVideo(nomVid);
-		for(DtComentario c: listaCom) {
+		for (DtComentario c: listaCom) {
 			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
 			cargarRespuestas(nodo, c.getRespuestas());
 			raiz.add(nodo);
@@ -326,7 +326,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 
 	
 	public void cargarRespuestas(DefaultMutableTreeNode padre, List<DtComentario> com) {
-		for(DtComentario c: com) {
+		for (DtComentario c: com) {
 			DefaultMutableTreeNode nodo = new DefaultMutableTreeNode(c);
 				cargarRespuestas(nodo, c.getRespuestas());	
 			padre.add(nodo);
@@ -359,7 +359,7 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		categoria.removeAllItems();
 		List<String> categorias = iC.listarCategorias();
 		categoria.addItem("<Sin categoria>");
-		for(String c: categorias) {
+		for (String c: categorias) {
 			categoria.addItem(c);
 		}
 	}
@@ -387,9 +387,9 @@ public class ModificarVideo extends JInternalFrame { //TODO es una copia de alta
 		fDia.setSelectedIndex(infoV.getfPublicacion().get(Calendar.DAY_OF_MONTH));
 		fMes.setSelectedIndex(infoV.getfPublicacion().get(Calendar.MONTH));
 		fAnio.setSelectedItem(infoV.getfPublicacion().get(Calendar.YEAR));
-		if(infoV.getCategoria() == null) {
+		if (infoV.getCategoria() == null) {
 			categoria.setSelectedIndex(0);
-		}else {
+		} else {
 			categoria.setSelectedItem(infoV.getCategoria());			
 		}
 		publico.setSelected(infoV.getPublico());

@@ -15,10 +15,10 @@ import javax.swing.JLabel;
 import java.awt.Color;
 
 public class ConsultaCategoria extends JInternalFrame{
-	JList listCategoria;
-	JList listElementos;
-	JLabel lblMsgErrorCat = new JLabel("Debe seleccionar una categoria");
-	String nomCat = "";
+	private JList listCategoria;
+	private JList listElementos;
+	private JLabel lblMsgErrorCat = new JLabel("Debe seleccionar una categoria");
+	private String nomCat = "";
 
 
 	public ConsultaCategoria(ICategoria iC) {
@@ -56,20 +56,19 @@ public class ConsultaCategoria extends JInternalFrame{
 				listElementos.setEnabled(true);
 				listElementos.removeAll();
 				int c = listCategoria.getSelectedIndex();
-				if(c < 0) {
+				if (c < 0) {
 					lblMsgErrorCat.setVisible(true);
-				}else {
+				} else {
 					nomCat = listCategoria.getModel().getElementAt(c).toString();
 					List<DtElementoUsuario> elementos = iC.listarElemCategoria(nomCat);
 					
-					if(!elementos.isEmpty()) {						
+					if (!elementos.isEmpty()) {
 						ArrayList<String> elems = new ArrayList<String>();
-						for(DtElementoUsuario e : elementos) {
+						for (DtElementoUsuario e : elementos) {
 							elems.add(e.getTipo().toString() + ">" + e.getNombreE() + " - " + e.getNickname());
 						}
 						DefaultListModel listModel = new DefaultListModel();
-						for (int i = 0; i < elems.size(); i++)
-						{
+						for (int i = 0; i < elems.size(); i++) {
 						    listModel.addElement(elems.get(i));
 						}
 						listElementos.setModel(listModel);
@@ -96,7 +95,7 @@ public class ConsultaCategoria extends JInternalFrame{
 		List<String> categorias = iC.listarCategorias();
 		DefaultListModel<String> listaCat = new DefaultListModel<String>();
 		int i = 0;
-		for(String c: categorias) {
+		for (String c: categorias) {
 			listaCat.add(i++, c);
 		}
 		listCategoria.setModel(listaCat);

@@ -99,7 +99,7 @@ public class MenuPrincipal extends JFrame {
 		});
 	}
 
-	private void LimpiarFrame() {
+	private void limpiarFrame() {
 		altaCategoriaIF.setVisible(false);
 		listarCategoriaIF.setVisible(false);
 		altaUsuarioIF.setVisible(false);
@@ -215,7 +215,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmAgregarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				altaUsuarioIF.setVisible(true);
 			}
 		});
@@ -224,7 +224,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmModificarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LimpiarFrame();
+				limpiarFrame();
 				modificarUsuarioIF.inicializar(iU, iC);
 				modificarUsuarioIF.setVisible(true);
 			}
@@ -234,7 +234,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmListarTodos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				listarUsuarioIF.cargarElementos(iU);
 				listarUsuarioIF.setVisible(true);
 			}
@@ -244,7 +244,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmConsultarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				consultaUsuarioIF.cargarElementos(iU);
 				consultaUsuarioIF.setVisible(true);
 			}
@@ -253,7 +253,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmConsultarEliminados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				consultaUsuarioEliminadoIF.cargarElementos(iU);
 				consultaUsuarioEliminadoIF.setVisible(true);
 			}
@@ -263,7 +263,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmSeguir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LimpiarFrame();
+				limpiarFrame();
 				seguirUsuarioIF.inicializar(iU);
 				seguirUsuarioIF.setVisible(true);
 			}
@@ -273,7 +273,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmDejarDeSeguir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			LimpiarFrame();
+			limpiarFrame();
 			dejarSeguirUsuarioIF.inicializar(iU);
 			dejarSeguirUsuarioIF.setVisible(true);
 			}
@@ -284,7 +284,7 @@ public class MenuPrincipal extends JFrame {
 		menuBar.add(mnVideo);
 		mntmAgregarVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				altaVideoIF.inicializar(iU, iC);
 				altaVideoIF.setVisible(true);
 			}
@@ -294,7 +294,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmModificarVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LimpiarFrame();
+				limpiarFrame();
 				modificarVideoIF.inicializar();
 				modificarVideoIF.setVisible(true);
 			}
@@ -304,7 +304,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmConsultarVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				consultaVideoIF.inicializar();
 				consultaVideoIF.setVisible(true);
 			}
@@ -314,7 +314,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmComentar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				comentarVideoIF.inicializar(iU);
 				comentarVideoIF.setVisible(true);
 			}
@@ -324,7 +324,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmValorar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				valorarVideoIF.inicializar(iU);
 				valorarVideoIF.setVisible(true);
 			}
@@ -335,7 +335,7 @@ public class MenuPrincipal extends JFrame {
 		menuBar.add(mnListaDeReproduccion);
 		mntmAgregarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				altaListaIF.inicializar(iU, iC);
 				altaListaIF.setVisible(true);
 			}
@@ -345,7 +345,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmModificarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				modificarListaIF.inicializar();
 				modificarListaIF.setVisible(true);
 			}
@@ -355,7 +355,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmConsultarLista.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LimpiarFrame();
+				limpiarFrame();
 				consultarListaIF.inicializar();
 				consultarListaIF.setVisible(true);
 			}
@@ -365,7 +365,7 @@ public class MenuPrincipal extends JFrame {
 		//Agregar Video de Lista de Reproduccion//////////
 		mntmAgregarVideoA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				agregarVideoListaIF.inicializar();
 				agregarVideoListaIF.setVisible(true);
 			}
@@ -376,7 +376,7 @@ public class MenuPrincipal extends JFrame {
 		//Quitar Video de Lista de Reproduccion////////////
 		mntmQuitarVideoDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				quitarVideoListaIF.inicializar();
 				quitarVideoListaIF.setVisible(true);
 			}
@@ -388,7 +388,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmAgregarCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				altaCategoriaIF.setVisible(true);
 			}
 		});
@@ -397,7 +397,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmListarTodas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				listarCategoriaIF.cargarElementos(iC);
 				listarCategoriaIF.setVisible(true);
 			}
@@ -407,7 +407,7 @@ public class MenuPrincipal extends JFrame {
 		
 		mntmConsultarCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LimpiarFrame();
+				limpiarFrame();
 				consultaCategoriaIF.setVisible(true);
 				consultaCategoriaIF.inicializar(iC);
 			}
@@ -456,7 +456,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(fondo);
 
 		
-		LimpiarFrame();
+		limpiarFrame();
 
 		/////////////////WEB SERVICES////////////////////////////
 		CVideoPublish pV = new CVideoPublish();

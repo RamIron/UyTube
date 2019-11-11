@@ -145,12 +145,12 @@
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <input name="nomU" class="form-control" placeholder="Nombre" type="text" value="<%=nomU%>">
+                    <input name="nomU" id="nomU" class="form-control" placeholder="Nombre" type="text" value="<%=nomU%>" onkeyup="quitarInvalido(this)">
                   </div>
                 </div>
                 <div class="col">
                   <div class="form-group">
-                    <input name="apellido" class="form-control" placeholder="Apellido" type="text" value="<%=apellido%>">
+                    <input name="apellido" id="apellido" class="form-control" placeholder="Apellido" type="text" value="<%=apellido%>" onkeyup="quitarInvalido(this)">
                   </div>
                 </div>
               </div>
@@ -173,7 +173,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                       </div>
-                      <input name="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" type="text" value="<%=fNac%>">
+                      <input name="fNac" id="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" type="text" value="<%=fNac%>" onkeyup="quitarInvalido(this)">
                     </div>
                   </div>
                 </div>
@@ -214,7 +214,7 @@
 
               <div class="form-group">
                 <div class="input-group">
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Descripcion..." name="descripcion"><%=descripcion%></textarea>
+                  <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripcion..." onkeyup="quitarInvalido(this)" name="descripcion"><%=descripcion%></textarea>
                 </div>
               </div>
               <div class="text-muted text-center mt-2 mb-3">
@@ -273,8 +273,9 @@
         var pass2 = document.forms["registro"]["pass2"].value;
         var descripcion = document.forms["registro"]["descripcion"].value;
         if(nick == "" || email == "" || nomU == "" || apellido == "" || fNac == "" || pass == "" || pass2 == "" || descripcion == "" ){
-          $("#mensaje-error").html('<strong>Error!</strong> Falta completar algun campo');
+          $("#mensaje-error").html('<strong>Error!</strong> Falta completar algun campo obligatorio');
           $("#mensaje-error").removeClass("d-none");
+          marcarCamposVacios(nick, email, nomU, apellido, fNac, pass, pass2, descripcion);
         } else if (pass != pass2) {
           $("#mensaje-error").html('<strong>Error!</strong> Las contraseñas no coinciden');
           $("#mensaje-error").removeClass("d-none");
@@ -287,10 +288,42 @@
         }else {
             document.forms[0].submit();
         }
-
     }
 
+    function quitarInvalido(arg){
+      if(arg.value == ""){
+        $(arg).addClass("is-invalid");
+      }else {
+        $(arg).removeClass("is-invalid");
+      }
+    }
 
+    function marcarCamposVacios(nick, email, nomU, apellido, fNac, pass, pass2, descripcion){
+      if(nick == "") {
+        $("#nickname").addClass("is-invalid");
+      }
+      if(email == "") {
+        $("#email").addClass("is-invalid");
+      }
+      if(nomU == "") {
+        $("#nomU").addClass("is-invalid");
+      }
+      if(apellido == "") {
+        $("#apellido").addClass("is-invalid");
+      }
+      if(fNac == "") {
+        $("#fNac").addClass("is-invalid");
+      }
+      if(pass == "") {
+        $("#pass").addClass("is-invalid");
+      }
+      if(pass2 == "") {
+        $("#pass2").addClass("is-invalid");
+      }
+      if(descripcion == "") {
+        $("#descripcion").addClass("is-invalid");
+      }
+    }
 
     function validarNick() {
       var target = document.getElementById("nickname");

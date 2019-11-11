@@ -1,5 +1,10 @@
 package interfaces;
 
+import datatypes.DtCanal;
+import datatypes.DtCanalWeb;
+import datatypes.DtUsuario;
+import datatypes.DtUsuarioWeb;
+import datatypes.DtVisita;
 import java.util.List;
 import java.util.Calendar;
 import datatypes.*;
@@ -24,7 +29,7 @@ public interface IUsuario {
 	
 	public void limpiarControlador();
 
-	public List<DtUsuarioWeb> listarNickFotoWeb(List <String> seguidores);
+	public List<DtUsuarioWeb> listarNickFotoWeb(List<String> seguidores);
 	
 	public List<String> listarSeguidores();
 	
@@ -71,4 +76,8 @@ public interface IUsuario {
 	public void agregarVisita(String usrSesion, String usrVid, String nomVid);
 
     public List<DtVisita> listarMasVisitados(String nick);
+
+	public void crearToken(String selector, String validador, String usuario);
+
+	public DtUsuarioWeb obtenerUsuarioConToken(String selector, String validador);
 }

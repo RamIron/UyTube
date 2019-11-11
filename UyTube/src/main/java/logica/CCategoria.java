@@ -7,7 +7,7 @@ import datatypes.DtElementoWeb;
 import interfaces.ICategoria;
 
 public class CCategoria implements ICategoria {
-	public Categoria cat;
+	private Categoria cat;
 	
 	//Operaciones
 
@@ -20,14 +20,13 @@ public class CCategoria implements ICategoria {
 			this.cat = c;
 		} catch (Exception e){
 			throw e;
-
 		}
 	}
 	
 	@Override 
 	public List<DtElementoUsuario> listarElemCategoria(String nomC) {
 		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
-		if(mc.existeCategoria(nomC)) { //si existe la categoria
+		if (mc.existeCategoria(nomC)) { //si existe la categoria
 			this.cat = mc.obtenerCategoria(nomC);
 			List<DtElementoUsuario> elementos = this.cat.obtenerElemCategoria();
 			return elementos;	
@@ -39,7 +38,7 @@ public class CCategoria implements ICategoria {
 	@Override
 	public List<DtElementoWeb> listarVideosPublicosCategoria(String nomC) {
 		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
-		if(mc.existeCategoria(nomC)) { //si existe la categoria
+		if (mc.existeCategoria(nomC)) { //si existe la categoria
 			this.cat = mc.obtenerCategoria(nomC);
 			List<DtElementoWeb> elementos = this.cat.obtenerVideosPublicosWeb();
 			return elementos;
@@ -51,7 +50,7 @@ public class CCategoria implements ICategoria {
 	@Override
 	public List<DtElementoWeb> listarListasPublicasCategoria(String nomC) {
 		ManejadorCategoria mc = ManejadorCategoria.getInstancia();
-		if(mc.existeCategoria(nomC)) { //si existe la categoria
+		if (mc.existeCategoria(nomC)) { //si existe la categoria
 			this.cat = mc.obtenerCategoria(nomC);
 			List<DtElementoWeb> elementos = this.cat.obtenerListasPublicasWeb();
 			return elementos;

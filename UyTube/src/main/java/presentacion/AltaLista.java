@@ -61,9 +61,9 @@ public class AltaLista extends JInternalFrame {
 		btnSelecUsr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reiniciarMsg();
-				if(usr.isEmpty()) {
+				if (usr.isEmpty()) {
 					lblMsgErrorUsr.setVisible(true);
-				}else {
+				} else {
 					habilitarFormUsr(false);
 					habilitarFormVid(true);
 				}
@@ -85,7 +85,7 @@ public class AltaLista extends JInternalFrame {
 		listaUsr.addListSelectionListener(new ListSelectionListener() {
 		public void valueChanged(ListSelectionEvent e) {
 			int i = listaUsr.getSelectedIndex();
-			if(i > 0) {
+			if (i > 0) {
 				usr = listaUsr.getModel().getElementAt(i).toString();
 			}
 		}	
@@ -113,25 +113,25 @@ public class AltaLista extends JInternalFrame {
 			public void actionPerformed(ActionEvent e)  {
 				//Hay que ver errores anotados en cuadernola mateo
 				reiniciarMsg();
-				if(nomLis.getText().isEmpty()) {
+				if (nomLis.getText().isEmpty()) {
 					lblMsgError.setVisible(true);
-				}else {
+				} else {
 					
-					if(listaParticular) {
-						if(iL.existeListaParticular(usr, nomLis.getText())) {
+					if (listaParticular) {
+						if (iL.existeListaParticular(usr, nomLis.getText())) {
 							lblMsgExiste.setVisible(true);
-						}else {
-							if(categoria.getSelectedIndex() != 0) {
+						} else {
+							if (categoria.getSelectedIndex() != 0) {
 								iL.agregarListaParticularCategoria(nomLis.getText(), listaPublica, categoria.getSelectedItem().toString());
 							} else {
 								iL.agregarListaParticular(nomLis.getText(), listaPublica);
 							}
 
 						}
-					}else {
-						if(iL.existeListaDefecto(nomLis.getText())) {
+					} else {
+						if (iL.existeListaDefecto(nomLis.getText())) {
 							lblMsgExiste.setVisible(true);
-						}else {
+						} else {
 							iL.agregarListaDefecto(nomLis.getText());
 						}
 					}
@@ -207,7 +207,7 @@ public class AltaLista extends JInternalFrame {
 	public void cargarUsuarios(IUsuario iU) {
 		List<String> usuarios = iU.listarUsuarios();
 		((DefaultListModel) listaUsr.getModel()).addElement("");
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			((DefaultListModel) listaUsr.getModel()).addElement(u);
 		}
 	}
@@ -215,7 +215,7 @@ public class AltaLista extends JInternalFrame {
 	public void cargarCategorias(ICategoria iC) {
 		List<String> categorias = iC.listarCategorias();
 		categoria.addItem("<Sin categoria>");
-		for(String c: categorias) {
+		for (String c: categorias) {
 			categoria.addItem(c);
 		}
 	}

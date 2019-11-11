@@ -5,7 +5,6 @@ import javax.persistence.RollbackException;
 
 import logica.Comentario;
 import logica.Conexion;
-import logica.Usuario;
 
 public class ManejadorComentario {
 
@@ -30,11 +29,9 @@ public class ManejadorComentario {
 	public boolean existeComentario(Integer id) {
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
-		if(em.find(Comentario.class, id) == null){
-			//em.close();
+		if (em.find(Comentario.class, id) == null){
 			return false;
 		}else {
-			//em.close();
 			return true;
 		}
 	}
@@ -46,10 +43,9 @@ public class ManejadorComentario {
 			em.getTransaction().begin();
 			em.persist(comentario);
 			em.getTransaction().commit();
-			//em.close();
 		} catch (Exception e){
-			if(e instanceof RollbackException)
-				if(em.getTransaction().isActive())
+			if (e instanceof RollbackException)
+				if (em.getTransaction().isActive())
 					em.getTransaction().rollback();
 			throw new IllegalArgumentException("Hubo un error inesperado");
 		}

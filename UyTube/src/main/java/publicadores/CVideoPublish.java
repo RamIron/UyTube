@@ -6,7 +6,12 @@ import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.ParameterStyle;
 import javax.jws.soap.SOAPBinding.Style;
 import javax.xml.ws.Endpoint;
-import datatypes.*;
+import datatypes.DtComentario;
+import datatypes.DtElementoUsuario;
+import datatypes.DtElementoWeb;
+import datatypes.DtFecha;
+import datatypes.DtVideo;
+import datatypes.DtValoracion;
 import interfaces.IVideo;
 import interfaces.VFactory;
 import java.util.Calendar;
@@ -56,7 +61,7 @@ public class CVideoPublish {
         List<String> vids = iVid.listarVideosDeUsuario(nick);
         int i = 0;
         String[] ret = new String[vids.size()];
-        for(String v : vids) {
+        for (String v : vids) {
             ret[i]=v;
             i++;
         }
@@ -68,7 +73,7 @@ public class CVideoPublish {
         List<DtElementoWeb> dtElem = iVid.listarVideosDeUsuarioWeb(nick);
         int i = 0;
         DtElementoWeb[] ret = new DtElementoWeb[dtElem.size()];
-        for(DtElementoWeb e : dtElem) {
+        for (DtElementoWeb e : dtElem) {
             ret[i]=e;
             i++;
         }
@@ -81,7 +86,7 @@ public class CVideoPublish {
         List<String> vids = iVid.listarVideosPublicosDeUsuario(nick);
         int i = 0;
         String[] ret = new String[vids.size()];
-        for(String v : vids) {
+        for (String v : vids) {
             ret[i]=v;
             i++;
         }
@@ -93,7 +98,7 @@ public class CVideoPublish {
         List<DtElementoWeb> dtElem = iVid.listarVideosPublicosDeUsuarioWeb(nick);
         int i = 0;
         DtElementoWeb[] ret = new DtElementoWeb[dtElem.size()];
-        for(DtElementoWeb e : dtElem) {
+        for (DtElementoWeb e : dtElem) {
             ret[i]=e;
             i++;
         }
@@ -105,7 +110,7 @@ public class CVideoPublish {
         List<DtElementoUsuario> dtElem = iVid.listarVideosPublicos();
         int i = 0;
         DtElementoUsuario[] ret = new DtElementoUsuario[dtElem.size()];
-        for(DtElementoUsuario e : dtElem) {
+        for (DtElementoUsuario e : dtElem) {
             ret[i]=e;
             i++;
         }
@@ -117,7 +122,7 @@ public class CVideoPublish {
         List<DtElementoWeb> dtElem = iVid.listarVideosPublicosWeb();
         int i = 0;
         DtElementoWeb[] ret = new DtElementoWeb[dtElem.size()];
-        for(DtElementoWeb e : dtElem) {
+        for (DtElementoWeb e : dtElem) {
             ret[i]=e;
             i++;
         }
@@ -138,7 +143,7 @@ public class CVideoPublish {
         List<DtComentario> dtCom = iVid.obtenerComentariosVideo(nomVid);
         int i = 0;
         DtComentario[] ret = new DtComentario[dtCom.size()];
-        for(DtComentario c : dtCom) {
+        for (DtComentario c : dtCom) {
             ret[i]=c;
             i++;
         }
@@ -155,7 +160,7 @@ public class CVideoPublish {
         List<DtValoracion> dtVal = iVid.obtenerValoracionVideo();
         int i = 0;
         DtValoracion[] ret = new DtValoracion[dtVal.size()];
-        for(DtValoracion v : dtVal) {
+        for (DtValoracion v : dtVal) {
             ret[i]=v;
             i++;
         }
@@ -216,7 +221,7 @@ public class CVideoPublish {
         List<DtElementoWeb> dtElem = iVid.busqueda(query, ordFecha);
         int i = 0;
         DtElementoWeb[] ret = new DtElementoWeb[dtElem.size()];
-        for(DtElementoWeb e : dtElem) {
+        for (DtElementoWeb e : dtElem) {
             ret[i]=e;
             i++;
         }

@@ -38,7 +38,7 @@ public class ListarUsuario extends JInternalFrame {
 		List<String> usuarios = iU.listarUsuarios();
 		DefaultListModel<String> listaUsr = new DefaultListModel<String>();
 		int i = 0;
-		for(String u: usuarios) {
+		for (String u: usuarios) {
 			listaUsr.add(i++, u);
 		}
 		list.setModel(listaUsr);
