@@ -30,10 +30,6 @@
       res += "<small>No existen comentarios.</small>";
     }else {
       for (DtComentario c :comentarios){
-
-        /*Integer dia = c.getFecha().getDay();
-        Integer mes = c.getFecha().getMonth();
-        Integer ano = c.getFecha().getYear();*/
         String dia = Integer.toString(c.getFecha().getDay());
         String mes = Integer.toString(c.getFecha().getMonth());
         String ano = Integer.toString(c.getFecha().getYear());

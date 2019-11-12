@@ -333,7 +333,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                                 </div>
-                                                <input name="fPub" id="fPub" class="form-control datepicker" placeholder="Fecha de publicación" type="text" onkeyup="quitarInvalido(this)">
+                                                <input name="fPub" id="fPub" autocomplete="off" class="form-control datepicker" placeholder="Fecha de publicación" type="text" onkeyup="quitarInvalido(this)">
                                             </div>
                                         </div>
                                         <%--Fin Fecha de Publicacion--%>

@@ -21,16 +21,12 @@
 
 <%!
 
-  public String imprimirComentarios(List< DtComentario > comentarios, HttpServletRequest request, String path){
+  public String imprimirComentarios(List<DtComentario> comentarios, HttpServletRequest request, String path){
     String res = "";
     if(comentarios.isEmpty()){
       res += "<small>No existen comentarios.</small>";
     }else {
       for (DtComentario c :comentarios){
-
-        /*Integer dia = c.getFecha().getDay();
-        Integer mes = c.getFecha().getMonth();
-        Integer ano = c.getFecha().getYear();*/
         String dia = Integer.toString(c.getFecha().getDay());
         String mes = Integer.toString(c.getFecha().getMonth());
         String ano = Integer.toString(c.getFecha().getYear());
@@ -48,36 +44,35 @@
           res += " <button type=\"button\" class=\"btn btn-link\" id=\"btn-" + c.getId() + "\">Responder</button>";
         }
         res +=    "</h5>\n " +
-                  "<small>" + c.getTexto() + "</small>\n" +
-                  "                      </div>\n" +
-                  "                      <div id=\"resp-" + c.getId() +"\" class=\"d-none\">\n" +
-                  "                          <form action=\"" + request.getContextPath() + "/ResponderComentario\" method=\"post\">\n" +
-                  "                       <div class=\"input-group input-group-alternative\"> \n" +
-                  "                       <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" placeholder=\"Responder...\" name=\"respuesta\"></textarea>\n" +
-                  "                       </div>\n" + " <br>\n" +
-                  "                       <input type=\"hidden\" name=\"id\" value=\"" + c.getId() +"\">\n" +
-                  "                       <input type=\"hidden\" name=\"path\" value=\"" + path + "\">\n" +
-                  "                      <div class=\"float-right\">\n" +
-                  "                        <button type=\"submit\" class=\"btn btn-primary btn-sm\">Responder</button>\n" +
-                  "                      </div>\n" +
-                  "                       <br>\n" +
-                  "                       </form>\n" +
-                  "                       </div>"+
-                  "<script>\n" +
-                  "                          document.getElementById('btn-" + c.getId() +"').onclick = function(){\n" +
-                  "                            var $elem = $(\"#resp-" + c.getId() +"\");\n" +
-                  "                            $elem.removeClass('d-none');\n" +
-                  "                          }\n" +
-                  "                        </script>" +
-                  "                      <br>\n";
+                "<small>" + c.getTexto() + "</small>\n" +
+                "                      </div>\n" +
+                "                      <div id=\"resp-" + c.getId() +"\" class=\"d-none\">\n" +
+                "                          <form action=\"" + request.getContextPath() + "/ResponderComentario\" method=\"post\">\n" +
+                "                       <div class=\"input-group input-group-alternative\"> \n" +
+                "                       <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" placeholder=\"Responder...\" name=\"respuesta\"></textarea>\n" +
+                "                       </div>\n" + " <br>\n" +
+                "                       <input type=\"hidden\" name=\"id\" value=\"" + c.getId() +"\">\n" +
+                "                       <input type=\"hidden\" name=\"path\" value=\"" + path + "\">\n" +
+                "                      <div class=\"float-right\">\n" +
+                "                        <button type=\"submit\" class=\"btn btn-primary btn-sm\">Responder</button>\n" +
+                "                      </div>\n" +
+                "                       <br>\n" +
+                "                       </form>\n" +
+                "                       </div>"+
+                "<script>\n" +
+                "                          document.getElementById('btn-" + c.getId() +"').onclick = function(){\n" +
+                "                            var $elem = $(\"#resp-" + c.getId() +"\");\n" +
+                "                            $elem.removeClass('d-none');\n" +
+                "                          }\n" +
+                "                        </script>" +
+                "                      <br>\n";
         if (!c.getRespuestas().isEmpty()){
-          res += "                      <div class=\"container-fluid\">\n" +
+          res += "                      <div class=\"container-fluid\" style=\"border-left: 2px solid #7300e6;\">\n" +
                   imprimirComentarios(c.getRespuestas(), request, path) +
                   "                      </div>";
 
         }
-        res += "                        <hr>\n" +
-                "                      </div>";
+        res += "                      </div>";
       }
     }
     return res;
