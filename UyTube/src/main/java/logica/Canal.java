@@ -338,6 +338,7 @@ public class Canal {
 	private void borrarTodosVideos() {
 		if (!this.videos.isEmpty()){
 			for (Video v : this.videos) {
+				v.setPublico(false);
 				v.eliminarValoraciones();
 				v.eliminarComentarios();
 			}
@@ -345,6 +346,9 @@ public class Canal {
 	}
 	private  void borrarTodasListas() {
 		for (ListaReproduccion l : this.listas) {
+			if(l instanceof Particular){
+				((Particular) l).setPublico(false);
+			}
 			l.quitarVideos();
 		}
 	}

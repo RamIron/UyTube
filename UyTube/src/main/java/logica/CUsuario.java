@@ -345,15 +345,21 @@ public class CUsuario implements IUsuario {
 		try {
 			borrarTodosSeguidores(usr);
 			borrarTodosSeguidos(usr);
+			usr.borrarMasVisitados();
 
-			//Borrar videos en listas de otros
+			//Borrar videos en listas de otros y borrar videos en MasVisitados de otros
 			//Obtengo el id de los videos del usuario a eliminar
-			Query qL = em.createNativeQuery("select v.id from usuarios u join canal c on u.nickname = c.usuario_nickname join elemento e on e.canal_id=c.id join video v on e.id=v.id where u.nickname like :keyword");
-			qL.setParameter("keyword", nick);
-			List<Integer> idVideos = qL.getResultList();
+			Query qV = em.createNativeQuery("SELECT v.id FROM usuarios u JOIN canal c ON u.nickname = c.usuario_nickname JOIN elemento e ON e.canal_id=c.id JOIN video v ON e.id=v.id WHERE u.nickname LIKE :keyword");
+			qV.setParameter("keyword", nick);
+			List<Integer> idVideos = qV.getResultList();
 			for (Integer i : idVideos) {
-				//Obtengo el id de la lista que contiene el video
-				Query q = em.createNativeQuery("select l.listareproduccion_id from listareproduccion_video l join elemento e on e.id=l.listareproduccion_id join canal c on e.canal_id=c.id where l.videos_id = ?1 and c.usuario_nickname not like ?2");
+				//Obtengo el objeto Video a partir del idVideo
+				TypedQuery<Video> consulta2 = em.createQuery("FROM Video WHERE id =:param", Video.class);
+				consulta2.setParameter("param", i);
+				Video vid = consulta2.getSingleResult();
+
+				//Obtengo los id's de las listas que contienen el video y no son listas del usuario eliminado
+				Query q = em.createNativeQuery("SELECT l.listareproduccion_id FROM listareproduccion_video l JOIN elemento e ON e.id=l.listareproduccion_id JOIN canal c ON e.canal_id=c.id WHERE l.videos_id = ?1 AND c.usuario_nickname NOT LIKE ?2");
 				q.setParameter(1, i).setParameter(2, nick);
 				List<Integer> idLista = (List<Integer>) q.getResultList();
 
@@ -362,14 +368,29 @@ public class CUsuario implements IUsuario {
 					TypedQuery<ListaReproduccion> consulta = em.createQuery("FROM ListaReproduccion WHERE id =:param", ListaReproduccion.class);
 					consulta.setParameter("param", j);
 					ListaReproduccion lis = consulta.getSingleResult();
-
-					//Obtengo el objeto Video a partir del idVideo
-					TypedQuery<Video> consulta2 = em.createQuery("FROM Video WHERE id =:param", Video.class);
-					consulta2.setParameter("param", i);
-					Video vid = consulta2.getSingleResult();
 					lis.quitarVideo(vid);
 					mU.modificaDatosUsuario(lis.getCanal().getUsuario());
 				}
+
+				//Obtengo los id's de las Visitas que contienen dicho video y no son visitas del usuario eliminado
+				//Query q2 = em.createNativeQuery ("SELECT id FROM visita WHERE video_id=?1");
+				Query q2 = em.createNativeQuery ("SELECT v.id FROM visita v JOIN usuarios_visita u ON v.id=u.masvisitados_id WHERE v.video_id=?1 AND u.usuario_nickname NOT LIKE ?2");
+				q2.setParameter(1, i).setParameter(2, nick);
+				List<Integer> idVisitas = (List<Integer>) q2.getResultList();
+				for (Integer k : idVisitas){
+					//Obtengo el objeto visita a partir de los id's obtenidos
+					TypedQuery<Visita> consulta = em.createQuery("FROM Visita WHERE id =:param", Visita.class);
+					consulta.setParameter("param", k);
+					Visita vis = consulta.getSingleResult();
+
+					Query q3 = em.createNativeQuery("SELECT u.usuario_nickname FROM visita v JOIN usuarios_visita u ON v.id=u.masvisitados_id WHERE v.id = ?1");
+					q3.setParameter(1, k);
+					String nickVisita = (String) q3.getSingleResult();
+					Usuario usrVisita = mU.obtenerUsuario(nickVisita);
+					usrVisita.quitarVisita(vis);
+				}
+
+
 			}
 
 			//Borrar valoraciones en videos de otros
