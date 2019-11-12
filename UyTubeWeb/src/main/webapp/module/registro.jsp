@@ -173,7 +173,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                       </div>
-                      <input name="fNac" id="fNac" class="form-control datepicker" placeholder="Fecha de nacimiento" type="text" value="<%=fNac%>" onkeyup="quitarInvalido(this)">
+                      <input name="fNac" id="fNac" autocomplete="off" class="form-control datepicker" placeholder="Fecha de nacimiento" type="text" value="<%=fNac%>" onkeyup="quitarInvalido(this)">
                     </div>
                   </div>
                 </div>
