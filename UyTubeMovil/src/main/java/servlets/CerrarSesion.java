@@ -21,22 +21,39 @@ public class CerrarSesion extends HttpServlet {
         HttpSession s = request.getSession();
         s.removeAttribute("usuario");
 
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            Cookie selector = null;
+            Cookie rawValidator = null;
+            Cookie tipo = null;
+            String selectorValue = "";
+            String validatorValue = "";
+            for (Cookie aCookie : cookies) {
+                if (aCookie.getName().equals("selector")) {
+                    selector = aCookie;
+                    selectorValue = selector.getValue();
+                } else if (aCookie.getName().equals("validator")) {
+                    rawValidator = aCookie;
+                    validatorValue = rawValidator.getValue();
+                } else if (aCookie.getName().equals("tipo")) {
+                    tipo = aCookie;
+                }
+            }
+            if (!"".equals(selectorValue) && !"".equals(validatorValue)) {
+                selector.setMaxAge(0);
+                selector.setPath("/");
+                rawValidator.setMaxAge(0);
+                rawValidator.setPath("/");
+                tipo.setMaxAge(0);
+                tipo.setPath("/");
 
-        Cookie cookieSelector = new Cookie("selector", "");
-        Cookie cookieValidator = new Cookie("validator", "");
-        Cookie cookieTipo = new Cookie("tipo", "");
-        cookieSelector.setMaxAge(0);
-        cookieValidator.setMaxAge(0);
-        cookieTipo.setMaxAge(0);
-        cookieSelector.setPath("/");
-        cookieValidator.setPath("/");
-        cookieTipo.setPath("/");
-        response.addCookie(cookieSelector);
-        response.addCookie(cookieValidator);
-        response.addCookie(cookieTipo);
-
+                response.addCookie(selector);
+                response.addCookie(rawValidator);
+                response.addCookie(tipo);
+            }
+        }
         RequestDispatcher rd;
-        rd = request.getRequestDispatcher("/module/iniciarSesion.jsp");
+        rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
     }
 }
