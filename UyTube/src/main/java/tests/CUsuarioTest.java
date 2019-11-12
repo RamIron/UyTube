@@ -1,12 +1,9 @@
 package tests;
 
+import interfaces.*;
 import manejadores.ManejadorCategoria;
 import manejadores.ManejadorUsuario;
 import datatypes.*;
-import interfaces.IUsuario;
-import interfaces.IVideo;
-import interfaces.UFactory;
-import interfaces.VFactory;
 import logica.Canal;
 import logica.Categoria;
 import logica.Usuario;
@@ -19,16 +16,16 @@ import static org.junit.Assert.*;
 
 public class CUsuarioTest {
     private IUsuario iU = null;
-    private IUsuario iU2 = null;
     private IVideo iV = null;
+    private IListaReproduccion iL = null;
     private ManejadorUsuario mU = null;
     private ManejadorCategoria mC = null;
 
     @Before
     public void inicializar(){
         iU = UFactory.getInstancia().getIUsuario();
-        iU2 = UFactory.getInstancia().getIUsuario();
         iV = VFactory.getInstancia().getIVideo();
+        iL = LRFactory.getInstancia().getIListaReproduccion();
         mU = ManejadorUsuario.getInstancia();
         mC = ManejadorCategoria.getInstancia();
     }
@@ -327,6 +324,80 @@ public class CUsuarioTest {
         iU.agregarCanal();
         iU.eliminarUsuario("usr1");
         assertEquals(1, iU.listarUsuariosEliminados().size());
+    }
+
+    @Test
+    public void obtenerInfoUsuarioEliminadoComentario() { /*Aca tambien testeo la operacion de eliminarUsuario. Borro los comentarios en videos*/
+        Calendar fecha = Calendar.getInstance();
+        iU.agregarUsuario("usr1", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        iU.agregarUsuario("usr2", "nom2", "apellido2", fecha, "email2");
+        iU.agregarCanal();
+        iV.agregarVideo("usr1", "vidUsr1", "videito1", fecha, 123, "url");
+        iV.setVid("vidUsr1");
+        iV.agregarVideo("usr2", "vidUsr2", "videito2", fecha, 123, "url");
+        iV.setVid("vidUsr2");
+        iV.valorarVideo("usr1", true);
+        iV.realizarComentario("usr1", fecha, "buen video lince");
+        iL.setuList("usr1");
+        iL.agregarListaParticular("listaUsr1", true);
+        iL.agregarVideoListaParticular("usr2", "vidUsr2", "listaUsr1");
+        iL.setuList("usr2");
+        iL.agregarListaParticular("listaUsr2", true);
+        iL.agregarVideoListaParticular("usr1", "vidUsr1", "listaUsr2");
+        iU.agregarVisita("usr1", "usr2", "vidUsr2");
+        iU.agregarVisita("usr2", "usr1", "vidUsr1");
+        DtUsuario usrEsperado = iU.obtenerInfoUsuario("usr1");
+        iU.eliminarUsuario("usr1");
+        DtUsuario usrObtenido = iU.obtenerInfoUsuarioEliminado("usr1");
+        assertEquals(usrEsperado.getNickname(), usrObtenido.getNickname());
+    }
+
+    @Test
+    public void obtenerInfoUsuarioEliminadoRespuesta() { /*Aca tambien testeo la operacion de eliminarUsuario. Borro las respuestasa comentarios en videos*/
+        Calendar fecha = Calendar.getInstance();
+        iU.agregarUsuario("usr1", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        iU.agregarUsuario("usr2", "nom2", "apellido2", fecha, "email2");
+        iU.agregarCanal();
+        iV.agregarVideo("usr1", "vidUsr1", "videito1", fecha, 123, "url");
+        iV.setVid("vidUsr1");
+        iV.agregarVideo("usr2", "vidUsr2", "videito2", fecha, 123, "url");
+        iV.setVid("vidUsr2");
+        iV.valorarVideo("usr1", true);
+        iV.realizarComentario("usr1", fecha, "buen video lince");
+        iV.responderComentario(1, "usr1", fecha, "respuesta wena");
+        iL.setuList("usr1");
+        iL.agregarListaParticular("listaUsr1", true);
+        iL.agregarVideoListaParticular("usr2", "vidUsr2", "listaUsr1");
+        iL.setuList("usr2");
+        iL.agregarListaParticular("listaUsr2", true);
+        iL.agregarVideoListaParticular("usr1", "vidUsr1", "listaUsr2");
+        iU.agregarVisita("usr1", "usr2", "vidUsr2");
+        iU.agregarVisita("usr2", "usr1", "vidUsr1");
+        DtUsuario usrEsperado = iU.obtenerInfoUsuario("usr1");
+        iU.eliminarUsuario("usr1");
+        DtUsuario usrObtenido = iU.obtenerInfoUsuarioEliminado("usr1");
+        assertEquals(usrEsperado.getNickname(), usrObtenido.getNickname());
+    }
+
+    @Test
+    public void crearToken() {
+        Calendar fecha = Calendar.getInstance();
+        iU.agregarUsuario("usr1", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        iU.crearToken("selector", "validador", "usr1");
+    }
+
+    @Test
+    public void obtenerUsuarioConToken() {
+        Calendar fecha = Calendar.getInstance();
+        iU.agregarUsuario("usr1", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        DtUsuarioWeb usrEsperado = iU.obtenerUsuarioWebNick("usr1");
+        iU.crearToken("selector", "validador", "usr1");
+        DtUsuarioWeb usrObtenido = iU.obtenerUsuarioConToken("selector", "validador");
+        assertEquals(usrEsperado.getNickname(), usrObtenido.getNickname());
     }
 
     @After
