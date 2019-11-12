@@ -253,4 +253,12 @@ public class Usuario {
 	public List<Visita> getMasVisitados() {
 		return masVisitados;
 	}
+
+	public void borrarMasVisitados(){
+		this.masVisitados.clear();
+	}
+
+	public void quitarVisita(Visita vis){
+		this.masVisitados.remove(vis);
+	}
 }
