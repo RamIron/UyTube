@@ -53,7 +53,7 @@ public class CerrarSesion extends HttpServlet {
             }
         }
         RequestDispatcher rd;
-        rd = request.getRequestDispatcher("/index.jsp");
+        rd = request.getRequestDispatcher("/module/iniciarSesion.jsp");
         rd.forward(request, response);
     }
 }

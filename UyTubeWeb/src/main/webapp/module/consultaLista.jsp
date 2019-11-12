@@ -324,6 +324,7 @@
                                 </div>
                                 <%if(usr != null && usuario.equals(usr.getNickname())){%>
                                 <div class="col- btn-group row-grid text-lg-right">
+                                    <% if (infoLista.isEsParticular()) { %>
                                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Modificar
                                     </button>
@@ -347,6 +348,9 @@
                                             </div>
                                          </form>
                                     </div>
+                                    <% } else {%>
+                                    <h1><span class="badge badge-info">Por Defecto</span></h1>
+                                    <%}%>
                                 </div>
                                 <%}%>
                             </div>
