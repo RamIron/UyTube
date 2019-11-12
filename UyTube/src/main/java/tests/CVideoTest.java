@@ -262,6 +262,7 @@ public class CVideoTest {
     public void setVid(){
         Calendar cal = Calendar.getInstance();
         iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iU.agregarCanal();
         iV.agregarVideo("usr", "vid", "desc", cal, 10, "url");
         Usuario usr = mU.obtenerUsuario("usr");
         Video vid = usr.getCanal().obtenerVideo("vid");
@@ -275,7 +276,7 @@ public class CVideoTest {
         iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
         iU.agregarCanal();
         iV.setUsr("usr");
-        iV.agregarVideo("m", "vid", "desc", cal, 10, "url");
+        iV.agregarVideo("usr", "vid", "desc", cal, 10, "url");
         iV.setVid("vid");
         Integer idEsperado = 1; //aca hay que poner el id del video que agregas
         Integer idObtenido = iV.obtenerIdVideo("usr", "vid");
@@ -291,7 +292,7 @@ public class CVideoTest {
         iV.agregarVideo("usr", "vid", "desc", cal, 10, "url");
         iV.setVid("vid");
         DtElementoWeb videoEsperado = new DtElementoWeb("usr", "vid", tipoElemento.VIDEO, "url");
-        DtElementoWeb videoObtenido = iV.obtenerVideo(2); //aca hay que poner el id del video que agregas
+        DtElementoWeb videoObtenido = iV.obtenerVideo(iV.obtenerIdVideo("usr", "vid")); //aca hay que poner el id del video que agregas
         assertEquals(videoEsperado.getNombreE(), videoObtenido.getNombreE());
     }
 
