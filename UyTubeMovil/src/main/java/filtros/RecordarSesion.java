@@ -26,14 +26,12 @@ public class RecordarSesion implements Filter {
         String path = ((HttpServletRequest)req).getServletPath();
         Boolean pathValido = true;
         if(path.length() > 7){
-            //pathValido = !path.substring(0,7).equals("/assets") && !path.substring(0,4).equals("/img") && !path.substring(0,3).equals("/v/");
             pathValido = !path.substring(0,7).equals("/assets");
         } else if(path.length() > 4) {
             pathValido = !path.substring(0,4).equals("/img");
         }
         if (!path.equals("/module/iniciarSesion.jsp") && !path.equals("/IniciarSesion") && !path.equals("/CerrarSesion") && pathValido) {
             HttpSession s = ((HttpServletRequest) req).getSession();
-            //DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
             DtUsuarioWeb usr = null;
             Cookie[] cookies = ((HttpServletRequest) req).getCookies();
             if (usr == null && cookies != null) {
@@ -75,8 +73,11 @@ public class RecordarSesion implements Filter {
                     } else {
 
                         selector.setMaxAge(SESION_CORTA);
+                        selector.setPath("/");
                         rawValidator.setMaxAge(SESION_CORTA);
+                        rawValidator.setPath("/");
                         tipo.setMaxAge(SESION_CORTA);
+                        tipo.setPath("/");
 
                         ((HttpServletResponse) resp).addCookie(selector);
                         ((HttpServletResponse) resp).addCookie(rawValidator);
