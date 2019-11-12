@@ -37,7 +37,7 @@ public class RecordarSesion implements Filter {
             //DtUsuarioWeb usr = (DtUsuarioWeb) s.getAttribute("usuario");
             DtUsuarioWeb usr = null;
             Cookie[] cookies = ((HttpServletRequest) req).getCookies();
-            if (usr == null && cookies != null) {
+            if (cookies != null) {
                 Cookie selector = null;
                 Cookie rawValidator = null;
                 Cookie tipo = null;
@@ -64,8 +64,11 @@ public class RecordarSesion implements Filter {
                     s.setAttribute("usuario", usr);
                     if (recordar) {
                         selector.setMaxAge(SESION_LARGA);
+                        selector.setPath("/");
                         rawValidator.setMaxAge(SESION_LARGA);
+                        rawValidator.setPath("/");
                         tipo.setMaxAge(SESION_LARGA);
+                        tipo.setPath("/");
 
                         ((HttpServletResponse) resp).addCookie(selector);
                         ((HttpServletResponse) resp).addCookie(rawValidator);
@@ -73,8 +76,11 @@ public class RecordarSesion implements Filter {
                     } else {
 
                         selector.setMaxAge(SESION_CORTA);
+                        selector.setPath("/");
                         rawValidator.setMaxAge(SESION_CORTA);
+                        rawValidator.setPath("/");
                         tipo.setMaxAge(SESION_CORTA);
+                        tipo.setPath("/");
 
                         ((HttpServletResponse) resp).addCookie(selector);
                         ((HttpServletResponse) resp).addCookie(rawValidator);

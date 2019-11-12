@@ -75,8 +75,11 @@ public class RecordarSesion implements Filter {
                     } else {
 
                         selector.setMaxAge(SESION_CORTA);
+                        selector.setPath("/");
                         rawValidator.setMaxAge(SESION_CORTA);
+                        rawValidator.setPath("/");
                         tipo.setMaxAge(SESION_CORTA);
+                        tipo.setPath("/");
 
                         ((HttpServletResponse) resp).addCookie(selector);
                         ((HttpServletResponse) resp).addCookie(rawValidator);

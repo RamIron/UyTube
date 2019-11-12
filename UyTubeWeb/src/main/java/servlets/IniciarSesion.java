@@ -42,6 +42,10 @@ public class IniciarSesion extends HttpServlet {
                 Cookie cookieTipo = new Cookie("tipo", "long");
                 cookieTipo.setMaxAge(SESION_LARGA);
 
+                cookieSelector.setPath("/");
+                cookieValidator.setPath("/");
+                cookieTipo.setPath("/");
+
                 response.addCookie(cookieSelector);
                 response.addCookie(cookieValidator);
                 response.addCookie(cookieTipo);
@@ -57,6 +61,10 @@ public class IniciarSesion extends HttpServlet {
                 cookieValidator.setMaxAge(SESION_CORTA);
                 Cookie cookieTipo = new Cookie("tipo", "short");
                 cookieTipo.setMaxAge(SESION_CORTA);
+
+                cookieSelector.setPath("/");
+                cookieValidator.setPath("/");
+                cookieTipo.setPath("/");
 
                 response.addCookie(cookieSelector);
                 response.addCookie(cookieValidator);
@@ -81,6 +89,10 @@ public class IniciarSesion extends HttpServlet {
                 Cookie cookieTipo = new Cookie("tipo", "long");
                 cookieTipo.setMaxAge(SESION_LARGA);
 
+                cookieSelector.setPath("/");
+                cookieValidator.setPath("/");
+                cookieTipo.setPath("/");
+
                 response.addCookie(cookieSelector);
                 response.addCookie(cookieValidator);
                 response.addCookie(cookieTipo);
@@ -96,6 +108,10 @@ public class IniciarSesion extends HttpServlet {
                 cookieValidator.setMaxAge(SESION_CORTA);
                 Cookie cookieTipo = new Cookie("tipo", "short");
                 cookieTipo.setMaxAge(SESION_CORTA);
+
+                cookieSelector.setPath("/");
+                cookieValidator.setPath("/");
+                cookieTipo.setPath("/");
 
                 response.addCookie(cookieSelector);
                 response.addCookie(cookieValidator);

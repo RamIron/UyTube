@@ -28,6 +28,9 @@ public class CerrarSesion extends HttpServlet {
         cookieSelector.setMaxAge(0);
         cookieValidator.setMaxAge(0);
         cookieTipo.setMaxAge(0);
+        cookieSelector.setPath("/");
+        cookieValidator.setPath("/");
+        cookieTipo.setPath("/");
         response.addCookie(cookieSelector);
         response.addCookie(cookieValidator);
         response.addCookie(cookieTipo);

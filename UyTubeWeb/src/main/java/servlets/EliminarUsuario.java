@@ -20,7 +20,7 @@ public class EliminarUsuario extends HttpServlet {
         port.eliminarUsuario(nick);
         s.removeAttribute("usuario");
         RequestDispatcher rd;
-        rd = request.getRequestDispatcher("/index.jsp");
+        rd = request.getRequestDispatcher("/CerrarSesion");
         String message = "El usuario fue eliminado correctamente";
         request.setAttribute("message", message);
         rd.forward(request, response);
