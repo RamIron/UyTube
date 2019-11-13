@@ -24,27 +24,12 @@ public class TokenUsuario implements Serializable {
         this.usuario = usuario;
     }
 
-    public String getSelector() {
-        return selector;
-    }
-
-    public void setSelector(String selector) {
-        this.selector = selector;
-    }
-
     public String getValidador() {
         return validador;
     }
 
-    public void setValidador(String validador) {
-        this.validador = validador;
-    }
 
     public Usuario getUsuario() {
         return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 }

@@ -65,11 +65,6 @@ public class Usuario {
 	public Usuario() {
 		super();
 	}
-	
-	public Usuario(String nickname) {
-		super();
-		this.nickname = nickname;
-	}
 
 	public Usuario(String nickname, String nombre, String apellido, Calendar fNac, String correoE) {
 		super();
@@ -87,9 +82,6 @@ public class Usuario {
 		return nickname;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
 
 	public String getNombre() {
 		return nombre;
@@ -138,10 +130,6 @@ public class Usuario {
 	public Canal getCanal() {
 		return this.canal;
 	}
-	
-	public void setCanal(Canal c) {
-		this.canal = c;
-	}
 
 	public String getContrasena() {
 		return contrasena;
@@ -161,10 +149,6 @@ public class Usuario {
 
 	public List<TokenUsuario> getTokens() {
 		return tokens;
-	}
-
-	public void setTokens(List<TokenUsuario> tokens) {
-		this.tokens = tokens;
 	}
 
 	//Operaciones

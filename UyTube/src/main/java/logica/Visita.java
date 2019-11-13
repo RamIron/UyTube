@@ -22,21 +22,12 @@ public class Visita {
         this.cantVisitas = cantVisitas;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Video getVideo() {
         return video;
     }
 
-    public void setVideo(Video video) {
-        this.video = video;
-    }
 
     public Calendar getUltimaVisita() {
         return ultimaVisita;

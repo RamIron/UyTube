@@ -24,11 +24,6 @@ public abstract class ListaReproduccion extends Elemento {
 		super(nombre, canal);
 	}
 
-	public List<Video> getVideos() {
-		return videos;
-	}
-
-
 	//Operaciones
 	public void agregarVideo(Video v) {
 		videos.add(v);
@@ -58,13 +53,6 @@ public abstract class ListaReproduccion extends Elemento {
 			}
 		}
 		return res;
-	}
-
-	public void sacarCategoria(){
-		if (this.categoria != null) {
-			this.categoria.quitarElemento(this);
-			this.categoria = null;
-		}
 	}
 
 	public void quitarVideos(){

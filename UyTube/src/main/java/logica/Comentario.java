@@ -38,23 +38,15 @@ public class Comentario {
 	public Integer getId() {
 		return id;
 	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	public Calendar getFecha() {
 		return fecha;
 	}
-	public void setFecha(Calendar fecha) {
-		this.fecha = fecha;
-	}
+
 	public String getTexto() {
 		return texto;
 	}
 	public Usuario getUsuario() {
 		return usuario;
-	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 	
 	public List<Comentario> getRespuestas() {

@@ -119,6 +119,15 @@ public class CListaReproduccionTest {
     }
 
     @Test
+    public void existeListaFalse() {
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iU.agregarCanal();
+        iL.setuList("usr");
+        assertEquals(false, iL.existeLista("lis"));
+    }
+
+    @Test
     public void existeListaDefecto() {
         Calendar cal = Calendar.getInstance();
         iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
@@ -129,6 +138,11 @@ public class CListaReproduccionTest {
     }
 
     @Test
+    public void existeListaDefectoFalse() {
+        assertEquals(false, iL.existeListaDefecto("lis"));
+    }
+
+    @Test
     public void existeListaParticular() {
         Calendar cal = Calendar.getInstance();
         iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
@@ -136,6 +150,15 @@ public class CListaReproduccionTest {
         iL.setuList("usr");
         iL.agregarListaParticular("lis", true);
         assertEquals(true, iL.existeListaParticular("usr", "lis"));
+    }
+
+    @Test
+    public void existeListaParticularFalse() {
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iU.agregarCanal();
+        iL.setuList("usr");
+        assertEquals(false, iL.existeListaParticular("usr", "lis"));
     }
 
     @Test
@@ -195,6 +218,16 @@ public class CListaReproduccionTest {
     }
 
     @Test
+    public void listarVideosdeListVacio() {
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iU.agregarCanal();
+        iL.setuList("usr");
+        iL.agregarListaDefecto("lis");
+        assertEquals(0, iL.listarVideosdeLista("lis").size());
+    }
+
+    @Test
     public void listarVideosListaWeb() {
         Calendar cal = Calendar.getInstance();
         iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
@@ -204,6 +237,16 @@ public class CListaReproduccionTest {
         iV.agregarVideo("usr", "nom", "desc", cal, 10, "url");
         iL.agregarVideoListaPorDefecto("usr", "nom", "lis");
         assertEquals(1, iL.listarVideosListaWeb("lis").size());
+    }
+
+    @Test
+    public void listarVideosdeListaWebVacio() {
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iU.agregarCanal();
+        iL.setuList("usr");
+        iL.agregarListaDefecto("lis");
+        assertEquals(0, iL.listarVideosListaWeb("lis").size());
     }
 
     @Test
@@ -237,8 +280,7 @@ public class CListaReproduccionTest {
         iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
         iU.agregarCanal();
         iL.setuList("usr");
-        iL.agregarListaParticular("lis", true);
-        assertEquals("lis", iL.obtenerListaDeUsuario("lis").getNombre());
+        assertEquals(null, iL.obtenerListaDeUsuario("lis"));
     }
 
     @Test

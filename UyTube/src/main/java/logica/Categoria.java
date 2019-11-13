@@ -34,10 +34,6 @@ public class Categoria {
 			return nombre;
 		}
 
-		public void setNombre(String nombre) {
-			this.nombre = nombre;
-		}
-
 		public List<DtElementoUsuario> obtenerElemCategoria(){
 			List<DtElementoUsuario> res = new LinkedList<DtElementoUsuario>();
 			DtElementoUsuario elem;

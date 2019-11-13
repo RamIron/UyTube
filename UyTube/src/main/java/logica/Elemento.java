@@ -32,11 +32,6 @@ public abstract class Elemento {
 		this.canal = canal;
 	}
 
-	public Elemento(String nombre) {
-		super();
-		this.nombre = nombre;
-	}
-
 	//Getters & Setters
 	public String getNombre() {
 		return nombre;
@@ -48,10 +43,6 @@ public abstract class Elemento {
 
 	public Canal getCanal() {
 		return canal;
-	}
-
-	public void setCanal(Canal canal) {
-		this.canal = canal;
 	}
 
 	public Categoria getCategoria() {
