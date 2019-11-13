@@ -252,6 +252,18 @@ public class CVideoTest {
     }
 
     @Test
+    public void busquedaFecha() {
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iU.agregarCanal();
+        iU.modificarInfoCanal("nom", "desc", true);
+        iV.setUsr("usr");
+        iV.agregarVideo("usr", "vid", "desc", cal, 10, "url");
+        iV.modificarInfoVideo("vid", "desc", cal, 10, "url", true);
+        assertEquals(1, iV.busqueda("vid", true).size());
+    }
+
+    @Test
     public void setUsr(){
         Calendar cal = Calendar.getInstance();
         iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
