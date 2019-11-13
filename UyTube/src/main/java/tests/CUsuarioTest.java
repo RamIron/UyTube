@@ -320,6 +320,15 @@ public class CUsuarioTest {
         assertEquals(0, usr1.getSeguidos().size());
     }
 
+    @Test
+    public void listarUsuariosEliminados(){
+        Calendar fecha = Calendar.getInstance();
+        iU.agregarUsuario("usr1", "nom", "apellido", fecha, "email");
+        iU.agregarCanal();
+        iU.eliminarUsuario("usr1");
+        assertEquals(1, iU.listarUsuariosEliminados().size());
+    }
+
     @After
     public void terminarCaso(){
         mU.cerrarConexion();

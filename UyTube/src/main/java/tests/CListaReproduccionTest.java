@@ -97,7 +97,15 @@ public class CListaReproduccionTest {
 
     @Test
     public void eliminarVideoDeLista() {
-        //TODO
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iU.agregarCanal();
+        iL.setuList("usr");
+        iL.agregarListaDefecto("lis");
+        iV.agregarVideo("usr", "nom", "desc", cal, 10, "url");
+        iL.agregarVideoListaPorDefecto("usr", "nom", "lis");
+        iL.eliminarVideoDeLista("usr", "nom", "lis");
+        assertEquals(0, iL.listarVideosdeLista("lis").size());
     }
 
     @Test

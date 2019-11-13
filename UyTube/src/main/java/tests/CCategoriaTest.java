@@ -1,14 +1,16 @@
 package tests;
 
+import interfaces.*;
 import manejadores.ManejadorCategoria;
 import datatypes.DtElementoUsuario;
 import datatypes.DtElementoWeb;
-import interfaces.CFactory;
-import interfaces.ICategoria;
 import logica.Categoria;
+import manejadores.ManejadorUsuario;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -16,11 +18,19 @@ import static org.junit.Assert.*;
 public class CCategoriaTest {
     private ICategoria iC = null;
     private ManejadorCategoria mC = null;
+    private IUsuario iU = null;
+    private IListaReproduccion iL = null;
+    private IVideo iV = null;
+    private ManejadorUsuario mU = null;
 
     @Before
     public void inicializar(){
         iC = CFactory.getInstancia().getICategoria();
         mC = ManejadorCategoria.getInstancia();
+        iU = UFactory.getInstancia().getIUsuario();
+        iL = LRFactory.getInstancia().getIListaReproduccion();
+        iV = VFactory.getInstancia().getIVideo();
+        mU = ManejadorUsuario.getInstancia();
     }
 
     @Test
@@ -74,6 +84,19 @@ public class CCategoriaTest {
     public void limpiarControlador() {
         iC.limpiarControlador();
         assertEquals(true, !false);
+    }
+
+    @Test
+    public void listarListasPublicasCategoria(){
+        Calendar cal = Calendar.getInstance();
+        iU.agregarUsuario("usr", "nom", "ape", cal, "mail");
+        iU.agregarCanal();
+        iL.setuList("usr");
+        iL.agregarListaParticular("lis", true);
+        iL.setLista("lis");
+        iC.altaCategoria("Deportes");
+        iL.modificarCategoria("Deportes");
+        assertEquals(1, iC.listarListasPublicasCategoria("Deportes").size());
     }
 
     @After
