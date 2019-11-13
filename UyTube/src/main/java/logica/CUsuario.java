@@ -8,6 +8,7 @@ import datatypes.DtCanalWeb;
 import datatypes.DtUsuario;
 import datatypes.DtUsuarioWeb;
 import datatypes.DtVisita;
+import jdk.nashorn.internal.parser.Token;
 import manejadores.ManejadorCategoria;
 import manejadores.ManejadorPorDefecto;
 import manejadores.ManejadorToken;
@@ -328,19 +329,11 @@ public class CUsuario implements IUsuario {
 
 	@Override
 	public void eliminarUsuario(String nick){
-		//hecho: borrar valoraciones y comentarios de tus videos
-		//hecho: borrar tus listas y videos
-		//hecho: borrar el usuario
-		//hecho: PERSISTIR LOS CAMBIOS
-
-		//TODO Respaldar el usuario
-		//TODO borrar tus videos de las listas de otros
-		//TODO borrar todos tus comentarios y valoraciones en videos de otros
-
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
 		ManejadorUsuario mU = ManejadorUsuario.getInstancia();
 		Usuario usr = mU.obtenerUsuario(nick);
+		ManejadorToken mT = ManejadorToken.getInstancia();
 
 		try {
 			borrarTodosSeguidores(usr);
@@ -389,8 +382,6 @@ public class CUsuario implements IUsuario {
 					Usuario usrVisita = mU.obtenerUsuario(nickVisita);
 					usrVisita.quitarVisita(vis);
 				}
-
-
 			}
 
 			//Borrar valoraciones en videos de otros
@@ -432,7 +423,7 @@ public class CUsuario implements IUsuario {
 					vid.eliminarComentario(com);
 					mU.modificaDatosUsuario(vid.getCanal().getUsuario());
 				} else { //O es una respuesta de un comentario
-					Query q3 = em.createNativeQuery("select c.comentario_id from comentario_comentario c where c.respuestas_id = ?1");
+					Query q3 = em.createNativeQuery("SELECT c.comentario_id FROM comentario_comentario c WHERE c.respuestas_id = ?1");
 					q3.setParameter(1, i);
 					Integer j = (Integer) q3.getSingleResult();
 
@@ -443,12 +434,19 @@ public class CUsuario implements IUsuario {
 					comPadre.eliminarRespuesta(com);
 				}
 			}
-
 			usr.getCanal().borrarContenidoCanal();
 			usr.setActivo(false);
 			Calendar fElim = Calendar.getInstance();
 			usr.setfEliminado(fElim);
 			mU.quitarUsuario(usr);
+
+			TypedQuery<TokenUsuario> qT = em.createQuery("FROM TokenUsuario WHERE usuario_id = ?1", TokenUsuario.class);
+			qT.setParameter(1, nick);
+			List<TokenUsuario> tokens = (List<TokenUsuario>) qT.getResultList();
+			for(TokenUsuario tu : tokens){
+				mT.eliminarToken(tu);
+			}
+
 			System.gc();
 		}catch (Exception e){
 			throw new IllegalArgumentException("No se pudo eliminar el usuario");
