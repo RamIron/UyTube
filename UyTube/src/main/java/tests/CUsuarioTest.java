@@ -347,6 +347,7 @@ public class CUsuarioTest {
         iL.agregarVideoListaParticular("usr1", "vidUsr1", "listaUsr2");
         iU.agregarVisita("usr1", "usr2", "vidUsr2");
         iU.agregarVisita("usr2", "usr1", "vidUsr1");
+        iU.crearToken("1", "1", "usr1");
         DtUsuario usrEsperado = iU.obtenerInfoUsuario("usr1");
         iU.eliminarUsuario("usr1");
         DtUsuario usrObtenido = iU.obtenerInfoUsuarioEliminado("usr1");

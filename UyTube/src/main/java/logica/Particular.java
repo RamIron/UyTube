@@ -51,10 +51,6 @@ public class Particular extends ListaReproduccion{
 		super();
 	}
 
-	public Particular(String nombre, Canal canal, boolean publico) {
-		super(nombre, canal);
-		this.publico = publico;
-	}
 
 	public Particular(String nombre, Canal canal, boolean publico, Categoria cat) {
 		super(nombre, canal);
