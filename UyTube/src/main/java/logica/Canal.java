@@ -95,15 +95,6 @@ public class Canal {
 	public void setPublico(Boolean publico) {
 		this.publico = publico;
 	}
-
-	public List<Video> getVideos() {
-		return videos;
-	}
-
-	public List<ListaReproduccion> getListas() {
-		return listas;
-	}
-
 	//Fin Getters & Setters
 
 	

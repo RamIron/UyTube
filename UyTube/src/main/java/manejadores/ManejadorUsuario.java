@@ -118,7 +118,6 @@ public class ManejadorUsuario {
 	
 	public void cerrarConexion(){
 		Conexion conexion=Conexion.getInstancia();
-		EntityManager em =conexion.getEntityManager();
 		conexion.cerrar();
 	}
 }
