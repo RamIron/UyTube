@@ -33,6 +33,7 @@ public class Valoracion {
 	public boolean isGusta() {
 		return gusta;
 	}
+
 	public void setGusta(boolean gusta) {
 		this.gusta = gusta;
 	}

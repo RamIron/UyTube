@@ -46,14 +46,6 @@ public class ManejadorPorDefecto {
 		}
 	}
 	
-	public List<NombrePorDefecto> getPorDefecto() {
-		Conexion conexion=Conexion.getInstancia();
-		EntityManager em =conexion.getEntityManager();
-		TypedQuery<NombrePorDefecto> consulta = em.createQuery("FROM NombrePorDefecto", NombrePorDefecto.class);
-	    List<NombrePorDefecto> nombresPD = consulta.getResultList();
-	    return nombresPD;
-	}
-	
 	public List<String> getNombresPorDefecto(){
 		Conexion conexion = Conexion.getInstancia();
 		EntityManager em = conexion.getEntityManager();
