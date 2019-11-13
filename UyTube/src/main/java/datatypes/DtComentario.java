@@ -35,11 +35,6 @@ public class DtComentario {
 		this.texto = texto;
 	}
 
-	public DtComentario(String texto) { //temporal
-		super();
-		this.texto = texto;
-	}
-
 	//Getters
 	public Integer getId() {
 		return id;

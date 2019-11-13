@@ -157,6 +157,7 @@ public class DataTypesTest {
         visita1.setUltimaVisita(fecha);
         visita1.setCantVisitas(1);
         DtVisita visita2 = new DtVisita(visita1.getUsrVideo(), visita1.getNomVideo(), visita1.getUltimaVisita(), visita1.getCantVisitas());
+        visita2.setUrlVideo(visita1.getUrlVideo());
         assertEquals(visita1.getUsrVideo(), visita2.getUsrVideo());
     }
 
