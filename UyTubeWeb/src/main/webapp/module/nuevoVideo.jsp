@@ -408,7 +408,11 @@
             $("#mensaje-error").html('<strong>Error!</strong> Falta completar algun campo obligatorio');
             $("#mensaje-error").removeClass("d-none");
             marcarCamposVacios(nomVid, dur, url, desc, fPub);
-        } else{
+        } else if (!/^([0-9])*$/.test(dur)){
+            $("#mensaje-error").html('<strong>Error!</strong> La duracion debe ser un numero');
+            $("#mensaje-error").removeClass("d-none");
+            marcarCamposVacios(nomVid, "", url, desc, fPub);
+        }else {
             var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
             var match = url.match(regExp);
             if (match&&match[7].length==11){
@@ -416,7 +420,9 @@
                 document.forms["nuevoVideo"]["url"].value = b;
                 document.forms["nuevoVideo"].submit();
             }else{
-                alert("Url incorrecta, debe ser de youtube");
+                $("#mensaje-error").html('<strong>Error!</strong> Url incorrecta, debe ser de youtube');
+                $("#mensaje-error").removeClass("d-none");
+                marcarCamposVacios(nomVid, dur, "", desc, fPub);
             }
         }
     }
