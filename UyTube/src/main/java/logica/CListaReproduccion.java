@@ -249,7 +249,7 @@ public class CListaReproduccion implements IListaReproduccion {
 			resQuery = consulta.getResultList();
 		}
 		for (Object[] o : resQuery){
-			DtElementoWeb lis = new DtElementoWeb(o[1].toString(), o[0].toString(), tipoElemento.LISTA, "");
+			DtElementoWeb lis = new DtElementoWeb(o[0].toString(), o[1].toString(), tipoElemento.LISTA, "");
 			res.add(lis);
 		}
 		return res;

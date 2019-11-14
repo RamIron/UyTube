@@ -13,11 +13,11 @@ import java.util.List;
 @NamedNativeQueries({
 		@NamedNativeQuery(name = "buscarCanalNombre", query = "select u.nickname, c.nombre, u.imagen\n" +
 				"from usuarios u inner join canal c on c.usuario_nickname = u.nickname\n" +
-				"where c.nombre like (?) and c.publico = true\n" +
+				"where upper(c.nombre) like upper(?) and c.publico = true\n" +
 				"order by c.nombre asc"),
 		@NamedNativeQuery(name = "buscarCanalFecha", query = "select u.nickname, c.nombre, u.imagen, u.fecha_de_nacimiento\n" +
 				"from usuarios u inner join canal c on c.usuario_nickname = u.nickname\n" +
-				"where c.nombre like (?) and c.publico = true\n" +
+				"where upper(c.nombre) like upper(?) and c.publico = true\n" +
 				"order by u.fecha_de_nacimiento desc")
 })
 public class Canal {

@@ -408,8 +408,10 @@
                                                 <span class="mb-xl-2 font-weight-bold text-xl"><%=canal.getNombre() %></span>
                                             </div>
                                             <%--Fin Nombre Canal--%>
+                                        </div>
 
-                                            <%--Categoria Canal--%>
+                                        <%--Categoria Canal--%>
+                                        <div class="row text-center px-lg-8 mb-lg-2">
                                             <div class="col">
                                                 <% if(canal.getCategoria() != null){ %>
                                                     <h5 class="mb-0">Categoria: </h5>
